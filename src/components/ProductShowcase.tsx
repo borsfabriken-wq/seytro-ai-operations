@@ -136,7 +136,7 @@ export function ProductShowcase() {
     >
       <div className="grid gap-12 lg:grid-cols-[auto_minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-10">
         <div className="relative hidden lg:block">
-          <span className="absolute right-0 top-1/2 -translate-y-1/2 whitespace-nowrap pr-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+          <span className="product-side-label absolute right-0 top-1/2 -translate-y-1/2 whitespace-nowrap pr-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">
             En plattform
           </span>
         </div>
