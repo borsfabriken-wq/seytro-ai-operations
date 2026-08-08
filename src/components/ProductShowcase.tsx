@@ -134,7 +134,13 @@ export function ProductShowcase() {
       onMouseLeave={() => setPaused(false)}
       aria-label="Våra produkter"
     >
-      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-20">
+      <div className="grid gap-12 lg:grid-cols-[9rem_minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-10">
+        <div className="relative hidden lg:block">
+          <span className="absolute -left-4 top-1/2 -translate-y-1/2 whitespace-nowrap text-xs uppercase tracking-[0.2em] text-muted-foreground">
+            En plattform
+          </span>
+        </div>
+
         <div>
           <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Våra produkter</p>
           <p className="mt-4 font-mono text-sm text-muted-foreground">
@@ -163,9 +169,6 @@ export function ProductShowcase() {
                       }`}
                     />
                   </button>
-                  {i === 2 && (
-                    <p className="pt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">En plattform</p>
-                  )}
                 </li>
               );
             })}
