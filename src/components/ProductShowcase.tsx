@@ -55,7 +55,7 @@ export function ProductShowcase() {
     }, 200);
   };
 
-  const current = products[active];
+  const current = products[active] ?? products[0]!;
   const Icon = current.icon;
 
   return (
