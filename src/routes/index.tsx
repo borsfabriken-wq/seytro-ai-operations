@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
+import heroTableAsset from "@/assets/hero-table.webp.asset.json";
 
 import heroImg from "@/assets/hero.jpg";
 import visionImg from "@/assets/vision.jpg";
