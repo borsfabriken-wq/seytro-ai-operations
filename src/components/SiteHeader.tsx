@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
+import { PlatformMenu } from "@/components/PlatformMenu";
 
 const navItems = [
   { label: "Plattform", href: "#pelare", dropdown: true },
@@ -11,6 +12,28 @@ const navItems = [
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
+  const [platformOpen, setPlatformOpen] = useState(false);
+  const platformRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openMenu = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setPlatformOpen(true);
+  };
+  const scheduleClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setPlatformOpen(false), 120);
+  };
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (platformRef.current && !platformRef.current.contains(e.target as Node)) {
+        setPlatformOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -18,6 +41,7 @@ export function SiteHeader() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
 
   return (
     <header
