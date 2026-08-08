@@ -111,6 +111,19 @@ function Index() {
 
       <LogoMarquee />
 
+      <section className="bg-background">
+        <div className="mx-auto max-w-7xl px-6 pb-20 sm:px-10">
+          <img
+            src={heroTableAsset.url}
+            alt="Elegant dukning med Seytro-märket på en vit tallrik"
+            width={1920}
+            height={800}
+            loading="lazy"
+            className="w-full rounded-2xl"
+          />
+        </div>
+      </section>
+
       <section className="border-b border-border">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 py-16 sm:px-10 lg:grid-cols-4">
           {[
