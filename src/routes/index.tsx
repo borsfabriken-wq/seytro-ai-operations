@@ -108,8 +108,6 @@ function Index() {
         </div>
       </section>
 
-      <LogoMarquee />
-
       <section className="border-b border-border">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 py-16 sm:px-10 lg:grid-cols-4">
           {[
