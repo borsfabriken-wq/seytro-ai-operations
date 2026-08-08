@@ -108,8 +108,6 @@ function Index() {
         </div>
       </section>
 
-      <LogoMarquee />
-
       <section className="border-b border-border">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 py-16 sm:px-10 lg:grid-cols-4">
           {[
@@ -197,6 +195,8 @@ function Index() {
           Boka demo
         </a>
       </section>
+
+      <LogoMarquee />
 
       <footer className="border-t border-primary-foreground/10 bg-forest-deep text-primary-foreground">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 px-6 py-10 text-sm sm:flex-row sm:px-10">
