@@ -3,6 +3,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { ProductShowcase } from "@/components/ProductShowcase";
+import { FaqSection } from "@/components/FaqSection";
 
 import heroImg from "@/assets/hero.jpg";
 import visionImg from "@/assets/vision.jpg";
@@ -200,6 +201,8 @@ function Index() {
           Boka demo
         </a>
       </section>
+
+      <FaqSection />
 
       <SiteFooter />
     </div>
