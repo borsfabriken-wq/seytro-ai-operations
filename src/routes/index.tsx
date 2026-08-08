@@ -113,7 +113,7 @@ function Index() {
 
       <ProductShowcase />
 
-      <section className="border-t-2 border-forest border-b border-border">
+      <section className="border-t-2 border-forest bg-forest text-primary-foreground">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 py-16 sm:px-10 lg:grid-cols-4">
           {[
             ["−38%", "administrativ tid i salen"],
@@ -122,8 +122,8 @@ function Index() {
             ["+21%", "återkommande gäster"],
           ].map(([kpi, label]) => (
             <div key={label}>
-              <p className="font-display text-4xl text-forest">{kpi}</p>
-              <p className="mt-2 text-sm text-muted-foreground">{label}</p>
+              <p className="font-display text-4xl text-primary-foreground">{kpi}</p>
+              <p className="mt-2 text-sm text-primary-foreground/80">{label}</p>
             </div>
           ))}
         </div>
