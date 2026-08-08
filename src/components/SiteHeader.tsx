@@ -28,15 +28,15 @@ export function SiteHeader() {
       <nav
         className={`mx-auto flex items-center justify-between transition-all duration-500 ease-out ${
           scrolled
-            ? "max-w-3xl rounded-full border border-primary-foreground/10 bg-forest-deep/90 px-4 py-2 shadow-2xl backdrop-blur-md sm:px-5"
-            : "max-w-7xl rounded-none border border-transparent bg-transparent px-5 py-3 shadow-none sm:px-8"
+            ? "max-w-4xl rounded-full border border-primary-foreground/10 bg-forest-deep/90 px-5 py-2.5 shadow-2xl backdrop-blur-md sm:px-6"
+            : "max-w-7xl rounded-none border border-transparent bg-transparent px-6 py-6 shadow-none sm:px-10"
         }`}
       >
-        <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-4 sm:gap-5">
           <a href="#top" className="block shrink-0">
-            <img src={logoAsset.url} alt="Seytro" className="h-5 w-auto" />
+            <img src={logoAsset.url} alt="Seytro" className="h-6 w-auto" />
           </a>
-          <div className="flex items-center gap-4 sm:gap-5">
+          <div className="flex items-center gap-5 sm:gap-6">
             {navItems.map((item) => (
               <a
                 key={item.label}
@@ -49,16 +49,16 @@ export function SiteHeader() {
             ))}
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <a
             href="#login"
-            className="rounded-full bg-primary-foreground/10 px-3.5 py-1 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground/20"
+            className="rounded-full bg-primary-foreground/10 px-4 py-1.5 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground/20"
           >
             Logga in
           </a>
           <a
             href="#demo"
-            className="rounded-full border border-primary-foreground/40 px-3.5 py-1 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-forest-deep"
+            className="rounded-full border border-primary-foreground/40 px-4 py-1.5 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-forest-deep"
           >
             Boka demo
           </a>
