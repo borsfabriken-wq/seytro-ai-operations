@@ -134,10 +134,10 @@ export function SiteHeader() {
             <img src={logoAsset.url} alt="Seytro" className="h-6 w-auto" />
           </a>
           <div className="flex items-center gap-5 sm:gap-6">
-            {renderDropdown(navItems[0], "platform", platformRef, PlatformMenu)}
-            {renderDropdown(navItems[1], "solutions", solutionsRef, SolutionsMenu)}
-            {renderDropdown(navItems[2], "resources", resourcesRef, ResourcesMenu)}
-            {renderDropdown(navItems[3], "company", companyRef, CompanyMenu)}
+            {renderDropdown("Plattform", "platform", platformRef, PlatformMenu)}
+            {renderDropdown("Lösningar", "solutions", solutionsRef, SolutionsMenu)}
+            {renderDropdown("Resurser", "resources", resourcesRef, ResourcesMenu)}
+            {renderDropdown("Företag", "company", companyRef, CompanyMenu)}
           </div>
         </div>
         <div className="flex items-center gap-4 sm:gap-5">
