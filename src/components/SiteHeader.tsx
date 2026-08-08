@@ -61,17 +61,43 @@ export function SiteHeader() {
             <img src={logoAsset.url} alt="Seytro" className="h-6 w-auto" />
           </a>
           <div className="flex items-center gap-5 sm:gap-6">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="hidden items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:flex"
-              >
-                {item.label}
-                {item.dropdown && <ChevronDown className="h-3 w-3 opacity-60" />}
-              </a>
-            ))}
+            {navItems.map((item) =>
+              item.label === "Plattform" ? (
+                <div
+                  key={item.label}
+                  ref={platformRef}
+                  className="relative hidden sm:block"
+                  onMouseEnter={openMenu}
+                  onMouseLeave={scheduleClose}
+                >
+                  <button
+                    type="button"
+                    aria-expanded={platformOpen}
+                    onClick={() => setPlatformOpen((v) => !v)}
+                    className="flex items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+                  >
+                    {item.label}
+                    <ChevronDown
+                      className={`h-3 w-3 opacity-60 transition-transform duration-200 ${
+                        platformOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  <PlatformMenu open={platformOpen} />
+                </div>
+              ) : (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="hidden items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:flex"
+                >
+                  {item.label}
+                  {item.dropdown && <ChevronDown className="h-3 w-3 opacity-60" />}
+                </a>
+              ),
+            )}
           </div>
+
         </div>
         <div className="flex items-center gap-2.5">
           <a
