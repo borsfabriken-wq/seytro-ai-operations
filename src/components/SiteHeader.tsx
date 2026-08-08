@@ -3,54 +3,76 @@ import { ChevronDown } from "lucide-react";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
 import { PlatformMenu } from "@/components/PlatformMenu";
 import { SolutionsMenu } from "@/components/SolutionsMenu";
+import { ResourcesMenu } from "@/components/ResourcesMenu";
+import { CompanyMenu } from "@/components/CompanyMenu";
 
 const navItems = [
   { label: "Plattform", href: "#pelare", dropdown: true },
   { label: "Lösningar", href: "#losningar", dropdown: true },
-  { label: "Resurser", href: "#vision", dropdown: true },
-  { label: "Företag", href: "#vision", dropdown: false },
+  { label: "Resurser", href: "#resurser", dropdown: true },
+  { label: "Företag", href: "#foretag", dropdown: true },
 ];
+
+type DropdownState = {
+  platform: boolean;
+  solutions: boolean;
+  resources: boolean;
+  company: boolean;
+};
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
 
-  const [platformOpen, setPlatformOpen] = useState(false);
+  const [open, setOpen] = useState<DropdownState>({
+    platform: false,
+    solutions: false,
+    resources: false,
+    company: false,
+  });
+
   const platformRef = useRef<HTMLDivElement>(null);
-  const platformCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const [solutionsOpen, setSolutionsOpen] = useState(false);
   const solutionsRef = useRef<HTMLDivElement>(null);
-  const solutionsCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const resourcesRef = useRef<HTMLDivElement>(null);
+  const companyRef = useRef<HTMLDivElement>(null);
 
-  const openPlatform = () => {
-    if (platformCloseTimer.current) clearTimeout(platformCloseTimer.current);
-    setPlatformOpen(true);
-  };
-  const scheduleClosePlatform = () => {
-    if (platformCloseTimer.current) clearTimeout(platformCloseTimer.current);
-    platformCloseTimer.current = setTimeout(() => setPlatformOpen(false), 120);
+  const timers = useRef<Record<keyof DropdownState, ReturnType<typeof setTimeout> | null>>({
+    platform: null,
+    solutions: null,
+    resources: null,
+    company: null,
+  });
+
+  const openMenu = (key: keyof DropdownState) => {
+    const timer = timers.current[key];
+    if (timer) clearTimeout(timer);
+    setOpen((prev) => ({ ...prev, [key]: true }));
   };
 
-  const openSolutions = () => {
-    if (solutionsCloseTimer.current) clearTimeout(solutionsCloseTimer.current);
-    setSolutionsOpen(true);
+  const scheduleClose = (key: keyof DropdownState) => {
+    const timer = timers.current[key];
+    if (timer) clearTimeout(timer);
+    timers.current[key] = setTimeout(() => {
+      setOpen((prev) => ({ ...prev, [key]: false }));
+    }, 120);
   };
-  const scheduleCloseSolutions = () => {
-    if (solutionsCloseTimer.current) clearTimeout(solutionsCloseTimer.current);
-    solutionsCloseTimer.current = setTimeout(() => setSolutionsOpen(false), 120);
+
+  const toggleMenu = (key: keyof DropdownState) => {
+    setOpen((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
   };
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       const target = e.target as Node;
-      if (
-        platformRef.current &&
-        !platformRef.current.contains(target) &&
-        solutionsRef.current &&
-        !solutionsRef.current.contains(target)
-      ) {
-        setPlatformOpen(false);
-        setSolutionsOpen(false);
+      const insideAny =
+        platformRef.current?.contains(target) ||
+        solutionsRef.current?.contains(target) ||
+        resourcesRef.current?.contains(target) ||
+        companyRef.current?.contains(target);
+      if (!insideAny) {
+        setOpen({ platform: false, solutions: false, resources: false, company: false });
       }
     };
     document.addEventListener("mousedown", onClick);
@@ -63,6 +85,36 @@ export function SiteHeader() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const renderDropdown = (
+    label: string,
+    key: keyof DropdownState,
+    ref: React.RefObject<HTMLDivElement | null>,
+    MenuComponent: React.ComponentType<{ open: boolean }>,
+  ) => (
+    <div
+      key={label}
+      ref={ref}
+      className="relative hidden sm:block"
+      onMouseEnter={() => openMenu(key)}
+      onMouseLeave={() => scheduleClose(key)}
+    >
+      <button
+        type="button"
+        aria-expanded={open[key]}
+        onClick={() => toggleMenu(key)}
+        className="flex items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+      >
+        {label}
+        <ChevronDown
+          className={`h-3 w-3 opacity-60 transition-transform duration-200 ${
+            open[key] ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+      <MenuComponent open={open[key]} />
+    </div>
+  );
 
   return (
     <header
@@ -82,78 +134,16 @@ export function SiteHeader() {
             <img src={logoAsset.url} alt="Seytro" className="h-6 w-auto" />
           </a>
           <div className="flex items-center gap-5 sm:gap-6">
-            {navItems.map((item) => {
-              if (item.label === "Plattform") {
-                return (
-                  <div
-                    key={item.label}
-                    ref={platformRef}
-                    className="relative hidden sm:block"
-                    onMouseEnter={openPlatform}
-                    onMouseLeave={scheduleClosePlatform}
-                  >
-                    <button
-                      type="button"
-                      aria-expanded={platformOpen}
-                      onClick={() => setPlatformOpen((v) => !v)}
-                      className="flex items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
-                    >
-                      {item.label}
-                      <ChevronDown
-                        className={`h-3 w-3 opacity-60 transition-transform duration-200 ${
-                          platformOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                    <PlatformMenu open={platformOpen} />
-                  </div>
-                );
-              }
-
-              if (item.label === "Lösningar") {
-                return (
-                  <div
-                    key={item.label}
-                    ref={solutionsRef}
-                    className="relative hidden sm:block"
-                    onMouseEnter={openSolutions}
-                    onMouseLeave={scheduleCloseSolutions}
-                  >
-                    <button
-                      type="button"
-                      aria-expanded={solutionsOpen}
-                      onClick={() => setSolutionsOpen((v) => !v)}
-                      className="flex items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
-                    >
-                      {item.label}
-                      <ChevronDown
-                        className={`h-3 w-3 opacity-60 transition-transform duration-200 ${
-                          solutionsOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                    <SolutionsMenu open={solutionsOpen} />
-                  </div>
-                );
-              }
-
-              return (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="hidden items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:flex"
-                >
-                  {item.label}
-                  {item.dropdown && <ChevronDown className="h-3 w-3 opacity-60" />}
-                </a>
-              );
-            })}
+            {renderDropdown("Plattform", "platform", platformRef, PlatformMenu)}
+            {renderDropdown("Lösningar", "solutions", solutionsRef, SolutionsMenu)}
+            {renderDropdown("Resurser", "resources", resourcesRef, ResourcesMenu)}
+            {renderDropdown("Företag", "company", companyRef, CompanyMenu)}
           </div>
         </div>
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-4 sm:gap-5">
           <a
             href="#login"
-            className="rounded-full bg-primary-foreground/10 px-4 py-1.5 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground/20"
+            className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
           >
             Logga in
           </a>
