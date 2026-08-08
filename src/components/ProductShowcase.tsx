@@ -141,35 +141,37 @@ export function ProductShowcase() {
             {String(active + 1).padStart(2, "0")} — {String(products.length).padStart(2, "0")}
           </p>
 
-          <ul className="mt-8 space-y-3">
-            {products.map((p, i) => {
-              const isActive = i === active;
-              return (
-                <li key={p.name}>
-                  <button
-                    type="button"
-                    onClick={() => select(i)}
-                    className={`group flex items-center gap-3 text-left transition-all duration-500 ${
-                      isActive
-                        ? "text-3xl font-semibold text-forest sm:text-4xl"
-                        : "text-2xl font-normal text-muted-foreground/50 hover:text-muted-foreground sm:text-3xl"
-                    }`}
-                  >
-                    {isActive ? <ProgressRing progress={progress} /> : <span className="inline-block h-5 w-5" />}
-                    <span>{p.name}</span>
-                    <ChevronRight
-                      className={`transition-all duration-500 ${
-                        isActive ? "h-6 w-6 opacity-100" : "h-5 w-5 opacity-0"
+          <div className="relative mt-8">
+            <span className="absolute right-full top-1/2 mr-5 hidden -translate-y-1/2 whitespace-nowrap text-xs uppercase tracking-[0.2em] text-muted-foreground lg:block">
+              En plattform
+            </span>
+            <ul className="space-y-3">
+              {products.map((p, i) => {
+                const isActive = i === active;
+                return (
+                  <li key={p.name}>
+                    <button
+                      type="button"
+                      onClick={() => select(i)}
+                      className={`group flex items-center gap-3 text-left transition-all duration-500 ${
+                        isActive
+                          ? "text-3xl font-semibold text-forest sm:text-4xl"
+                          : "text-2xl font-normal text-muted-foreground/50 hover:text-muted-foreground sm:text-3xl"
                       }`}
-                    />
-                  </button>
-                  {i === 2 && (
-                    <p className="pt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">En plattform</p>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+                    >
+                      {isActive ? <ProgressRing progress={progress} /> : <span className="inline-block h-5 w-5" />}
+                      <span>{p.name}</span>
+                      <ChevronRight
+                        className={`transition-all duration-500 ${
+                          isActive ? "h-6 w-6 opacity-100" : "h-5 w-5 opacity-0"
+                        }`}
+                      />
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
 
         <div className="rounded-3xl bg-muted/60 p-8 sm:p-12">
