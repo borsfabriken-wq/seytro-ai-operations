@@ -202,6 +202,8 @@ function Index() {
         </a>
       </section>
 
+      <FaqSection />
+
       <SiteFooter />
     </div>
   );
