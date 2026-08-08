@@ -113,7 +113,7 @@ function Index() {
 
       <ProductShowcase />
 
-      <section className="border-b border-border">
+      <section className="border-t-2 border-forest border-b border-border">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 py-16 sm:px-10 lg:grid-cols-4">
           {[
             ["−38%", "administrativ tid i salen"],
