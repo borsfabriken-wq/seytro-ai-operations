@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
-
+import logoAsset from "@/assets/seytro-logo.png.asset.json";
 
 import heroImg from "@/assets/hero.jpg";
 import visionImg from "@/assets/vision.jpg";
@@ -195,10 +195,10 @@ function Index() {
         </a>
       </section>
 
-      <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 px-6 py-10 text-sm text-muted-foreground sm:flex-row sm:px-10">
-          <span className="tracking-[0.3em] uppercase text-forest">Seytro</span>
-          <span>© {new Date().getFullYear()} Seytro. Stockholm.</span>
+      <footer className="border-t border-primary-foreground/10 bg-forest-deep text-primary-foreground">
+        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 px-6 py-10 text-sm sm:flex-row sm:px-10">
+          <img src={logoAsset.url} alt="Seytro" className="h-6 w-auto" />
+          <span className="text-primary-foreground/70">© {new Date().getFullYear()} Seytro. Stockholm.</span>
         </div>
       </footer>
     </div>

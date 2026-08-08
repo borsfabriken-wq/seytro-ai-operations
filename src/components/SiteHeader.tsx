@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import logoAsset from "@/assets/seytro-logo.png.asset.json";
 
 const navItems = [
   { label: "Plattform", href: "#pelare", dropdown: true },
@@ -32,8 +33,8 @@ export function SiteHeader() {
         }`}
       >
         <div className="flex items-center gap-4 sm:gap-6">
-          <a href="#top" className="text-lg tracking-[0.3em] text-primary-foreground uppercase">
-            Seytro
+          <a href="#top" className="block shrink-0">
+            <img src={logoAsset.url} alt="Seytro" className="h-7 w-auto" />
           </a>
           <div className="flex items-center gap-7">
             {navItems.map((item) => (
