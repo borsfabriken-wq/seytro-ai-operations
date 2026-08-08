@@ -36,29 +36,29 @@ export function SiteHeader() {
           <a href="#top" className="block shrink-0">
             <img src={logoAsset.url} alt="Seytro" className="h-6 w-auto" />
           </a>
-          <div className="flex items-center gap-7">
+          <div className="flex items-center gap-5 sm:gap-6">
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
-                className="hidden items-center gap-1.5 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:flex"
+                className="hidden items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:flex"
               >
                 {item.label}
-                {item.dropdown && <ChevronDown className="h-3.5 w-3.5 opacity-60" />}
+                {item.dropdown && <ChevronDown className="h-3 w-3 opacity-60" />}
               </a>
             ))}
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <a
             href="#login"
-            className="rounded-full bg-primary-foreground/10 px-5 py-2 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground/20"
+            className="rounded-full bg-primary-foreground/10 px-4 py-1.5 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground/20"
           >
             Logga in
           </a>
           <a
             href="#demo"
-            className="rounded-full border border-primary-foreground/40 px-5 py-2 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-forest-deep"
+            className="rounded-full border border-primary-foreground/40 px-4 py-1.5 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-forest-deep"
           >
             Boka demo
           </a>
