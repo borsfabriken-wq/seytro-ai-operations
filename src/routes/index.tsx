@@ -1,4 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/SiteHeader";
+
+
 import heroImg from "@/assets/hero.jpg";
 import visionImg from "@/assets/vision.jpg";
 
@@ -63,33 +66,9 @@ const pillars = [
 function Index() {
   return (
     <div className="bg-background text-foreground">
-      <header className="fixed inset-x-0 top-0 z-50">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 sm:px-10">
-          <a href="#top" className="text-lg tracking-[0.3em] text-primary-foreground uppercase">
-            Seytro
-          </a>
-          <div className="flex items-center gap-8">
-            <a
-              href="#pelare"
-              className="hidden text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:block"
-            >
-              Plattform
-            </a>
-            <a
-              href="#vision"
-              className="hidden text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:block"
-            >
-              Vision
-            </a>
-            <a
-              href="#demo"
-              className="rounded-full border border-primary-foreground/40 px-5 py-2 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-forest-deep"
-            >
-              Boka demo
-            </a>
-          </div>
-        </nav>
-      </header>
+      <SiteHeader />
+
+
 
       <section id="top" className="relative min-h-screen overflow-hidden">
         <img
