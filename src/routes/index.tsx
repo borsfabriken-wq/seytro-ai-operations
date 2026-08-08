@@ -196,6 +196,8 @@ function Index() {
         </a>
       </section>
 
+      <LogoMarquee />
+
       <footer className="border-t border-primary-foreground/10 bg-forest-deep text-primary-foreground">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 px-6 py-10 text-sm sm:flex-row sm:px-10">
           <img src={logoAsset.url} alt="Seytro" className="h-6 w-auto" />
