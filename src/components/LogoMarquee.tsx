@@ -11,16 +11,16 @@ type Item =
   | { type: "text"; name: string };
 
 const items: Item[] = [
-  { type: "img", name: "Agaton", url: agaton.url, className: "h-9 sm:h-10" },
+  { type: "img", name: "Agaton", url: agaton.url, className: "h-6 sm:h-7" },
   { type: "text", name: "Ramblas" },
-  { type: "img", name: "Brasserie Astrid", url: astrid.url, className: "h-10 sm:h-11" },
+  { type: "img", name: "Brasserie Astrid", url: astrid.url, className: "h-7 sm:h-8" },
   { type: "text", name: "Ess Group" },
-  { type: "img", name: "Blå Porten", url: blaPorten.url, className: "h-11 sm:h-12" },
-  { type: "img", name: "Boqueria", url: boqueria.url, className: "h-10 sm:h-11" },
+  { type: "img", name: "Blå Porten", url: blaPorten.url, className: "h-7 sm:h-8" },
+  { type: "img", name: "Boqueria", url: boqueria.url, className: "h-7 sm:h-8" },
   { type: "text", name: "Melanders" },
-  { type: "img", name: "il Tempo", url: ilTempo.url, className: "h-10 sm:h-11" },
-  { type: "img", name: "NYT.6", url: nyt6.url, className: "h-10 sm:h-11" },
-  { type: "img", name: "Restaurant Pelikan", url: pelikan.url, className: "h-11 sm:h-12" },
+  { type: "img", name: "il Tempo", url: ilTempo.url, className: "h-7 sm:h-8" },
+  { type: "img", name: "NYT.6", url: nyt6.url, className: "h-7 sm:h-8" },
+  { type: "img", name: "Restaurant Pelikan", url: pelikan.url, className: "h-7 sm:h-8" },
 ];
 
 function Row({ ariaHidden }: { ariaHidden?: boolean }) {
