@@ -27,7 +27,7 @@ function Row({ ariaHidden }: { ariaHidden?: boolean }) {
   return (
     <ul
       aria-hidden={ariaHidden}
-      className="marquee-track flex shrink-0 items-center gap-14 pr-14 sm:gap-20 sm:pr-20"
+      className="marquee-track flex shrink-0 items-center gap-8 pr-8 sm:gap-12 sm:pr-12"
     >
       {items.map((item) => (
         <li key={item.name} className="flex shrink-0 items-center">
@@ -36,10 +36,10 @@ function Row({ ariaHidden }: { ariaHidden?: boolean }) {
               src={item.url}
               alt={item.name}
               loading="lazy"
-              className={`w-auto opacity-70 ${item.className}`}
+              className={`w-auto opacity-60 ${item.className}`}
             />
           ) : (
-            <span className="font-display text-2xl leading-none text-primary-foreground opacity-70 sm:text-3xl">
+            <span className="font-display text-lg leading-none text-primary-foreground opacity-60 sm:text-xl">
               {item.name}
             </span>
           )}
@@ -51,8 +51,8 @@ function Row({ ariaHidden }: { ariaHidden?: boolean }) {
 
 export function LogoMarquee() {
   return (
-    <section className="border-y border-primary-foreground/10 bg-forest-deep py-12 text-primary-foreground">
-      <p className="mx-auto mb-9 max-w-7xl px-6 text-sm uppercase tracking-[0.28em] text-primary-foreground/50 sm:px-10">
+    <section className="border-y border-primary-foreground/10 bg-forest-deep py-7 text-primary-foreground">
+      <p className="mx-auto mb-5 max-w-7xl px-6 text-xs uppercase tracking-[0.28em] text-primary-foreground/50 sm:px-10">
         Restauranger och hotell som växer med Seytro
       </p>
       <div className="marquee-mask relative flex overflow-hidden">
