@@ -1,4 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { ChevronDown } from "lucide-react";
+
 import heroImg from "@/assets/hero.jpg";
 import visionImg from "@/assets/vision.jpg";
 
