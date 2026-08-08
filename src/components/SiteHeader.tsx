@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
+import { PlatformMenu } from "@/components/PlatformMenu";
 
 const navItems = [
   { label: "Plattform", href: "#pelare", dropdown: true },
@@ -11,6 +12,28 @@ const navItems = [
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
+  const [platformOpen, setPlatformOpen] = useState(false);
+  const platformRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openMenu = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setPlatformOpen(true);
+  };
+  const scheduleClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setPlatformOpen(false), 120);
+  };
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (platformRef.current && !platformRef.current.contains(e.target as Node)) {
+        setPlatformOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -18,6 +41,7 @@ export function SiteHeader() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
 
   return (
     <header
@@ -37,17 +61,43 @@ export function SiteHeader() {
             <img src={logoAsset.url} alt="Seytro" className="h-6 w-auto" />
           </a>
           <div className="flex items-center gap-5 sm:gap-6">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="hidden items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:flex"
-              >
-                {item.label}
-                {item.dropdown && <ChevronDown className="h-3 w-3 opacity-60" />}
-              </a>
-            ))}
+            {navItems.map((item) =>
+              item.label === "Plattform" ? (
+                <div
+                  key={item.label}
+                  ref={platformRef}
+                  className="relative hidden sm:block"
+                  onMouseEnter={openMenu}
+                  onMouseLeave={scheduleClose}
+                >
+                  <button
+                    type="button"
+                    aria-expanded={platformOpen}
+                    onClick={() => setPlatformOpen((v) => !v)}
+                    className="flex items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+                  >
+                    {item.label}
+                    <ChevronDown
+                      className={`h-3 w-3 opacity-60 transition-transform duration-200 ${
+                        platformOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  <PlatformMenu open={platformOpen} />
+                </div>
+              ) : (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="hidden items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:flex"
+                >
+                  {item.label}
+                  {item.dropdown && <ChevronDown className="h-3 w-3 opacity-60" />}
+                </a>
+              ),
+            )}
           </div>
+
         </div>
         <div className="flex items-center gap-2.5">
           <a
