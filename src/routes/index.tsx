@@ -195,10 +195,10 @@ function Index() {
         </a>
       </section>
 
-      <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 px-6 py-10 text-sm text-muted-foreground sm:flex-row sm:px-10">
+      <footer className="border-t border-primary-foreground/10 bg-forest-deep text-primary-foreground">
+        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 px-6 py-10 text-sm sm:flex-row sm:px-10">
           <img src={logoAsset.url} alt="Seytro" className="h-6 w-auto" />
-          <span>© {new Date().getFullYear()} Seytro. Stockholm.</span>
+          <span className="text-primary-foreground/70">© {new Date().getFullYear()} Seytro. Stockholm.</span>
         </div>
       </footer>
     </div>
