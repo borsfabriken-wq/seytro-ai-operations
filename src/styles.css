@@ -173,3 +173,20 @@
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: none; }
 }
+
+@utility marquee-track {
+  animation: marquee 42s linear infinite;
+}
+
+@utility marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}

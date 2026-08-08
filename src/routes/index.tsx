@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
+import { LogoMarquee } from "@/components/LogoMarquee";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
 
 import heroImg from "@/assets/hero.jpg";
@@ -106,6 +107,8 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <LogoMarquee />
 
       <section className="border-b border-border">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 py-16 sm:px-10 lg:grid-cols-4">
