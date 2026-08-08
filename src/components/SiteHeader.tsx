@@ -87,13 +87,13 @@ export function SiteHeader() {
   }, []);
 
   const renderDropdown = (
-    item: (typeof navItems)[number],
+    label: string,
     key: keyof DropdownState,
     ref: React.RefObject<HTMLDivElement | null>,
     MenuComponent: React.ComponentType<{ open: boolean }>,
   ) => (
     <div
-      key={item.label}
+      key={label}
       ref={ref}
       className="relative hidden sm:block"
       onMouseEnter={() => openMenu(key)}
@@ -105,7 +105,7 @@ export function SiteHeader() {
         onClick={() => toggleMenu(key)}
         className="flex items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
       >
-        {item.label}
+        {label}
         <ChevronDown
           className={`h-3 w-3 opacity-60 transition-transform duration-200 ${
             open[key] ? "rotate-180" : ""
