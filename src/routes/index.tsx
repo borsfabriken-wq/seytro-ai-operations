@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
-import heroTableAsset from "@/assets/hero-table.webp.asset.json";
 
 import heroImg from "@/assets/hero.jpg";
 import visionImg from "@/assets/vision.jpg";
@@ -110,19 +109,6 @@ function Index() {
       </section>
 
       <LogoMarquee />
-
-      <section className="bg-background">
-        <div className="mx-auto max-w-7xl px-6 pb-20 sm:px-10">
-          <img
-            src={heroTableAsset.url}
-            alt="Elegant dukning med Seytro-märket på en vit tallrik"
-            width={1920}
-            height={800}
-            loading="lazy"
-            className="w-full rounded-2xl"
-          />
-        </div>
-      </section>
 
       <section className="border-b border-border">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 py-16 sm:px-10 lg:grid-cols-4">
