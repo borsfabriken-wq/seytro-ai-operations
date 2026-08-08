@@ -31,20 +31,30 @@ export function SiteHeader() {
             : "max-w-7xl rounded-none border border-transparent bg-transparent px-6 py-6 shadow-none sm:px-10"
         }`}
       >
-        <a href="#top" className="text-lg tracking-[0.3em] text-primary-foreground uppercase">
-          Seytro
-        </a>
-        <div className="flex items-center gap-7">
-          {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className="hidden items-center gap-1.5 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:flex"
-            >
-              {item.label}
-              {item.dropdown && <ChevronDown className="h-3.5 w-3.5 opacity-60" />}
-            </a>
-          ))}
+        <div className="flex items-center gap-4 sm:gap-6">
+          <a href="#top" className="text-lg tracking-[0.3em] text-primary-foreground uppercase">
+            Seytro
+          </a>
+          <div className="flex items-center gap-7">
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="hidden items-center gap-1.5 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:flex"
+              >
+                {item.label}
+                {item.dropdown && <ChevronDown className="h-3.5 w-3.5 opacity-60" />}
+              </a>
+            ))}
+          </div>
+        </div>
+        <div className="flex items-center gap-3">
+          <a
+            href="#login"
+            className="rounded-full bg-primary-foreground/10 px-5 py-2 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground/20"
+          >
+            Logga in
+          </a>
           <a
             href="#demo"
             className="rounded-full border border-primary-foreground/40 px-5 py-2 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-forest-deep"
