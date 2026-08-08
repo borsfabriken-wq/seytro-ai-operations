@@ -163,6 +163,9 @@ export function ProductShowcase() {
                       }`}
                     />
                   </button>
+                  {i === 2 && (
+                    <p className="pt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">En plattform</p>
+                  )}
                 </li>
               );
             })}
