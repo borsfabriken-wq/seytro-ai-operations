@@ -2,33 +2,55 @@ import { useEffect, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
 import { PlatformMenu } from "@/components/PlatformMenu";
+import { SolutionsMenu } from "@/components/SolutionsMenu";
 
 const navItems = [
   { label: "Plattform", href: "#pelare", dropdown: true },
-  { label: "Lösningar", href: "#pelare", dropdown: true },
+  { label: "Lösningar", href: "#losningar", dropdown: true },
   { label: "Resurser", href: "#vision", dropdown: true },
   { label: "Företag", href: "#vision", dropdown: false },
 ];
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
+
   const [platformOpen, setPlatformOpen] = useState(false);
   const platformRef = useRef<HTMLDivElement>(null);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const platformCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const openMenu = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
+  const [solutionsOpen, setSolutionsOpen] = useState(false);
+  const solutionsRef = useRef<HTMLDivElement>(null);
+  const solutionsCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openPlatform = () => {
+    if (platformCloseTimer.current) clearTimeout(platformCloseTimer.current);
     setPlatformOpen(true);
   };
-  const scheduleClose = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setPlatformOpen(false), 120);
+  const scheduleClosePlatform = () => {
+    if (platformCloseTimer.current) clearTimeout(platformCloseTimer.current);
+    platformCloseTimer.current = setTimeout(() => setPlatformOpen(false), 120);
+  };
+
+  const openSolutions = () => {
+    if (solutionsCloseTimer.current) clearTimeout(solutionsCloseTimer.current);
+    setSolutionsOpen(true);
+  };
+  const scheduleCloseSolutions = () => {
+    if (solutionsCloseTimer.current) clearTimeout(solutionsCloseTimer.current);
+    solutionsCloseTimer.current = setTimeout(() => setSolutionsOpen(false), 120);
   };
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
-      if (platformRef.current && !platformRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      if (
+        platformRef.current &&
+        !platformRef.current.contains(target) &&
+        solutionsRef.current &&
+        !solutionsRef.current.contains(target)
+      ) {
         setPlatformOpen(false);
+        setSolutionsOpen(false);
       }
     };
     document.addEventListener("mousedown", onClick);
@@ -41,7 +63,6 @@ export function SiteHeader() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
 
   return (
     <header
@@ -61,31 +82,62 @@ export function SiteHeader() {
             <img src={logoAsset.url} alt="Seytro" className="h-6 w-auto" />
           </a>
           <div className="flex items-center gap-5 sm:gap-6">
-            {navItems.map((item) =>
-              item.label === "Plattform" ? (
-                <div
-                  key={item.label}
-                  ref={platformRef}
-                  className="relative hidden sm:block"
-                  onMouseEnter={openMenu}
-                  onMouseLeave={scheduleClose}
-                >
-                  <button
-                    type="button"
-                    aria-expanded={platformOpen}
-                    onClick={() => setPlatformOpen((v) => !v)}
-                    className="flex items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+            {navItems.map((item) => {
+              if (item.label === "Plattform") {
+                return (
+                  <div
+                    key={item.label}
+                    ref={platformRef}
+                    className="relative hidden sm:block"
+                    onMouseEnter={openPlatform}
+                    onMouseLeave={scheduleClosePlatform}
                   >
-                    {item.label}
-                    <ChevronDown
-                      className={`h-3 w-3 opacity-60 transition-transform duration-200 ${
-                        platformOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                  <PlatformMenu open={platformOpen} />
-                </div>
-              ) : (
+                    <button
+                      type="button"
+                      aria-expanded={platformOpen}
+                      onClick={() => setPlatformOpen((v) => !v)}
+                      className="flex items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+                    >
+                      {item.label}
+                      <ChevronDown
+                        className={`h-3 w-3 opacity-60 transition-transform duration-200 ${
+                          platformOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                    <PlatformMenu open={platformOpen} />
+                  </div>
+                );
+              }
+
+              if (item.label === "Lösningar") {
+                return (
+                  <div
+                    key={item.label}
+                    ref={solutionsRef}
+                    className="relative hidden sm:block"
+                    onMouseEnter={openSolutions}
+                    onMouseLeave={scheduleCloseSolutions}
+                  >
+                    <button
+                      type="button"
+                      aria-expanded={solutionsOpen}
+                      onClick={() => setSolutionsOpen((v) => !v)}
+                      className="flex items-center gap-1 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+                    >
+                      {item.label}
+                      <ChevronDown
+                        className={`h-3 w-3 opacity-60 transition-transform duration-200 ${
+                          solutionsOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                    <SolutionsMenu open={solutionsOpen} />
+                  </div>
+                );
+              }
+
+              return (
                 <a
                   key={item.label}
                   href={item.href}
@@ -94,10 +146,9 @@ export function SiteHeader() {
                   {item.label}
                   {item.dropdown && <ChevronDown className="h-3 w-3 opacity-60" />}
                 </a>
-              ),
-            )}
+              );
+            })}
           </div>
-
         </div>
         <div className="flex items-center gap-2.5">
           <a
