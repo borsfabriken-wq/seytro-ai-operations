@@ -36,7 +36,7 @@ export function SiteHeader() {
           <a href="#top" className="block shrink-0">
             <img src={logoAsset.url} alt="Seytro" className="h-5 w-auto" />
           </a>
-          <div className="flex items-center gap-5 sm:gap-6">
+          <div className="flex items-center gap-4 sm:gap-5">
             {navItems.map((item) => (
               <a
                 key={item.label}
@@ -49,16 +49,16 @@ export function SiteHeader() {
             ))}
           </div>
         </div>
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
           <a
             href="#login"
-            className="rounded-full bg-primary-foreground/10 px-4 py-1.5 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground/20"
+            className="rounded-full bg-primary-foreground/10 px-3.5 py-1 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground/20"
           >
             Logga in
           </a>
           <a
             href="#demo"
-            className="rounded-full border border-primary-foreground/40 px-4 py-1.5 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-forest-deep"
+            className="rounded-full border border-primary-foreground/40 px-3.5 py-1 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-forest-deep"
           >
             Boka demo
           </a>
