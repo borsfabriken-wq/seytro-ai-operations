@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, ChevronRight, Phone, Mail, Users, BarChart3 } from "lucide-react";
+import { ArrowRight, ChevronRight, Phone, Mail, LayoutGrid, Users, BarChart3, Megaphone } from "lucide-react";
 
 const products = [
   {
@@ -8,12 +8,17 @@ const products = [
     text: "Någon svarar mitt i servicen. Ett samtal i taget, detaljer bekräftade muntligt — och bokningen hamnar i samma bok som allt annat.",
   },
   {
-    name: "E-postagent",
+    name: "E-postconcierge",
     icon: Mail,
     text: "Inkorgen svarar för sig själv. Gruppförfrågningar, allergier och ändringar besvaras i husets egen ton, medan ni står i köket.",
   },
   {
-    name: "Gästintelligens",
+    name: "Bordsplacering",
+    icon: LayoutGrid,
+    text: "Sällskapet kommer tidigt, ett annat blir försenat. Salen lägger om sig själv — borden, zonerna och personalen hamnar där de behövs som mest.",
+  },
+  {
+    name: "Gästinsikt",
     icon: Users,
     text: "Gästen känns igen redan vid dörren. Favoritbordet, vinet från förra gången, tio år av besök — samlat i en profil som växer av sig själv.",
   },
@@ -22,15 +27,55 @@ const products = [
     icon: BarChart3,
     text: "Måndagens siffror förklarar sig själva. Ni ser vilka pass som bär, var intäkten läcker och vad nästa vecka behöver — innan den börjar.",
   },
+  {
+    name: "Kampanjer",
+    icon: Megaphone,
+    text: "Lågsäsongen knackar på dörren. Ett segment, ett erbjudande, ett utskick — och de svaga passen fylls av gäster som inte hade kommit annars.",
+  },
 ];
 
 const INTERVAL = 4500;
+const R = 9;
+const CIRCUMFERENCE = 2 * Math.PI * R;
+
+function ProgressRing({ progress }: { progress: number }) {
+  const offset = CIRCUMFERENCE * (1 - progress / 100);
+  return (
+    <svg className="h-5 w-5 shrink-0 -rotate-90" viewBox="0 0 24 24">
+      <circle
+        cx="12"
+        cy="12"
+        r={R}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        className="text-forest/20"
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r={R}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeDasharray={CIRCUMFERENCE}
+        strokeDashoffset={offset}
+        className="text-forest transition-all duration-75 ease-linear"
+      />
+    </svg>
+  );
+}
 
 export function ProductShowcase() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [visible, setVisible] = useState(true);
+  const [progress, setProgress] = useState(0);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const raf = useRef<number | null>(null);
+  const startRef = useRef<number>(0);
+  const progressRef = useRef<number>(0);
 
   useEffect(() => {
     if (paused) return;
@@ -45,6 +90,30 @@ export function ProductShowcase() {
       if (timer.current) clearInterval(timer.current);
     };
   }, [paused, active]);
+
+  useEffect(() => {
+    setProgress(0);
+    progressRef.current = 0;
+    startRef.current = performance.now();
+
+    const animate = (now: number) => {
+      if (paused) {
+        startRef.current = now - progressRef.current * INTERVAL;
+        raf.current = requestAnimationFrame(animate);
+        return;
+      }
+      const elapsed = now - startRef.current;
+      const next = Math.min((elapsed / INTERVAL) * 100, 100);
+      progressRef.current = next / 100;
+      setProgress(next);
+      raf.current = requestAnimationFrame(animate);
+    };
+
+    raf.current = requestAnimationFrame(animate);
+    return () => {
+      if (raf.current) cancelAnimationFrame(raf.current);
+    };
+  }, [active, paused]);
 
   const select = (i: number) => {
     if (i === active) return;
@@ -86,6 +155,7 @@ export function ProductShowcase() {
                         : "text-2xl font-normal text-muted-foreground/50 hover:text-muted-foreground sm:text-3xl"
                     }`}
                   >
+                    {isActive ? <ProgressRing progress={progress} /> : <span className="inline-block h-5 w-5" />}
                     <span>{p.name}</span>
                     <ChevronRight
                       className={`transition-all duration-500 ${
