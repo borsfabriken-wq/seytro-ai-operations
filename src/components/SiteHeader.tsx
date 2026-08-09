@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { ChevronDown } from "lucide-react";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
 import { PlatformMenu } from "@/components/PlatformMenu";
