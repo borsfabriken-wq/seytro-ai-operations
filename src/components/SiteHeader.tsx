@@ -21,8 +21,9 @@ type DropdownState = {
   company: boolean;
 };
 
-export function SiteHeader() {
-  const [scrolled, setScrolled] = useState(false);
+export function SiteHeader({ solid = false }: { solid?: boolean } = {}) {
+  const [scrolledRaw, setScrolled] = useState(false);
+  const scrolled = solid || scrolledRaw;
 
   const [open, setOpen] = useState<DropdownState>({
     platform: false,
