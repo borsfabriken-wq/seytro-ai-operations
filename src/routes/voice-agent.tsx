@@ -40,7 +40,7 @@ const benefits = [
     text: "Aldrig missa en bokning, även utanför öppettiderna.",
   },
   {
-    icon: Route,
+    icon: RouteIcon,
     title: "Smart eskalering",
     text: "Komplexa situationer kopplas till rätt person med full kontext.",
   },
