@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 const columns = [
   {
     title: "Lär dig",
