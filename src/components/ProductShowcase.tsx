@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { ArrowRight, ChevronRight, Phone, Mail, LayoutGrid, Users, BarChart3, Megaphone } from "lucide-react";
 
 const products = [
