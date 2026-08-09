@@ -131,9 +131,9 @@ export function SiteHeader() {
         }`}
       >
         <div className="flex items-center gap-4 sm:gap-5">
-          <a href="#top" className="block shrink-0">
+          <Link to="/" className="block shrink-0">
             <img src={logoAsset.url} alt="Seytro" className="h-6 w-auto" />
-          </a>
+          </Link>
           <div className="flex items-center gap-5 sm:gap-6">
             {renderDropdown("Plattform", "platform", platformRef, PlatformMenu)}
             {renderDropdown("Lösningar", "solutions", solutionsRef, SolutionsMenu)}
