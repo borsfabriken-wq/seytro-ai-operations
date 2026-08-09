@@ -202,7 +202,7 @@ function Index() {
         </a>
       </section>
 
-      <div className="h-2 w-full bg-forest" aria-hidden="true" />
+      <div className="my-8 h-6 w-full bg-forest" aria-hidden="true" />
 
       <FaqSection />
 
