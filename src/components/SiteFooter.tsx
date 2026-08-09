@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
 
 const columns = [
@@ -39,9 +40,9 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-4">
-            <a href="#top" className="inline-block">
+            <Link to="/" className="inline-block">
               <img src={logoAsset.url} alt="Seytro" className="h-7 w-auto" />
-            </a>
+            </Link>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-primary-foreground/70">
               AI-driven operationsplattform för restauranger och hotell.
             </p>
@@ -56,12 +57,12 @@ export function SiteFooter() {
                 <ul className="mt-5 space-y-3">
                   {col.links.map((link) => (
                     <li key={link}>
-                      <a
-                        href="#"
+                      <Link
+                        to={link === "Röstagent" ? "/voice-agent" : "/"}
                         className="text-sm text-primary-foreground/75 transition-colors hover:text-primary-foreground"
                       >
                         {link}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -74,12 +75,12 @@ export function SiteFooter() {
           <div className="flex flex-col items-start justify-between gap-4 text-sm text-primary-foreground/60 sm:flex-row sm:items-center">
             <p>© 2026 Seytro. Alla rättigheter förbehållna.</p>
             <div className="flex flex-wrap items-center gap-6">
-              <a href="#" className="transition-colors hover:text-primary-foreground">
+              <Link to="/" className="transition-colors hover:text-primary-foreground">
                 Integritetspolicy
-              </a>
-              <a href="#" className="transition-colors hover:text-primary-foreground">
+              </Link>
+              <Link to="/" className="transition-colors hover:text-primary-foreground">
                 Användarvillkor
-              </a>
+              </Link>
             </div>
           </div>
         </div>

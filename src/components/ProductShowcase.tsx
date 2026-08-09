@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { ArrowRight, ChevronRight, Phone, Mail, LayoutGrid, Users, BarChart3, Megaphone } from "lucide-react";
 
 const products = [
@@ -186,13 +187,24 @@ export function ProductShowcase() {
             </div>
             <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/80">{current.text}</p>
             <div className="mt-8">
-              <a
-                href="#demo"
-                className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
-              >
-                Utforska {current.name}
-                <ArrowRight className="h-4 w-4" />
-              </a>
+              {current.name === "Röstagent" ? (
+                <Link
+                  to="/voice-agent"
+                  className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
+                >
+                  Utforska {current.name}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              ) : (
+                <Link
+                  to="/"
+                  hash="demo"
+                  className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
+                >
+                  Utforska {current.name}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              )}
             </div>
           </div>
         </div>
