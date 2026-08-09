@@ -75,8 +75,8 @@ function Index() {
 
       <section id="top" className="relative min-h-screen overflow-hidden">
         <img
-          src={heroImg}
-          alt="Stilren restaurangmatsal i skymningsljus"
+          src={heroImg.url}
+          alt="Livfull restaurangmatsal med gäster vid dukade bord"
           width={1920}
           height={1280}
           className="absolute inset-0 h-full w-full object-cover"
