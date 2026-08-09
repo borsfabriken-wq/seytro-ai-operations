@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import floorPlanAsset from "@/assets/salsplan-floor.png.asset.json";
 import {
   LayoutTemplate,
   Eye,
