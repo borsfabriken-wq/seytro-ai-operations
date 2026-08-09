@@ -38,7 +38,7 @@ export function ResourcesMenu({ open }: { open: boolean }) {
               {col.items.map(([name, href, desc]) => (
                 <li key={name}>
                   <Link
-                    to={href}
+                    to={href!}
                     className="block rounded-lg px-2 py-1.5 transition-colors hover:bg-secondary"
                   >
                     <span className="block text-sm font-medium text-forest">{name}</span>
