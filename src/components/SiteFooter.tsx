@@ -1,6 +1,32 @@
 import { Link } from "@tanstack/react-router";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
 
+const linkMap: Record<string, string> = {
+  Röstagent: "/voice-agent",
+  E-postconcierge: "/epostagent",
+  Bordsplacering: "/bordsplacering",
+  Gästinsikt: "/gastinsikt",
+  Analys: "/analys",
+  Kampanjer: "/kampanjer",
+  "Fristående restauranger": "/losningar/fristaende-restauranger",
+  Restauranggrupper: "/losningar/restauranggrupper",
+  "Fine dining": "/losningar/fine-dining",
+  Hotell: "/losningar/hotell",
+  "Barer och lounger": "/losningar/barer-och-lounger",
+  Högvolymsverksamheter: "/losningar/hogvolymsverksamheter",
+  Hjälpcenter: "/resurser/hjalpcenter",
+  Guider: "/resurser/guider",
+  Kundberättelser: "/resurser/kundberattelser",
+  Restauranginsikter: "/resurser/insikter",
+  Produktnyheter: "/resurser/produktnyheter",
+  "API-dokumentation": "/resurser/api",
+  "Om Seytro": "/foretag/om-oss",
+  Karriär: "/foretag/karriar",
+  Kontakt: "/foretag/kontakt",
+  Partners: "/foretag/partners",
+  Säkerhet: "/foretag/sakerhet",
+};
+
 const columns = [
   {
     title: "Plattform",
@@ -55,24 +81,16 @@ export function SiteFooter() {
                   {col.title}
                 </h3>
                 <ul className="mt-5 space-y-3">
-                  {col.links.map((link) => {
-                    const to =
-                      link === "Röstagent"
-                        ? "/voice-agent"
-                        : link === "E-postconcierge"
-                          ? "/epostagent"
-                          : "/";
-                    return (
-                      <li key={link}>
-                        <Link
-                          to={to}
-                          className="text-sm text-primary-foreground/75 transition-colors hover:text-primary-foreground"
-                        >
-                          {link}
-                        </Link>
-                      </li>
-                    );
-                  })}
+                  {col.links.map((link) => (
+                    <li key={link}>
+                      <Link
+                        to={linkMap[link] ?? "/"}
+                        className="text-sm text-primary-foreground/75 transition-colors hover:text-primary-foreground"
+                      >
+                        {link}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
             ))}
