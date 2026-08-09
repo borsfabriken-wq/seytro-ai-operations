@@ -75,12 +75,12 @@ export function SiteFooter() {
           <div className="flex flex-col items-start justify-between gap-4 text-sm text-primary-foreground/60 sm:flex-row sm:items-center">
             <p>© 2026 Seytro. Alla rättigheter förbehållna.</p>
             <div className="flex flex-wrap items-center gap-6">
-              <a href="#" className="transition-colors hover:text-primary-foreground">
+              <Link to="/" className="transition-colors hover:text-primary-foreground">
                 Integritetspolicy
-              </a>
-              <a href="#" className="transition-colors hover:text-primary-foreground">
+              </Link>
+              <Link to="/" className="transition-colors hover:text-primary-foreground">
                 Användarvillkor
-              </a>
+              </Link>
             </div>
           </div>
         </div>
