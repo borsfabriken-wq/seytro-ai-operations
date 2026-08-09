@@ -5,7 +5,7 @@ import { LogoMarquee } from "@/components/LogoMarquee";
 import { ProductShowcase } from "@/components/ProductShowcase";
 import { FaqSection } from "@/components/FaqSection";
 
-import heroImg from "@/assets/hero.jpg";
+import heroImg from "@/assets/hero-restaurant.png.asset.json";
 import visionImg from "@/assets/vision.jpg";
 
 export const Route = createFileRoute("/")({
