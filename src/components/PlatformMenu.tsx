@@ -56,7 +56,11 @@ export function PlatformMenu({ open }: { open: boolean }) {
                           ? ({ to: "/bordsplacering" } as const)
                           : name === "Salsplan"
                             ? ({ to: "/salsplan" } as const)
-                            : ({ to: "/", hash: "pelare" } as const);
+                            : name === "Tillgänglighet"
+                              ? ({ to: "/tillganglighet" } as const)
+                              : name === "Bokningsregler"
+                                ? ({ to: "/bokningsregler" } as const)
+                                : ({ to: "/", hash: "pelare" } as const);
                 return (
                   <li key={name}>
                     <Link
