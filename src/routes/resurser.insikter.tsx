@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ContentPage } from "@/components/ContentPage";
+import { ContentPage, PageSection, ItemList } from "@/components/ContentPage";
 import { BarChart3, CalendarX, Users, Repeat, Coins, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/resurser/insikter")({
@@ -45,6 +45,19 @@ function InsikterPage() {
       ctaText="Vi skickar en sammanfattning när något nytt publiceras. Inget brus, ingen försäljning."
       ctaSubject="Prenumerera på Seytros restauranginsikter"
       steps={["Läs den senaste analysen.", "Jämför siffrorna med er egen verksamhet.", "Prenumerera för att få nästa direkt."]}
-    />
+    >
+      <PageSection eyebrow="Insikter" title="Det vi skriver om just nu.">
+        <ItemList
+          items={[
+            { label: "Analys", title: "Var tredje restaurangsamtal förblir obesvarat under service", text: "Vi mätte 42 000 inkommande samtal hos nordiska restauranger. Toppen ligger 17:30–19:00 — exakt när ingen kan svara." },
+            { label: "Drift", title: "No-show är ett kommunikationsproblem, inte ett gästproblem", text: "Bekräftelse plus påminnelse 24 timmar innan sänker uteblivna bokningar mer än depositioner gör." },
+            { label: "Gästupplevelse", title: "Vad gäster faktiskt frågar om på telefon", text: "Öppettider, allergier och parkering står för nästan hälften av alla samtal. Inget av det kräver en människa." },
+            { label: "Ekonomi", title: "Räkna på en tom fredagsplats", text: "En enkel modell för vad varje obokad stol kostar dig över ett kvartal — och vad som faktiskt fyller den." },
+            { label: "Teknik", title: "Så bör AI eskalera till personal", text: "Tre regler som avgör om gästen känner sig hjälpt eller bortkopplad." },
+            { label: "Trend", title: "Hotellreceptionen 2027", text: "När restaurang, spa och reception delar samma gästbild försvinner de dubbla frågorna." },
+          ]}
+        />
+      </PageSection>
+    </ContentPage>
   );
 }

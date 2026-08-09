@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ArrowRight, type LucideIcon } from "lucide-react";
+import type { ReactNode } from "react";
 
 export type ContentBlock = { title: string; text: string };
 export type ContentCard = { icon: LucideIcon; title: string; text: string };
@@ -20,6 +21,7 @@ export function ContentPage({
   ctaText,
   ctaSubject,
   steps,
+  children,
 }: {
   eyebrow: string;
   title: string;
@@ -34,6 +36,7 @@ export function ContentPage({
   ctaText: string;
   ctaSubject: string;
   steps: string[];
+  children?: ReactNode;
 }) {
   const mailto = `mailto:hej@seytro.com?subject=${encodeURIComponent(ctaSubject)}`;
 
@@ -117,6 +120,8 @@ export function ContentPage({
         </div>
       </section>
 
+      {children}
+
       <section className="bg-forest-deep text-primary-foreground">
         <div className="mx-auto max-w-7xl px-6 py-28 sm:px-10">
           <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -157,6 +162,80 @@ export function ContentPage({
       </section>
 
       <SiteFooter />
+    </div>
+  );
+}
+
+export function PageSection({
+  eyebrow,
+  title,
+  children,
+  tinted = false,
+}: {
+  eyebrow: string;
+  title: string;
+  children: ReactNode;
+  tinted?: boolean;
+}) {
+  return (
+    <section className={tinted ? "bg-muted/50" : ""}>
+      <div className="mx-auto max-w-7xl px-6 py-24 sm:px-10">
+        <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">{eyebrow}</p>
+        <h2 className="mt-6 max-w-3xl text-3xl leading-tight sm:text-4xl">{title}</h2>
+        <div className="mt-14">{children}</div>
+      </div>
+    </section>
+  );
+}
+
+export function ItemList({
+  items,
+}: {
+  items: { label?: string; title: string; text: string; href?: string }[];
+}) {
+  return (
+    <ul className="divide-y divide-border border-y border-border">
+      {items.map((item) => (
+        <li key={item.title} className="grid gap-2 py-6 sm:grid-cols-[10rem_1fr] sm:gap-8">
+          {item.label ? (
+            <span className="text-sm uppercase tracking-[0.18em] text-forest">{item.label}</span>
+          ) : (
+            <span />
+          )}
+          <div>
+            <h3 className="text-lg font-medium">
+              {item.href ? (
+                <a className="underline-offset-4 hover:underline" href={item.href}>
+                  {item.title}
+                </a>
+              ) : (
+                item.title
+              )}
+            </h3>
+            <p className="mt-2 max-w-2xl leading-relaxed text-muted-foreground">{item.text}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function QuoteGrid({
+  quotes,
+}: {
+  quotes: { quote: string; name: string; role: string; metric?: string }[];
+}) {
+  return (
+    <div className="grid gap-8 lg:grid-cols-3">
+      {quotes.map((q) => (
+        <figure key={q.name} className="flex h-full flex-col rounded-2xl border border-border bg-card p-8">
+          {q.metric && <p className="text-3xl text-forest">{q.metric}</p>}
+          <blockquote className="mt-4 flex-1 text-lg leading-relaxed">“{q.quote}”</blockquote>
+          <figcaption className="mt-6 text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">{q.name}</span> — {q.role}
+          </figcaption>
+        </figure>
+      ))}
     </div>
   );
 }
