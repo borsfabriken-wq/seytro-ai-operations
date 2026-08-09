@@ -3,7 +3,7 @@ import logoAsset from "@/assets/seytro-logo.png.asset.json";
 
 const linkMap: Record<string, string> = {
   Röstagent: "/voice-agent",
-  E-postconcierge: "/epostagent",
+  "E-postconcierge": "/epostagent",
   Bordsplacering: "/bordsplacering",
   Gästinsikt: "/gastinsikt",
   Analys: "/analys",
