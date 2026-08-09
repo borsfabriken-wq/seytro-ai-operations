@@ -14,6 +14,7 @@ import { Route as BokningsassistentRouteImport } from './routes/bokningsassisten
 import { Route as BokningsreglerRouteImport } from './routes/bokningsregler'
 import { Route as BordsplaceringRouteImport } from './routes/bordsplacering'
 import { Route as EpostagentRouteImport } from './routes/epostagent'
+import { Route as GastinsiktRouteImport } from './routes/gastinsikt'
 import { Route as SalsplanRouteImport } from './routes/salsplan'
 import { Route as TillganglighetRouteImport } from './routes/tillganglighet'
 import { Route as VoiceAgentRouteImport } from './routes/voice-agent'
@@ -43,6 +44,11 @@ const EpostagentRoute = EpostagentRouteImport.update({
   path: '/epostagent',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GastinsiktRoute = GastinsiktRouteImport.update({
+  id: '/gastinsikt',
+  path: '/gastinsikt',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SalsplanRoute = SalsplanRouteImport.update({
   id: '/salsplan',
   path: '/salsplan',
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/bokningsregler': typeof BokningsreglerRoute
   '/bordsplacering': typeof BordsplaceringRoute
   '/epostagent': typeof EpostagentRoute
+  '/gastinsikt': typeof GastinsiktRoute
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByTo {
   '/bokningsregler': typeof BokningsreglerRoute
   '/bordsplacering': typeof BordsplaceringRoute
   '/epostagent': typeof EpostagentRoute
+  '/gastinsikt': typeof GastinsiktRoute
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   '/bokningsregler': typeof BokningsreglerRoute
   '/bordsplacering': typeof BordsplaceringRoute
   '/epostagent': typeof EpostagentRoute
+  '/gastinsikt': typeof GastinsiktRoute
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
@@ -98,6 +107,7 @@ export interface FileRouteTypes {
     | '/bokningsregler'
     | '/bordsplacering'
     | '/epostagent'
+    | '/gastinsikt'
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/bokningsregler'
     | '/bordsplacering'
     | '/epostagent'
+    | '/gastinsikt'
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/bokningsregler'
     | '/bordsplacering'
     | '/epostagent'
+    | '/gastinsikt'
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
@@ -129,6 +141,7 @@ export interface RootRouteChildren {
   BokningsreglerRoute: typeof BokningsreglerRoute
   BordsplaceringRoute: typeof BordsplaceringRoute
   EpostagentRoute: typeof EpostagentRoute
+  GastinsiktRoute: typeof GastinsiktRoute
   SalsplanRoute: typeof SalsplanRoute
   TillganglighetRoute: typeof TillganglighetRoute
   VoiceAgentRoute: typeof VoiceAgentRoute
@@ -171,6 +184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EpostagentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gastinsikt': {
+      id: '/gastinsikt'
+      path: '/gastinsikt'
+      fullPath: '/gastinsikt'
+      preLoaderRoute: typeof GastinsiktRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/salsplan': {
       id: '/salsplan'
       path: '/salsplan'
@@ -201,6 +221,7 @@ const rootRouteChildren: RootRouteChildren = {
   BokningsreglerRoute: BokningsreglerRoute,
   BordsplaceringRoute: BordsplaceringRoute,
   EpostagentRoute: EpostagentRoute,
+  GastinsiktRoute: GastinsiktRoute,
   SalsplanRoute: SalsplanRoute,
   TillganglighetRoute: TillganglighetRoute,
   VoiceAgentRoute: VoiceAgentRoute,
@@ -208,13 +229,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
