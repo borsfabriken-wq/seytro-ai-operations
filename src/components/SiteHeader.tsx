@@ -144,7 +144,7 @@ export function SiteHeader({ solid = false }: { solid?: boolean } = {}) {
         </div>
         <div className="flex items-center gap-4 sm:gap-5">
           <a
-            href="#login"
+            href="https://www.seytro.com/login"
             className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
           >
             Logga in
