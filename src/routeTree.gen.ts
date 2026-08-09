@@ -20,6 +20,12 @@ import { Route as KampanjerRouteImport } from './routes/kampanjer'
 import { Route as SalsplanRouteImport } from './routes/salsplan'
 import { Route as TillganglighetRouteImport } from './routes/tillganglighet'
 import { Route as VoiceAgentRouteImport } from './routes/voice-agent'
+import { Route as LosningarBarerOchLoungerRouteImport } from './routes/losningar.barer-och-lounger'
+import { Route as LosningarFineDiningRouteImport } from './routes/losningar.fine-dining'
+import { Route as LosningarFristaendeRestaurangerRouteImport } from './routes/losningar.fristaende-restauranger'
+import { Route as LosningarHogvolymsverksamheterRouteImport } from './routes/losningar.hogvolymsverksamheter'
+import { Route as LosningarHotellRouteImport } from './routes/losningar.hotell'
+import { Route as LosningarRestauranggrupperRouteImport } from './routes/losningar.restauranggrupper'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -76,6 +82,40 @@ const VoiceAgentRoute = VoiceAgentRouteImport.update({
   path: '/voice-agent',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LosningarBarerOchLoungerRoute =
+  LosningarBarerOchLoungerRouteImport.update({
+    id: '/losningar/barer-och-lounger',
+    path: '/losningar/barer-och-lounger',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const LosningarFineDiningRoute = LosningarFineDiningRouteImport.update({
+  id: '/losningar/fine-dining',
+  path: '/losningar/fine-dining',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LosningarFristaendeRestaurangerRoute =
+  LosningarFristaendeRestaurangerRouteImport.update({
+    id: '/losningar/fristaende-restauranger',
+    path: '/losningar/fristaende-restauranger',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const LosningarHogvolymsverksamheterRoute =
+  LosningarHogvolymsverksamheterRouteImport.update({
+    id: '/losningar/hogvolymsverksamheter',
+    path: '/losningar/hogvolymsverksamheter',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const LosningarHotellRoute = LosningarHotellRouteImport.update({
+  id: '/losningar/hotell',
+  path: '/losningar/hotell',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LosningarRestauranggrupperRoute =
+  LosningarRestauranggrupperRouteImport.update({
+    id: '/losningar/restauranggrupper',
+    path: '/losningar/restauranggrupper',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -89,6 +129,12 @@ export interface FileRoutesByFullPath {
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
+  '/losningar/barer-och-lounger': typeof LosningarBarerOchLoungerRoute
+  '/losningar/fine-dining': typeof LosningarFineDiningRoute
+  '/losningar/fristaende-restauranger': typeof LosningarFristaendeRestaurangerRoute
+  '/losningar/hogvolymsverksamheter': typeof LosningarHogvolymsverksamheterRoute
+  '/losningar/hotell': typeof LosningarHotellRoute
+  '/losningar/restauranggrupper': typeof LosningarRestauranggrupperRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,6 +148,12 @@ export interface FileRoutesByTo {
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
+  '/losningar/barer-och-lounger': typeof LosningarBarerOchLoungerRoute
+  '/losningar/fine-dining': typeof LosningarFineDiningRoute
+  '/losningar/fristaende-restauranger': typeof LosningarFristaendeRestaurangerRoute
+  '/losningar/hogvolymsverksamheter': typeof LosningarHogvolymsverksamheterRoute
+  '/losningar/hotell': typeof LosningarHotellRoute
+  '/losningar/restauranggrupper': typeof LosningarRestauranggrupperRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,6 +168,12 @@ export interface FileRoutesById {
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
+  '/losningar/barer-och-lounger': typeof LosningarBarerOchLoungerRoute
+  '/losningar/fine-dining': typeof LosningarFineDiningRoute
+  '/losningar/fristaende-restauranger': typeof LosningarFristaendeRestaurangerRoute
+  '/losningar/hogvolymsverksamheter': typeof LosningarHogvolymsverksamheterRoute
+  '/losningar/hotell': typeof LosningarHotellRoute
+  '/losningar/restauranggrupper': typeof LosningarRestauranggrupperRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +189,12 @@ export interface FileRouteTypes {
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
+    | '/losningar/barer-och-lounger'
+    | '/losningar/fine-dining'
+    | '/losningar/fristaende-restauranger'
+    | '/losningar/hogvolymsverksamheter'
+    | '/losningar/hotell'
+    | '/losningar/restauranggrupper'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +208,12 @@ export interface FileRouteTypes {
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
+    | '/losningar/barer-och-lounger'
+    | '/losningar/fine-dining'
+    | '/losningar/fristaende-restauranger'
+    | '/losningar/hogvolymsverksamheter'
+    | '/losningar/hotell'
+    | '/losningar/restauranggrupper'
   id:
     | '__root__'
     | '/'
@@ -157,6 +227,12 @@ export interface FileRouteTypes {
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
+    | '/losningar/barer-och-lounger'
+    | '/losningar/fine-dining'
+    | '/losningar/fristaende-restauranger'
+    | '/losningar/hogvolymsverksamheter'
+    | '/losningar/hotell'
+    | '/losningar/restauranggrupper'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -171,6 +247,12 @@ export interface RootRouteChildren {
   SalsplanRoute: typeof SalsplanRoute
   TillganglighetRoute: typeof TillganglighetRoute
   VoiceAgentRoute: typeof VoiceAgentRoute
+  LosningarBarerOchLoungerRoute: typeof LosningarBarerOchLoungerRoute
+  LosningarFineDiningRoute: typeof LosningarFineDiningRoute
+  LosningarFristaendeRestaurangerRoute: typeof LosningarFristaendeRestaurangerRoute
+  LosningarHogvolymsverksamheterRoute: typeof LosningarHogvolymsverksamheterRoute
+  LosningarHotellRoute: typeof LosningarHotellRoute
+  LosningarRestauranggrupperRoute: typeof LosningarRestauranggrupperRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -252,6 +334,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VoiceAgentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/losningar/barer-och-lounger': {
+      id: '/losningar/barer-och-lounger'
+      path: '/losningar/barer-och-lounger'
+      fullPath: '/losningar/barer-och-lounger'
+      preLoaderRoute: typeof LosningarBarerOchLoungerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/losningar/fine-dining': {
+      id: '/losningar/fine-dining'
+      path: '/losningar/fine-dining'
+      fullPath: '/losningar/fine-dining'
+      preLoaderRoute: typeof LosningarFineDiningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/losningar/fristaende-restauranger': {
+      id: '/losningar/fristaende-restauranger'
+      path: '/losningar/fristaende-restauranger'
+      fullPath: '/losningar/fristaende-restauranger'
+      preLoaderRoute: typeof LosningarFristaendeRestaurangerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/losningar/hogvolymsverksamheter': {
+      id: '/losningar/hogvolymsverksamheter'
+      path: '/losningar/hogvolymsverksamheter'
+      fullPath: '/losningar/hogvolymsverksamheter'
+      preLoaderRoute: typeof LosningarHogvolymsverksamheterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/losningar/hotell': {
+      id: '/losningar/hotell'
+      path: '/losningar/hotell'
+      fullPath: '/losningar/hotell'
+      preLoaderRoute: typeof LosningarHotellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/losningar/restauranggrupper': {
+      id: '/losningar/restauranggrupper'
+      path: '/losningar/restauranggrupper'
+      fullPath: '/losningar/restauranggrupper'
+      preLoaderRoute: typeof LosningarRestauranggrupperRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -267,7 +391,23 @@ const rootRouteChildren: RootRouteChildren = {
   SalsplanRoute: SalsplanRoute,
   TillganglighetRoute: TillganglighetRoute,
   VoiceAgentRoute: VoiceAgentRoute,
+  LosningarBarerOchLoungerRoute: LosningarBarerOchLoungerRoute,
+  LosningarFineDiningRoute: LosningarFineDiningRoute,
+  LosningarFristaendeRestaurangerRoute: LosningarFristaendeRestaurangerRoute,
+  LosningarHogvolymsverksamheterRoute: LosningarHogvolymsverksamheterRoute,
+  LosningarHotellRoute: LosningarHotellRoute,
+  LosningarRestauranggrupperRoute: LosningarRestauranggrupperRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
