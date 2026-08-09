@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ContentPage } from "@/components/ContentPage";
+import { ContentPage, PageSection, ItemList } from "@/components/ContentPage";
 import { CalendarCheck, Users, Clock, Webhook, KeyRound, ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/resurser/api")({
@@ -45,6 +45,30 @@ function ApiPage() {
       ctaText="Vi sätter oss gärna med ert utvecklingsteam och går igenom flödena innan ni börjar bygga."
       ctaSubject="Teknisk genomgång av Seytros API"
       steps={["Läs igenom resurserna och händelsemodellen.", "Skapa en nyckel för testmiljön.", "Hör av dig när ni vill gå live."]}
-    />
+    >
+      <PageSection eyebrow="Endpoints" title="De vanligaste anropen.">
+        <ItemList
+          items={[
+            { label: "GET", title: "/v1/availability", text: "Lediga tider för ett datum och sällskapsstorlek. Parametrar: date, party_size, venue_id, duration." },
+            { label: "POST", title: "/v1/bookings", text: "Skapa en bokning. Returnerar bokningsid, tilldelat bord och bekräftelsestatus." },
+            { label: "PATCH", title: "/v1/bookings/:id", text: "Ändra tid, sällskapsstorlek eller status. Avbokning sker med status=cancelled." },
+            { label: "GET", title: "/v1/guests/:id", text: "Gästprofil med besökshistorik, allergier, noteringar och besöksfrekvens." },
+            { label: "GET", title: "/v1/conversations", text: "Samtal och mejltrådar med utskrift, resultat och eventuell eskalering." },
+            { label: "POST", title: "/v1/webhooks", text: "Prenumerera på händelser: booking.created, booking.cancelled, conversation.escalated." },
+          ]}
+        />
+      </PageSection>
+
+      <PageSection eyebrow="Kom igång" title="Autentisering och gränser." tinted>
+        <ItemList
+          items={[
+            { label: "Auth", title: "Bearer-token per verksamhet", text: "Skicka Authorization: Bearer <api_key>. Nycklar skapas per venue och kan begränsas till läsning." },
+            { label: "Format", title: "JSON över HTTPS", text: "Alla tider i ISO 8601 med tidszon. Fel returneras med kod, meddelande och fältreferens." },
+            { label: "Rate limit", title: "600 anrop per minut", text: "Överskrids gränsen svarar API:et 429 med Retry-After. Behöver ni mer, hör av er." },
+            { label: "Miljöer", title: "Sandbox och produktion", text: "Sandbox har separata nycklar och testdata så ni kan bygga utan att röra skarp drift." },
+          ]}
+        />
+      </PageSection>
+    </ContentPage>
   );
 }

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ContentPage } from "@/components/ContentPage";
+import { ContentPage, PageSection, ItemList } from "@/components/ContentPage";
 import { Settings, Plug, PhoneCall, Mail, ShieldCheck, LifeBuoy } from "lucide-react";
 
 export const Route = createFileRoute("/resurser/hjalpcenter")({
@@ -45,6 +45,21 @@ function HjalpcenterPage() {
       ctaText="Skicka en rad till oss så återkommer vi samma dag. Vi hellre svarar en gång för mycket än låter dig sitta fast."
       ctaSubject="Fråga till Seytros hjälpcenter"
       steps={["Sök i hjälpcentret på det du undrar över.", "Kolla guiden för ditt bokningssystem.", "Mejla oss om något fortfarande skaver."]}
-    />
+    >
+      <PageSection eyebrow="Vanliga frågor" title="De 8 frågor vi får oftast.">
+        <ItemList
+          items={[
+            { label: "Uppsättning", title: "Hur lång tid tar det att komma igång?", text: "De flesta är igång på 5–10 arbetsdagar. Dag 1–2 kopplar vi bokningssystem och telefoni, dag 3–5 tränar vi agenten på er meny, era regler och er ton, därefter kör vi skarpt med er som medlyssnare." },
+            { label: "Integrationer", title: "Vilka bokningssystem stöds?", text: "Caspeco, Superb, Trivec, OpenTable, Resy och Bookatable via direktintegration. Övriga system kopplas via vårt API eller via kalender- och mejlflöden." },
+            { label: "Telefoni", title: "Måste vi byta telefonnummer?", text: "Nej. Ni behåller numret och vidarekopplar det till Seytro — antingen alltid, eller bara vid upptaget och efter x signaler." },
+            { label: "Röstagent", title: "Hör gästen att det är en AI?", text: "Agenten presenterar sig alltid som Seytros digitala värd åt er restaurang. Ni väljer formuleringen ord för ord." },
+            { label: "Eskalering", title: "Vad händer när agenten inte kan svara?", text: "Den lämnar över till personal enligt era regler: koppla vidare direkt, ta meddelande, eller skapa ett ärende som mejlas till er inbox med hela samtalsutskriften." },
+            { label: "Mejl", title: "Kan agenten svara på mejl i vårt namn?", text: "Ja, från er egen domän och med er signatur. Ni kan välja utkastläge där personalen godkänner innan svaret skickas." },
+            { label: "Data", title: "Var lagras gästdatan?", text: "Inom EU. Ni är personuppgiftsansvarig, vi är biträde, och vi tecknar DPA vid uppstart. Radering och export sker på begäran inom 24 timmar." },
+            { label: "Support", title: "Hur snabbt får vi hjälp?", text: "Mejlsupport svarar inom 4 timmar vardagar 08–18. Driftkritiska ärenden har jour alla dagar 10–23." },
+          ]}
+        />
+      </PageSection>
+    </ContentPage>
   );
 }

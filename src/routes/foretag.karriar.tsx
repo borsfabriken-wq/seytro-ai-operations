@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ContentPage } from "@/components/ContentPage";
+import { ContentPage, PageSection, ItemList } from "@/components/ContentPage";
 import { Code, Palette, Handshake, LifeBuoy, Megaphone, Briefcase } from "lucide-react";
 
 export const Route = createFileRoute("/foretag/karriar")({
@@ -45,6 +45,28 @@ function KarriarPage() {
       ctaText="Skicka en spontanansökan. Vi läser allt och hör av oss när något matchar."
       ctaSubject="Spontanansökan till Seytro"
       steps={["Läs om hur vi jobbar och vad vi bygger.", "Välj ett område där du gör störst skillnad.", "Skicka några rader om dig själv."]}
-    />
+    >
+      <PageSection eyebrow="Lediga tjänster" title="Roller vi rekryterar till just nu.">
+        <ItemList
+          items={[
+            { label: "Stockholm", title: "Fullstackutvecklare (React / TypeScript)", text: "Bygg gränssnitten för salsplan, bokningsregler och analys. Du gillar att jobba nära kund och släppa ofta." },
+            { label: "Stockholm", title: "AI-ingenjör, röst", text: "Latens, avbrottshantering och naturligt tal på 20 språk. Erfarenhet av realtidsljud är ett stort plus." },
+            { label: "Stockholm", title: "Customer Success Manager", text: "Du har jobbat i restaurangbranschen och kan översätta drift till uppsättning. Du äger kundens första 90 dagar." },
+            { label: "Stockholm", title: "Account Executive", text: "Prata med restauranggrupper och hotellkedjor. Konsultativ försäljning, korta säljcykler, mycket besök på plats." },
+            { label: "Öppen", title: "Spontanansökan", text: "Ser du inte din roll? Skriv och berätta vad du skulle göra hos oss." },
+          ]}
+        />
+      </PageSection>
+
+      <PageSection eyebrow="Så jobbar vi" title="Villkor och vardag." tinted>
+        <ItemList
+          items={[
+            { title: "Kontor i Stockholm, tre dagar i veckan", text: "Vi tror på att sitta tillsammans, men styr själva över resten av veckan." },
+            { title: "Optionsprogram för alla", text: "Alla anställda får del av bolaget." },
+            { title: "Ute hos kund varje månad", text: "Alla — även utvecklare — besöker restauranger och lyssnar på riktiga samtal." },
+          ]}
+        />
+      </PageSection>
+    </ContentPage>
   );
 }

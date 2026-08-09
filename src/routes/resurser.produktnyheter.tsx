@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ContentPage } from "@/components/ContentPage";
+import { ContentPage, PageSection, ItemList } from "@/components/ContentPage";
 import { PhoneCall, Mail, LayoutGrid, BarChart3, Megaphone, Plug } from "lucide-react";
 
 export const Route = createFileRoute("/resurser/produktnyheter")({
@@ -45,6 +45,19 @@ function ProduktnyheterPage() {
       ctaText="Vi pratar hellre med er tidigt än gissar. Hör av dig med det som saknas i er vardag."
       ctaSubject="Feedback och produktönskemål till Seytro"
       steps={["Läs vad som är nytt sedan sist.", "Testa förbättringarna i din uppsättning.", "Skicka in det du vill se härnäst."]}
-    />
+    >
+      <PageSection eyebrow="Produktnyheter" title="Vad vi släppt den senaste tiden.">
+        <ItemList
+          items={[
+            { label: "Aug 2026", title: "Salsplan med drag-and-drop", text: "Flytta bord direkt i planen och se hur beläggningen påverkas i realtid. Ändringar synkas till bokningssystemet." },
+            { label: "Jul 2026", title: "Röstagent på 20 språk", text: "Agenten känner av gästens språk i första meningen och byter automatiskt, inklusive finska, polska och arabiska." },
+            { label: "Jun 2026", title: "Utkastläge för e-postconcierge", text: "Låt agenten skriva svaret och personalen trycka skicka. Bra första steg för verksamheter med hög servicenivå." },
+            { label: "Maj 2026", title: "Gästinsikt: besöksfrekvens och favoritbord", text: "Automatiska segment för nya, återkommande och tappade gäster — utan manuell listhantering." },
+            { label: "Apr 2026", title: "Bokningsregler per sittning", text: "Sätt olika regler för lunch, tidig och sen sittning: minsta sällskap, tidsbegränsning och släpptid." },
+            { label: "Mar 2026", title: "Öppet API i beta", text: "Läs och skriv bokningar, gäster och tillgänglighet direkt mot Seytro." },
+          ]}
+        />
+      </PageSection>
+    </ContentPage>
   );
 }

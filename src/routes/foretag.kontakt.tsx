@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ContentPage } from "@/components/ContentPage";
+import { ContentPage, PageSection, ItemList } from "@/components/ContentPage";
 import { Mail, CalendarCheck, LifeBuoy, Handshake, Newspaper, MapPin } from "lucide-react";
 
 export const Route = createFileRoute("/foretag/kontakt")({
@@ -45,6 +45,19 @@ function KontaktPage() {
       ctaText="Skriv några rader om er verksamhet så återkommer vi med tider som passar."
       ctaSubject="Kontakt med Seytro"
       steps={["Beskriv kort er verksamhet och er utmaning.", "Vi föreslår ett upplägg och en tid.", "Vi kör en demo med er data som utgångspunkt."]}
-    />
+    >
+      <PageSection eyebrow="Kontaktuppgifter" title="Nå oss direkt.">
+        <ItemList
+          items={[
+            { label: "Mejl", title: "hej@seytro.com", text: "Allmänna frågor, demo och offert. Vi svarar normalt samma arbetsdag.", href: "mailto:hej@seytro.com" },
+            { label: "Support", title: "support@seytro.com", text: "För befintliga kunder. Svar inom 4 timmar vardagar 08–18, jour för driftkritiska ärenden 10–23 alla dagar.", href: "mailto:support@seytro.com" },
+            { label: "Partner", title: "partner@seytro.com", text: "Systemleverantörer, byråer och konsulter som vill integrera eller samarbeta.", href: "mailto:partner@seytro.com" },
+            { label: "Press", title: "press@seytro.com", text: "Intervjuer, bakgrund och bildmaterial.", href: "mailto:press@seytro.com" },
+            { label: "Adress", title: "Seytro AB, Stockholm", text: "Vi tar emot besök efter överenskommelse och åker gärna ut till er restaurang i stället." },
+            { label: "Öppettider", title: "Vardagar 08–18", text: "Utanför kontorstid går driftkritiska ärenden till jour." },
+          ]}
+        />
+      </PageSection>
+    </ContentPage>
   );
 }

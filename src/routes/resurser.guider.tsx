@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ContentPage } from "@/components/ContentPage";
+import { ContentPage, PageSection, ItemList } from "@/components/ContentPage";
 import { Rocket, PhoneCall, Mail, LayoutGrid, CalendarCheck, Megaphone } from "lucide-react";
 
 export const Route = createFileRoute("/resurser/guider")({
@@ -45,6 +45,19 @@ function GuiderPage() {
       ctaText="Vi går igenom uppsättningen tillsammans, anpassad efter er verksamhet. Boka en halvtimme så gör vi det mesta på plats."
       ctaSubject="Boka genomgång av Seytro"
       steps={["Välj den guide som matchar var ni står.", "Följ stegen med er egen data.", "Hör av dig om något behöver skräddarsys."]}
-    />
+    >
+      <PageSection eyebrow="Guider" title="Steg-för-steg-guider vi använder med nya kunder.">
+        <ItemList
+          items={[
+            { label: "12 min", title: "Koppla ert bokningssystem till Seytro", text: "Från API-nyckel till första synkade bordskarta. Inkluderar checklista för Caspeco, Superb och OpenTable." },
+            { label: "8 min", title: "Sätt röstagentens ton och gränser", text: "Hur ni formulerar hälsningen, vad agenten får lova om allergier, och när den ska koppla vidare till personal." },
+            { label: "15 min", title: "Bygg en bordsplaceringslogik som håller på lördagar", text: "Så viktar ni sällskapsstorlek, sittningstider och favoritbord utan att låsa salen." },
+            { label: "10 min", title: "Från mejlkaos till mallar", text: "De sju svarsmallar som täcker 80 % av inkommande mejl — gruppbokning, avbokning, allergi, presentkort, event, klagomål, faktura." },
+            { label: "6 min", title: "Sätt upp veckorapporten till teamet", text: "Vilka nyckeltal som är värda att följa varje måndag, och vilka som bara skapar brus." },
+            { label: "9 min", title: "Kör er första kampanj mot återkommande gäster", text: "Segmentera på besöksfrekvens, skriv erbjudandet och mät faktisk återbokning — inte öppningsgrad." },
+          ]}
+        />
+      </PageSection>
+    </ContentPage>
   );
 }

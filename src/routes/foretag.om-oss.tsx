@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ContentPage } from "@/components/ContentPage";
+import { ContentPage, PageSection, ItemList } from "@/components/ContentPage";
 import { Heart, Compass, Users, Sparkles, ShieldCheck, Rocket } from "lucide-react";
 
 export const Route = createFileRoute("/foretag/om-oss")({
@@ -45,6 +45,27 @@ function OmOssPage() {
       ctaText="Vi berättar gärna hur vi tänker, var vi är på väg och vad det skulle betyda för er verksamhet."
       ctaSubject="Hej Seytro — jag vill veta mer"
       steps={["Läs om vår vision och vårt sätt att bygga.", "Se hur plattformen hänger ihop.", "Hör av dig så pratar vi."]}
-    />
+    >
+      <PageSection eyebrow="Historik" title="Så här långt har vi kommit.">
+        <ItemList
+          items={[
+            { label: "2024", title: "Idén föds i en full matsal", text: "Efter för många missade samtal en fredagskväll började vi bygga en agent som kunde ta dem." },
+            { label: "2025", title: "Första skarpa driften", text: "Tre restauranger i Stockholm körde röstagenten under hela höstsäsongen." },
+            { label: "2026", title: "Hela plattformen", text: "Gästkommunikation, restaurangdrift och gästtillväxt i ett — nu även för hotell." },
+          ]}
+        />
+      </PageSection>
+
+      <PageSection eyebrow="Team" title="Människorna bakom Seytro." tinted>
+        <ItemList
+          items={[
+            { title: "Carl Milio Andrée — Grundare", text: "Driver produkt och kundrelationer. Sitter helst i en matsal och lyssnar på hur samtalen faktiskt låter." },
+            { title: "Produkt och design", text: "Bygger gränssnitt som ska gå att förstå mitt i en service, inte på ett kontor." },
+            { title: "Teknik", text: "Röst, språkmodeller och integrationer mot bokningssystem och telefoni." },
+            { title: "Kundframgång", text: "Sätter upp, tränar agenten och följer upp siffrorna varje månad tillsammans med er." },
+          ]}
+        />
+      </PageSection>
+    </ContentPage>
   );
 }
