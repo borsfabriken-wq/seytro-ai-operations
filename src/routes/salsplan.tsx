@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import floorPlanAsset from "@/assets/salsplan-floor.png.asset.json";
 import {
   LayoutTemplate,
   Eye,
@@ -154,6 +155,20 @@ function FloorPlanPage() {
                 och köket ser kommande pass. Samma vy, anpassad efter vad varje roll
                 behöver veta.
               </p>
+            </div>
+          </div>
+
+          <div className="mt-20">
+            <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Exempel</p>
+            <h3 className="mt-4 text-2xl font-medium leading-tight sm:text-3xl">
+              En levande vy över borden.
+            </h3>
+            <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-background shadow-sm">
+              <img
+                src={floorPlanAsset.url}
+                alt="Exempel på interaktiv salsplan med bordsnummer"
+                className="mx-auto block max-h-[28rem] w-auto object-contain p-4 sm:p-6"
+              />
             </div>
           </div>
         </div>
