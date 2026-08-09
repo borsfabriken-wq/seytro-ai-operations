@@ -48,7 +48,9 @@ export function PlatformMenu({ open }: { open: boolean }) {
                 const linkProps =
                   name === "Röstagent"
                     ? ({ to: "/voice-agent" } as const)
-                    : ({ to: "/", hash: "pelare" } as const);
+                    : name === "E-postconcierge"
+                      ? ({ to: "/epostagent" } as const)
+                      : ({ to: "/", hash: "pelare" } as const);
                 return (
                   <li key={name}>
                     <Link
