@@ -148,12 +148,12 @@ export function SiteHeader() {
           >
             Logga in
           </a>
-          <a
-            href="#demo"
+          <Link
+            to="/demo"
             className="rounded-full border border-primary-foreground/40 px-4 py-1.5 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-forest-deep"
           >
             Boka demo
-          </a>
+          </Link>
         </div>
       </nav>
     </header>

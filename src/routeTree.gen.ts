@@ -14,6 +14,7 @@ import { Route as AnalysRouteImport } from './routes/analys'
 import { Route as BokningsassistentRouteImport } from './routes/bokningsassistent'
 import { Route as BokningsreglerRouteImport } from './routes/bokningsregler'
 import { Route as BordsplaceringRouteImport } from './routes/bordsplacering'
+import { Route as DemoRouteImport } from './routes/demo'
 import { Route as EpostagentRouteImport } from './routes/epostagent'
 import { Route as GastinsiktRouteImport } from './routes/gastinsikt'
 import { Route as KampanjerRouteImport } from './routes/kampanjer'
@@ -61,6 +62,11 @@ const BokningsreglerRoute = BokningsreglerRouteImport.update({
 const BordsplaceringRoute = BordsplaceringRouteImport.update({
   id: '/bordsplacering',
   path: '/bordsplacering',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoRoute = DemoRouteImport.update({
+  id: '/demo',
+  path: '/demo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EpostagentRoute = EpostagentRouteImport.update({
@@ -189,6 +195,7 @@ export interface FileRoutesByFullPath {
   '/bokningsassistent': typeof BokningsassistentRoute
   '/bokningsregler': typeof BokningsreglerRoute
   '/bordsplacering': typeof BordsplaceringRoute
+  '/demo': typeof DemoRoute
   '/epostagent': typeof EpostagentRoute
   '/gastinsikt': typeof GastinsiktRoute
   '/kampanjer': typeof KampanjerRoute
@@ -219,6 +226,7 @@ export interface FileRoutesByTo {
   '/bokningsassistent': typeof BokningsassistentRoute
   '/bokningsregler': typeof BokningsreglerRoute
   '/bordsplacering': typeof BordsplaceringRoute
+  '/demo': typeof DemoRoute
   '/epostagent': typeof EpostagentRoute
   '/gastinsikt': typeof GastinsiktRoute
   '/kampanjer': typeof KampanjerRoute
@@ -250,6 +258,7 @@ export interface FileRoutesById {
   '/bokningsassistent': typeof BokningsassistentRoute
   '/bokningsregler': typeof BokningsreglerRoute
   '/bordsplacering': typeof BordsplaceringRoute
+  '/demo': typeof DemoRoute
   '/epostagent': typeof EpostagentRoute
   '/gastinsikt': typeof GastinsiktRoute
   '/kampanjer': typeof KampanjerRoute
@@ -282,6 +291,7 @@ export interface FileRouteTypes {
     | '/bokningsassistent'
     | '/bokningsregler'
     | '/bordsplacering'
+    | '/demo'
     | '/epostagent'
     | '/gastinsikt'
     | '/kampanjer'
@@ -312,6 +322,7 @@ export interface FileRouteTypes {
     | '/bokningsassistent'
     | '/bokningsregler'
     | '/bordsplacering'
+    | '/demo'
     | '/epostagent'
     | '/gastinsikt'
     | '/kampanjer'
@@ -342,6 +353,7 @@ export interface FileRouteTypes {
     | '/bokningsassistent'
     | '/bokningsregler'
     | '/bordsplacering'
+    | '/demo'
     | '/epostagent'
     | '/gastinsikt'
     | '/kampanjer'
@@ -373,6 +385,7 @@ export interface RootRouteChildren {
   BokningsassistentRoute: typeof BokningsassistentRoute
   BokningsreglerRoute: typeof BokningsreglerRoute
   BordsplaceringRoute: typeof BordsplaceringRoute
+  DemoRoute: typeof DemoRoute
   EpostagentRoute: typeof EpostagentRoute
   GastinsiktRoute: typeof GastinsiktRoute
   KampanjerRoute: typeof KampanjerRoute
@@ -433,6 +446,13 @@ declare module '@tanstack/react-router' {
       path: '/bordsplacering'
       fullPath: '/bordsplacering'
       preLoaderRoute: typeof BordsplaceringRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo': {
+      id: '/demo'
+      path: '/demo'
+      fullPath: '/demo'
+      preLoaderRoute: typeof DemoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/epostagent': {
@@ -605,6 +625,7 @@ const rootRouteChildren: RootRouteChildren = {
   BokningsassistentRoute: BokningsassistentRoute,
   BokningsreglerRoute: BokningsreglerRoute,
   BordsplaceringRoute: BordsplaceringRoute,
+  DemoRoute: DemoRoute,
   EpostagentRoute: EpostagentRoute,
   GastinsiktRoute: GastinsiktRoute,
   KampanjerRoute: KampanjerRoute,
