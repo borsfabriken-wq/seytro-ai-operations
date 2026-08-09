@@ -205,6 +205,8 @@ function Index() {
       <FaqSection />
 
       <SiteFooter />
+
+      <div className="h-2 w-full bg-forest" aria-hidden="true" />
     </div>
   );
 }
