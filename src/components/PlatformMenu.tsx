@@ -44,17 +44,23 @@ export function PlatformMenu({ open }: { open: boolean }) {
               {col.title}
             </p>
             <ul className="mt-4 space-y-3">
-              {col.items.map(([name, desc]) => (
-                <li key={name}>
-                  <a
-                    href="#pelare"
-                    className="block rounded-lg px-2 py-1.5 transition-colors hover:bg-secondary"
-                  >
-                    <span className="block text-sm font-medium text-forest">{name}</span>
-                    <span className="block text-xs text-muted-foreground">{desc}</span>
-                  </a>
-                </li>
-              ))}
+              {col.items.map(([name, desc]) => {
+                const linkProps =
+                  name === "Röstagent"
+                    ? ({ to: "/voice-agent" } as const)
+                    : ({ to: "/", hash: "pelare" } as const);
+                return (
+                  <li key={name}>
+                    <Link
+                      {...linkProps}
+                      className="block rounded-lg px-2 py-1.5 transition-colors hover:bg-secondary"
+                    >
+                      <span className="block text-sm font-medium text-forest">{name}</span>
+                      <span className="block text-xs text-muted-foreground">{desc}</span>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}
