@@ -6,7 +6,7 @@ const columns = [
     items: [
       ["Röstagent", "Varje samtal besvaras"],
       ["E-postconcierge", "Svar i er ton"],
-      ["Bokningsassistent", "Förfrågan blir bokning"],
+      ["Bokningsassistent", "Samtal och mejl blir färdiga bokningar"],
     ],
   },
   {
