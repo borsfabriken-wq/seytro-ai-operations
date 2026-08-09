@@ -37,13 +37,14 @@ export function SolutionsMenu({ open }: { open: boolean }) {
             <ul className="mt-4 space-y-3">
               {col.items.map(([name, desc]) => (
                 <li key={name}>
-                  <a
-                    href="#losningar"
+                  <Link
+                    to="/"
+                    hash="demo"
                     className="block rounded-lg px-2 py-1.5 transition-colors hover:bg-secondary"
                   >
                     <span className="block text-sm font-medium text-forest">{name}</span>
                     <span className="block text-xs text-muted-foreground">{desc}</span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
