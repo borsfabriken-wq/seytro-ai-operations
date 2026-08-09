@@ -52,7 +52,9 @@ export function PlatformMenu({ open }: { open: boolean }) {
                       ? ({ to: "/epostagent" } as const)
                       : name === "Bokningsassistent"
                         ? ({ to: "/bokningsassistent" } as const)
-                        : ({ to: "/", hash: "pelare" } as const);
+                        : name === "Bordsplacering"
+                          ? ({ to: "/bordsplacering" } as const)
+                          : ({ to: "/", hash: "pelare" } as const);
                 return (
                   <li key={name}>
                     <Link

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BokningsassistentRouteImport } from './routes/bokningsassistent'
+import { Route as BordsplaceringRouteImport } from './routes/bordsplacering'
 import { Route as EpostagentRouteImport } from './routes/epostagent'
 import { Route as VoiceAgentRouteImport } from './routes/voice-agent'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const BokningsassistentRoute = BokningsassistentRouteImport.update({
   id: '/bokningsassistent',
   path: '/bokningsassistent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BordsplaceringRoute = BordsplaceringRouteImport.update({
+  id: '/bordsplacering',
+  path: '/bordsplacering',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EpostagentRoute = EpostagentRouteImport.update({
@@ -38,12 +44,14 @@ const VoiceAgentRoute = VoiceAgentRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bokningsassistent': typeof BokningsassistentRoute
+  '/bordsplacering': typeof BordsplaceringRoute
   '/epostagent': typeof EpostagentRoute
   '/voice-agent': typeof VoiceAgentRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bokningsassistent': typeof BokningsassistentRoute
+  '/bordsplacering': typeof BordsplaceringRoute
   '/epostagent': typeof EpostagentRoute
   '/voice-agent': typeof VoiceAgentRoute
 }
@@ -51,20 +59,38 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bokningsassistent': typeof BokningsassistentRoute
+  '/bordsplacering': typeof BordsplaceringRoute
   '/epostagent': typeof EpostagentRoute
   '/voice-agent': typeof VoiceAgentRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bokningsassistent' | '/epostagent' | '/voice-agent'
+  fullPaths:
+    | '/'
+    | '/bokningsassistent'
+    | '/bordsplacering'
+    | '/epostagent'
+    | '/voice-agent'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bokningsassistent' | '/epostagent' | '/voice-agent'
-  id: '__root__' | '/' | '/bokningsassistent' | '/epostagent' | '/voice-agent'
+  to:
+    | '/'
+    | '/bokningsassistent'
+    | '/bordsplacering'
+    | '/epostagent'
+    | '/voice-agent'
+  id:
+    | '__root__'
+    | '/'
+    | '/bokningsassistent'
+    | '/bordsplacering'
+    | '/epostagent'
+    | '/voice-agent'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BokningsassistentRoute: typeof BokningsassistentRoute
+  BordsplaceringRoute: typeof BordsplaceringRoute
   EpostagentRoute: typeof EpostagentRoute
   VoiceAgentRoute: typeof VoiceAgentRoute
 }
@@ -83,6 +109,13 @@ declare module '@tanstack/react-router' {
       path: '/bokningsassistent'
       fullPath: '/bokningsassistent'
       preLoaderRoute: typeof BokningsassistentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bordsplacering': {
+      id: '/bordsplacering'
+      path: '/bordsplacering'
+      fullPath: '/bordsplacering'
+      preLoaderRoute: typeof BordsplaceringRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/epostagent': {
@@ -105,6 +138,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BokningsassistentRoute: BokningsassistentRoute,
+  BordsplaceringRoute: BordsplaceringRoute,
   EpostagentRoute: EpostagentRoute,
   VoiceAgentRoute: VoiceAgentRoute,
 }
