@@ -195,6 +195,14 @@ export function ProductShowcase() {
                   Utforska {current.name}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
+              ) : current.name === "E-postconcierge" ? (
+                <Link
+                  to="/epostagent"
+                  className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
+                >
+                  Utforska {current.name}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
               ) : (
                 <Link
                   to="/"
