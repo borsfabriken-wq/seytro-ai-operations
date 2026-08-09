@@ -3,7 +3,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import {
   Clock,
-  Route,
+  Route as RouteIcon,
   RefreshCw,
   PhoneCall,
   Globe,
