@@ -119,7 +119,7 @@ function Index() {
           {[
             ["−38%", "administrativ tid i salen"],
             ["100%", "besvarade samtal och mejl"],
-            ["24/7", "gästservice på 20 språk"],
+            ["24/7", "gästservice på svenska och engelska"],
             ["+21%", "återkommande gäster"],
           ].map(([kpi, label]) => (
             <div key={label}>
