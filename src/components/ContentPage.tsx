@@ -20,6 +20,7 @@ export function ContentPage({
   ctaText,
   ctaSubject,
   steps,
+  children,
 }: {
   eyebrow: string;
   title: string;
