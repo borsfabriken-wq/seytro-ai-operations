@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EpostagentRouteImport } from './routes/epostagent'
 import { Route as VoiceAgentRouteImport } from './routes/voice-agent'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EpostagentRoute = EpostagentRouteImport.update({
+  id: '/epostagent',
+  path: '/epostagent',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VoiceAgentRoute = VoiceAgentRouteImport.update({
@@ -25,27 +31,31 @@ const VoiceAgentRoute = VoiceAgentRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/epostagent': typeof EpostagentRoute
   '/voice-agent': typeof VoiceAgentRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/epostagent': typeof EpostagentRoute
   '/voice-agent': typeof VoiceAgentRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/epostagent': typeof EpostagentRoute
   '/voice-agent': typeof VoiceAgentRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/voice-agent'
+  fullPaths: '/' | '/epostagent' | '/voice-agent'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/voice-agent'
-  id: '__root__' | '/' | '/voice-agent'
+  to: '/' | '/epostagent' | '/voice-agent'
+  id: '__root__' | '/' | '/epostagent' | '/voice-agent'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EpostagentRoute: typeof EpostagentRoute
   VoiceAgentRoute: typeof VoiceAgentRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/epostagent': {
+      id: '/epostagent'
+      path: '/epostagent'
+      fullPath: '/epostagent'
+      preLoaderRoute: typeof EpostagentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/voice-agent': {
@@ -70,8 +87,19 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EpostagentRoute: EpostagentRoute,
   VoiceAgentRoute: VoiceAgentRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
