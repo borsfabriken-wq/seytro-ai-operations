@@ -3,18 +3,20 @@ import { Link } from "@tanstack/react-router";
 const columns = [
   {
     title: "Efter verksamhet",
+    base: "/losningar",
     items: [
-      ["Fristående restauranger", "Personlig service i världsklass"],
-      ["Restauranggrupper", "Skalbarhet över alla enheter"],
-      ["Fine dining", "Detaljrikedom utan kompromiss"],
+      ["fristaende-restauranger", "Fristående restauranger", "Personlig service i världsklass"],
+      ["restauranggrupper", "Restauranggrupper", "Skalbarhet över alla enheter"],
+      ["fine-dining", "Fine dining", "Detaljrikedom utan kompromiss"],
     ],
   },
   {
     title: "Efter driftform",
+    base: "/losningar",
     items: [
-      ["Hotell", "Gästservice dygnet runt"],
-      ["Barer och lounger", "Snabb och smidig kommunikation"],
-      ["Högvolymsverksamheter", "Hantera rusning utan stress"],
+      ["hotell", "Hotell", "Gästservice dygnet runt"],
+      ["barer-och-lounger", "Barer och lounger", "Snabb och smidig kommunikation"],
+      ["hogvolymsverksamheter", "Högvolymsverksamheter", "Hantera rusning utan stress"],
     ],
   },
 ];
@@ -35,11 +37,10 @@ export function SolutionsMenu({ open }: { open: boolean }) {
               {col.title}
             </p>
             <ul className="mt-4 space-y-3">
-              {col.items.map(([name, desc]) => (
+              {col.items.map(([slug, name, desc]) => (
                 <li key={name}>
                   <Link
-                    to="/"
-                    hash="demo"
+                    to={`${col.base}/${slug}`}
                     className="block rounded-lg px-2 py-1.5 transition-colors hover:bg-secondary"
                   >
                     <span className="block text-sm font-medium text-forest">{name}</span>
@@ -54,3 +55,4 @@ export function SolutionsMenu({ open }: { open: boolean }) {
     </div>
   );
 }
+
