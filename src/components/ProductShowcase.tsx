@@ -211,6 +211,30 @@ export function ProductShowcase() {
                   Utforska {current.name}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
+              ) : current.name === "Gästinsikt" ? (
+                <Link
+                  to="/gastinsikt"
+                  className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
+                >
+                  Utforska {current.name}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              ) : current.name === "Analys" ? (
+                <Link
+                  to="/analys"
+                  className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
+                >
+                  Utforska {current.name}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              ) : current.name === "Kampanjer" ? (
+                <Link
+                  to="/kampanjer"
+                  className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
+                >
+                  Utforska {current.name}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
               ) : (
                 <Link
                   to="/"
