@@ -5,7 +5,7 @@ import { LogoMarquee } from "@/components/LogoMarquee";
 import { ProductShowcase } from "@/components/ProductShowcase";
 import { FaqSection } from "@/components/FaqSection";
 
-import heroImg from "@/assets/hero.jpg";
+import heroImg from "@/assets/hero-restaurant.png.asset.json";
 import visionImg from "@/assets/vision.jpg";
 
 export const Route = createFileRoute("/")({
@@ -75,8 +75,8 @@ function Index() {
 
       <section id="top" className="relative min-h-screen overflow-hidden">
         <img
-          src={heroImg}
-          alt="Stilren restaurangmatsal i skymningsljus"
+          src={heroImg.url}
+          alt="Livfull restaurangmatsal med gäster vid dukade bord"
           width={1920}
           height={1280}
           className="absolute inset-0 h-full w-full object-cover"
