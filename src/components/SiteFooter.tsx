@@ -57,12 +57,12 @@ export function SiteFooter() {
                 <ul className="mt-5 space-y-3">
                   {col.links.map((link) => (
                     <li key={link}>
-                      <a
-                        href="#"
+                      <Link
+                        to={link === "Röstagent" ? "/voice-agent" : "/"}
                         className="text-sm text-primary-foreground/75 transition-colors hover:text-primary-foreground"
                       >
                         {link}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
