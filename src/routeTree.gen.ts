@@ -11,9 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BokningsassistentRouteImport } from './routes/bokningsassistent'
+import { Route as BokningsreglerRouteImport } from './routes/bokningsregler'
 import { Route as BordsplaceringRouteImport } from './routes/bordsplacering'
 import { Route as EpostagentRouteImport } from './routes/epostagent'
 import { Route as SalsplanRouteImport } from './routes/salsplan'
+import { Route as TillganglighetRouteImport } from './routes/tillganglighet'
 import { Route as VoiceAgentRouteImport } from './routes/voice-agent'
 
 const IndexRoute = IndexRouteImport.update({
@@ -24,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
 const BokningsassistentRoute = BokningsassistentRouteImport.update({
   id: '/bokningsassistent',
   path: '/bokningsassistent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BokningsreglerRoute = BokningsreglerRouteImport.update({
+  id: '/bokningsregler',
+  path: '/bokningsregler',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BordsplaceringRoute = BordsplaceringRouteImport.update({
@@ -41,6 +48,11 @@ const SalsplanRoute = SalsplanRouteImport.update({
   path: '/salsplan',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TillganglighetRoute = TillganglighetRouteImport.update({
+  id: '/tillganglighet',
+  path: '/tillganglighet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VoiceAgentRoute = VoiceAgentRouteImport.update({
   id: '/voice-agent',
   path: '/voice-agent',
@@ -50,26 +62,32 @@ const VoiceAgentRoute = VoiceAgentRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bokningsassistent': typeof BokningsassistentRoute
+  '/bokningsregler': typeof BokningsreglerRoute
   '/bordsplacering': typeof BordsplaceringRoute
   '/epostagent': typeof EpostagentRoute
   '/salsplan': typeof SalsplanRoute
+  '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bokningsassistent': typeof BokningsassistentRoute
+  '/bokningsregler': typeof BokningsreglerRoute
   '/bordsplacering': typeof BordsplaceringRoute
   '/epostagent': typeof EpostagentRoute
   '/salsplan': typeof SalsplanRoute
+  '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bokningsassistent': typeof BokningsassistentRoute
+  '/bokningsregler': typeof BokningsreglerRoute
   '/bordsplacering': typeof BordsplaceringRoute
   '/epostagent': typeof EpostagentRoute
   '/salsplan': typeof SalsplanRoute
+  '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
 }
 export interface FileRouteTypes {
@@ -77,34 +95,42 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/bokningsassistent'
+    | '/bokningsregler'
     | '/bordsplacering'
     | '/epostagent'
     | '/salsplan'
+    | '/tillganglighet'
     | '/voice-agent'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/bokningsassistent'
+    | '/bokningsregler'
     | '/bordsplacering'
     | '/epostagent'
     | '/salsplan'
+    | '/tillganglighet'
     | '/voice-agent'
   id:
     | '__root__'
     | '/'
     | '/bokningsassistent'
+    | '/bokningsregler'
     | '/bordsplacering'
     | '/epostagent'
     | '/salsplan'
+    | '/tillganglighet'
     | '/voice-agent'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BokningsassistentRoute: typeof BokningsassistentRoute
+  BokningsreglerRoute: typeof BokningsreglerRoute
   BordsplaceringRoute: typeof BordsplaceringRoute
   EpostagentRoute: typeof EpostagentRoute
   SalsplanRoute: typeof SalsplanRoute
+  TillganglighetRoute: typeof TillganglighetRoute
   VoiceAgentRoute: typeof VoiceAgentRoute
 }
 
@@ -122,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/bokningsassistent'
       fullPath: '/bokningsassistent'
       preLoaderRoute: typeof BokningsassistentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bokningsregler': {
+      id: '/bokningsregler'
+      path: '/bokningsregler'
+      fullPath: '/bokningsregler'
+      preLoaderRoute: typeof BokningsreglerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bordsplacering': {
@@ -145,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SalsplanRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tillganglighet': {
+      id: '/tillganglighet'
+      path: '/tillganglighet'
+      fullPath: '/tillganglighet'
+      preLoaderRoute: typeof TillganglighetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/voice-agent': {
       id: '/voice-agent'
       path: '/voice-agent'
@@ -158,9 +198,11 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BokningsassistentRoute: BokningsassistentRoute,
+  BokningsreglerRoute: BokningsreglerRoute,
   BordsplaceringRoute: BordsplaceringRoute,
   EpostagentRoute: EpostagentRoute,
   SalsplanRoute: SalsplanRoute,
+  TillganglighetRoute: TillganglighetRoute,
   VoiceAgentRoute: VoiceAgentRoute,
 }
 export const routeTree = rootRouteImport
