@@ -187,13 +187,14 @@ export function ProductShowcase() {
             </div>
             <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/80">{current.text}</p>
             <div className="mt-8">
-              <a
-                href="#demo"
+              <Link
+                to={current.name === "Röstagent" ? "/voice-agent" : "/"}
+                hash={current.name === "Röstagent" ? undefined : "demo"}
                 className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
               >
                 Utforska {current.name}
                 <ArrowRight className="h-4 w-4" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
