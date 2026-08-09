@@ -4,17 +4,17 @@ const columns = [
   {
     title: "Lär dig",
     items: [
-      ["Hjälpcenter", "Svar på vanliga frågor"],
-      ["Guider", "Kom igång med Seytro"],
-      ["Kundberättelser", "Så växer andra med oss"],
+      ["Hjälpcenter", "/resurser/hjalpcenter", "Svar på vanliga frågor"],
+      ["Guider", "/resurser/guider", "Kom igång med Seytro"],
+      ["Kundberättelser", "/resurser/kundberattelser", "Så växer andra med oss"],
     ],
   },
   {
     title: "Håll dig uppdaterad",
     items: [
-      ["Restauranginsikter", "Trender och analys"],
-      ["Produktnyheter", "Det senaste från Seytro"],
-      ["API-dokumentation", "Integrera med plattformen"],
+      ["Restauranginsikter", "/resurser/insikter", "Trender och analys"],
+      ["Produktnyheter", "/resurser/produktnyheter", "Det senaste från Seytro"],
+      ["API-dokumentation", "/resurser/api", "Integrera med plattformen"],
     ],
   },
 ];
@@ -35,10 +35,10 @@ export function ResourcesMenu({ open }: { open: boolean }) {
               {col.title}
             </p>
             <ul className="mt-4 space-y-3">
-              {col.items.map(([name, desc]) => (
+              {col.items.map(([name, href, desc]) => (
                 <li key={name}>
                   <Link
-                    to="/"
+                    to={href!}
                     className="block rounded-lg px-2 py-1.5 transition-colors hover:bg-secondary"
                   >
                     <span className="block text-sm font-medium text-forest">{name}</span>

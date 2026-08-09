@@ -4,16 +4,16 @@ const columns = [
   {
     title: "Seytro",
     items: [
-      ["Om Seytro", "Vår vision och historia"],
-      ["Karriär", "Joina teamet"],
-      ["Kontakt", "Prata med oss"],
+      ["Om Seytro", "/foretag/om-oss", "Vår vision och historia"],
+      ["Karriär", "/foretag/karriar", "Joina teamet"],
+      ["Kontakt", "/foretag/kontakt", "Prata med oss"],
     ],
   },
   {
     title: "Samarbeta med oss",
     items: [
-      ["Partners", "Tillsammans växer vi"],
-      ["Säkerhet", "Så skyddar vi dina data"],
+      ["Partners", "/foretag/partners", "Tillsammans växer vi"],
+      ["Säkerhet", "/foretag/sakerhet", "Så skyddar vi dina data"],
     ],
   },
 ];
@@ -34,10 +34,10 @@ export function CompanyMenu({ open }: { open: boolean }) {
               {col.title}
             </p>
             <ul className="mt-4 space-y-3">
-              {col.items.map(([name, desc]) => (
+              {col.items.map(([name, href, desc]) => (
                 <li key={name}>
                   <Link
-                    to="/"
+                    to={href!}
                     className="block rounded-lg px-2 py-1.5 transition-colors hover:bg-secondary"
                   >
                     <span className="block text-sm font-medium text-forest">{name}</span>

@@ -20,12 +20,23 @@ import { Route as KampanjerRouteImport } from './routes/kampanjer'
 import { Route as SalsplanRouteImport } from './routes/salsplan'
 import { Route as TillganglighetRouteImport } from './routes/tillganglighet'
 import { Route as VoiceAgentRouteImport } from './routes/voice-agent'
+import { Route as ForetagKarriarRouteImport } from './routes/foretag.karriar'
+import { Route as ForetagKontaktRouteImport } from './routes/foretag.kontakt'
+import { Route as ForetagOmOssRouteImport } from './routes/foretag.om-oss'
+import { Route as ForetagPartnersRouteImport } from './routes/foretag.partners'
+import { Route as ForetagSakerhetRouteImport } from './routes/foretag.sakerhet'
 import { Route as LosningarBarerOchLoungerRouteImport } from './routes/losningar.barer-och-lounger'
 import { Route as LosningarFineDiningRouteImport } from './routes/losningar.fine-dining'
 import { Route as LosningarFristaendeRestaurangerRouteImport } from './routes/losningar.fristaende-restauranger'
 import { Route as LosningarHogvolymsverksamheterRouteImport } from './routes/losningar.hogvolymsverksamheter'
 import { Route as LosningarHotellRouteImport } from './routes/losningar.hotell'
 import { Route as LosningarRestauranggrupperRouteImport } from './routes/losningar.restauranggrupper'
+import { Route as ResurserApiRouteImport } from './routes/resurser.api'
+import { Route as ResurserGuiderRouteImport } from './routes/resurser.guider'
+import { Route as ResurserHjalpcenterRouteImport } from './routes/resurser.hjalpcenter'
+import { Route as ResurserInsikterRouteImport } from './routes/resurser.insikter'
+import { Route as ResurserKundberattelserRouteImport } from './routes/resurser.kundberattelser'
+import { Route as ResurserProduktnyheterRouteImport } from './routes/resurser.produktnyheter'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -82,6 +93,31 @@ const VoiceAgentRoute = VoiceAgentRouteImport.update({
   path: '/voice-agent',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForetagKarriarRoute = ForetagKarriarRouteImport.update({
+  id: '/foretag/karriar',
+  path: '/foretag/karriar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForetagKontaktRoute = ForetagKontaktRouteImport.update({
+  id: '/foretag/kontakt',
+  path: '/foretag/kontakt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForetagOmOssRoute = ForetagOmOssRouteImport.update({
+  id: '/foretag/om-oss',
+  path: '/foretag/om-oss',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForetagPartnersRoute = ForetagPartnersRouteImport.update({
+  id: '/foretag/partners',
+  path: '/foretag/partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForetagSakerhetRoute = ForetagSakerhetRouteImport.update({
+  id: '/foretag/sakerhet',
+  path: '/foretag/sakerhet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LosningarBarerOchLoungerRoute =
   LosningarBarerOchLoungerRouteImport.update({
     id: '/losningar/barer-och-lounger',
@@ -116,6 +152,36 @@ const LosningarRestauranggrupperRoute =
     path: '/losningar/restauranggrupper',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ResurserApiRoute = ResurserApiRouteImport.update({
+  id: '/resurser/api',
+  path: '/resurser/api',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResurserGuiderRoute = ResurserGuiderRouteImport.update({
+  id: '/resurser/guider',
+  path: '/resurser/guider',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResurserHjalpcenterRoute = ResurserHjalpcenterRouteImport.update({
+  id: '/resurser/hjalpcenter',
+  path: '/resurser/hjalpcenter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResurserInsikterRoute = ResurserInsikterRouteImport.update({
+  id: '/resurser/insikter',
+  path: '/resurser/insikter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResurserKundberattelserRoute = ResurserKundberattelserRouteImport.update({
+  id: '/resurser/kundberattelser',
+  path: '/resurser/kundberattelser',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResurserProduktnyheterRoute = ResurserProduktnyheterRouteImport.update({
+  id: '/resurser/produktnyheter',
+  path: '/resurser/produktnyheter',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -129,12 +195,23 @@ export interface FileRoutesByFullPath {
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
+  '/foretag/karriar': typeof ForetagKarriarRoute
+  '/foretag/kontakt': typeof ForetagKontaktRoute
+  '/foretag/om-oss': typeof ForetagOmOssRoute
+  '/foretag/partners': typeof ForetagPartnersRoute
+  '/foretag/sakerhet': typeof ForetagSakerhetRoute
   '/losningar/barer-och-lounger': typeof LosningarBarerOchLoungerRoute
   '/losningar/fine-dining': typeof LosningarFineDiningRoute
   '/losningar/fristaende-restauranger': typeof LosningarFristaendeRestaurangerRoute
   '/losningar/hogvolymsverksamheter': typeof LosningarHogvolymsverksamheterRoute
   '/losningar/hotell': typeof LosningarHotellRoute
   '/losningar/restauranggrupper': typeof LosningarRestauranggrupperRoute
+  '/resurser/api': typeof ResurserApiRoute
+  '/resurser/guider': typeof ResurserGuiderRoute
+  '/resurser/hjalpcenter': typeof ResurserHjalpcenterRoute
+  '/resurser/insikter': typeof ResurserInsikterRoute
+  '/resurser/kundberattelser': typeof ResurserKundberattelserRoute
+  '/resurser/produktnyheter': typeof ResurserProduktnyheterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -148,12 +225,23 @@ export interface FileRoutesByTo {
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
+  '/foretag/karriar': typeof ForetagKarriarRoute
+  '/foretag/kontakt': typeof ForetagKontaktRoute
+  '/foretag/om-oss': typeof ForetagOmOssRoute
+  '/foretag/partners': typeof ForetagPartnersRoute
+  '/foretag/sakerhet': typeof ForetagSakerhetRoute
   '/losningar/barer-och-lounger': typeof LosningarBarerOchLoungerRoute
   '/losningar/fine-dining': typeof LosningarFineDiningRoute
   '/losningar/fristaende-restauranger': typeof LosningarFristaendeRestaurangerRoute
   '/losningar/hogvolymsverksamheter': typeof LosningarHogvolymsverksamheterRoute
   '/losningar/hotell': typeof LosningarHotellRoute
   '/losningar/restauranggrupper': typeof LosningarRestauranggrupperRoute
+  '/resurser/api': typeof ResurserApiRoute
+  '/resurser/guider': typeof ResurserGuiderRoute
+  '/resurser/hjalpcenter': typeof ResurserHjalpcenterRoute
+  '/resurser/insikter': typeof ResurserInsikterRoute
+  '/resurser/kundberattelser': typeof ResurserKundberattelserRoute
+  '/resurser/produktnyheter': typeof ResurserProduktnyheterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -168,12 +256,23 @@ export interface FileRoutesById {
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
+  '/foretag/karriar': typeof ForetagKarriarRoute
+  '/foretag/kontakt': typeof ForetagKontaktRoute
+  '/foretag/om-oss': typeof ForetagOmOssRoute
+  '/foretag/partners': typeof ForetagPartnersRoute
+  '/foretag/sakerhet': typeof ForetagSakerhetRoute
   '/losningar/barer-och-lounger': typeof LosningarBarerOchLoungerRoute
   '/losningar/fine-dining': typeof LosningarFineDiningRoute
   '/losningar/fristaende-restauranger': typeof LosningarFristaendeRestaurangerRoute
   '/losningar/hogvolymsverksamheter': typeof LosningarHogvolymsverksamheterRoute
   '/losningar/hotell': typeof LosningarHotellRoute
   '/losningar/restauranggrupper': typeof LosningarRestauranggrupperRoute
+  '/resurser/api': typeof ResurserApiRoute
+  '/resurser/guider': typeof ResurserGuiderRoute
+  '/resurser/hjalpcenter': typeof ResurserHjalpcenterRoute
+  '/resurser/insikter': typeof ResurserInsikterRoute
+  '/resurser/kundberattelser': typeof ResurserKundberattelserRoute
+  '/resurser/produktnyheter': typeof ResurserProduktnyheterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -189,12 +288,23 @@ export interface FileRouteTypes {
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
+    | '/foretag/karriar'
+    | '/foretag/kontakt'
+    | '/foretag/om-oss'
+    | '/foretag/partners'
+    | '/foretag/sakerhet'
     | '/losningar/barer-och-lounger'
     | '/losningar/fine-dining'
     | '/losningar/fristaende-restauranger'
     | '/losningar/hogvolymsverksamheter'
     | '/losningar/hotell'
     | '/losningar/restauranggrupper'
+    | '/resurser/api'
+    | '/resurser/guider'
+    | '/resurser/hjalpcenter'
+    | '/resurser/insikter'
+    | '/resurser/kundberattelser'
+    | '/resurser/produktnyheter'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -208,12 +318,23 @@ export interface FileRouteTypes {
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
+    | '/foretag/karriar'
+    | '/foretag/kontakt'
+    | '/foretag/om-oss'
+    | '/foretag/partners'
+    | '/foretag/sakerhet'
     | '/losningar/barer-och-lounger'
     | '/losningar/fine-dining'
     | '/losningar/fristaende-restauranger'
     | '/losningar/hogvolymsverksamheter'
     | '/losningar/hotell'
     | '/losningar/restauranggrupper'
+    | '/resurser/api'
+    | '/resurser/guider'
+    | '/resurser/hjalpcenter'
+    | '/resurser/insikter'
+    | '/resurser/kundberattelser'
+    | '/resurser/produktnyheter'
   id:
     | '__root__'
     | '/'
@@ -227,12 +348,23 @@ export interface FileRouteTypes {
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
+    | '/foretag/karriar'
+    | '/foretag/kontakt'
+    | '/foretag/om-oss'
+    | '/foretag/partners'
+    | '/foretag/sakerhet'
     | '/losningar/barer-och-lounger'
     | '/losningar/fine-dining'
     | '/losningar/fristaende-restauranger'
     | '/losningar/hogvolymsverksamheter'
     | '/losningar/hotell'
     | '/losningar/restauranggrupper'
+    | '/resurser/api'
+    | '/resurser/guider'
+    | '/resurser/hjalpcenter'
+    | '/resurser/insikter'
+    | '/resurser/kundberattelser'
+    | '/resurser/produktnyheter'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -247,12 +379,23 @@ export interface RootRouteChildren {
   SalsplanRoute: typeof SalsplanRoute
   TillganglighetRoute: typeof TillganglighetRoute
   VoiceAgentRoute: typeof VoiceAgentRoute
+  ForetagKarriarRoute: typeof ForetagKarriarRoute
+  ForetagKontaktRoute: typeof ForetagKontaktRoute
+  ForetagOmOssRoute: typeof ForetagOmOssRoute
+  ForetagPartnersRoute: typeof ForetagPartnersRoute
+  ForetagSakerhetRoute: typeof ForetagSakerhetRoute
   LosningarBarerOchLoungerRoute: typeof LosningarBarerOchLoungerRoute
   LosningarFineDiningRoute: typeof LosningarFineDiningRoute
   LosningarFristaendeRestaurangerRoute: typeof LosningarFristaendeRestaurangerRoute
   LosningarHogvolymsverksamheterRoute: typeof LosningarHogvolymsverksamheterRoute
   LosningarHotellRoute: typeof LosningarHotellRoute
   LosningarRestauranggrupperRoute: typeof LosningarRestauranggrupperRoute
+  ResurserApiRoute: typeof ResurserApiRoute
+  ResurserGuiderRoute: typeof ResurserGuiderRoute
+  ResurserHjalpcenterRoute: typeof ResurserHjalpcenterRoute
+  ResurserInsikterRoute: typeof ResurserInsikterRoute
+  ResurserKundberattelserRoute: typeof ResurserKundberattelserRoute
+  ResurserProduktnyheterRoute: typeof ResurserProduktnyheterRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -334,6 +477,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VoiceAgentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/foretag/karriar': {
+      id: '/foretag/karriar'
+      path: '/foretag/karriar'
+      fullPath: '/foretag/karriar'
+      preLoaderRoute: typeof ForetagKarriarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/foretag/kontakt': {
+      id: '/foretag/kontakt'
+      path: '/foretag/kontakt'
+      fullPath: '/foretag/kontakt'
+      preLoaderRoute: typeof ForetagKontaktRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/foretag/om-oss': {
+      id: '/foretag/om-oss'
+      path: '/foretag/om-oss'
+      fullPath: '/foretag/om-oss'
+      preLoaderRoute: typeof ForetagOmOssRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/foretag/partners': {
+      id: '/foretag/partners'
+      path: '/foretag/partners'
+      fullPath: '/foretag/partners'
+      preLoaderRoute: typeof ForetagPartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/foretag/sakerhet': {
+      id: '/foretag/sakerhet'
+      path: '/foretag/sakerhet'
+      fullPath: '/foretag/sakerhet'
+      preLoaderRoute: typeof ForetagSakerhetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/losningar/barer-och-lounger': {
       id: '/losningar/barer-och-lounger'
       path: '/losningar/barer-och-lounger'
@@ -376,6 +554,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LosningarRestauranggrupperRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resurser/api': {
+      id: '/resurser/api'
+      path: '/resurser/api'
+      fullPath: '/resurser/api'
+      preLoaderRoute: typeof ResurserApiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resurser/guider': {
+      id: '/resurser/guider'
+      path: '/resurser/guider'
+      fullPath: '/resurser/guider'
+      preLoaderRoute: typeof ResurserGuiderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resurser/hjalpcenter': {
+      id: '/resurser/hjalpcenter'
+      path: '/resurser/hjalpcenter'
+      fullPath: '/resurser/hjalpcenter'
+      preLoaderRoute: typeof ResurserHjalpcenterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resurser/insikter': {
+      id: '/resurser/insikter'
+      path: '/resurser/insikter'
+      fullPath: '/resurser/insikter'
+      preLoaderRoute: typeof ResurserInsikterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resurser/kundberattelser': {
+      id: '/resurser/kundberattelser'
+      path: '/resurser/kundberattelser'
+      fullPath: '/resurser/kundberattelser'
+      preLoaderRoute: typeof ResurserKundberattelserRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resurser/produktnyheter': {
+      id: '/resurser/produktnyheter'
+      path: '/resurser/produktnyheter'
+      fullPath: '/resurser/produktnyheter'
+      preLoaderRoute: typeof ResurserProduktnyheterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -391,23 +611,24 @@ const rootRouteChildren: RootRouteChildren = {
   SalsplanRoute: SalsplanRoute,
   TillganglighetRoute: TillganglighetRoute,
   VoiceAgentRoute: VoiceAgentRoute,
+  ForetagKarriarRoute: ForetagKarriarRoute,
+  ForetagKontaktRoute: ForetagKontaktRoute,
+  ForetagOmOssRoute: ForetagOmOssRoute,
+  ForetagPartnersRoute: ForetagPartnersRoute,
+  ForetagSakerhetRoute: ForetagSakerhetRoute,
   LosningarBarerOchLoungerRoute: LosningarBarerOchLoungerRoute,
   LosningarFineDiningRoute: LosningarFineDiningRoute,
   LosningarFristaendeRestaurangerRoute: LosningarFristaendeRestaurangerRoute,
   LosningarHogvolymsverksamheterRoute: LosningarHogvolymsverksamheterRoute,
   LosningarHotellRoute: LosningarHotellRoute,
   LosningarRestauranggrupperRoute: LosningarRestauranggrupperRoute,
+  ResurserApiRoute: ResurserApiRoute,
+  ResurserGuiderRoute: ResurserGuiderRoute,
+  ResurserHjalpcenterRoute: ResurserHjalpcenterRoute,
+  ResurserInsikterRoute: ResurserInsikterRoute,
+  ResurserKundberattelserRoute: ResurserKundberattelserRoute,
+  ResurserProduktnyheterRoute: ResurserProduktnyheterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
