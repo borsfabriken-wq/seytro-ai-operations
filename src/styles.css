@@ -2,7 +2,7 @@
 @source "../src";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+
 
 /*
  * Design system definition.
@@ -117,53 +117,6 @@
   --sidebar-ring: oklch(0.65 0.17 245);
 }
 
-
-
-.dark {
-  --background: oklch(0.20 0.02 220);
-  --foreground: oklch(0.95 0.005 120);
-  --card: oklch(0.27 0.02 220);
-  --card-foreground: oklch(0.95 0.005 120);
-  --popover: oklch(0.27 0.02 220);
-  --popover-foreground: oklch(0.95 0.005 120);
-  --primary: oklch(0.65 0.17 245);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.27 0.02 220);
-  --secondary-foreground: oklch(0.95 0.005 120);
-  --muted: oklch(0.27 0.02 220);
-  --muted-foreground: oklch(0.82 0.018 100);
-  --accent: oklch(0.35 0.02 220);
-  --accent-foreground: oklch(0.95 0.005 120);
-  --destructive: oklch(0.62 0.18 27.3);
-  --destructive-foreground: oklch(1 0 0);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 16%);
-  --ring: oklch(0.65 0.17 245);
-  --forest: oklch(0.95 0.005 120);
-  --forest-deep: oklch(0.20 0.02 220);
-  --brass: oklch(0.78 0.10 60);
-  --brass-soft: oklch(0.35 0.04 60);
-  --tide: oklch(0.72 0.14 245);
-  --tide-soft: oklch(0.32 0.05 245);
-  --ember: oklch(0.76 0.11 45);
-  --ember-soft: oklch(0.33 0.05 45);
-  --moss: oklch(0.72 0.08 160);
-  --moss-soft: oklch(0.30 0.04 160);
-
-  --chart-1: oklch(0.65 0.17 245);
-  --chart-2: oklch(0.82 0.018 100);
-  --chart-3: oklch(0.95 0.005 120);
-  --chart-4: oklch(1 0 0);
-  --chart-5: oklch(0.27 0.02 220);
-  --sidebar: oklch(0.27 0.02 220);
-  --sidebar-foreground: oklch(0.95 0.005 120);
-  --sidebar-primary: oklch(0.65 0.17 245);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.35 0.02 220);
-  --sidebar-accent-foreground: oklch(0.95 0.005 120);
-  --sidebar-border: oklch(1 0 0 / 12%);
-  --sidebar-ring: oklch(0.65 0.17 245);
-}
 
 @layer base {
   * {

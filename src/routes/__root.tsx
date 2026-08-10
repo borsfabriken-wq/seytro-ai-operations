@@ -116,22 +116,6 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
-        <script
-          // Apply the stored theme before React hydrates to avoid a flash.
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function () {
-                try {
-                  const stored = localStorage.getItem('seytro-theme');
-                  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  if (stored === 'dark' || (!stored && prefersDark)) {
-                    document.documentElement.classList.add('dark');
-                  }
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
         <HeadContent />
       </head>
       <body>

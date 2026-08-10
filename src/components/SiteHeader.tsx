@@ -6,7 +6,7 @@ import { PlatformMenu } from "@/components/PlatformMenu";
 import { SolutionsMenu } from "@/components/SolutionsMenu";
 import { ResourcesMenu } from "@/components/ResourcesMenu";
 import { CompanyMenu } from "@/components/CompanyMenu";
-import { ThemeToggle } from "@/components/ThemeToggle";
+
 
 const navItems = [
   { label: "Plattform", href: "#pelare", dropdown: true },
@@ -150,7 +150,6 @@ export function SiteHeader({ solid = false }: { solid?: boolean } = {}) {
           >
             Logga in
           </a>
-          <ThemeToggle />
           <Link
             to="/demo"
             className="rounded-full border border-primary-foreground/40 px-4 py-1.5 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-forest-deep"
