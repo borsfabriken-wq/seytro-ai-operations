@@ -27,9 +27,9 @@ export const Route = createFileRoute("/demo")({
 });
 
 const bullets = [
-  "Se våra AI-röst- och mejlagenter hantera verkliga scenarion",
-  "Få en genomgång anpassad efter er verksamhet",
-  "Se hur restauranger redan använder Seytro",
+  "30 minuter anpassat efter din restaurang eller ditt hotell",
+  "Se AI-agenter hantera bokningar, frågor och ändringar live",
+  "Få koll på migrering, uppstart och snabb ROI",
 ];
 
 const monthNames = [
