@@ -106,7 +106,7 @@ function HogvolymsverksamheterPage() {
 
       <section className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Översikt</p>
-        <h2 className="mt-6 max-w-3xl text-3xl leading-tight sm:text-4xl">
+        <h2 className="mt-6 max-w-3xl text-3xl sm:text-[2.6rem]">
           Rusning ska inte betyda sämre service.
         </h2>
         <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
@@ -124,7 +124,7 @@ function HogvolymsverksamheterPage() {
       <section className="bg-muted/50">
         <div className="site-container section-y">
           <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Så fungerar det</p>
-          <h2 className="mt-6 max-w-3xl text-3xl leading-tight sm:text-4xl">
+          <h2 className="mt-6 max-w-3xl text-3xl sm:text-[2.6rem]">
             Skalbar service som växer med trycket.
           </h2>
 
@@ -149,7 +149,7 @@ function HogvolymsverksamheterPage() {
 
       <section className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Nyckelfördelar</p>
-        <h2 className="mt-6 max-w-2xl text-3xl leading-tight sm:text-4xl">
+        <h2 className="mt-6 max-w-2xl text-3xl sm:text-[2.6rem]">
           Så hjälper Seytro er att klara rusningen.
         </h2>
 
@@ -176,7 +176,7 @@ function HogvolymsverksamheterPage() {
               <p className="text-sm uppercase tracking-[0.28em] text-primary-foreground/60">
                 Kom igång
               </p>
-              <h2 className="mt-6 text-3xl leading-tight sm:text-4xl">
+              <h2 className="mt-6 text-3xl sm:text-[2.6rem]">
                 Rusta verksamheten för högtryck.
               </h2>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-primary-foreground/75">

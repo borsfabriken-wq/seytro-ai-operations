@@ -107,7 +107,7 @@ function TablePlacementPage() {
 
       <section className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Översikt</p>
-        <h2 className="mt-6 max-w-3xl text-3xl leading-tight sm:text-4xl">
+        <h2 className="mt-6 max-w-3xl text-3xl sm:text-[2.6rem]">
           Salen är en levande pusselbit — låt den lägga sig själv.
         </h2>
         <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
@@ -126,7 +126,7 @@ function TablePlacementPage() {
       <section className="bg-muted/50">
         <div className="site-container section-y">
           <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Så fungerar det</p>
-          <h2 className="mt-6 max-w-3xl text-3xl leading-tight sm:text-4xl">
+          <h2 className="mt-6 max-w-3xl text-3xl sm:text-[2.6rem]">
             Varje bokning blir en optimal plats.
           </h2>
 
@@ -160,7 +160,7 @@ function TablePlacementPage() {
 
       <section className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Nyckelfördelar</p>
-        <h2 className="mt-6 max-w-2xl text-3xl leading-tight sm:text-4xl">
+        <h2 className="mt-6 max-w-2xl text-3xl sm:text-[2.6rem]">
           Så hjälper Bordsplaceringen er att växa.
         </h2>
 
@@ -187,7 +187,7 @@ function TablePlacementPage() {
               <p className="text-sm uppercase tracking-[0.28em] text-primary-foreground/60">
                 Kom igång
               </p>
-              <h2 className="mt-6 text-3xl leading-tight sm:text-4xl">
+              <h2 className="mt-6 text-3xl sm:text-[2.6rem]">
                 Mata in salsplanen — så börjar placeringarna optimera sig.
               </h2>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-primary-foreground/75">
