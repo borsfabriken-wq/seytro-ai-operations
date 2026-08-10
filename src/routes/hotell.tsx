@@ -97,7 +97,7 @@ function HotellPage() {
 
       <section className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Så används Seytro på hotellet</p>
-        <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
+        <h2 className="mt-6 max-w-2xl text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">
           Från bokning till rumsplacering.
         </h2>
         <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
