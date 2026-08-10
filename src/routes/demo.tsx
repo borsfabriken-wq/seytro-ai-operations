@@ -164,7 +164,7 @@ function DemoPage() {
     <div className="min-h-screen bg-background">
       <SiteHeader solid />
 
-      <main className="mx-auto max-w-6xl px-6 pb-24 pt-40">
+      <main className="mx-auto max-w-6xl px-6 pb-16 pt-32 sm:pb-24 sm:pt-40">
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           {/* Left */}
           <div className="lg:pt-6">

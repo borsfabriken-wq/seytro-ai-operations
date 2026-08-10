@@ -52,7 +52,7 @@ function Row({ ariaHidden }: { ariaHidden?: boolean }) {
 export function LogoMarquee() {
   return (
     <section className="border-y border-primary-foreground/10 bg-forest-deep py-4 text-primary-foreground sm:py-5">
-      <div className="mx-auto flex max-w-7xl items-center gap-6 px-6 sm:px-10">
+      <div className="site-container flex items-center gap-6">
         <p className="shrink-0 text-[10px] uppercase leading-tight tracking-[0.2em] text-primary-foreground/50 sm:text-xs">
           Restauranger och<br className="hidden sm:block" /> hotell som växer<br className="hidden sm:block" /> med Seytro
         </p>
