@@ -146,13 +146,13 @@ function Index() {
           Tre problem varje serviceverksamhet känner igen.
         </h2>
         <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {reasons.map((r, i) => (
+          {reasons.map((r) => (
             <div
               key={r.num}
-              className={`border-t-2 pt-8 ${["border-tide/60", "border-ember/60", "border-moss/60"][i % 3]}`}
+              className="border-t border-border pt-8"
             >
               <span
-                className={`text-sm tracking-[0.28em] ${["text-tide", "text-ember", "text-moss"][i % 3]}`}
+                className="text-sm tracking-[0.28em] text-muted-foreground"
               >
                 {r.num}
               </span>
@@ -166,7 +166,7 @@ function Index() {
       <ProductShowcase />
 
       <section className="relative overflow-hidden bg-forest-deep text-primary-foreground">
-        <div className="absolute inset-0 bg-linear-to-r from-tide/12 via-transparent to-ember/10" aria-hidden="true" />
+        <div className="absolute inset-0 bg-linear-to-r from-muted/60 via-transparent to-muted/40" aria-hidden="true" />
         <div className="site-container relative grid grid-cols-2 gap-8 py-16 lg:grid-cols-4">
           {[
             ["−38%", "administrativ tid i driften"],
@@ -193,13 +193,11 @@ function Index() {
         </p>
 
         <div className="mt-20 space-y-20">
-          {pillars.map((p, i) => (
+          {pillars.map((p) => (
             <div key={p.num} className="grid gap-10 border-t border-border pt-12 lg:grid-cols-12">
               <div className="lg:col-span-4">
                 <span
-                  className={`inline-block rounded-full px-3 py-1 text-xs tracking-[0.28em] ${
-                    ["bg-tide-soft text-tide", "bg-ember-soft text-ember", "bg-moss-soft text-moss"][i % 3]
-                  }`}
+                  className="inline-block rounded-full bg-muted px-3 py-1 text-xs tracking-[0.28em] text-muted-foreground"
                 >
                   {p.num}
                 </span>
@@ -269,8 +267,8 @@ function Index() {
               alt: "Värd vid en bordsöversikt i en restaurang under service",
               desc: "Telefonen under rushen, bordsläggningen och gästerna som ska tillbaka.",
               cta: "Se Seytro för restauranger",
-              ring: "hover:border-ember",
-              tone: "text-ember",
+              ring: "hover:border-foreground/30",
+              tone: "text-foreground",
             },
             {
               to: "/hotell" as const,
@@ -279,8 +277,8 @@ function Index() {
               alt: "Korridor och rumsentré på ett boutiquehotell",
               desc: "Receptionens inkorg, automatisk rumsplacering och gästservice dygnet runt.",
               cta: "Se Seytro för hotell",
-              ring: "hover:border-tide",
-              tone: "text-tide",
+              ring: "hover:border-foreground/30",
+              tone: "text-foreground",
             },
           ].map((c) => (
             <Link
