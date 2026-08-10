@@ -146,7 +146,7 @@ function Index() {
           Tre problem varje serviceverksamhet känner igen.
         </h2>
         <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {reasons.map((r, i) => (
+          {reasons.map((r) => (
             <div
               key={r.num}
               className="border-t border-border pt-8"
@@ -193,7 +193,7 @@ function Index() {
         </p>
 
         <div className="mt-20 space-y-20">
-          {pillars.map((p, i) => (
+          {pillars.map((p) => (
             <div key={p.num} className="grid gap-10 border-t border-border pt-12 lg:grid-cols-12">
               <div className="lg:col-span-4">
                 <span
