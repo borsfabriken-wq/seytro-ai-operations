@@ -152,14 +152,68 @@
 @layer base {
   body {
     font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    letter-spacing: -0.005em;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
-  h1, h2, h3 {
+  h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-weight: 400;
+    font-optical-sizing: auto;
+    text-wrap: balance;
+  }
+  h1 {
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+  }
+  h2 {
+    letter-spacing: -0.028em;
+    line-height: 1.1;
+  }
+  h3 {
     letter-spacing: -0.02em;
+    line-height: 1.22;
+  }
+  p {
+    text-wrap: pretty;
   }
 }
+
+/* Vertical rhythm for page sections */
+@utility section-y {
+  padding-block: 5rem;
+}
+
+@media (min-width: 640px) {
+  .section-y { padding-block: 7rem; }
+}
+
+@media (min-width: 1280px) {
+  .section-y { padding-block: 8.5rem; }
+}
+
+@utility section-y-lg {
+  padding-block: 6rem;
+}
+
+@media (min-width: 640px) {
+  .section-y-lg { padding-block: 8.5rem; }
+}
+
+@media (min-width: 1280px) {
+  .section-y-lg { padding-block: 10.5rem; }
+}
+
+@utility eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
 
 @utility site-container {
   width: 100%;

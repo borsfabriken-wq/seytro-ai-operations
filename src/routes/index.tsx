@@ -140,9 +140,9 @@ function Index() {
 
       <LogoMarquee />
 
-      <section id="varfor" className="site-container py-20 sm:py-28">
+      <section id="varfor" className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Varför Seytro</p>
-        <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
+        <h2 className="mt-6 max-w-2xl text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">
           Tre problem varje serviceverksamhet känner igen.
         </h2>
         <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
@@ -183,9 +183,9 @@ function Index() {
       </section>
 
       <section id="pelare" className="bg-linear-to-b from-background to-secondary/50">
-        <div className="site-container py-20 sm:py-28">
+        <div className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Funktionerna</p>
-        <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
+        <h2 className="mt-6 max-w-2xl text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">
           Vad plattformen gör — och när den används.
         </h2>
         <p className="mt-6 max-w-xl text-muted-foreground">
@@ -232,7 +232,7 @@ function Index() {
           <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">
             Så fungerar det
           </p>
-          <h2 className="mt-6 max-w-3xl text-4xl leading-tight sm:text-5xl">
+          <h2 className="mt-6 max-w-3xl text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">
             En helhetslösning för bokning, drift och gästkommunikation — ovanpå era befintliga system.
           </h2>
           <div className="mt-14 grid gap-10 lg:grid-cols-3">
@@ -253,9 +253,9 @@ function Index() {
         </div>
       </section>
 
-      <section id="bransch" className="site-container py-20 sm:py-28">
+      <section id="bransch" className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Djupdykning</p>
-        <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">Vad driver du?</h2>
+        <h2 className="mt-6 max-w-2xl text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">Vad driver du?</h2>
         <p className="mt-6 max-w-xl text-muted-foreground">
           Samma plattform, olika vardag. Välj din ingång så visar vi hur systemet maxas för just din
           verksamhet — med dina flöden, exempel och siffror.
@@ -317,10 +317,10 @@ function Index() {
       </section>
 
       <section id="vision" className="bg-forest-deep text-primary-foreground">
-        <div className="site-container grid items-center gap-16 py-20 sm:py-28 lg:grid-cols-2">
+        <div className="site-container grid items-center gap-16 section-y lg:grid-cols-2">
           <div>
             <p className="text-sm uppercase tracking-[0.28em] text-primary-foreground/60">Vision</p>
-            <h2 className="mt-6 text-4xl leading-tight sm:text-5xl">
+            <h2 className="mt-6 text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">
               Framtidens värdskap är tyst, snabbt och personligt.
             </h2>
             <p className="mt-8 text-lg leading-relaxed text-primary-foreground/75">
@@ -345,8 +345,8 @@ function Index() {
         </div>
       </section>
 
-      <section id="demo" className="site-container py-24 sm:py-32 text-center">
-        <h2 className="mx-auto max-w-3xl text-4xl leading-tight sm:text-6xl">
+      <section id="demo" className="site-container section-y-lg text-center">
+        <h2 className="mx-auto max-w-3xl text-[2.5rem] sm:text-6xl">
           Se Seytro i er egen verksamhet.
         </h2>
         <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">

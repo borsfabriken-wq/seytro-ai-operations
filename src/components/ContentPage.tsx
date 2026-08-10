@@ -70,7 +70,7 @@ export function ContentPage({
         </div>
       </section>
 
-      <section className="site-container py-20 sm:py-28">
+      <section className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Översikt</p>
         {intro.map((p, i) => (
           <p
@@ -85,9 +85,9 @@ export function ContentPage({
       </section>
 
       <section className="bg-muted/50">
-        <div className="site-container py-20 sm:py-28">
+        <div className="site-container section-y">
           <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Så fungerar det</p>
-          <h2 className="mt-6 max-w-3xl text-3xl leading-tight sm:text-4xl">{sectionTitle}</h2>
+          <h2 className="mt-6 max-w-3xl text-3xl sm:text-[2.6rem]">{sectionTitle}</h2>
 
           <div className="mt-16 grid gap-12 lg:grid-cols-2">
             {blocks.map((b) => (
@@ -100,9 +100,9 @@ export function ContentPage({
         </div>
       </section>
 
-      <section className="site-container py-20 sm:py-28">
+      <section className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">{cardsEyebrow}</p>
-        <h2 className="mt-6 max-w-2xl text-3xl leading-tight sm:text-4xl">{cardsTitle}</h2>
+        <h2 className="mt-6 max-w-2xl text-3xl sm:text-[2.6rem]">{cardsTitle}</h2>
 
         <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {cards.map(({ icon: Icon, title: t, text }) => (
@@ -123,13 +123,13 @@ export function ContentPage({
       {children}
 
       <section className="bg-forest-deep text-primary-foreground">
-        <div className="site-container py-20 sm:py-28">
+        <div className="site-container section-y">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
               <p className="text-sm uppercase tracking-[0.28em] text-primary-foreground/60">
                 Kom igång
               </p>
-              <h2 className="mt-6 text-3xl leading-tight sm:text-4xl">{ctaTitle}</h2>
+              <h2 className="mt-6 text-3xl sm:text-[2.6rem]">{ctaTitle}</h2>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-primary-foreground/75">
                 {ctaText}
               </p>
@@ -181,7 +181,7 @@ export function PageSection({
     <section className={tinted ? "bg-muted/50" : ""}>
       <div className="site-container py-24">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">{eyebrow}</p>
-        <h2 className="mt-6 max-w-3xl text-3xl leading-tight sm:text-4xl">{title}</h2>
+        <h2 className="mt-6 max-w-3xl text-3xl sm:text-[2.6rem]">{title}</h2>
         <div className="mt-14">{children}</div>
       </div>
     </section>

@@ -95,9 +95,9 @@ function RestaurangPage() {
         </div>
       </section>
 
-      <section className="site-container py-20 sm:py-28">
+      <section className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Så används Seytro i restaurangen</p>
-        <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
+        <h2 className="mt-6 max-w-2xl text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">
           Byggt för bordsläggning, turnering och gästfrihet.
         </h2>
         <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
