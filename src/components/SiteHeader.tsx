@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
 import { PlatformMenu } from "@/components/PlatformMenu";
 import { SolutionsMenu } from "@/components/SolutionsMenu";
@@ -8,12 +8,55 @@ import { ResourcesMenu } from "@/components/ResourcesMenu";
 import { CompanyMenu } from "@/components/CompanyMenu";
 
 
-const navItems = [
-  { label: "Plattform", href: "#pelare", dropdown: true },
-  { label: "Lösningar", href: "#losningar", dropdown: true },
-  { label: "Resurser", href: "#resurser", dropdown: true },
-  { label: "Företag", href: "#foretag", dropdown: true },
+const mobileNav: { label: string; links: { label: string; to: string }[] }[] = [
+  {
+    label: "Plattform",
+    links: [
+      { label: "Röstagent", to: "/voice-agent" },
+      { label: "E-postconcierge", to: "/epostagent" },
+      { label: "Bokningsassistent", to: "/bokningsassistent" },
+      { label: "Bordsplacering", to: "/bordsplacering" },
+      { label: "Salsplan", to: "/salsplan" },
+      { label: "Tillgänglighet", to: "/tillganglighet" },
+      { label: "Gästinsikt", to: "/gastinsikt" },
+      { label: "Analys", to: "/analys" },
+      { label: "Kampanjer", to: "/kampanjer" },
+    ],
+  },
+  {
+    label: "Lösningar",
+    links: [
+      { label: "Restauranggrupper", to: "/losningar/restauranggrupper" },
+      { label: "Fine dining", to: "/losningar/fine-dining" },
+      { label: "Fristående restauranger", to: "/losningar/fristaende-restauranger" },
+      { label: "Barer och lounger", to: "/losningar/barer-och-lounger" },
+      { label: "Hotell", to: "/losningar/hotell" },
+      { label: "Högvolymsverksamheter", to: "/losningar/hogvolymsverksamheter" },
+    ],
+  },
+  {
+    label: "Resurser",
+    links: [
+      { label: "Hjälpcenter", to: "/resurser/hjalpcenter" },
+      { label: "Guider", to: "/resurser/guider" },
+      { label: "API", to: "/resurser/api" },
+      { label: "Kundberättelser", to: "/resurser/kundberattelser" },
+      { label: "Insikter", to: "/resurser/insikter" },
+      { label: "Produktnyheter", to: "/resurser/produktnyheter" },
+    ],
+  },
+  {
+    label: "Företag",
+    links: [
+      { label: "Om oss", to: "/foretag/om-oss" },
+      { label: "Karriär", to: "/foretag/karriar" },
+      { label: "Säkerhet", to: "/foretag/sakerhet" },
+      { label: "Partners", to: "/foretag/partners" },
+      { label: "Kontakt", to: "/foretag/kontakt" },
+    ],
+  },
 ];
+
 
 type DropdownState = {
   platform: boolean;
