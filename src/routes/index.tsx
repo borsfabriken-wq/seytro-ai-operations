@@ -145,7 +145,7 @@ function Index() {
         <div className="mt-16 grid gap-10 lg:grid-cols-3">
           {reasons.map((r) => (
             <div key={r.num} className="border-t border-border pt-8">
-              <span className="text-sm tracking-[0.28em] text-accent-foreground/50">{r.num}</span>
+              <span className="text-sm tracking-[0.28em] text-brass">{r.num}</span>
               <h3 className="mt-4 text-2xl leading-snug">{r.title}</h3>
               <p className="mt-4 leading-relaxed text-muted-foreground">{r.body}</p>
             </div>
@@ -184,7 +184,7 @@ function Index() {
           {pillars.map((p) => (
             <div key={p.num} className="grid gap-10 border-t border-border pt-12 lg:grid-cols-12">
               <div className="lg:col-span-4">
-                <span className="text-sm tracking-[0.28em] text-accent-foreground/50">{p.num}</span>
+                <span className="text-sm tracking-[0.28em] text-brass">{p.num}</span>
                 <h3 className="mt-4 text-3xl">{p.title}</h3>
                 <p className="mt-4 max-w-sm text-muted-foreground">{p.intro}</p>
               </div>
@@ -219,7 +219,7 @@ function Index() {
           <div className="mt-14 grid gap-10 lg:grid-cols-3">
             {steps.map(([t, d], i) => (
               <div key={t} className="border-t border-border pt-8">
-                <span className="text-sm tracking-[0.28em] text-accent-foreground/50">
+                <span className="text-sm tracking-[0.28em] text-brass">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-4 text-2xl">{t}</h3>
