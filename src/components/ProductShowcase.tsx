@@ -50,7 +50,7 @@ function ProgressRing({ progress }: { progress: number }) {
         fill="none"
         stroke="currentColor"
         strokeWidth="2"
-        className="text-forest/20"
+        className="text-tide/25"
       />
       <circle
         cx="12"
@@ -62,7 +62,7 @@ function ProgressRing({ progress }: { progress: number }) {
         strokeLinecap="round"
         strokeDasharray={CIRCUMFERENCE}
         strokeDashoffset={offset}
-        className="text-forest transition-all duration-75 ease-linear"
+        className="text-tide transition-all duration-75 ease-linear"
       />
     </svg>
   );
@@ -183,14 +183,14 @@ export function ProductShowcase() {
             }`}
           >
             <div className="flex flex-1 items-center justify-center rounded-2xl bg-background/70 py-14">
-              <Icon className="h-16 w-16 text-forest" strokeWidth={1.25} />
+              <Icon className="h-16 w-16 text-tide" strokeWidth={1.25} />
             </div>
             <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/80">{current.text}</p>
             <div className="mt-8">
               {current.name === "Röstagent" ? (
                 <Link
                   to="/voice-agent"
-                  className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
+                  className="inline-flex items-center gap-2 rounded-full bg-tide px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
                 >
                   Utforska {current.name}
                   <ArrowRight className="h-4 w-4" />
@@ -198,7 +198,7 @@ export function ProductShowcase() {
               ) : current.name === "E-postconcierge" ? (
                 <Link
                   to="/epostagent"
-                  className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
+                  className="inline-flex items-center gap-2 rounded-full bg-tide px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
                 >
                   Utforska {current.name}
                   <ArrowRight className="h-4 w-4" />
@@ -206,7 +206,7 @@ export function ProductShowcase() {
               ) : current.name === "Bordsplacering" ? (
                 <Link
                   to="/bordsplacering"
-                  className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
+                  className="inline-flex items-center gap-2 rounded-full bg-tide px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
                 >
                   Utforska {current.name}
                   <ArrowRight className="h-4 w-4" />
@@ -214,7 +214,7 @@ export function ProductShowcase() {
               ) : current.name === "Gästinsikt" ? (
                 <Link
                   to="/gastinsikt"
-                  className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
+                  className="inline-flex items-center gap-2 rounded-full bg-tide px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
                 >
                   Utforska {current.name}
                   <ArrowRight className="h-4 w-4" />
@@ -222,7 +222,7 @@ export function ProductShowcase() {
               ) : current.name === "Analys" ? (
                 <Link
                   to="/analys"
-                  className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
+                  className="inline-flex items-center gap-2 rounded-full bg-tide px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
                 >
                   Utforska {current.name}
                   <ArrowRight className="h-4 w-4" />
@@ -230,7 +230,7 @@ export function ProductShowcase() {
               ) : current.name === "Kampanjer" ? (
                 <Link
                   to="/kampanjer"
-                  className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
+                  className="inline-flex items-center gap-2 rounded-full bg-tide px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
                 >
                   Utforska {current.name}
                   <ArrowRight className="h-4 w-4" />
@@ -239,7 +239,7 @@ export function ProductShowcase() {
                 <Link
                   to="/"
                   hash="demo"
-                  className="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-deep"
+                  className="inline-flex items-center gap-2 rounded-full bg-tide px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
                 >
                   Utforska {current.name}
                   <ArrowRight className="h-4 w-4" />

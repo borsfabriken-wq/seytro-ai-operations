@@ -165,8 +165,9 @@ function Index() {
 
       <ProductShowcase />
 
-      <section className="border-t-2 border-forest-deep bg-forest-deep text-primary-foreground">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 py-16 sm:px-10 lg:grid-cols-4">
+      <section className="relative overflow-hidden bg-forest-deep text-primary-foreground">
+        <div className="absolute inset-0 bg-linear-to-r from-tide/20 via-transparent to-ember/20" aria-hidden="true" />
+        <div className="relative mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 py-16 sm:px-10 lg:grid-cols-4">
           {[
             ["−38%", "administrativ tid i driften"],
             ["100%", "besvarade samtal och mejl"],
@@ -360,7 +361,7 @@ function Index() {
         </Link>
       </section>
 
-      <div className="my-8 h-6 w-full bg-forest" aria-hidden="true" />
+      <div className="mx-auto my-4 h-px w-full max-w-7xl bg-linear-to-r from-transparent via-border to-transparent" aria-hidden="true" />
 
       <FaqSection />
 
