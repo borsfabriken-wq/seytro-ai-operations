@@ -215,7 +215,7 @@ export function SiteHeader({ solid = false }: { solid?: boolean } = {}) {
       </nav>
 
       {mobileOpen && (
-        <div className="mx-auto mt-2 max-h-[calc(100dvh-6rem)] overflow-y-auto rounded-3xl border border-primary-foreground/10 bg-forest-deep/95 p-5 text-primary-foreground shadow-2xl backdrop-blur-md lg:hidden">
+        <div className="mx-3 mt-2 max-h-[calc(100dvh-6rem)] sm:mx-6 overflow-y-auto rounded-3xl border border-primary-foreground/10 bg-forest-deep/95 p-5 text-primary-foreground shadow-2xl backdrop-blur-md lg:hidden">
           <div className="flex flex-col divide-y divide-primary-foreground/10">
             {mobileNav.map((group) => (
               <div key={group.label} className="py-3">
