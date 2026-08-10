@@ -95,7 +95,7 @@ function HotellPage() {
         </div>
       </section>
 
-      <section className="site-container py-20 sm:py-28">
+      <section className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Så används Seytro på hotellet</p>
         <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
           Från bokning till rumsplacering.

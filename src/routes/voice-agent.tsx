@@ -104,7 +104,7 @@ function VoiceAgentPage() {
         </div>
       </section>
 
-      <section className="site-container py-20 sm:py-28">
+      <section className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Översikt</p>
         <h2 className="mt-6 max-w-3xl text-3xl leading-tight sm:text-4xl">
           Telefonen ringer klockan 23 en fredag. Ett sällskap på åtta vill boka till morgondagen.
@@ -121,7 +121,7 @@ function VoiceAgentPage() {
       </section>
 
       <section className="bg-muted/50">
-        <div className="site-container py-20 sm:py-28">
+        <div className="site-container section-y">
           <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Ingen gäst lämnas utanför</p>
           <h2 className="mt-6 max-w-3xl text-3xl leading-tight sm:text-4xl">
             Varje möjlig väg leder till att gästen får hjälp.
@@ -150,7 +150,7 @@ function VoiceAgentPage() {
         </div>
       </section>
 
-      <section className="site-container py-20 sm:py-28">
+      <section className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Nyckelfördelar</p>
         <h2 className="mt-6 max-w-2xl text-3xl leading-tight sm:text-4xl">
           Så hjälper Röstagenten er att växa.
@@ -173,7 +173,7 @@ function VoiceAgentPage() {
       </section>
 
       <section className="bg-forest-deep text-primary-foreground">
-        <div className="site-container py-20 sm:py-28">
+        <div className="site-container section-y">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
               <p className="text-sm uppercase tracking-[0.28em] text-primary-foreground/60">

@@ -52,7 +52,7 @@ export function FaqSection() {
 
   return (
     <section className="bg-background text-foreground">
-      <div className="site-container grid gap-12 py-20 sm:py-28 lg:grid-cols-12 lg:gap-16">
+      <div className="site-container grid gap-12 section-y lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-4">
           <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Frågor</p>
           <h2 className="mt-5 text-3xl leading-tight sm:text-4xl">

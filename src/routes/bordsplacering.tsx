@@ -105,7 +105,7 @@ function TablePlacementPage() {
         </div>
       </section>
 
-      <section className="site-container py-20 sm:py-28">
+      <section className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Översikt</p>
         <h2 className="mt-6 max-w-3xl text-3xl leading-tight sm:text-4xl">
           Salen är en levande pusselbit — låt den lägga sig själv.
@@ -124,7 +124,7 @@ function TablePlacementPage() {
       </section>
 
       <section className="bg-muted/50">
-        <div className="site-container py-20 sm:py-28">
+        <div className="site-container section-y">
           <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Så fungerar det</p>
           <h2 className="mt-6 max-w-3xl text-3xl leading-tight sm:text-4xl">
             Varje bokning blir en optimal plats.
@@ -158,7 +158,7 @@ function TablePlacementPage() {
         </div>
       </section>
 
-      <section className="site-container py-20 sm:py-28">
+      <section className="site-container section-y">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Nyckelfördelar</p>
         <h2 className="mt-6 max-w-2xl text-3xl leading-tight sm:text-4xl">
           Så hjälper Bordsplaceringen er att växa.
@@ -181,7 +181,7 @@ function TablePlacementPage() {
       </section>
 
       <section className="bg-forest-deep text-primary-foreground">
-        <div className="site-container py-20 sm:py-28">
+        <div className="site-container section-y">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
               <p className="text-sm uppercase tracking-[0.28em] text-primary-foreground/60">
