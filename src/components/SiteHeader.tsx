@@ -6,6 +6,7 @@ import { PlatformMenu } from "@/components/PlatformMenu";
 import { SolutionsMenu } from "@/components/SolutionsMenu";
 import { ResourcesMenu } from "@/components/ResourcesMenu";
 import { CompanyMenu } from "@/components/CompanyMenu";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navItems = [
   { label: "Plattform", href: "#pelare", dropdown: true },
@@ -142,13 +143,14 @@ export function SiteHeader({ solid = false }: { solid?: boolean } = {}) {
             {renderDropdown("Företag", "company", companyRef, CompanyMenu)}
           </div>
         </div>
-        <div className="flex items-center gap-4 sm:gap-5">
+        <div className="flex items-center gap-3 sm:gap-4">
           <a
             href="https://www.seytro.com/login"
             className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
           >
             Logga in
           </a>
+          <ThemeToggle />
           <Link
             to="/demo"
             className="rounded-full border border-primary-foreground/40 px-4 py-1.5 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-forest-deep"
