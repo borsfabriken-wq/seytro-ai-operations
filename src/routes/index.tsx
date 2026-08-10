@@ -5,8 +5,10 @@ import { LogoMarquee } from "@/components/LogoMarquee";
 import { ProductShowcase } from "@/components/ProductShowcase";
 import { FaqSection } from "@/components/FaqSection";
 
-import heroImg from "@/assets/hero-restaurant.png.asset.json";
-import visionImg from "@/assets/vision.jpg";
+import heroImg from "@/assets/hero-main.jpg";
+import visionImg from "@/assets/vision-new.jpg";
+import cardRestaurant from "@/assets/card-restaurant.jpg";
+import cardHotel from "@/assets/card-hotel.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -97,13 +99,14 @@ function Index() {
 
       <section id="top" className="relative min-h-screen overflow-hidden">
         <img
-          src={heroImg.url}
+          src={heroImg}
           alt="Gäster som möts av personal i en servicemiljö"
           width={1920}
           height={1280}
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-forest-deep via-forest-deep/55 to-forest-deep/15" />
+        <div className="absolute inset-0 bg-linear-to-t from-forest-deep/95 via-forest-deep/25 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-r from-forest-deep/45 via-transparent to-transparent" />
 
 
         <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-end px-6 pb-24 pt-40 sm:px-10">
@@ -143,9 +146,16 @@ function Index() {
           Tre problem varje serviceverksamhet känner igen.
         </h2>
         <div className="mt-16 grid gap-10 lg:grid-cols-3">
-          {reasons.map((r) => (
-            <div key={r.num} className="border-t border-border pt-8">
-              <span className="text-sm tracking-[0.28em] text-brass">{r.num}</span>
+          {reasons.map((r, i) => (
+            <div
+              key={r.num}
+              className={`border-t-2 pt-8 ${["border-tide", "border-ember", "border-moss"][i % 3]}`}
+            >
+              <span
+                className={`text-sm tracking-[0.28em] ${["text-tide", "text-ember", "text-moss"][i % 3]}`}
+              >
+                {r.num}
+              </span>
               <h3 className="mt-4 text-2xl leading-snug">{r.title}</h3>
               <p className="mt-4 leading-relaxed text-muted-foreground">{r.body}</p>
             </div>
@@ -155,8 +165,9 @@ function Index() {
 
       <ProductShowcase />
 
-      <section className="border-t-2 border-forest-deep bg-forest-deep text-primary-foreground">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 py-16 sm:px-10 lg:grid-cols-4">
+      <section className="relative overflow-hidden bg-forest-deep text-primary-foreground">
+        <div className="absolute inset-0 bg-linear-to-r from-tide/20 via-transparent to-ember/20" aria-hidden="true" />
+        <div className="relative mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 py-16 sm:px-10 lg:grid-cols-4">
           {[
             ["−38%", "administrativ tid i driften"],
             ["100%", "besvarade samtal och mejl"],
@@ -171,7 +182,8 @@ function Index() {
         </div>
       </section>
 
-      <section id="pelare" className="mx-auto max-w-7xl px-6 py-28 sm:px-10">
+      <section id="pelare" className="bg-linear-to-b from-background to-secondary/50">
+        <div className="mx-auto max-w-7xl px-6 py-28 sm:px-10">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Funktionerna</p>
         <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
           Vad plattformen gör — och när den används.
@@ -181,10 +193,16 @@ function Index() {
         </p>
 
         <div className="mt-20 space-y-20">
-          {pillars.map((p) => (
+          {pillars.map((p, i) => (
             <div key={p.num} className="grid gap-10 border-t border-border pt-12 lg:grid-cols-12">
               <div className="lg:col-span-4">
-                <span className="text-sm tracking-[0.28em] text-brass">{p.num}</span>
+                <span
+                  className={`inline-block rounded-full px-3 py-1 text-xs tracking-[0.28em] ${
+                    ["bg-tide-soft text-tide", "bg-ember-soft text-ember", "bg-moss-soft text-moss"][i % 3]
+                  }`}
+                >
+                  {p.num}
+                </span>
                 <h3 className="mt-4 text-3xl">{p.title}</h3>
                 <p className="mt-4 max-w-sm text-muted-foreground">{p.intro}</p>
               </div>
@@ -205,6 +223,7 @@ function Index() {
               </div>
             </div>
           ))}
+        </div>
         </div>
       </section>
 
@@ -246,28 +265,48 @@ function Index() {
             {
               to: "/restaurang" as const,
               label: "Restaurang",
+              img: cardRestaurant,
+              alt: "Värd vid en bordsöversikt i en restaurang under service",
               desc: "Telefonen under rushen, bordsläggningen och gästerna som ska tillbaka.",
               cta: "Se Seytro för restauranger",
+              ring: "hover:border-ember",
+              tone: "text-ember",
             },
             {
               to: "/hotell" as const,
               label: "Hotell",
+              img: cardHotel,
+              alt: "Korridor och rumsentré på ett boutiquehotell",
               desc: "Receptionens inkorg, automatisk rumsplacering och gästservice dygnet runt.",
               cta: "Se Seytro för hotell",
+              ring: "hover:border-tide",
+              tone: "text-tide",
             },
           ].map((c) => (
             <Link
               key={c.to}
               to={c.to}
-              className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-8 transition-colors hover:border-forest"
+              className={`group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-colors ${c.ring}`}
             >
-              <div>
-                <h3 className="text-2xl text-forest">{c.label}</h3>
-                <p className="mt-3 max-w-sm text-muted-foreground">{c.desc}</p>
+              <div className="relative h-56 overflow-hidden sm:h-64">
+                <img
+                  src={c.img}
+                  alt={c.alt}
+                  width={1200}
+                  height={912}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
               </div>
-              <span className="mt-10 text-sm font-medium text-forest transition-transform group-hover:translate-x-1">
-                {c.cta} →
-              </span>
+              <div className="flex flex-1 flex-col justify-between p-8">
+                <div>
+                  <h3 className={`text-2xl ${c.tone}`}>{c.label}</h3>
+                  <p className="mt-3 max-w-sm text-muted-foreground">{c.desc}</p>
+                </div>
+                <span className="mt-10 text-sm font-medium text-foreground transition-transform group-hover:translate-x-1">
+                  {c.cta} →
+                </span>
+              </div>
             </Link>
           ))}
         </div>
@@ -322,7 +361,7 @@ function Index() {
         </Link>
       </section>
 
-      <div className="my-8 h-6 w-full bg-forest" aria-hidden="true" />
+      <div className="mx-auto my-4 h-px w-full max-w-7xl bg-linear-to-r from-transparent via-border to-transparent" aria-hidden="true" />
 
       <FaqSection />
 

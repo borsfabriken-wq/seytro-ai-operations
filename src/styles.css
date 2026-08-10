@@ -92,8 +92,16 @@
   --sage: oklch(0.82 0.018 100);
   --sage-soft: oklch(0.95 0.005 120);
   --ivory: oklch(1 0 0);
-  --brass: oklch(0.65 0.17 245);
-  --brass-soft: oklch(0.82 0.018 100);
+  --brass: oklch(0.62 0.11 55);
+  --brass-soft: oklch(0.92 0.035 70);
+  /* Livelier secondary accents — used sparingly */
+  --tide: oklch(0.65 0.17 245);
+  --tide-soft: oklch(0.95 0.03 245);
+  --ember: oklch(0.64 0.13 45);
+  --ember-soft: oklch(0.94 0.035 60);
+  --moss: oklch(0.55 0.07 160);
+  --moss-soft: oklch(0.94 0.03 160);
+
   --chart-1: oklch(0.65 0.17 245);
   --chart-2: oklch(0.32 0.02 220);
   --chart-3: oklch(0.82 0.018 100);
@@ -133,6 +141,15 @@
   --ring: oklch(0.65 0.17 245);
   --forest: oklch(0.95 0.005 120);
   --forest-deep: oklch(0.20 0.02 220);
+  --brass: oklch(0.78 0.10 60);
+  --brass-soft: oklch(0.35 0.04 60);
+  --tide: oklch(0.72 0.14 245);
+  --tide-soft: oklch(0.32 0.05 245);
+  --ember: oklch(0.76 0.11 45);
+  --ember-soft: oklch(0.33 0.05 45);
+  --moss: oklch(0.72 0.08 160);
+  --moss-soft: oklch(0.30 0.04 160);
+
   --chart-1: oklch(0.65 0.17 245);
   --chart-2: oklch(0.82 0.018 100);
   --chart-3: oklch(0.95 0.005 120);
@@ -168,6 +185,13 @@
   --color-ivory: var(--ivory);
   --color-brass: var(--brass);
   --color-brass-soft: var(--brass-soft);
+  --color-tide: var(--tide);
+  --color-tide-soft: var(--tide-soft);
+  --color-ember: var(--ember);
+  --color-ember-soft: var(--ember-soft);
+  --color-moss: var(--moss);
+  --color-moss-soft: var(--moss-soft);
+
   --font-display: "Fraunces", Georgia, serif;
   --font-sans: "Inter Tight", system-ui, sans-serif;
 }
