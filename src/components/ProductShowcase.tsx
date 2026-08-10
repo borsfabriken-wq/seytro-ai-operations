@@ -6,22 +6,22 @@ const products = [
   {
     name: "Röstagent",
     icon: Phone,
-    text: "Någon svarar mitt i servicen. Ett samtal i taget, detaljer bekräftade muntligt — och bokningen hamnar i samma bok som allt annat.",
+    text: "Någon svarar alltid, mitt i högsta belastningen. Ett samtal i taget, detaljerna bekräftade muntligt — och bokningen hamnar direkt i ert befintliga system.",
   },
   {
     name: "E-postconcierge",
     icon: Mail,
-    text: "Inkorgen svarar för sig själv. Gruppförfrågningar, allergier och ändringar besvaras i husets egen ton, medan ni står i köket.",
+    text: "Inkorgen svarar för sig själv. Förfrågningar, ändringar och specialönskemål besvaras i er egen ton, medan personalen är kvar hos gästen.",
   },
   {
     name: "Bordsplacering",
     icon: LayoutGrid,
-    text: "Sällskapet kommer tidigt, ett annat blir försenat. Salen lägger om sig själv — borden, zonerna och personalen hamnar där de behövs som mest.",
+    text: "Ett sällskap kommer tidigt, ett annat blir försenat. Kapaciteten läggs om automatiskt — platser, zoner och personal hamnar där de behövs som mest.",
   },
   {
     name: "Gästinsikt",
     icon: Users,
-    text: "Gästen känns igen redan vid dörren. Favoritbordet, vinet från förra gången, tio år av besök — samlat i en profil som växer av sig själv.",
+    text: "Gästen känns igen redan vid första kontakten. Preferenser, tidigare besök och noteringar samlade i en profil som växer av sig själv.",
   },
   {
     name: "Analys",
@@ -31,7 +31,7 @@ const products = [
   {
     name: "Kampanjer",
     icon: Megaphone,
-    text: "Lågsäsongen knackar på dörren. Ett segment, ett erbjudande, ett utskick — och de svaga passen fylls av gäster som inte hade kommit annars.",
+    text: "Lågsäsongen knackar på dörren. Ett segment, ett erbjudande, ett utskick — och de svaga passen fylls av gäster som annars inte hade bokat.",
   },
 ];
 

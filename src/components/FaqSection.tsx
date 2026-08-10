@@ -19,7 +19,7 @@ const faqs = [
   {
     question: "Hur lång tid tar implementeringen?",
     answer:
-      "Varje restaurang går igenom en onboarding där plattformen anpassas efter er meny, era bokningsflöden och er ton — tidsåtgången beror på hur mycket anpassning som behövs, men vi jobbar för en så smidig start som möjligt.",
+      "Varje verksamhet går igenom en onboarding där plattformen anpassas efter era tjänster, era boknings- och bemanningsflöden och er ton — tidsåtgången beror på hur mycket anpassning som behövs, men vi jobbar för en så smidig start som möjligt.",
   },
   {
     question: "Var lagras vår gästdata?",
