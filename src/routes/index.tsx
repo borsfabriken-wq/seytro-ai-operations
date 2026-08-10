@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { LogoMarquee } from "@/components/LogoMarquee";
@@ -111,6 +111,51 @@ function Index() {
       </section>
 
       <LogoMarquee />
+
+      <section id="bransch" className="mx-auto max-w-7xl px-6 py-24 sm:px-10">
+        <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Två branscher</p>
+        <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
+          Vad driver du?
+        </h2>
+        <p className="mt-6 max-w-xl text-muted-foreground">
+          Samma plattform, men olika vardag. Välj din ingång så visar vi Seytro med dina flöden,
+          exempel och siffror.
+        </p>
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          {[
+            {
+              to: "/restaurang" as const,
+              label: "Restaurang",
+              desc: "Telefonen under rushen, bordsläggningen och gästerna som ska tillbaka.",
+              cta: "Se Seytro för restauranger",
+            },
+            {
+              to: "/hotell" as const,
+              label: "Hotell",
+              desc: "Receptionens inkorg, gästservice dygnet runt och bordsbokning för rumsgäster.",
+              cta: "Se Seytro för hotell",
+            },
+          ].map((c) => (
+            <Link
+              key={c.to}
+              to={c.to}
+              className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-8 transition-colors hover:border-forest"
+            >
+              <div>
+                <h3 className="text-2xl text-forest">{c.label}</h3>
+                <p className="mt-3 max-w-sm text-muted-foreground">{c.desc}</p>
+              </div>
+              <span className="mt-10 text-sm font-medium text-forest transition-transform group-hover:translate-x-1">
+                {c.cta} →
+              </span>
+            </Link>
+          ))}
+        </div>
+        <p className="mt-8 text-sm text-muted-foreground">
+          Hotell med egen restaurang? Hybriduppsättningen kör båda flödena i samma plattform, med en
+          gemensam gästprofil.
+        </p>
+      </section>
 
       <ProductShowcase />
 

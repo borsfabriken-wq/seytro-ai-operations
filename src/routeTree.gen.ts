@@ -17,7 +17,9 @@ import { Route as BordsplaceringRouteImport } from './routes/bordsplacering'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as EpostagentRouteImport } from './routes/epostagent'
 import { Route as GastinsiktRouteImport } from './routes/gastinsikt'
+import { Route as HotellRouteImport } from './routes/hotell'
 import { Route as KampanjerRouteImport } from './routes/kampanjer'
+import { Route as RestaurangRouteImport } from './routes/restaurang'
 import { Route as SalsplanRouteImport } from './routes/salsplan'
 import { Route as TillganglighetRouteImport } from './routes/tillganglighet'
 import { Route as VoiceAgentRouteImport } from './routes/voice-agent'
@@ -79,9 +81,19 @@ const GastinsiktRoute = GastinsiktRouteImport.update({
   path: '/gastinsikt',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HotellRoute = HotellRouteImport.update({
+  id: '/hotell',
+  path: '/hotell',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const KampanjerRoute = KampanjerRouteImport.update({
   id: '/kampanjer',
   path: '/kampanjer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RestaurangRoute = RestaurangRouteImport.update({
+  id: '/restaurang',
+  path: '/restaurang',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SalsplanRoute = SalsplanRouteImport.update({
@@ -198,7 +210,9 @@ export interface FileRoutesByFullPath {
   '/demo': typeof DemoRoute
   '/epostagent': typeof EpostagentRoute
   '/gastinsikt': typeof GastinsiktRoute
+  '/hotell': typeof HotellRoute
   '/kampanjer': typeof KampanjerRoute
+  '/restaurang': typeof RestaurangRoute
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
@@ -229,7 +243,9 @@ export interface FileRoutesByTo {
   '/demo': typeof DemoRoute
   '/epostagent': typeof EpostagentRoute
   '/gastinsikt': typeof GastinsiktRoute
+  '/hotell': typeof HotellRoute
   '/kampanjer': typeof KampanjerRoute
+  '/restaurang': typeof RestaurangRoute
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
@@ -261,7 +277,9 @@ export interface FileRoutesById {
   '/demo': typeof DemoRoute
   '/epostagent': typeof EpostagentRoute
   '/gastinsikt': typeof GastinsiktRoute
+  '/hotell': typeof HotellRoute
   '/kampanjer': typeof KampanjerRoute
+  '/restaurang': typeof RestaurangRoute
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
@@ -294,7 +312,9 @@ export interface FileRouteTypes {
     | '/demo'
     | '/epostagent'
     | '/gastinsikt'
+    | '/hotell'
     | '/kampanjer'
+    | '/restaurang'
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
@@ -325,7 +345,9 @@ export interface FileRouteTypes {
     | '/demo'
     | '/epostagent'
     | '/gastinsikt'
+    | '/hotell'
     | '/kampanjer'
+    | '/restaurang'
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
@@ -356,7 +378,9 @@ export interface FileRouteTypes {
     | '/demo'
     | '/epostagent'
     | '/gastinsikt'
+    | '/hotell'
     | '/kampanjer'
+    | '/restaurang'
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
@@ -388,7 +412,9 @@ export interface RootRouteChildren {
   DemoRoute: typeof DemoRoute
   EpostagentRoute: typeof EpostagentRoute
   GastinsiktRoute: typeof GastinsiktRoute
+  HotellRoute: typeof HotellRoute
   KampanjerRoute: typeof KampanjerRoute
+  RestaurangRoute: typeof RestaurangRoute
   SalsplanRoute: typeof SalsplanRoute
   TillganglighetRoute: typeof TillganglighetRoute
   VoiceAgentRoute: typeof VoiceAgentRoute
@@ -469,11 +495,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GastinsiktRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hotell': {
+      id: '/hotell'
+      path: '/hotell'
+      fullPath: '/hotell'
+      preLoaderRoute: typeof HotellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/kampanjer': {
       id: '/kampanjer'
       path: '/kampanjer'
       fullPath: '/kampanjer'
       preLoaderRoute: typeof KampanjerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/restaurang': {
+      id: '/restaurang'
+      path: '/restaurang'
+      fullPath: '/restaurang'
+      preLoaderRoute: typeof RestaurangRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/salsplan': {
@@ -628,7 +668,9 @@ const rootRouteChildren: RootRouteChildren = {
   DemoRoute: DemoRoute,
   EpostagentRoute: EpostagentRoute,
   GastinsiktRoute: GastinsiktRoute,
+  HotellRoute: HotellRoute,
   KampanjerRoute: KampanjerRoute,
+  RestaurangRoute: RestaurangRoute,
   SalsplanRoute: SalsplanRoute,
   TillganglighetRoute: TillganglighetRoute,
   VoiceAgentRoute: VoiceAgentRoute,

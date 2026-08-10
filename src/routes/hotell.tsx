@@ -1,0 +1,137 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
+import { FaqSection } from "@/components/FaqSection";
+import heroImg from "@/assets/hero-hotel.jpg";
+
+export const Route = createFileRoute("/hotell")({
+  head: () => ({
+    meta: [
+      { title: "Seytro för hotell — AI-concierge för reception och restaurang" },
+      {
+        name: "description",
+        content:
+          "Röstagent och e-postconcierge som avlastar receptionen dygnet runt, kopplar rumsgäster till restaurangen och samlar gästprofilen på ett ställe.",
+      },
+      { property: "og:title", content: "Seytro för hotell" },
+      {
+        property: "og:description",
+        content:
+          "Gästservice dygnet runt: samtal, mejl, bordsbokning och gästprofil i en plattform för hotell.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: HotellPage,
+});
+
+const products = [
+  ["Röstagent", "Svarar när receptionen är upptagen eller obemannad — frågor om incheckning, parkering, frukost och bordsbokning."],
+  ["E-postconcierge", "Grupp- och konferensförfrågningar, sena ankomster och specialönskemål besvaras direkt, dygnet runt."],
+  ["Bokningsassistent", "Rumsgästen bokar bord i hotellets restaurang i samma dialog — bekräftelse och påminnelse sköts automatiskt."],
+  ["Gästinsikt", "En gästprofil som följer med från rum till restaurang: preferenser, allergier och tidigare vistelser."],
+  ["Analys", "Beläggning, restaurangintäkt per gäst och kanalprestanda i klartext."],
+  ["Kampanjer", "Återaktivera tidigare gäster inför lågsäsong och fyll frukost- och middagspassen."],
+];
+
+const kpis: [string, string][] = [
+  ["24/7", "gästservice på svenska och engelska"],
+  ["100%", "besvarade samtal och mejl"],
+  ["−41%", "tid i receptionens inkorg"],
+  ["+18%", "bordsbokningar från rumsgäster"],
+];
+
+function HotellPage() {
+  return (
+    <div className="bg-background text-foreground">
+      <SiteHeader />
+
+      <section className="relative min-h-[85vh] overflow-hidden">
+        <img
+          src={heroImg}
+          alt="Hotellreception i grön marmor och mässing med gäster som checkar in"
+          width={1920}
+          height={1280}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-forest-deep/45" aria-hidden="true" />
+        <div className="relative mx-auto flex min-h-[85vh] max-w-7xl flex-col justify-end px-6 pb-24 pt-40 sm:px-10">
+          <p className="mb-8 text-sm uppercase tracking-[0.28em] text-primary-foreground/70">
+            För hotell
+          </p>
+          <h1 className="max-w-4xl text-5xl leading-[1.05] text-primary-foreground sm:text-7xl">
+            En concierge som aldrig går hem.
+          </h1>
+          <p className="mt-8 max-w-xl text-lg leading-relaxed text-primary-foreground/80">
+            Seytro besvarar gästen dygnet runt, avlastar receptionen och kopplar ihop rummet med
+            restaurangen — samma gästprofil hela vägen.
+          </p>
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <Link
+              to="/demo"
+              className="rounded-full bg-primary-foreground px-8 py-4 text-sm font-medium text-forest-deep transition-opacity hover:opacity-90"
+            >
+              Boka demo
+            </Link>
+            <Link
+              to="/restaurang"
+              className="rounded-full border border-primary-foreground/40 px-8 py-4 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground/10"
+            >
+              Driver du restaurang?
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t-2 border-forest-deep bg-forest-deep text-primary-foreground">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 py-16 sm:px-10 lg:grid-cols-4">
+          {kpis.map(([kpi, label]) => (
+            <div key={label}>
+              <p className="font-display text-4xl">{kpi}</p>
+              <p className="mt-2 text-sm text-primary-foreground/80">{label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-28 sm:px-10">
+        <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Så används Seytro på hotellet</p>
+        <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
+          Från reception till restaurang.
+        </h2>
+        <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          {products.map(([t, d]) => (
+            <div key={t} className="border-l border-border pl-5">
+              <h3 className="text-base font-medium text-forest">{t}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="bg-secondary">
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-16 sm:flex-row sm:items-center sm:justify-between sm:px-10">
+          <div>
+            <h2 className="text-2xl">Hotell med egen restaurang?</h2>
+            <p className="mt-2 max-w-xl text-muted-foreground">
+              Hybriduppsättningen kör reception och sal i samma plattform, med gemensam gästprofil
+              och separata regler för varje flöde.
+            </p>
+          </div>
+          <Link
+            to="/demo"
+            className="shrink-0 rounded-full bg-forest px-8 py-4 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            Visa hybridlösningen
+          </Link>
+        </div>
+      </section>
+
+      <div className="my-8 h-6 w-full bg-forest" aria-hidden="true" />
+
+      <FaqSection />
+      <SiteFooter />
+    </div>
+  );
+}
