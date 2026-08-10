@@ -252,7 +252,7 @@ function Index() {
             {
               to: "/hotell" as const,
               label: "Hotell",
-              desc: "Receptionens inkorg, gästservice dygnet runt och bokningar för rumsgäster.",
+              desc: "Receptionens inkorg, automatisk rumsplacering och gästservice dygnet runt.",
               cta: "Se Seytro för hotell",
             },
           ].map((c) => (
