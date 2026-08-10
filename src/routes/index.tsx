@@ -103,6 +103,8 @@ function Index() {
           height={1280}
           className="absolute inset-0 h-full w-full object-cover"
         />
+        <div className="absolute inset-0 bg-linear-to-t from-forest-deep via-forest-deep/55 to-forest-deep/15" />
+
 
         <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-end px-6 pb-24 pt-40 sm:px-10">
           <p className="fade-up mb-8 max-w-xl text-sm uppercase tracking-[0.28em] text-primary-foreground/70">
@@ -143,7 +145,7 @@ function Index() {
         <div className="mt-16 grid gap-10 lg:grid-cols-3">
           {reasons.map((r) => (
             <div key={r.num} className="border-t border-border pt-8">
-              <span className="text-sm tracking-[0.28em] text-accent-foreground/50">{r.num}</span>
+              <span className="text-sm tracking-[0.28em] text-brass">{r.num}</span>
               <h3 className="mt-4 text-2xl leading-snug">{r.title}</h3>
               <p className="mt-4 leading-relaxed text-muted-foreground">{r.body}</p>
             </div>
@@ -182,7 +184,7 @@ function Index() {
           {pillars.map((p) => (
             <div key={p.num} className="grid gap-10 border-t border-border pt-12 lg:grid-cols-12">
               <div className="lg:col-span-4">
-                <span className="text-sm tracking-[0.28em] text-accent-foreground/50">{p.num}</span>
+                <span className="text-sm tracking-[0.28em] text-brass">{p.num}</span>
                 <h3 className="mt-4 text-3xl">{p.title}</h3>
                 <p className="mt-4 max-w-sm text-muted-foreground">{p.intro}</p>
               </div>
@@ -217,7 +219,7 @@ function Index() {
           <div className="mt-14 grid gap-10 lg:grid-cols-3">
             {steps.map(([t, d], i) => (
               <div key={t} className="border-t border-border pt-8">
-                <span className="text-sm tracking-[0.28em] text-accent-foreground/50">
+                <span className="text-sm tracking-[0.28em] text-brass">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-4 text-2xl">{t}</h3>
