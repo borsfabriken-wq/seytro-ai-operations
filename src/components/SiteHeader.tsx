@@ -6,6 +6,7 @@ import { PlatformMenu } from "@/components/PlatformMenu";
 import { SolutionsMenu } from "@/components/SolutionsMenu";
 import { ResourcesMenu } from "@/components/ResourcesMenu";
 import { CompanyMenu } from "@/components/CompanyMenu";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navItems = [
   { label: "Plattform", href: "#pelare", dropdown: true },
