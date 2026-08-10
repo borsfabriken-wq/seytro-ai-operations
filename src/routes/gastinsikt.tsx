@@ -72,7 +72,7 @@ function GastinsiktPage() {
       <SiteHeader />
 
       <section className="relative min-h-[80vh] overflow-hidden bg-forest-deep text-primary-foreground">
-        <div className="relative mx-auto flex min-h-[80vh] max-w-7xl flex-col justify-end px-6 pb-24 pt-40 sm:px-10">
+        <div className="site-container relative flex min-h-[80vh] flex-col justify-end pb-24 pt-40">
           <p className="mb-8 max-w-xl text-sm uppercase tracking-[0.28em] text-primary-foreground/60">
             Produkt
           </p>
@@ -105,7 +105,7 @@ function GastinsiktPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-28 sm:px-10">
+      <section className="site-container py-28">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Översikt</p>
         <h2 className="mt-6 max-w-3xl text-3xl leading-tight sm:text-4xl">
           Det är inte bara en bokning. Det är en relation.
@@ -123,7 +123,7 @@ function GastinsiktPage() {
       </section>
 
       <section className="bg-muted/50">
-        <div className="mx-auto max-w-7xl px-6 py-28 sm:px-10">
+        <div className="site-container py-28">
           <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Så fungerar det</p>
           <h2 className="mt-6 max-w-3xl text-3xl leading-tight sm:text-4xl">
             Profiler som växer automatiskt, överallt där ni möter gästen.
@@ -149,7 +149,7 @@ function GastinsiktPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-28 sm:px-10">
+      <section className="site-container py-28">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Nyckelfördelar</p>
         <h2 className="mt-6 max-w-2xl text-3xl leading-tight sm:text-4xl">
           Så hjälper Gästinsikt er att växa.
@@ -172,7 +172,7 @@ function GastinsiktPage() {
       </section>
 
       <section className="bg-forest-deep text-primary-foreground">
-        <div className="mx-auto max-w-7xl px-6 py-28 sm:px-10">
+        <div className="site-container py-28">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
               <p className="text-sm uppercase tracking-[0.28em] text-primary-foreground/60">

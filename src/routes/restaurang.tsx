@@ -56,7 +56,7 @@ function RestaurangPage() {
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-forest-deep/55" aria-hidden="true" />
-        <div className="relative mx-auto flex min-h-[85vh] max-w-7xl flex-col justify-end px-6 pb-24 pt-40 sm:px-10">
+        <div className="site-container relative flex min-h-[85vh] flex-col justify-end pb-24 pt-40">
           <p className="mb-8 text-sm uppercase tracking-[0.28em] text-primary-foreground/70">
             För restauranger
           </p>
@@ -85,7 +85,7 @@ function RestaurangPage() {
       </section>
 
       <section className="border-t-2 border-forest-deep bg-forest-deep text-primary-foreground">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 py-16 sm:px-10 lg:grid-cols-4">
+        <div className="site-container grid grid-cols-2 gap-px py-16 lg:grid-cols-4">
           {kpis.map(([kpi, label]) => (
             <div key={label}>
               <p className="font-display text-4xl">{kpi}</p>
@@ -95,7 +95,7 @@ function RestaurangPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-28 sm:px-10">
+      <section className="site-container py-28">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Så används Seytro i restaurangen</p>
         <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
           Byggt för bordsläggning, turnering och gästfrihet.
@@ -111,7 +111,7 @@ function RestaurangPage() {
       </section>
 
       <section className="bg-secondary">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-16 sm:flex-row sm:items-center sm:justify-between sm:px-10">
+        <div className="site-container flex flex-col gap-6 py-16 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-2xl">Både restaurang och hotell?</h2>
             <p className="mt-2 max-w-xl text-muted-foreground">

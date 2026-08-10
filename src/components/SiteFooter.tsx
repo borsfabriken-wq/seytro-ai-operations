@@ -63,7 +63,7 @@ const columns = [
 export function SiteFooter() {
   return (
     <footer className="rounded-t-3xl bg-forest-deep text-primary-foreground">
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:py-20">
+      <div className="site-container py-16 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-4">
             <Link to="/" className="inline-block">

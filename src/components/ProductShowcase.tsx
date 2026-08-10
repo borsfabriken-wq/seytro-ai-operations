@@ -130,7 +130,7 @@ export function ProductShowcase() {
 
   return (
     <section
-      className="mx-auto max-w-7xl px-6 py-24 sm:px-10"
+      className="site-container py-24"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-label="Våra produkter"
