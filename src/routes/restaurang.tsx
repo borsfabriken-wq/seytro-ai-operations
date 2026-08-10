@@ -98,7 +98,7 @@ function RestaurangPage() {
       <section className="mx-auto max-w-7xl px-6 py-28 sm:px-10">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Så används Seytro i restaurangen</p>
         <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
-          Byggt för sal, bar och bokning.
+          Byggt för bordsläggning, turnering och gästfrihet.
         </h2>
         <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {products.map(([t, d]) => (
