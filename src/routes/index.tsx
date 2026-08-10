@@ -11,17 +11,17 @@ import visionImg from "@/assets/vision.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Seytro — AI-driven operationsplattform för gästfrihet" },
+      { title: "Seytro — AI-plattform för servicebranschen" },
       {
         name: "description",
         content:
-          "Seytro samlar gästkommunikation, drift och gästtillväxt i en AI-driven plattform. Se vad varje funktion gör, varför den behövs och hur den fungerar hos er.",
+          "Seytro fångar upp missade bokningar, minskar det administrativa arbetet och samlar all gästdata — AI-integrationer ovanpå de system servicebranschen redan använder.",
       },
-      { property: "og:title", content: "Seytro — AI-plattform för gästfrihet" },
+      { property: "og:title", content: "Seytro — AI för servicebranschen" },
       {
         property: "og:description",
         content:
-          "Röstagent, e-postconcierge, bordsplacering och gästinsikt — en plattform, tydliga funktioner, mätbar nytta.",
+          "Inga missade förfrågningar, mindre administration och en samlad datagrund. AI som lägger sig ovanpå era befintliga system.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -33,30 +33,30 @@ export const Route = createFileRoute("/")({
 const reasons = [
   {
     num: "01",
-    title: "Ingen förfrågan faller mellan stolarna",
-    body: "Missade samtal och obesvarade mejl är förlorade intäkter. Seytro svarar direkt, dygnet runt, oavsett hur mycket som händer i verksamheten.",
+    title: "Missade bokningar blir bokade",
+    body: "Varje obesvarat samtal och mejl är en intäkt som gick till någon annan. Seytro svarar direkt, dygnet runt, oavsett hur mycket som händer i verksamheten — och förfrågan blir en färdig bokning.",
   },
   {
     num: "02",
-    title: "Administrationen slutar växa med er",
-    body: "Fler gäster ska inte betyda fler timmar i inkorgen. Rutinarbetet — bekräftelser, ändringar, påminnelser, placeringar — sköts automatiskt.",
+    title: "Mindre administrativt arbete",
+    body: "Bekräftelser, ändringar, påminnelser, avbokningar och schemapussel äter timmar varje vecka. Rutinen sköts automatiskt, så personalen kan lägga tiden på gästen istället för på skärmen.",
   },
   {
     num: "03",
-    title: "Gästdatan blir faktiskt använd",
-    body: "Preferenser, allergier och historik ligger sällan där de behövs. Seytro samlar dem i en profil som följer gästen genom varje kontakt.",
+    title: "All data på ett ställe",
+    body: "Gästdata ligger utspridd i telefon, mejl, bokningssystem och kassa. Seytro samlar den i en gemensam grund — samma bild av gästen, oavsett vem i teamet som möter den.",
   },
 ];
 
 const pillars = [
   {
     num: "01",
-    title: "Gästkommunikation",
+    title: "Kommunikation",
     intro:
-      "Funktionen: varje samtal, mejl och bokningsförfrågan besvaras direkt, på gästens språk. Används när telefonen ringer mer än ni hinner svara.",
+      "Funktionen: varje samtal, mejl och förfrågan besvaras direkt, på gästens språk. Används när kontaktflödet är större än vad bemanningen hinner med.",
     items: [
       ["Röstagent", "Tar emot samtal, bokar och besvarar frågor med naturlig röst.", "/voice-agent"],
-      ["E-postconcierge", "Läser, prioriterar och svarar på gästmejl i er ton.", "/epostagent"],
+      ["E-postconcierge", "Läser, prioriterar och svarar på förfrågningar i er ton.", "/epostagent"],
       ["Bokningsassistent", "Bekräftar, ombokar och påminner — färre no-shows.", "/bokningsassistent"],
     ] as [string, string, string][],
   },
@@ -64,7 +64,7 @@ const pillars = [
     num: "02",
     title: "Drift och kapacitet",
     intro:
-      "Funktionen: kapaciteten planeras i realtid över alla kanaler. Används när pusslet mellan bokningar, bord och bemanning tar för mycket tid.",
+      "Funktionen: kapaciteten planeras i realtid över alla kanaler. Används när pusslet mellan bokningar, platser och bemanning tar för mycket tid.",
     items: [
       ["Bordsplacering", "Optimal placering utifrån sällskap, tid och belastning.", "/bordsplacering"],
       ["Salsplan", "Levande vy med statusar, turnering och zoner.", "/salsplan"],
@@ -73,21 +73,21 @@ const pillars = [
   },
   {
     num: "03",
-    title: "Gästtillväxt",
+    title: "Data och tillväxt",
     intro:
-      "Funktionen: gästdata blir till återkommande besök. Används när ni vill fylla svaga pass utan att bygga rapporter manuellt.",
+      "Funktionen: gästdatan blir användbar och leder till fler återkommande besök. Används när underlaget finns men ingen hinner arbeta med det.",
     items: [
-      ["Gästinsikt", "Profiler med preferenser, allergier och historik.", "/gastinsikt"],
-      ["Analys", "Intäkt, turnering och kanalprestanda i klartext.", "/analys"],
+      ["Gästinsikt", "Profiler med preferenser, historik och noteringar.", "/gastinsikt"],
+      ["Analys", "Intäkt, beläggning och kanalprestanda i klartext.", "/analys"],
       ["Kampanjer", "Segmenterade utskick som fyller de svaga passen.", "/kampanjer"],
     ] as [string, string, string][],
   },
 ];
 
 const steps = [
-  ["Koppla", "Seytro läggs ovanpå ert befintliga boknings- och telefonisystem. Ingen migrering."],
-  ["Lär", "Plattformen tränas på era regler, er ton och era öppettider — ni godkänner innan den går live."],
-  ["Kör", "AI:n hanterar rutinen och eskalerar till personal när något kräver en människa."],
+  ["Koppla", "Seytro läggs ovanpå era befintliga system — bokning, telefoni, mejl och kassa. Ingen migrering, inget systembyte."],
+  ["Lär", "Plattformen tränas på era regler, er ton och era öppettider. Ni godkänner innan den går live."],
+  ["Kör", "AI:n hanterar rutinen, samlar datan och eskalerar till personal när något kräver en människa."],
 ];
 
 function Index() {
@@ -98,7 +98,7 @@ function Index() {
       <section id="top" className="relative min-h-screen overflow-hidden">
         <img
           src={heroImg.url}
-          alt="Livfull matsal med gäster vid dukade bord"
+          alt="Gäster som möts av personal i en servicemiljö"
           width={1920}
           height={1280}
           className="absolute inset-0 h-full w-full object-cover"
@@ -106,14 +106,15 @@ function Index() {
 
         <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-end px-6 pb-24 pt-40 sm:px-10">
           <p className="fade-up mb-8 max-w-xl text-sm uppercase tracking-[0.28em] text-primary-foreground/70">
-            AI-driven operationsplattform för gästfrihet
+            AI-integrationer för servicebranschen
           </p>
           <h1 className="fade-up max-w-4xl text-5xl leading-[1.02] text-primary-foreground sm:text-7xl lg:text-8xl">
-            Gästfrihet som sköter sig själv.
+            Service som sköter sig själv.
           </h1>
           <p className="fade-up mt-8 max-w-xl text-lg leading-relaxed text-primary-foreground/75">
-            Seytro besvarar gästen, planerar kapaciteten och får gästen att komma tillbaka. Här är
-            vad varje funktion gör och varför den behövs — djupdykningen finns på respektive sida.
+            Seytro fångar upp bokningarna ni annars hade missat, tar bort det administrativa
+            rutinarbetet och samlar all gästdata — som ett AI-lager ovanpå de system ni redan
+            använder.
           </p>
           <div className="fade-up mt-10 flex flex-wrap items-center gap-4">
             <Link
@@ -137,7 +138,7 @@ function Index() {
       <section id="varfor" className="mx-auto max-w-7xl px-6 py-28 sm:px-10">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Varför Seytro</p>
         <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
-          Tre skäl att lägga AI ovanpå driften.
+          Tre problem varje serviceverksamhet känner igen.
         </h2>
         <div className="mt-16 grid gap-10 lg:grid-cols-3">
           {reasons.map((r) => (
@@ -207,8 +208,12 @@ function Index() {
 
       <section className="bg-secondary">
         <div className="mx-auto max-w-7xl px-6 py-24 sm:px-10">
-          <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Så kommer ni igång</p>
-          <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">Tre steg, inga systembyten.</h2>
+          <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">
+            Så kommer ni igång
+          </p>
+          <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
+            Tre steg, inga systembyten.
+          </h2>
           <div className="mt-14 grid gap-10 lg:grid-cols-3">
             {steps.map(([t, d], i) => (
               <div key={t} className="border-t border-border pt-8">
@@ -220,6 +225,10 @@ function Index() {
               </div>
             ))}
           </div>
+          <p className="mt-12 max-w-2xl text-sm text-muted-foreground">
+            Seytro integreras med bokningssystem, telefoni, mejl, kassa och gästregister — datan
+            fortsätter att leva i era system, men blir användbar på ett ställe.
+          </p>
         </div>
       </section>
 
@@ -227,8 +236,8 @@ function Index() {
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Djupdykning</p>
         <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">Vad driver du?</h2>
         <p className="mt-6 max-w-xl text-muted-foreground">
-          Samma plattform, olika vardag. Välj din ingång så visar vi Seytro med dina flöden, exempel
-          och siffror.
+          Samma plattform, olika vardag. Välj din ingång så visar vi hur systemet maxas för just din
+          verksamhet — med dina flöden, exempel och siffror.
         </p>
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
           {[
@@ -241,7 +250,7 @@ function Index() {
             {
               to: "/hotell" as const,
               label: "Hotell",
-              desc: "Receptionens inkorg, gästservice dygnet runt och bordsbokning för rumsgäster.",
+              desc: "Receptionens inkorg, gästservice dygnet runt och bokningar för rumsgäster.",
               cta: "Se Seytro för hotell",
             },
           ].map((c) => (
@@ -261,8 +270,8 @@ function Index() {
           ))}
         </div>
         <p className="mt-8 text-sm text-muted-foreground">
-          Hotell med egen restaurang? Hybriduppsättningen kör båda flödena i samma plattform, med en
-          gemensam gästprofil.
+          Verksamhet med både boende och servering? Hybriduppsättningen kör båda flödena i samma
+          plattform, med en gemensam gästprofil.
         </p>
       </section>
 
@@ -275,8 +284,8 @@ function Index() {
             </h2>
             <p className="mt-8 text-lg leading-relaxed text-primary-foreground/75">
               Vi tror att tekniken ska försvinna in i väggarna. Personalen ska möta gästen — inte
-              skärmen. Seytro byggs som ett operativsystem för gästfrihet där varje system talar med
-              varandra: telefonen, bokningen, planen och gästprofilen.
+              skärmen. Seytro byggs som ett operativsystem för service där varje system talar med
+              varandra: telefonen, inkorgen, bokningen och gästprofilen.
             </p>
             <p className="mt-6 text-lg leading-relaxed text-primary-foreground/75">
               Nästa steg är en plattform som föreslår innan ni frågar: bemanning inför en regnig
@@ -286,7 +295,7 @@ function Index() {
           </div>
           <img
             src={visionImg}
-            alt="Detalj av en hotellreception i grön marmor och mässing"
+            alt="Detalj av en reception i grön marmor och mässing"
             width={1280}
             height={960}
             loading="lazy"
@@ -300,8 +309,8 @@ function Index() {
           Se Seytro i er egen verksamhet.
         </h2>
         <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
-          30 minuter, live med ert eget bokningsflöde. Vi visar hur röstagenten svarar och hur
-          kapaciteten planeras automatiskt.
+          30 minuter, live med era egna flöden. Vi visar hur röstagenten svarar, hur bokningarna
+          landar och hur administrationen försvinner.
         </p>
         <Link
           to="/demo"
