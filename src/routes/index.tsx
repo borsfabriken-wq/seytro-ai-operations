@@ -264,28 +264,48 @@ function Index() {
             {
               to: "/restaurang" as const,
               label: "Restaurang",
+              img: cardRestaurant,
+              alt: "Värd vid en bordsöversikt i en restaurang under service",
               desc: "Telefonen under rushen, bordsläggningen och gästerna som ska tillbaka.",
               cta: "Se Seytro för restauranger",
+              ring: "hover:border-ember",
+              tone: "text-ember",
             },
             {
               to: "/hotell" as const,
               label: "Hotell",
+              img: cardHotel,
+              alt: "Korridor och rumsentré på ett boutiquehotell",
               desc: "Receptionens inkorg, automatisk rumsplacering och gästservice dygnet runt.",
               cta: "Se Seytro för hotell",
+              ring: "hover:border-tide",
+              tone: "text-tide",
             },
           ].map((c) => (
             <Link
               key={c.to}
               to={c.to}
-              className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-8 transition-colors hover:border-forest"
+              className={`group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-colors ${c.ring}`}
             >
-              <div>
-                <h3 className="text-2xl text-forest">{c.label}</h3>
-                <p className="mt-3 max-w-sm text-muted-foreground">{c.desc}</p>
+              <div className="relative h-56 overflow-hidden sm:h-64">
+                <img
+                  src={c.img}
+                  alt={c.alt}
+                  width={1200}
+                  height={912}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
               </div>
-              <span className="mt-10 text-sm font-medium text-forest transition-transform group-hover:translate-x-1">
-                {c.cta} →
-              </span>
+              <div className="flex flex-1 flex-col justify-between p-8">
+                <div>
+                  <h3 className={`text-2xl ${c.tone}`}>{c.label}</h3>
+                  <p className="mt-3 max-w-sm text-muted-foreground">{c.desc}</p>
+                </div>
+                <span className="mt-10 text-sm font-medium text-foreground transition-transform group-hover:translate-x-1">
+                  {c.cta} →
+                </span>
+              </div>
             </Link>
           ))}
         </div>
