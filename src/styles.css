@@ -10,11 +10,13 @@
  * The @theme inline block maps CSS custom properties to Tailwind utility
  * classes (e.g. --color-primary -> bg-primary, text-primary).
  *
- * The :root and .dark blocks define the actual color values using oklch.
+ * The :root block defines the actual color values using oklch.
+ * This site is light-mode only — there is no .dark theme.
  * All colors MUST use oklch format.
  *
  * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 1. Add the variable to :root
+
  * 2. Register it in @theme inline as --color-<name>: var(--<name>)
  */
 
@@ -63,6 +65,7 @@
 
 :root {
   --radius: 0.25rem;
+  color-scheme: light;
   /* Clean white canvas */
   --background: oklch(1 0 0);
   --foreground: oklch(0.32 0.02 220);
@@ -103,19 +106,19 @@
   --moss-soft: oklch(0.962 0.018 160);
 
 
-  --chart-1: oklch(0.65 0.17 245);
+  --chart-1: oklch(0.58 0.135 245);
   --chart-2: oklch(0.32 0.02 220);
-  --chart-3: oklch(0.82 0.018 100);
+  --chart-3: oklch(0.9 0.008 100);
   --chart-4: oklch(0.95 0.005 120);
   --chart-5: oklch(1 0 0);
   --sidebar: oklch(0.95 0.005 120);
   --sidebar-foreground: oklch(0.32 0.02 220);
-  --sidebar-primary: oklch(0.65 0.17 245);
+  --sidebar-primary: oklch(0.58 0.135 245);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.82 0.018 100);
+  --sidebar-accent: oklch(0.93 0.012 100);
   --sidebar-accent-foreground: oklch(0.32 0.02 220);
-  --sidebar-border: oklch(0.82 0.018 100);
-  --sidebar-ring: oklch(0.65 0.17 245);
+  --sidebar-border: oklch(0.9 0.008 100);
+  --sidebar-ring: oklch(0.58 0.135 245);
 }
 
 
