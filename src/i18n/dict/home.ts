@@ -1,4 +1,8 @@
 export const home: Record<string, string> = {
+  "Bokningssystem och gästkommunikation i ett": "Booking system and guest communication in one",
+  "Seytro är helhetslösningen för bokningar och gästkommunikation. Vi fångar upp förfrågningar ni annars hade missat, svarar i telefon och mejl dygnet runt, placerar varje gäst på rätt plats och tar bort det administrativa rutinarbetet — som ett AI-lager ovanpå de system ni redan använder.":
+    "Seytro is the complete solution for bookings and guest communication. We capture requests you would otherwise miss, answer calls and emails around the clock, seat every guest in the right spot and remove routine administrative work — an AI layer on top of the systems you already use.",
+
   "Seytro — AI-plattform för servicebranschen": "Seytro — AI platform for the hospitality industry",
   "Seytro fångar upp missade bokningar, minskar det administrativa arbetet och samlar all gästdata — AI-integrationer ovanpå de system servicebranschen redan använder.":
     "Seytro captures missed bookings, reduces administrative work and consolidates all guest data — AI integrations on top of the systems hospitality already uses.",
