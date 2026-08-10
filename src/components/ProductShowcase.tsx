@@ -73,10 +73,28 @@ export function ProductShowcase() {
   const [paused, setPaused] = useState(false);
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
   const raf = useRef<number | null>(null);
   const startRef = useRef<number>(0);
   const progressRef = useRef<number>(0);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (paused) return;
@@ -124,6 +142,11 @@ export function ProductShowcase() {
       setVisible(true);
     }, 200);
   };
+
+  const reveal = (delay: number) => ({
+    className: `transition-all duration-700 ease-out will-change-transform ${inView ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`,
+    style: { transitionDelay: `${delay}ms` },
+  });
 
   const current = products[active] ?? products[0]!;
   const Icon = current.icon;
