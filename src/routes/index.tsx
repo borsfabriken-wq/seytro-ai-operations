@@ -111,16 +111,18 @@ function Index() {
 
         <div className="site-container relative flex min-h-[100svh] flex-col justify-end pb-16 pt-32 sm:pb-24 sm:pt-40">
           <p className="fade-up mb-8 max-w-xl text-sm uppercase tracking-[0.28em] text-primary-foreground/70">
-            AI-integrationer för servicebranschen
+            Bokningssystem och gästkommunikation i ett
           </p>
           <h1 className="fade-up max-w-4xl text-5xl leading-[1.02] text-primary-foreground sm:text-7xl lg:text-8xl">
             Bokningar och placering som sköter sig självt.
           </h1>
           <p className="fade-up mt-8 max-w-xl text-lg leading-relaxed text-primary-foreground/75">
-            Seytro fångar upp förfrågningar ni annars hade missat, placerar varje gäst på rätt plats
-            och tar bort det administrativa rutinarbetet — som ett AI-lager ovanpå de system ni
-            redan använder.
+            Seytro är helhetslösningen för bokningar och gästkommunikation. Vi fångar upp
+            förfrågningar ni annars hade missat, svarar i telefon och mejl dygnet runt, placerar
+            varje gäst på rätt plats och tar bort det administrativa rutinarbetet — som ett AI-lager
+            ovanpå de system ni redan använder.
           </p>
+
           <div className="fade-up mt-10 flex flex-wrap items-center gap-4">
             <Link
               to="/demo"
