@@ -230,10 +230,10 @@ function Index() {
       <section className="bg-secondary">
         <div className="mx-auto max-w-7xl px-6 py-24 sm:px-10">
           <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">
-            Så kommer ni igång
+            Så fungerar det
           </p>
-          <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
-            Tre steg, inga systembyten.
+          <h2 className="mt-6 max-w-3xl text-4xl leading-tight sm:text-5xl">
+            En helhetslösning för bokning, drift och gästkommunikation — ovanpå era befintliga system.
           </h2>
           <div className="mt-14 grid gap-10 lg:grid-cols-3">
             {steps.map(([t, d], i) => (
