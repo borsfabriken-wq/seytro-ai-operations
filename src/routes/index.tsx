@@ -5,8 +5,10 @@ import { LogoMarquee } from "@/components/LogoMarquee";
 import { ProductShowcase } from "@/components/ProductShowcase";
 import { FaqSection } from "@/components/FaqSection";
 
-import heroImg from "@/assets/hero-restaurant.png.asset.json";
-import visionImg from "@/assets/vision.jpg";
+import heroImg from "@/assets/hero-main.jpg";
+import visionImg from "@/assets/vision-new.jpg";
+import cardRestaurant from "@/assets/card-restaurant.jpg";
+import cardHotel from "@/assets/card-hotel.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -97,13 +99,14 @@ function Index() {
 
       <section id="top" className="relative min-h-screen overflow-hidden">
         <img
-          src={heroImg.url}
+          src={heroImg}
           alt="Gäster som möts av personal i en servicemiljö"
           width={1920}
           height={1280}
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-forest-deep via-forest-deep/55 to-forest-deep/15" />
+        <div className="absolute inset-0 bg-linear-to-t from-forest-deep via-forest-deep/60 to-forest-deep/10" />
+        <div className="absolute inset-0 bg-linear-to-r from-forest-deep/60 via-transparent to-tide/10" />
 
 
         <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-end px-6 pb-24 pt-40 sm:px-10">
@@ -143,9 +146,16 @@ function Index() {
           Tre problem varje serviceverksamhet känner igen.
         </h2>
         <div className="mt-16 grid gap-10 lg:grid-cols-3">
-          {reasons.map((r) => (
-            <div key={r.num} className="border-t border-border pt-8">
-              <span className="text-sm tracking-[0.28em] text-brass">{r.num}</span>
+          {reasons.map((r, i) => (
+            <div
+              key={r.num}
+              className={`border-t-2 pt-8 ${["border-tide", "border-ember", "border-moss"][i % 3]}`}
+            >
+              <span
+                className={`text-sm tracking-[0.28em] ${["text-tide", "text-ember", "text-moss"][i % 3]}`}
+              >
+                {r.num}
+              </span>
               <h3 className="mt-4 text-2xl leading-snug">{r.title}</h3>
               <p className="mt-4 leading-relaxed text-muted-foreground">{r.body}</p>
             </div>
@@ -171,7 +181,8 @@ function Index() {
         </div>
       </section>
 
-      <section id="pelare" className="mx-auto max-w-7xl px-6 py-28 sm:px-10">
+      <section id="pelare" className="bg-linear-to-b from-background to-secondary/50">
+        <div className="mx-auto max-w-7xl px-6 py-28 sm:px-10">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Funktionerna</p>
         <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
           Vad plattformen gör — och när den används.
@@ -181,10 +192,16 @@ function Index() {
         </p>
 
         <div className="mt-20 space-y-20">
-          {pillars.map((p) => (
+          {pillars.map((p, i) => (
             <div key={p.num} className="grid gap-10 border-t border-border pt-12 lg:grid-cols-12">
               <div className="lg:col-span-4">
-                <span className="text-sm tracking-[0.28em] text-brass">{p.num}</span>
+                <span
+                  className={`inline-block rounded-full px-3 py-1 text-xs tracking-[0.28em] ${
+                    ["bg-tide-soft text-tide", "bg-ember-soft text-ember", "bg-moss-soft text-moss"][i % 3]
+                  }`}
+                >
+                  {p.num}
+                </span>
                 <h3 className="mt-4 text-3xl">{p.title}</h3>
                 <p className="mt-4 max-w-sm text-muted-foreground">{p.intro}</p>
               </div>
@@ -205,6 +222,7 @@ function Index() {
               </div>
             </div>
           ))}
+        </div>
         </div>
       </section>
 
