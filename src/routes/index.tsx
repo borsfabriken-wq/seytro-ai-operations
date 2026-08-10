@@ -97,7 +97,7 @@ function Index() {
     <div className="bg-background text-foreground">
       <SiteHeader />
 
-      <section id="top" className="relative min-h-screen overflow-hidden">
+      <section id="top" className="relative min-h-[100svh] overflow-hidden">
         <img
           src={heroImg}
           alt="Gäster som möts av personal i en servicemiljö"
@@ -109,7 +109,7 @@ function Index() {
         <div className="absolute inset-0 bg-linear-to-r from-forest-deep/45 via-transparent to-transparent" />
 
 
-        <div className="site-container relative flex min-h-screen flex-col justify-end pb-24 pt-40">
+        <div className="site-container relative flex min-h-[100svh] flex-col justify-end pb-16 pt-32 sm:pb-24 sm:pt-40">
           <p className="fade-up mb-8 max-w-xl text-sm uppercase tracking-[0.28em] text-primary-foreground/70">
             AI-integrationer för servicebranschen
           </p>
@@ -140,7 +140,7 @@ function Index() {
 
       <LogoMarquee />
 
-      <section id="varfor" className="site-container py-28">
+      <section id="varfor" className="site-container py-20 sm:py-28">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Varför Seytro</p>
         <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
           Tre problem varje serviceverksamhet känner igen.
@@ -183,7 +183,7 @@ function Index() {
       </section>
 
       <section id="pelare" className="bg-linear-to-b from-background to-secondary/50">
-        <div className="site-container py-28">
+        <div className="site-container py-20 sm:py-28">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Funktionerna</p>
         <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
           Vad plattformen gör — och när den används.
@@ -253,7 +253,7 @@ function Index() {
         </div>
       </section>
 
-      <section id="bransch" className="site-container py-28">
+      <section id="bransch" className="site-container py-20 sm:py-28">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Djupdykning</p>
         <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">Vad driver du?</h2>
         <p className="mt-6 max-w-xl text-muted-foreground">
@@ -317,7 +317,7 @@ function Index() {
       </section>
 
       <section id="vision" className="bg-forest-deep text-primary-foreground">
-        <div className="site-container grid items-center gap-16 py-28 lg:grid-cols-2">
+        <div className="site-container grid items-center gap-16 py-20 sm:py-28 lg:grid-cols-2">
           <div>
             <p className="text-sm uppercase tracking-[0.28em] text-primary-foreground/60">Vision</p>
             <h2 className="mt-6 text-4xl leading-tight sm:text-5xl">
@@ -345,7 +345,7 @@ function Index() {
         </div>
       </section>
 
-      <section id="demo" className="site-container py-32 text-center">
+      <section id="demo" className="site-container py-24 sm:py-32 text-center">
         <h2 className="mx-auto max-w-3xl text-4xl leading-tight sm:text-6xl">
           Se Seytro i er egen verksamhet.
         </h2>

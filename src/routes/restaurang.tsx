@@ -47,7 +47,7 @@ function RestaurangPage() {
     <div className="bg-background text-foreground">
       <SiteHeader />
 
-      <section className="relative min-h-[85vh] overflow-hidden">
+      <section className="relative min-h-[75svh] sm:min-h-[85svh] overflow-hidden">
         <img
           src={heroImg.url}
           alt="Restaurangmatsal med gäster vid dukade bord"
@@ -56,7 +56,7 @@ function RestaurangPage() {
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-forest-deep/55" aria-hidden="true" />
-        <div className="site-container relative flex min-h-[85vh] flex-col justify-end pb-24 pt-40">
+        <div className="site-container relative flex min-h-[75svh] sm:min-h-[85svh] flex-col justify-end pb-16 pt-32 sm:pb-24 sm:pt-40">
           <p className="mb-8 text-sm uppercase tracking-[0.28em] text-primary-foreground/70">
             För restauranger
           </p>
@@ -95,7 +95,7 @@ function RestaurangPage() {
         </div>
       </section>
 
-      <section className="site-container py-28">
+      <section className="site-container py-20 sm:py-28">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Så används Seytro i restaurangen</p>
         <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
           Byggt för bordsläggning, turnering och gästfrihet.
