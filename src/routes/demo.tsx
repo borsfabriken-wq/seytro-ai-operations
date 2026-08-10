@@ -158,8 +158,6 @@ function Calendar() {
 }
 
 function DemoPage() {
-  const [expanded, setExpanded] = useState(false);
-
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader solid />
