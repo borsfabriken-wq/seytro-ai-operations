@@ -27,9 +27,9 @@ export const Route = createFileRoute("/demo")({
 });
 
 const bullets = [
-  "Se våra AI-röst- och mejlagenter hantera verkliga scenarion",
-  "Få en genomgång anpassad efter er verksamhet",
-  "Se hur restauranger redan använder Seytro",
+  "30 minuter anpassat efter din restaurang eller ditt hotell",
+  "Se AI-agenter hantera bokningar, frågor och ändringar live",
+  "Få koll på migrering, uppstart och snabb ROI",
 ];
 
 const monthNames = [
@@ -158,8 +158,6 @@ function Calendar() {
 }
 
 function DemoPage() {
-  const [expanded, setExpanded] = useState(false);
-
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader solid />
@@ -220,25 +218,44 @@ function DemoPage() {
               <h3 className="text-sm font-medium text-foreground">
                 Vad händer under demot?
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                På 30 minuter visar vi hur Seytro kan ersätta manuell
-                bokningshantering och ge er full koll på gästkommunikationen.
-                {expanded && (
-                  <>
-                    {" "}
-                    Vi går igenom röstagenten och e-postconciergen live, tittar
-                    på hur bordsplacering och salsplan hänger ihop, och svarar
-                    på era frågor om integrationer, data och uppstart.
-                  </>
-                )}
-              </p>
-              <button
-                type="button"
-                onClick={() => setExpanded((v) => !v)}
-                className="mt-2 text-sm font-medium text-forest-deep underline underline-offset-4 transition-opacity hover:opacity-70"
-              >
-                {expanded ? "Visa mindre" : "Visa mer"}
-              </button>
+              <div className="mt-3 space-y-4 text-sm leading-relaxed text-muted-foreground">
+                <p>
+                  På 30 minuter visar vi hur Seytro kan ersätta ditt nuvarande
+                  bokningssystem, hjälpa dig att få in fler bokningar, minska
+                  administrationen och ge dig bättre kontroll över salsplan och
+                  tillgänglighet.
+                </p>
+                <p>
+                  Du får se hur Seytros AI-agenter fungerar som en digital
+                  maître d' — tillgängliga dygnet runt. De hanterar
+                  bokningsförfrågningar via telefon och mejl, svarar gäster
+                  inom en minut, följer upp när information saknas, och sköter
+                  detaljer som större sällskap, menyval, allergier, ändringar,
+                  avbokningar och särskilda önskemål.
+                </p>
+                <p>
+                  Vi visar också hur bordsoptimeringen arbetar i realtid för
+                  att hitta smartare sätt att placera gäster. Det hjälper dig
+                  att ta emot fler bokningar, minska det manuella arbetet med
+                  bordsfördelning och skapa ett lugnare flöde för reception,
+                  bokningsansvariga och servicepersonal.
+                </p>
+                <p>
+                  En viktig del av demon är övergången till Seytro. Vi går
+                  igenom exakt hur migreringen fungerar, vad vårt team tar hand
+                  om och vad vi behöver från er. Historiska bokningsdata,
+                  gästinformation, mejlkonto, telefonuppsättning och viktiga
+                  inställningar flyttas genom en tydlig process, så att ni kan
+                  komma igång utan tekniska bekymmer eller störningar i
+                  verksamheten.
+                </p>
+                <p>
+                  Demot anpassas efter din restaurang, ditt hotell, dina
+                  arbetsflöden och dina mål. Du lämnar mötet med en tydlig bild
+                  av hur Seytro skulle fungera i din vardag, vilka delar som kan
+                  automatiseras direkt och hur enkelt det är att komma igång.
+                </p>
+              </div>
             </div>
 
             <div className="mt-7 border-t border-border pt-6">
