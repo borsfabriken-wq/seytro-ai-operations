@@ -103,6 +103,8 @@ function Index() {
           height={1280}
           className="absolute inset-0 h-full w-full object-cover"
         />
+        <div className="absolute inset-0 bg-linear-to-t from-forest-deep via-forest-deep/55 to-forest-deep/15" />
+
 
         <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-end px-6 pb-24 pt-40 sm:px-10">
           <p className="fade-up mb-8 max-w-xl text-sm uppercase tracking-[0.28em] text-primary-foreground/70">
