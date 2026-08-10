@@ -145,7 +145,7 @@ function Index() {
         <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
           Tre problem varje serviceverksamhet känner igen.
         </h2>
-        <div className="mt-16 grid gap-10 lg:grid-cols-3">
+        <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {reasons.map((r, i) => (
             <div
               key={r.num}
