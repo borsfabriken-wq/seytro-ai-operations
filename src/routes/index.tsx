@@ -38,8 +38,8 @@ const reasons = [
   },
   {
     num: "02",
-    title: "Mindre administrativt arbete",
-    body: "Bekräftelser, ändringar, påminnelser, avbokningar och schemapussel äter timmar varje vecka. Rutinen sköts automatiskt, så personalen kan lägga tiden på gästen istället för på skärmen.",
+    title: "Rätt plats vid rätt tid",
+    body: "Bordsläggning, rumsplacering och kapacitetsstyrning görs automatiskt utifrån sällskap, önskemål och belastning. Färre dubbelbokningar och mer välplanerade pass.",
   },
   {
     num: "03",
@@ -62,9 +62,9 @@ const pillars = [
   },
   {
     num: "02",
-    title: "Drift och kapacitet",
+    title: "Placering och kapacitet",
     intro:
-      "Funktionen: kapaciteten planeras i realtid över alla kanaler. Används när pusslet mellan bokningar, platser och bemanning tar för mycket tid.",
+      "Funktionen: varje gäst placeras på rätt plats i rätt tid, oavsett kanal. Används när pusslet mellan bokningar, bord, rum och bemanning tar för mycket tid.",
     items: [
       ["Bordsplacering", "Optimal placering utifrån sällskap, tid och belastning.", "/bordsplacering"],
       ["Salsplan", "Levande vy med statusar, turnering och zoner.", "/salsplan"],
@@ -111,12 +111,12 @@ function Index() {
             AI-integrationer för servicebranschen
           </p>
           <h1 className="fade-up max-w-4xl text-5xl leading-[1.02] text-primary-foreground sm:text-7xl lg:text-8xl">
-            Service som sköter sig själv.
+            Bokningar och placering som sköter sig självt.
           </h1>
           <p className="fade-up mt-8 max-w-xl text-lg leading-relaxed text-primary-foreground/75">
-            Seytro fångar upp bokningarna ni annars hade missat, tar bort det administrativa
-            rutinarbetet och samlar all gästdata — som ett AI-lager ovanpå de system ni redan
-            använder.
+            Seytro fångar upp förfrågningar ni annars hade missat, placerar varje gäst på rätt plats
+            och tar bort det administrativa rutinarbetet — som ett AI-lager ovanpå de system ni
+            redan använder.
           </p>
           <div className="fade-up mt-10 flex flex-wrap items-center gap-4">
             <Link
