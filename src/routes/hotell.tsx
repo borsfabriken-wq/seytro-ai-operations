@@ -7,17 +7,17 @@ import heroImg from "@/assets/hero-hotel.jpg";
 export const Route = createFileRoute("/hotell")({
   head: () => ({
     meta: [
-      { title: "Seytro för hotell — AI-concierge för reception och restaurang" },
+      { title: "Seytro för hotell — AI för rumsplacering, reception och gästservice" },
       {
         name: "description",
         content:
-          "Röstagent och e-postconcierge som avlastar receptionen dygnet runt, kopplar rumsgäster till restaurangen och samlar gästprofilen på ett ställe.",
+          "Röstagent, e-postconcierge och automatisk rumsplacering för hotell. Avlasta receptionen dygnet runt och låt varje gäst hamna på rätt rum.",
       },
       { property: "og:title", content: "Seytro för hotell" },
       {
         property: "og:description",
         content:
-          "Gästservice dygnet runt: samtal, mejl, bordsbokning och gästprofil i en plattform för hotell.",
+          "Gästservice dygnet runt: samtal, mejl, rumsplacering och gästprofil i en plattform för hotell.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -27,11 +27,11 @@ export const Route = createFileRoute("/hotell")({
 });
 
 const products = [
-  ["Röstagent", "Svarar när receptionen är upptagen eller obemannad — frågor om incheckning, parkering, frukost och bordsbokning."],
+  ["Röstagent", "Svarar när receptionen är upptagen eller obemannad — frågor om incheckning, parkering, frukost och rumsönskemål."],
   ["E-postconcierge", "Grupp- och konferensförfrågningar, sena ankomster och specialönskemål besvaras direkt, dygnet runt."],
-  ["Bokningsassistent", "Rumsgästen bokar bord i hotellets restaurang i samma dialog — bekräftelse och påminnelse sköts automatiskt."],
-  ["Gästinsikt", "En gästprofil som följer med från rum till restaurang: preferenser, allergier och tidigare vistelser."],
-  ["Analys", "Beläggning, restaurangintäkt per gäst och kanalprestanda i klartext."],
+  ["Rumsplacering", "Automatisk rumstilldeling baserad på gästens önskemål, vistelse och beläggning — receptionen slipper manuella pussel."],
+  ["Gästinsikt", "En gästprofil som följer med från bokning till incheckning: preferenser, allergier och tidigare vistelser."],
+  ["Analys", "Beläggning, intäkt per gäst och kanalprestanda i klartext."],
   ["Kampanjer", "Återaktivera tidigare gäster inför lågsäsong och fyll frukost- och middagspassen."],
 ];
 
@@ -61,11 +61,11 @@ function HotellPage() {
             För hotell
           </p>
           <h1 className="max-w-4xl text-5xl leading-[1.05] text-primary-foreground sm:text-7xl">
-            En concierge som aldrig går hem.
+            Rätt gäst på rätt rum, dygnet runt.
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-primary-foreground/80">
-            Seytro besvarar gästen dygnet runt, avlastar receptionen och kopplar ihop rummet med
-            restaurangen — samma gästprofil hela vägen.
+            Seytro besvarar gästen dygnet runt, avlastar receptionen och placerar varje bokning på
+            rätt rum — samma gästprofil från förfrågan till incheckning.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Link
@@ -98,7 +98,7 @@ function HotellPage() {
       <section className="mx-auto max-w-7xl px-6 py-28 sm:px-10">
         <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Så används Seytro på hotellet</p>
         <h2 className="mt-6 max-w-2xl text-4xl leading-tight sm:text-5xl">
-          Från reception till restaurang.
+          Från bokning till rumsplacering.
         </h2>
         <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {products.map(([t, d]) => (
