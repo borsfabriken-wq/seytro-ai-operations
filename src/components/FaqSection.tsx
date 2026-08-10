@@ -2,34 +2,44 @@ import { useState } from "react";
 
 const faqs = [
   {
-    question: "Ersätter Seytro vårt bokningssystem?",
+    question: "Vad gör röstagenten när alla linjer är upptagna?",
     answer:
-      "Nej — Seytro är byggt för att komplettera era befintliga system, inte ersätta dem. Ni behöver inte välja bort det ni redan har för att använda Seytro.",
+      "Den svarar direkt istället för att gästen möts av upptagetton. Röstagenten tar bokningen, svarar på frågor om öppettider, meny, allergier eller rumstyper, och skickar en bekräftelse. Behöver gästen prata med en människa kopplas samtalet vidare med hela sammanhanget medskickat.",
   },
   {
-    question: "Vet gästerna att de pratar med AI?",
+    question: "Hur hanterar e-postconciergen inkorgen?",
     answer:
-      "Ja, vi är transparenta med det. Samtidigt är målet att interaktionen ska kännas lika smidig och personlig som om er egen personal svarade.",
+      "Den läser varje inkommande mejl, avgör vad det handlar om och svarar i er ton — bokningsförfrågningar, ändringar, gruppbokningar och standardfrågor. Allt som är känsligt, avvikande eller kommersiellt viktigt lyfts till er med ett färdigt svarsförslag.",
   },
   {
-    question: "Vad händer med ovanliga eller känsliga förfrågningar?",
+    question: "Hur vet systemet var gästen ska placeras?",
     answer:
-      "Seytro känner igen när något ligger utanför vad AI:n ska hantera själv och eskalerar då direkt till er personal, istället för att gissa.",
+      "Bordsplacering och rumsplacering utgår från era egna regler: sällskapets storlek, tidsluckor, turnering, zoner, städstatus och gästens preferenser. Ni styr reglerna, plattformen gör pusslet — och ni kan alltid flytta manuellt i salsplanen.",
   },
   {
-    question: "Hur lång tid tar implementeringen?",
+    question: "Fungerar Seytro ihop med vårt bokningssystem och vår telefoni?",
     answer:
-      "Varje verksamhet går igenom en onboarding där plattformen anpassas efter era tjänster, era boknings- och bemanningsflöden och er ton — tidsåtgången beror på hur mycket anpassning som behövs, men vi jobbar för en så smidig start som möjligt.",
+      "Ja. Seytro läggs som ett lager ovanpå det ni redan använder — bokningssystem, växel, mejl, kassa och gästregister. Ingen migrering, inget systembyte, och datan fortsätter leva där den ligger idag.",
   },
   {
-    question: "Var lagras vår gästdata?",
+    question: "Vad kostar det och hur snabbt märks effekten?",
     answer:
-      "Er data hanteras säkert och i enlighet med gällande dataskyddslagstiftning. Vi delar aldrig gästdata med tredje part utan ert medgivande.",
+      "Ni betalar per verksamhet utifrån volym på samtal och mejl. De flesta ser effekten redan första månaden: färre obesvarade förfrågningar, kortare handläggningstid i inkorgen och färre no-shows tack vare automatiska påminnelser.",
   },
   {
-    question: "Fungerar det på svenska och engelska?",
+    question: "Hur ser gästinsikt, analys och kampanjer ut i praktiken?",
     answer:
-      "Ja, Seytro hanterar både svenska och engelska (fler språk kan läggas till vid behov), så ni kan möta internationella gäster lika naturligt som lokala.",
+      "Varje besök bygger på gästprofilen — preferenser, allergier, historik och noteringar. Analysen visar beläggning, intäkt per pass och vilka kanaler som levererar, och kampanjmodulen låter er skicka segmenterade utskick som fyller just de svaga passen.",
+  },
+  {
+    question: "Vad händer när AI:n är osäker?",
+    answer:
+      "Då gissar den inte. Seytro eskalerar till er personal med hela konversationen samlad, så att en människa kan ta över direkt. Ni sätter själva var gränsen går för vad plattformen får hantera på egen hand.",
+  },
+  {
+    question: "Var lagras gästdatan och vilka språk stöds?",
+    answer:
+      "Datan hanteras säkert och i enlighet med GDPR, och delas aldrig med tredje part utan ert medgivande. Plattformen arbetar på svenska och engelska i tal och skrift, med möjlighet att lägga till fler språk.",
   },
 ];
 
