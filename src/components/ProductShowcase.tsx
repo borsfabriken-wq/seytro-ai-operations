@@ -151,8 +151,14 @@ export function ProductShowcase() {
   const current = products[active] ?? products[0]!;
   const Icon = current.icon;
 
+  const revealProps = (delay: number, baseClass = "") => ({
+    className: `${baseClass} transition-all duration-700 ease-out will-change-transform ${inView ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`,
+    style: { transitionDelay: `${delay}ms` },
+  });
+
   return (
     <section
+      ref={sectionRef}
       className="site-container py-24"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -160,14 +166,19 @@ export function ProductShowcase() {
     >
       <div className="grid gap-12 lg:grid-cols-[9rem_minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-10">
         <div className="relative hidden lg:block">
-          <span className="absolute -left-4 top-1/2 -translate-y-1/2 whitespace-nowrap text-xs uppercase tracking-[0.2em] text-muted-foreground">
+          <span
+            {...revealProps(
+              0,
+              "absolute -left-4 top-1/2 -translate-y-1/2 whitespace-nowrap text-xs uppercase tracking-[0.2em] text-muted-foreground",
+            )}
+          >
             En plattform
           </span>
         </div>
 
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Våra produkter</p>
-          <p className="mt-4 font-mono text-sm text-muted-foreground">
+          <p {...revealProps(80, "text-xs uppercase tracking-[0.2em] text-muted-foreground")}>Våra produkter</p>
+          <p {...revealProps(160, "mt-4 font-mono text-sm text-muted-foreground")}>
             {String(active + 1).padStart(2, "0")} — {String(products.length).padStart(2, "0")}
           </p>
 
@@ -175,7 +186,7 @@ export function ProductShowcase() {
             {products.map((p, i) => {
               const isActive = i === active;
               return (
-                <li key={p.name}>
+                <li key={p.name} {...revealProps(260 + i * 90)}>
                   <button
                     type="button"
                     onClick={() => select(i)}
@@ -199,7 +210,7 @@ export function ProductShowcase() {
           </ul>
         </div>
 
-        <div className="rounded-3xl bg-muted/60 p-8 sm:p-12">
+        <div {...revealProps(420, "rounded-3xl bg-muted/60 p-8 sm:p-12")}>
           <div
             className={`flex h-full flex-col transition-opacity duration-300 ${
               visible ? "opacity-100" : "opacity-0"
