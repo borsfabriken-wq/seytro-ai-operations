@@ -77,8 +77,8 @@
   --secondary-foreground: oklch(0.274 0.042 169.3);
   --muted: oklch(0.957 0.015 80.7);
   --muted-foreground: oklch(0.511 0.025 162.3);
-  /* Brass — exclusivity accent, used sparingly */
-  --accent: oklch(0.748 0.089 84.2);
+  /* Sage as soft interactive accent */
+  --accent: oklch(0.910 0.029 135.6);
   --accent-foreground: oklch(0.274 0.042 169.3);
   --destructive: oklch(0.505 0.185 27.3);
   --destructive-foreground: oklch(0.980 0.009 84.6);
@@ -91,7 +91,8 @@
   --sage: oklch(0.775 0.043 139.7);
   --sage-soft: oklch(0.910 0.029 135.6);
   --ivory: oklch(0.957 0.015 80.7);
-  --brass: oklch(0.748 0.089 84.2);
+  /* Brass — exklusivitetssignatur, används sparsamt */
+  --brass: oklch(0.640 0.079 78);
   --brass-soft: oklch(0.877 0.042 85.3);
   --chart-1: oklch(0.386 0.060 166.8);
   --chart-2: oklch(0.488 0.061 164.9);
@@ -123,8 +124,8 @@
   --secondary-foreground: oklch(0.957 0.015 80.7);
   --muted: oklch(0.330 0.045 168);
   --muted-foreground: oklch(0.775 0.043 139.7);
-  --accent: oklch(0.748 0.089 84.2);
-  --accent-foreground: oklch(0.274 0.042 169.3);
+  --accent: oklch(0.330 0.045 168);
+  --accent-foreground: oklch(0.957 0.015 80.7);
   --destructive: oklch(0.62 0.18 27.3);
   --destructive-foreground: oklch(0.980 0.009 84.6);
   --border: oklch(1 0 0 / 12%);
