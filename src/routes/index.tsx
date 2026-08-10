@@ -149,7 +149,7 @@ function Index() {
           {reasons.map((r, i) => (
             <div
               key={r.num}
-              className={`border-t-2 pt-8 ${["border-tide", "border-ember", "border-moss"][i % 3]}`}
+              className={`border-t-2 pt-8 ${["border-tide/60", "border-ember/60", "border-moss/60"][i % 3]}`}
             >
               <span
                 className={`text-sm tracking-[0.28em] ${["text-tide", "text-ember", "text-moss"][i % 3]}`}
@@ -166,7 +166,7 @@ function Index() {
       <ProductShowcase />
 
       <section className="relative overflow-hidden bg-forest-deep text-primary-foreground">
-        <div className="absolute inset-0 bg-linear-to-r from-tide/20 via-transparent to-ember/20" aria-hidden="true" />
+        <div className="absolute inset-0 bg-linear-to-r from-tide/12 via-transparent to-ember/10" aria-hidden="true" />
         <div className="site-container relative grid grid-cols-2 gap-8 py-16 lg:grid-cols-4">
           {[
             ["−38%", "administrativ tid i driften"],
