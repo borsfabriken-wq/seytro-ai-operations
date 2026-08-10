@@ -161,6 +161,12 @@
 @theme inline {
   --color-forest: var(--forest);
   --color-forest-deep: var(--forest-deep);
+  --color-forest-mid: var(--forest-mid);
+  --color-sage: var(--sage);
+  --color-sage-soft: var(--sage-soft);
+  --color-ivory: var(--ivory);
+  --color-brass: var(--brass);
+  --color-brass-soft: var(--brass-soft);
   --font-display: "Fraunces", Georgia, serif;
   --font-sans: "Inter Tight", system-ui, sans-serif;
 }
