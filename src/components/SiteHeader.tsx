@@ -122,42 +122,93 @@ export function SiteHeader({ solid = false }: { solid?: boolean } = {}) {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-[padding] duration-500 ease-out ${
-        scrolled ? "px-4 pt-3 sm:px-6 sm:pt-4" : "px-0 pt-0"
+        scrolled ? "px-3 pt-3 sm:px-6 sm:pt-4" : "px-0 pt-0"
       }`}
     >
       <nav
-        className={`mx-auto flex items-center justify-between transition-all duration-500 ease-out ${
+        className={`mx-auto flex items-center justify-between gap-3 transition-all duration-500 ease-out ${
           scrolled
-            ? "max-w-4xl rounded-full border border-primary-foreground/10 bg-forest-deep/90 px-5 py-2.5 shadow-2xl backdrop-blur-md sm:px-6"
-            : "max-w-7xl rounded-none border border-transparent bg-transparent px-6 py-6 shadow-none sm:px-10"
+            ? "max-w-4xl rounded-full border border-primary-foreground/10 bg-forest-deep/90 px-4 py-2.5 shadow-2xl backdrop-blur-md sm:px-6"
+            : "max-w-7xl rounded-none border border-transparent bg-transparent px-5 py-5 shadow-none sm:px-10 sm:py-6 2xl:max-w-[96rem] 2xl:px-16"
         }`}
       >
-        <div className="flex items-center gap-4 sm:gap-5">
+        <div className="flex min-w-0 items-center gap-4 sm:gap-5">
           <Link to="/" className="block shrink-0">
-            <img src={logoAsset.url} alt="Seytro" className="h-6 w-auto" />
+            <img src={logoAsset.url} alt="Seytro" className="h-5 w-auto sm:h-6" />
           </Link>
-          <div className="flex items-center gap-5 sm:gap-6">
+          <div className="hidden items-center gap-5 lg:flex lg:gap-6">
             {renderDropdown("Plattform", "platform", platformRef, PlatformMenu)}
             {renderDropdown("Lösningar", "solutions", solutionsRef, SolutionsMenu)}
             {renderDropdown("Resurser", "resources", resourcesRef, ResourcesMenu)}
             {renderDropdown("Företag", "company", companyRef, CompanyMenu)}
           </div>
         </div>
-        <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex shrink-0 items-center gap-3 sm:gap-4">
           <a
             href="https://www.seytro.com/login"
-            className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+            className="hidden text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:block"
           >
             Logga in
           </a>
           <Link
             to="/demo"
-            className="rounded-full border border-primary-foreground/40 px-4 py-1.5 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-forest-deep"
+            className="hidden rounded-full border border-primary-foreground/40 px-4 py-1.5 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-forest-deep sm:block"
           >
             Boka demo
           </Link>
+          <button
+            type="button"
+            aria-label={mobileOpen ? "Stäng meny" : "Öppna meny"}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((v) => !v)}
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-primary-foreground/30 text-primary-foreground lg:hidden"
+          >
+            {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
         </div>
       </nav>
+
+      {mobileOpen && (
+        <div className="mx-auto mt-2 max-h-[calc(100dvh-6rem)] overflow-y-auto rounded-3xl border border-primary-foreground/10 bg-forest-deep/95 p-5 text-primary-foreground shadow-2xl backdrop-blur-md lg:hidden">
+          <div className="flex flex-col divide-y divide-primary-foreground/10">
+            {mobileNav.map((group) => (
+              <div key={group.label} className="py-3">
+                <p className="text-xs uppercase tracking-[0.28em] text-primary-foreground/50">
+                  {group.label}
+                </p>
+                <div className="mt-3 flex flex-col gap-2">
+                  {group.links.map((l) => (
+                    <Link
+                      key={l.to}
+                      to={l.to}
+                      onClick={() => setMobileOpen(false)}
+                      className="text-base text-primary-foreground/85 transition-colors hover:text-primary-foreground"
+                    >
+                      {l.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 flex flex-col gap-3">
+            <Link
+              to="/demo"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-full bg-primary-foreground px-6 py-3 text-center text-sm font-medium text-forest-deep"
+            >
+              Boka demo
+            </Link>
+            <a
+              href="https://www.seytro.com/login"
+              className="rounded-full border border-primary-foreground/40 px-6 py-3 text-center text-sm text-primary-foreground"
+            >
+              Logga in
+            </a>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
+
