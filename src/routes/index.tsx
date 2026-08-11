@@ -229,10 +229,10 @@ function Index() {
 
       <section className="bg-secondary">
         <div className="site-container py-24">
-          <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">
+          <p className="eyebrow text-muted-foreground">
             Så fungerar det
           </p>
-          <h2 className="mt-6 max-w-3xl text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">
+          <h2 className="mt-6 max-w-3xl text-display">
             En helhetslösning för bokning, drift och gästkommunikation — ovanpå era befintliga system.
           </h2>
           <div className="mt-14 grid gap-10 lg:grid-cols-3">
@@ -241,8 +241,8 @@ function Index() {
                 <span className="text-sm tracking-[0.28em] text-brass">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-4 text-2xl">{t}</h3>
-                <p className="mt-3 leading-relaxed text-muted-foreground">{d}</p>
+                <h3 className="mt-4 text-subheading">{t}</h3>
+                <p className="mt-3 text-body text-muted-foreground">{d}</p>
               </div>
             ))}
           </div>
