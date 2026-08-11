@@ -143,8 +143,8 @@ function Index() {
       <LogoMarquee />
 
       <section id="varfor" className="site-container section-y">
-        <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Varför Seytro</p>
-        <h2 className="mt-6 max-w-2xl text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">
+        <p className="eyebrow text-muted-foreground">Varför Seytro</p>
+        <h2 className="mt-6 max-w-2xl text-display">
           Tre problem varje serviceverksamhet känner igen.
         </h2>
         <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
@@ -158,8 +158,8 @@ function Index() {
               >
                 {r.num}
               </span>
-              <h3 className="mt-4 text-2xl leading-snug">{r.title}</h3>
-              <p className="mt-4 leading-relaxed text-muted-foreground">{r.body}</p>
+              <h3 className="mt-4 text-subheading">{r.title}</h3>
+              <p className="mt-4 text-body text-muted-foreground">{r.body}</p>
             </div>
           ))}
         </div>
