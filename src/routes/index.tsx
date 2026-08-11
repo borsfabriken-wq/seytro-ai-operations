@@ -110,13 +110,13 @@ function Index() {
 
 
         <div className="site-container relative flex min-h-[100svh] flex-col justify-end pb-16 pt-32 sm:pb-24 sm:pt-40">
-          <p className="fade-up mb-8 max-w-xl text-sm uppercase tracking-[0.28em] text-primary-foreground/70">
+          <p className="fade-up mb-8 max-w-xl text-caption text-primary-foreground/70">
             Bokningssystem och gästkommunikation i ett
           </p>
-          <h1 className="fade-up max-w-4xl text-5xl leading-[1.02] text-primary-foreground sm:text-7xl lg:text-8xl">
+          <h1 className="fade-up max-w-4xl text-display-xl text-primary-foreground">
             Bokningar och placering som sköter sig självt.
           </h1>
-          <p className="fade-up mt-8 max-w-xl text-lg leading-relaxed text-primary-foreground/75">
+          <p className="fade-up mt-8 max-w-xl text-body-lg text-primary-foreground/75">
             Seytro är helhetslösningen för bokningar och gästkommunikation. Vi fångar upp
             förfrågningar ni annars hade missat, svarar i telefon och mejl dygnet runt, placerar
             varje gäst på rätt plats och tar bort det administrativa rutinarbetet — som ett AI-lager
@@ -143,8 +143,8 @@ function Index() {
       <LogoMarquee />
 
       <section id="varfor" className="site-container section-y">
-        <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Varför Seytro</p>
-        <h2 className="mt-6 max-w-2xl text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">
+        <p className="eyebrow text-muted-foreground">Varför Seytro</p>
+        <h2 className="mt-6 max-w-2xl text-display">
           Tre problem varje serviceverksamhet känner igen.
         </h2>
         <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
@@ -158,8 +158,8 @@ function Index() {
               >
                 {r.num}
               </span>
-              <h3 className="mt-4 text-2xl leading-snug">{r.title}</h3>
-              <p className="mt-4 leading-relaxed text-muted-foreground">{r.body}</p>
+              <h3 className="mt-4 text-subheading">{r.title}</h3>
+              <p className="mt-4 text-body text-muted-foreground">{r.body}</p>
             </div>
           ))}
         </div>
@@ -186,11 +186,11 @@ function Index() {
 
       <section id="pelare" className="bg-linear-to-b from-background to-secondary/50">
         <div className="site-container section-y">
-        <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Funktionerna</p>
-        <h2 className="mt-6 max-w-2xl text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">
+        <p className="eyebrow text-muted-foreground">Funktionerna</p>
+        <h2 className="mt-6 max-w-2xl text-display">
           Vad plattformen gör — och när den används.
         </h2>
-        <p className="mt-6 max-w-xl text-muted-foreground">
+        <p className="mt-6 max-w-xl text-body text-muted-foreground">
           Tre områden, nio funktioner. Klicka vidare för djupdykning på varje funktion.
         </p>
 
@@ -203,8 +203,8 @@ function Index() {
                 >
                   {p.num}
                 </span>
-                <h3 className="mt-4 text-3xl">{p.title}</h3>
-                <p className="mt-4 max-w-sm text-muted-foreground">{p.intro}</p>
+                <h3 className="mt-4 text-heading">{p.title}</h3>
+                <p className="mt-4 max-w-sm text-body text-muted-foreground">{p.intro}</p>
               </div>
               <div className="grid gap-8 sm:grid-cols-3 lg:col-span-8">
                 {p.items.map(([t, d, href]) => (
@@ -229,10 +229,10 @@ function Index() {
 
       <section className="bg-secondary">
         <div className="site-container py-24">
-          <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">
+          <p className="eyebrow text-muted-foreground">
             Så fungerar det
           </p>
-          <h2 className="mt-6 max-w-3xl text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">
+          <h2 className="mt-6 max-w-3xl text-display">
             En helhetslösning för bokning, drift och gästkommunikation — ovanpå era befintliga system.
           </h2>
           <div className="mt-14 grid gap-10 lg:grid-cols-3">
@@ -241,8 +241,8 @@ function Index() {
                 <span className="text-sm tracking-[0.28em] text-brass">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-4 text-2xl">{t}</h3>
-                <p className="mt-3 leading-relaxed text-muted-foreground">{d}</p>
+                <h3 className="mt-4 text-subheading">{t}</h3>
+                <p className="mt-3 text-body text-muted-foreground">{d}</p>
               </div>
             ))}
           </div>
@@ -254,9 +254,9 @@ function Index() {
       </section>
 
       <section id="bransch" className="site-container section-y">
-        <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Djupdykning</p>
-        <h2 className="mt-6 max-w-2xl text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">Vad driver du?</h2>
-        <p className="mt-6 max-w-xl text-muted-foreground">
+        <p className="eyebrow text-muted-foreground">Djupdykning</p>
+        <h2 className="mt-6 max-w-2xl text-display">Vad driver du?</h2>
+        <p className="mt-6 max-w-xl text-body text-muted-foreground">
           Samma plattform, olika vardag. Välj din ingång så visar vi hur systemet maxas för just din
           verksamhet — med dina flöden, exempel och siffror.
         </p>
@@ -300,8 +300,8 @@ function Index() {
               </div>
               <div className="flex flex-1 flex-col justify-between p-8">
                 <div>
-                  <h3 className={`text-2xl ${c.tone}`}>{c.label}</h3>
-                  <p className="mt-3 max-w-sm text-muted-foreground">{c.desc}</p>
+                  <h3 className={`text-subheading ${c.tone}`}>{c.label}</h3>
+                  <p className="mt-3 max-w-sm text-body text-muted-foreground">{c.desc}</p>
                 </div>
                 <span className="mt-10 text-sm font-medium text-foreground transition-transform group-hover:translate-x-1">
                   {c.cta} →
@@ -319,16 +319,16 @@ function Index() {
       <section id="vision" className="bg-forest-deep text-primary-foreground">
         <div className="site-container grid items-center gap-16 section-y lg:grid-cols-2">
           <div>
-            <p className="text-sm uppercase tracking-[0.28em] text-primary-foreground/60">Vision</p>
-            <h2 className="mt-6 text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">
+            <p className="eyebrow text-primary-foreground/60">Vision</p>
+            <h2 className="mt-6 text-display text-primary-foreground">
               Framtidens värdskap är tyst, snabbt och personligt.
             </h2>
-            <p className="mt-8 text-lg leading-relaxed text-primary-foreground/75">
+            <p className="mt-8 text-body-lg text-primary-foreground/75">
               Vi tror att tekniken ska försvinna in i väggarna. Personalen ska möta gästen — inte
               skärmen. Seytro byggs som ett operativsystem för service där varje system talar med
               varandra: telefonen, inkorgen, bokningen och gästprofilen.
             </p>
-            <p className="mt-6 text-lg leading-relaxed text-primary-foreground/75">
+            <p className="mt-6 text-body-lg text-primary-foreground/75">
               Nästa steg är en plattform som föreslår innan ni frågar: bemanning inför en regnig
               fredag, en omplacering när ett sällskap blir försenat, ett erbjudande till gästen som
               inte varit här på ett halvår.
@@ -346,10 +346,10 @@ function Index() {
       </section>
 
       <section id="demo" className="site-container section-y-lg text-center">
-        <h2 className="mx-auto max-w-3xl text-[2.5rem] sm:text-6xl">
+        <h2 className="mx-auto max-w-3xl text-display-lg">
           Se Seytro i er egen verksamhet.
         </h2>
-        <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
+        <p className="mx-auto mt-6 max-w-xl text-body-lg text-muted-foreground">
           30 minuter, live med era egna flöden. Vi visar hur röstagenten svarar, hur bokningarna
           landar och hur administrationen försvinner.
         </p>
