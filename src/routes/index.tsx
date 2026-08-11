@@ -254,9 +254,9 @@ function Index() {
       </section>
 
       <section id="bransch" className="site-container section-y">
-        <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Djupdykning</p>
-        <h2 className="mt-6 max-w-2xl text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">Vad driver du?</h2>
-        <p className="mt-6 max-w-xl text-muted-foreground">
+        <p className="eyebrow text-muted-foreground">Djupdykning</p>
+        <h2 className="mt-6 max-w-2xl text-display">Vad driver du?</h2>
+        <p className="mt-6 max-w-xl text-body text-muted-foreground">
           Samma plattform, olika vardag. Välj din ingång så visar vi hur systemet maxas för just din
           verksamhet — med dina flöden, exempel och siffror.
         </p>
@@ -300,8 +300,8 @@ function Index() {
               </div>
               <div className="flex flex-1 flex-col justify-between p-8">
                 <div>
-                  <h3 className={`text-2xl ${c.tone}`}>{c.label}</h3>
-                  <p className="mt-3 max-w-sm text-muted-foreground">{c.desc}</p>
+                  <h3 className={`text-subheading ${c.tone}`}>{c.label}</h3>
+                  <p className="mt-3 max-w-sm text-body text-muted-foreground">{c.desc}</p>
                 </div>
                 <span className="mt-10 text-sm font-medium text-foreground transition-transform group-hover:translate-x-1">
                   {c.cta} →
