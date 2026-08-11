@@ -167,15 +167,15 @@
   --color-moss: var(--moss);
   --color-moss-soft: var(--moss-soft);
 
-  --font-display: "Fraunces", Georgia, serif;
+  --font-display: "DM Serif Display", Georgia, serif;
   --font-sans: "Inter Tight", system-ui, sans-serif;
 }
 
 @layer base {
   body {
     font-family: var(--font-sans);
-    font-size: 1.0625rem;
-    line-height: 1.65;
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
     letter-spacing: -0.005em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -188,16 +188,24 @@
     text-wrap: balance;
   }
   h1 {
-    letter-spacing: -0.035em;
-    line-height: 1.02;
+    font-size: var(--text-5xl);
+    line-height: var(--leading-tight);
+    letter-spacing: -0.02em;
   }
   h2 {
-    letter-spacing: -0.028em;
-    line-height: 1.1;
+    font-size: var(--text-4xl);
+    line-height: var(--leading-snug);
+    letter-spacing: -0.015em;
   }
   h3 {
-    letter-spacing: -0.02em;
-    line-height: 1.22;
+    font-size: var(--text-3xl);
+    line-height: var(--leading-normal);
+    letter-spacing: -0.01em;
+  }
+  h4 {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-normal);
+    letter-spacing: -0.005em;
   }
   p {
     text-wrap: pretty;
