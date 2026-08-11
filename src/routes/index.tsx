@@ -110,13 +110,13 @@ function Index() {
 
 
         <div className="site-container relative flex min-h-[100svh] flex-col justify-end pb-16 pt-32 sm:pb-24 sm:pt-40">
-          <p className="fade-up mb-8 max-w-xl text-sm uppercase tracking-[0.28em] text-primary-foreground/70">
+          <p className="fade-up mb-8 max-w-xl text-caption text-primary-foreground/70">
             Bokningssystem och gästkommunikation i ett
           </p>
-          <h1 className="fade-up max-w-4xl text-5xl leading-[1.02] text-primary-foreground sm:text-7xl lg:text-8xl">
+          <h1 className="fade-up max-w-4xl text-display-xl text-primary-foreground">
             Bokningar och placering som sköter sig självt.
           </h1>
-          <p className="fade-up mt-8 max-w-xl text-lg leading-relaxed text-primary-foreground/75">
+          <p className="fade-up mt-8 max-w-xl text-body-lg text-primary-foreground/75">
             Seytro är helhetslösningen för bokningar och gästkommunikation. Vi fångar upp
             förfrågningar ni annars hade missat, svarar i telefon och mejl dygnet runt, placerar
             varje gäst på rätt plats och tar bort det administrativa rutinarbetet — som ett AI-lager
