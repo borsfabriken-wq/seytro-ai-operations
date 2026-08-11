@@ -319,16 +319,16 @@ function Index() {
       <section id="vision" className="bg-forest-deep text-primary-foreground">
         <div className="site-container grid items-center gap-16 section-y lg:grid-cols-2">
           <div>
-            <p className="text-sm uppercase tracking-[0.28em] text-primary-foreground/60">Vision</p>
-            <h2 className="mt-6 text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">
+            <p className="eyebrow text-primary-foreground/60">Vision</p>
+            <h2 className="mt-6 text-display text-primary-foreground">
               Framtidens värdskap är tyst, snabbt och personligt.
             </h2>
-            <p className="mt-8 text-lg leading-relaxed text-primary-foreground/75">
+            <p className="mt-8 text-body-lg text-primary-foreground/75">
               Vi tror att tekniken ska försvinna in i väggarna. Personalen ska möta gästen — inte
               skärmen. Seytro byggs som ett operativsystem för service där varje system talar med
               varandra: telefonen, inkorgen, bokningen och gästprofilen.
             </p>
-            <p className="mt-6 text-lg leading-relaxed text-primary-foreground/75">
+            <p className="mt-6 text-body-lg text-primary-foreground/75">
               Nästa steg är en plattform som föreslår innan ni frågar: bemanning inför en regnig
               fredag, en omplacering när ett sällskap blir försenat, ett erbjudande till gästen som
               inte varit här på ett halvår.
@@ -346,10 +346,10 @@ function Index() {
       </section>
 
       <section id="demo" className="site-container section-y-lg text-center">
-        <h2 className="mx-auto max-w-3xl text-[2.5rem] sm:text-6xl">
+        <h2 className="mx-auto max-w-3xl text-display-lg">
           Se Seytro i er egen verksamhet.
         </h2>
-        <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
+        <p className="mx-auto mt-6 max-w-xl text-body-lg text-muted-foreground">
           30 minuter, live med era egna flöden. Vi visar hur röstagenten svarar, hur bokningarna
           landar och hur administrationen försvinner.
         </p>
