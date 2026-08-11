@@ -186,11 +186,11 @@ function Index() {
 
       <section id="pelare" className="bg-linear-to-b from-background to-secondary/50">
         <div className="site-container section-y">
-        <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">Funktionerna</p>
-        <h2 className="mt-6 max-w-2xl text-[2.5rem] sm:text-5xl xl:text-[3.4rem]">
+        <p className="eyebrow text-muted-foreground">Funktionerna</p>
+        <h2 className="mt-6 max-w-2xl text-display">
           Vad plattformen gör — och när den används.
         </h2>
-        <p className="mt-6 max-w-xl text-muted-foreground">
+        <p className="mt-6 max-w-xl text-body text-muted-foreground">
           Tre områden, nio funktioner. Klicka vidare för djupdykning på varje funktion.
         </p>
 
@@ -203,8 +203,8 @@ function Index() {
                 >
                   {p.num}
                 </span>
-                <h3 className="mt-4 text-3xl">{p.title}</h3>
-                <p className="mt-4 max-w-sm text-muted-foreground">{p.intro}</p>
+                <h3 className="mt-4 text-heading">{p.title}</h3>
+                <p className="mt-4 max-w-sm text-body text-muted-foreground">{p.intro}</p>
               </div>
               <div className="grid gap-8 sm:grid-cols-3 lg:col-span-8">
                 {p.items.map(([t, d, href]) => (
