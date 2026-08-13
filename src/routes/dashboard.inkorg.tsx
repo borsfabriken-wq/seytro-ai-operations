@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useVenue } from "@/components/dashboard/DashboardShell";
+import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/dashboard/inkorg")({
   head: () => ({
@@ -17,12 +19,19 @@ export const Route = createFileRoute("/dashboard/inkorg")({
   component: InboxPage,
 });
 
+const suggestion =
+  "Tack för ert meddelande! Vi har noterat önskemålet och återkommer med bekräftelse inom kort. Vill ni ändra något mer inför besöket hjälper vi gärna till.";
+
 function InboxPage() {
   const { data } = useVenue();
   const [activeId, setActiveId] = useState(data.messages[0]?.id ?? "");
   const [tab, setTab] = useState<"alla" | "väntar">("alla");
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(suggestion);
+  const [done, setDone] = useState<string[]>([]);
   const list = data.messages.filter((m) => (tab === "alla" ? true : !m.handled));
   const active = data.messages.find((m) => m.id === activeId) ?? list[0] ?? data.messages[0];
+
 
   return (
     <div className="space-y-8">
