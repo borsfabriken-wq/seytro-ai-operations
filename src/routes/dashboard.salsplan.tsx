@@ -428,6 +428,13 @@ function FloorPage() {
             </div>
           )}
 
+          <UpcomingPmCard
+            bookings={bookings}
+            unitWord={venue === "hotell" ? "rum" : "bord"}
+            activeId={selectedBooking}
+            onSelect={selectBooking}
+          />
+
           <div className="rounded-2xl border border-border bg-card p-5">
             {activeBooking ? (
               <BookingPanel
