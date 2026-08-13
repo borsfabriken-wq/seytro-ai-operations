@@ -203,7 +203,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 z-30 border-b border-dashboard-header-edge bg-dashboard-header">
             <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6">
-              <div className="hidden min-w-0 items-stretch divide-x divide-forest/10 overflow-hidden rounded-xl border border-white/60 bg-white/80 shadow-sm shadow-forest/5 sm:flex">
+              <div className="hidden min-w-0 items-stretch divide-x divide-forest/10 overflow-hidden rounded-xl border border-dashboard-header-edge bg-background shadow-sm shadow-forest/5 sm:flex">
                 {stats.map((s) => (
                   <span
                     key={s.label}
@@ -224,7 +224,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               <DateNav date={date} onChange={setDate} />
 
               <div className="flex items-center gap-3">
-                <div className="hidden items-center gap-2 rounded-full border border-white/60 bg-white/80 px-3 py-1.5 shadow-sm shadow-forest/5 md:flex">
+                <div className="hidden items-center gap-2 rounded-full border border-dashboard-header-edge bg-background px-3 py-1.5 shadow-sm shadow-forest/5 md:flex">
                   <Search className="h-3.5 w-3.5 text-muted-foreground" />
                   <input
                     placeholder="Sök gäst eller bokning"
@@ -243,7 +243,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
             <div className="flex items-center justify-between gap-4 overflow-x-auto border-t border-forest/8 px-4 py-2.5 sm:px-6">
               {venue === "restaurang" ? (
-                <div className="flex shrink-0 items-center gap-1 rounded-full border border-white/60 bg-white/70 p-1 shadow-sm shadow-forest/5">
+                <div className="flex shrink-0 items-center gap-1 rounded-full border border-dashboard-header-edge bg-background p-1 shadow-sm shadow-forest/5">
                   {serviceCounts.map((p) => (
                     <button
                       key={p.id}
