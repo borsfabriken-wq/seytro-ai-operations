@@ -1,42 +1,19 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import {
-  BarChart3,
   BedDouble,
-  BellRing,
   BrushCleaning,
-  CalendarClock,
+  CalendarPlus,
+  ChevronLeft,
   ChevronRight,
-  Clock,
-  Lightbulb,
+  DoorOpen,
   LogIn,
   LogOut,
-  Mail,
-  Megaphone,
-  PhoneCall,
-  Sparkles,
-  UserRound,
-  Users,
+  TriangleAlert,
+  UserRoundPlus,
 } from "lucide-react";
+import { toast } from "sonner";
 import { useVenue } from "@/components/dashboard/DashboardShell";
-import { hotelFunctions, hotelPromises } from "@/lib/dashboard-data";
-
-const quickDays = [
-  { label: "Idag", offset: 0 },
-  { label: "Imorgon", offset: 1 },
-  { label: "Om 2 dagar", offset: 2 },
-  { label: "Om 3 dagar", offset: 3 },
-  { label: "Om en vecka", offset: 7 },
-];
-
-const functionIcons = {
-  voice: PhoneCall,
-  mail: Mail,
-  room: BedDouble,
-  guest: UserRound,
-  analytics: BarChart3,
-  campaign: Megaphone,
-} as const;
 
 function greetingFor(h: number) {
   if (h < 10) return "God morgon";
@@ -44,304 +21,250 @@ function greetingFor(h: number) {
   return "God kväll";
 }
 
+const statusStyles: Record<string, { chip: string; label: string; dot: string }> = {
+  ledigt: { chip: "border-emerald-200 bg-emerald-50 text-emerald-800", label: "Städklart", dot: "bg-emerald-500" },
+  städas: { chip: "border-amber-200 bg-amber-50 text-amber-800", label: "Städas", dot: "bg-amber-500" },
+  upptaget: { chip: "border-rose-200 bg-rose-50 text-rose-800", label: "Upptaget", dot: "bg-rose-500" },
+  dukat: { chip: "border-primary/25 bg-primary/5 text-primary", label: "Ankomstklart", dot: "bg-primary" },
+};
+
 export function HotelOverview() {
   const [greeting, setGreeting] = useState("God dag");
   useEffect(() => setGreeting(greetingFor(new Date().getHours())), []);
 
   const { data, date, setDate } = useVenue();
+  const navigate = useNavigate();
 
-  const baselineNow = new Date();
-  const baseline = new Date(
-    baselineNow.getFullYear(),
-    baselineNow.getMonth(),
-    baselineNow.getDate(),
-  );
-  const dayKey = (d: Date) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+  const shiftDay = (delta: number) => {
+    const next = new Date(date);
+    next.setDate(next.getDate() + delta);
+    setDate(next);
+  };
 
   const active = data.bookings.filter((b) => b.status !== "avbokad");
   const arrivals = active.filter((b) => b.status !== "anlänt");
   const checkedIn = active.filter((b) => b.status === "anlänt");
   const pending = active.filter((b) => b.status === "väntar");
-  const inHouse = data.units.filter((u) => u.status === "upptaget");
-  const housekeeping = {
-    ledigt: data.units.filter((u) => u.status === "ledigt").length,
-    städas: data.units.filter((u) => u.status === "städas").length,
-    dukat: data.units.filter((u) => u.status === "dukat").length,
-    upptaget: inHouse.length,
-  };
-  const occupancy = Math.round(
-    ((housekeeping.upptaget + housekeeping.dukat) / Math.max(1, data.units.length)) * 100,
-  );
-  const unhandled = data.messages.filter((m) => !m.handled).length;
-  const requests = data.messages.slice(0, 4);
+  const rooms = data.units;
+  const clean = rooms.filter((u) => u.status === "ledigt");
+  const dirty = rooms.filter((u) => u.status === "städas");
+  const occupied = rooms.filter((u) => u.status === "upptaget");
+  const ready = rooms.filter((u) => u.status === "dukat");
+  const departures = occupied.slice(0, 4);
 
   return (
     <div className="space-y-6">
+      {/* Rubrik + datum */}
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-heading text-forest">
-            {greeting}, {data.label}
-          </h1>
-          <p className="mt-1 text-caption capitalize text-muted-foreground">
+          <h1 className="text-heading text-forest">{greeting}, receptionen</h1>
+          <p className="mt-1 text-caption text-muted-foreground">
+            Här är läget på {data.label} just nu.
+          </p>
+        </div>
+        <div className="flex items-center gap-1 rounded-full border border-border bg-card px-2 py-1.5">
+          <button
+            type="button"
+            aria-label="Föregående dag"
+            onClick={() => shiftDay(-1)}
+            className="rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-forest"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+          <span className="min-w-[200px] px-2 text-center text-sm capitalize text-forest">
             {date.toLocaleDateString("sv-SE", {
               weekday: "long",
               day: "numeric",
               month: "long",
               year: "numeric",
             })}
+          </span>
+          <button
+            type="button"
+            aria-label="Nästa dag"
+            onClick={() => shiftDay(1)}
+            className="rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-forest"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Snabbaste vägen */}
+      <div className="flex flex-wrap items-center justify-between gap-6 rounded-2xl bg-forest p-6 text-primary-foreground sm:p-7">
+        <div>
+          <p className="eyebrow text-primary-foreground/60">Snabbaste vägen</p>
+          <h2 className="mt-2 text-2xl font-medium">Checka in gäst</h2>
+          <p className="mt-1.5 text-sm text-primary-foreground/70">
+            {arrivals.reduce((s, b) => s + b.party, 0)} gäster väntas idag · {clean.length} rum är
+            städklara nu
           </p>
         </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          {quickDays.map((q) => {
-            const target = new Date(baseline);
-            target.setDate(target.getDate() + q.offset);
-            const isActive = dayKey(target) === dayKey(date);
-            return (
-              <button
-                key={q.label}
-                type="button"
-                onClick={() => setDate(target)}
-                className={`rounded-full px-3.5 py-1.5 text-sm transition-colors ${
-                  isActive
-                    ? "bg-forest text-primary-foreground"
-                    : "border border-border text-muted-foreground hover:text-forest"
-                }`}
-              >
-                {q.label}
-              </button>
-            );
-          })}
+        <div className="flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={() => toast.success("Incheckning startad", { description: "Välj gäst i ankomstlistan." })}
+            className="inline-flex items-center gap-2 rounded-full bg-background px-5 py-2.5 text-sm font-medium text-forest transition-opacity hover:opacity-90"
+          >
+            <UserRoundPlus className="h-4 w-4" /> Checka in gäst
+          </button>
+          <button
+            type="button"
+            onClick={() => toast("Drop in-gäst", { description: `${clean.length} rum kan tilldelas direkt.` })}
+            className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/25 px-5 py-2.5 text-sm transition-colors hover:bg-primary-foreground/10"
+          >
+            <DoorOpen className="h-4 w-4" /> Drop in-gäst
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate({ to: "/dashboard/salsplan", search: { new: true } })}
+            className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/25 px-5 py-2.5 text-sm transition-colors hover:bg-primary-foreground/10"
+          >
+            <CalendarPlus className="h-4 w-4" /> Ny bokning
+          </button>
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-muted/40 px-5 py-3">
-        <Lightbulb className="h-4 w-4 text-primary" />
-        <p className="text-sm text-muted-foreground">
-          Dagens tips:{" "}
-          <span className="font-medium text-forest">
-            {housekeeping.ledigt} rum är fortfarande lediga — låt e-postconciergen erbjuda dem till
-            sena ankomster och gäster på väntelistan.
-          </span>
-        </p>
-      </div>
-
-      {/* Dygnets rytm: ankomster, avresor, inhouse, städ */}
+      {/* Nyckeltal */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <MiniStat
           icon={LogIn}
-          label="Ankomster"
-          value={arrivals.length}
-          hint={`${arrivals.reduce((s, b) => s + b.party, 0)} gäster väntas checka in`}
-        />
-        <MiniStat
-          icon={LogOut}
-          label="Avresor"
-          value={housekeeping.städas + 2}
-          hint="Utcheckning senast 11:00"
+          label="Incheckade"
+          value={`${checkedIn.length}`}
+          suffix={`/ ${active.length}`}
+          hint={`${occupied.length} rum är belagda av totalt ${rooms.length}.`}
         />
         <MiniStat
           icon={BedDouble}
-          label="Beläggning"
-          value={`${occupancy}%`}
-          hint={`${housekeeping.upptaget + housekeeping.dukat} av ${data.units.length} rum`}
+          label="Ankomster idag"
+          value={`${arrivals.length}`}
+          suffix="bokningar"
+          hint={`${ready.length} rum är förberedda · ${pending.length} väntar bekräftelse.`}
         />
         <MiniStat
-          icon={BrushCleaning}
-          label="Städ kvar"
-          value={housekeeping.städas}
-          hint={`${housekeeping.ledigt} rum klara för incheckning`}
+          icon={DoorOpen}
+          label="Lediga rum"
+          value={`${clean.length}`}
+          suffix={`/ ${rooms.length} rum`}
+          hint={`${clean.length} städklara · ${dirty.length} behöver städas.`}
+        />
+        <MiniStat
+          icon={TriangleAlert}
+          label="Kräver uppmärksamhet"
+          value={`${pending.length + dirty.length}`}
+          suffix="ärenden"
+          hint={`${pending.length} obekräftade · ${dirty.length} rum väntar på städ.`}
         />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        {/* Ankomster */}
-        <div className="rounded-2xl border border-border bg-card p-5">
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex min-w-0 items-center gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <CalendarClock className="h-5 w-5" />
-              </span>
-              <div>
-                <h2 className="text-base font-medium text-forest">Dagens ankomster</h2>
-                <p className="text-caption text-muted-foreground">Rum tilldelas automatiskt</p>
-              </div>
-            </div>
-            <span className="rounded-full bg-primary px-2.5 py-1 text-xs text-primary-foreground">
-              {arrivals.length}
-            </span>
-          </div>
-
-          <ul className="mt-4 space-y-3">
-            {arrivals.slice(0, 4).map((b) => (
-              <li key={b.id} className="rounded-xl bg-muted/50 p-3">
-                <div className="flex items-center justify-between gap-3">
-                  <p className="truncate text-sm font-medium text-forest">{b.name}</p>
-                  <Link
-                    to="/dashboard/salsplan"
-                    className="shrink-0 rounded-full bg-primary px-3 py-1 text-xs text-primary-foreground"
-                  >
-                    {b.table ? "Visa rum" : "Placera"}
-                  </Link>
-                </div>
-                <p className="mt-1 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                  <span className="inline-flex items-center gap-1">
-                    <Clock className="h-3 w-3" /> {b.time}
-                  </span>
-                  <span className="inline-flex items-center gap-1">
-                    <Users className="h-3 w-3" /> {b.party} gäster · {b.nights ?? 1} nätter
-                  </span>
-                  <span>{b.table || "Ej tilldelat rum"}</span>
-                </p>
-              </li>
-            ))}
-          </ul>
-          {pending.length > 0 && (
-            <p className="mt-3 text-xs text-muted-foreground">
-              {pending.length} ankomster inväntar bekräftelse.
-            </p>
-          )}
-        </div>
-
-        {/* Gästförfrågningar */}
-        <div className="rounded-2xl border border-border bg-card p-5">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <h2 className="text-base font-medium text-forest">Gästförfrågningar</h2>
-              <p className="text-caption text-muted-foreground">Samtal, mejl och SMS dygnet runt</p>
-            </div>
-            <span className="shrink-0 rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
-              {unhandled} obesvarade
-            </span>
-          </div>
-
-          <ul className="mt-4 space-y-3">
-            {requests.map((m) => (
-              <li key={m.id} className="rounded-xl border border-border p-3">
-                <div className="flex items-center justify-between gap-3">
-                  <p className="truncate text-sm font-medium text-forest">{m.intent}</p>
-                  <span
-                    className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] ${
-                      m.handled
-                        ? "bg-emerald-500/15 text-emerald-700"
-                        : "bg-amber-500/15 text-amber-700"
-                    }`}
-                  >
-                    {m.handled ? "Hanterad av AI" : "Väntar"}
-                  </span>
-                </div>
-                <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{m.preview}</p>
-                <p className="mt-1 text-[11px] text-muted-foreground">
-                  {m.channel} · {m.from} · {m.time}
-                </p>
-              </li>
-            ))}
-          </ul>
-          <Link
-            to="/dashboard/inkorg"
-            className="mt-4 inline-flex items-center gap-1 text-xs text-primary"
-          >
-            Öppna inkorgen <ChevronRight className="h-3 w-3" />
-          </Link>
-        </div>
-
-        {/* Bor på hotellet + housekeeping */}
-        <div className="space-y-4">
-          <div className="rounded-2xl border border-border bg-card p-5">
-            <div className="flex items-center justify-between">
-              <h2 className="text-base font-medium text-forest">Bor på hotellet</h2>
-              <Link
-                to="/dashboard/salsplan"
-                className="inline-flex items-center gap-1 text-xs text-primary"
-              >
-                Rumsöversikt <ChevronRight className="h-3 w-3" />
-              </Link>
-            </div>
-            <ul className="mt-4 space-y-2">
-              {inHouse.slice(0, 4).map((u) => (
-                <li
-                  key={u.id}
-                  className="flex items-center justify-between rounded-xl bg-muted/50 px-3 py-2 text-sm"
-                >
-                  <span className="text-forest">
-                    <span className="font-medium">{u.label}</span>{" "}
-                    <span className="text-muted-foreground">· {u.zone}</span>
-                  </span>
-                  <span className="text-xs text-muted-foreground">
-                    {u.guest} · till {u.until}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="rounded-2xl border border-border bg-card p-5">
-            <h2 className="text-base font-medium text-forest">Housekeeping</h2>
-            <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-              {[
-                ["Klara", housekeeping.ledigt],
-                ["Städas", housekeeping.städas],
-                ["Ankomstklart", housekeeping.dukat],
-              ].map(([label, value]) => (
-                <div key={label as string} className="rounded-xl bg-muted/50 p-3">
-                  <p className="text-[11px] text-muted-foreground">{label}</p>
-                  <p className="mt-1 text-xl font-medium text-forest">{value}</p>
-                </div>
-              ))}
-            </div>
-            <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-              <Sparkles className="h-3 w-3 text-primary" />
-              Seytro besvarade {data.messages.length - unhandled} av {data.messages.length}{" "}
-              gästkonversationer automatiskt.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Funktionerna från Seytro för hotell */}
+      {/* Rumsstatus */}
       <div className="rounded-2xl border border-border bg-card p-6">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p className="eyebrow text-muted-foreground">Seytro på hotellet</p>
-            <h2 className="mt-1 text-heading text-forest">Från förfrågan till rumsplacering</h2>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="inline-flex items-center gap-2 text-base font-medium text-forest">
+            <BedDouble className="h-4 w-4 text-primary" /> Rumsstatus
+          </h2>
+          <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+            {Object.entries(statusStyles).map(([key, s]) => (
+              <span key={key} className="inline-flex items-center gap-1.5">
+                <span className={`h-2 w-2 rounded-full ${s.dot}`} /> {s.label}
+              </span>
+            ))}
           </div>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">
-            <BellRing className="h-3.5 w-3.5" /> Alla agenter aktiva
-          </span>
         </div>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {hotelFunctions.map((f) => {
-            const Icon = functionIcons[f.icon];
+        <div className="mt-5 grid grid-cols-3 gap-2.5 sm:grid-cols-5 xl:grid-cols-8">
+          {rooms.map((u) => {
+            const s = statusStyles[u.status]!;
             return (
               <Link
-                key={f.title}
-                to={f.to}
-                className="group rounded-2xl border border-border bg-background p-5 transition-colors hover:border-primary/50"
+                key={u.id}
+                to="/dashboard/salsplan"
+                className={`rounded-xl border p-3 text-center transition-transform hover:-translate-y-0.5 ${s.chip}`}
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <h3 className="mt-4 text-base font-medium text-forest">{f.title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{f.body}</p>
-                <p className="mt-4 flex items-center justify-between text-xs">
-                  <span className="text-forest">{f.metric}</span>
-                  <span className="inline-flex items-center gap-1 text-primary">
-                    Öppna <ChevronRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
-                  </span>
-                </p>
+                <p className="text-sm font-medium">{u.label}</p>
+                <p className="mt-0.5 text-[11px] opacity-80">{s.label}</p>
               </Link>
             );
           })}
         </div>
+      </div>
 
-        <div className="mt-6 grid grid-cols-2 gap-4 rounded-2xl bg-muted/50 p-5 lg:grid-cols-4">
-          {hotelPromises.map(([value, label]) => (
-            <div key={label}>
-              <p className="text-2xl font-medium text-forest">{value}</p>
-              <p className="mt-1 text-xs text-muted-foreground">{label}</p>
-            </div>
-          ))}
+      {/* Ankomster & avresor */}
+      <div className="grid gap-4 lg:grid-cols-2">
+        <div className="rounded-2xl border border-border bg-card p-6">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-base font-medium text-forest">Dagens ankomster</h2>
+            <span className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
+              {arrivals.length} väntar
+            </span>
+          </div>
+          <ul className="mt-4 space-y-2.5">
+            {arrivals.map((b) => (
+              <li
+                key={b.id}
+                className="flex items-center justify-between gap-4 rounded-xl bg-muted/50 px-4 py-3"
+              >
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium text-forest">{b.name}</p>
+                  <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                    {b.table || "Ej tilldelat rum"} · {b.party} gäster · {b.nights ?? 1} nätter
+                  </p>
+                </div>
+                <div className="flex shrink-0 items-center gap-3">
+                  <span className="text-xs text-muted-foreground">{b.time}</span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      toast.success("Incheckad", { description: `${b.name} · ${b.table || "rum tilldelas"}` })
+                    }
+                    className="rounded-full bg-forest px-3.5 py-1.5 text-xs text-primary-foreground transition-opacity hover:opacity-90"
+                  >
+                    Checka in
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="rounded-2xl border border-border bg-card p-6">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-base font-medium text-forest">Dagens avresor</h2>
+            <span className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
+              {departures.length} totalt
+            </span>
+          </div>
+          <ul className="mt-4 space-y-2.5">
+            {departures.map((u) => (
+              <li
+                key={u.id}
+                className="flex items-center justify-between gap-4 rounded-xl bg-muted/50 px-4 py-3"
+              >
+                <div className="flex min-w-0 items-center gap-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-background text-xs font-medium text-forest">
+                    {u.label}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-medium text-forest">{u.guest}</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">
+                      Utcheckning {u.until} · {u.zone}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => toast.success("Utcheckad", { description: `Rum ${u.label} skickat till städ.` })}
+                  className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs text-forest transition-colors hover:border-primary hover:text-primary"
+                >
+                  <LogOut className="h-3.5 w-3.5" /> Checka ut
+                </button>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+            <BrushCleaning className="h-3.5 w-3.5 text-primary" />
+            {dirty.length} rum ligger i städkö efter avresa.
+          </p>
         </div>
       </div>
     </div>
@@ -352,21 +275,28 @@ function MiniStat({
   icon: Icon,
   label,
   value,
+  suffix,
   hint,
 }: {
   icon: typeof BedDouble;
   label: string;
-  value: string | number;
+  value: string;
+  suffix: string;
   hint: string;
 }) {
   return (
     <div className="rounded-2xl border border-border bg-card p-5">
       <div className="flex items-center gap-2 text-muted-foreground">
-        <Icon className="h-4 w-4 text-primary" />
-        <p className="text-caption">{label}</p>
+        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <Icon className="h-4 w-4" />
+        </span>
+        <p className="eyebrow">{label}</p>
       </div>
-      <p className="mt-2 text-3xl font-medium text-forest">{value}</p>
-      <p className="mt-1 text-xs text-muted-foreground">{hint}</p>
+      <p className="mt-3 flex items-baseline gap-2">
+        <span className="text-3xl font-medium text-forest">{value}</span>
+        <span className="text-xs text-muted-foreground">{suffix}</span>
+      </p>
+      <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{hint}</p>
     </div>
   );
 }
