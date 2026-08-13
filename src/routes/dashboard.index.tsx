@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useVenue } from "@/components/dashboard/DashboardShell";
 import { TodayOverview } from "@/components/dashboard/TodayOverview";
+import { HotelOverview } from "@/components/dashboard/HotelOverview";
 import { statusStyles, type BookingStatus } from "@/lib/dashboard-data";
 
 export const Route = createFileRoute("/dashboard/")({
@@ -50,7 +51,7 @@ function OverviewPage() {
 
   return (
     <div className="space-y-8">
-      <TodayOverview />
+      {venue === "hotell" ? <HotelOverview /> : <TodayOverview />}
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {data.kpis.map((kpi) => (

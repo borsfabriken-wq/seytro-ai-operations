@@ -245,3 +245,63 @@ export const unitStatusStyles: Record<TableUnit["status"], string> = {
   upptaget: "border-forest/40 bg-forest text-primary-foreground",
   städas: "border-amber-500/30 bg-amber-500/10 text-amber-700",
 };
+
+/** Funktionerna från Seytro för hotell, kopplade till dashboardens vyer. */
+export const hotelFunctions: {
+  title: string;
+  body: string;
+  metric: string;
+  icon: "voice" | "mail" | "room" | "guest" | "analytics" | "campaign";
+  to: string;
+}[] = [
+  {
+    title: "Röstagent",
+    body: "Svarar när receptionen är upptagen eller obemannad — incheckning, parkering, frukost och rumsönskemål.",
+    metric: "43 samtal besvarade idag",
+    icon: "voice",
+    to: "/dashboard/inkorg",
+  },
+  {
+    title: "E-postconcierge",
+    body: "Grupp- och konferensförfrågningar, sena ankomster och specialönskemål besvaras direkt, dygnet runt.",
+    metric: "2 förfrågningar väntar",
+    icon: "mail",
+    to: "/dashboard/inkorg",
+  },
+  {
+    title: "Rumsplacering",
+    body: "Automatisk rumstilldelning utifrån önskemål, vistelsens längd och beläggning — inga manuella pussel.",
+    metric: "12 rum i drift idag",
+    icon: "room",
+    to: "/dashboard/salsplan",
+  },
+  {
+    title: "Gästinsikt",
+    body: "En gästprofil som följer med från bokning till incheckning: preferenser, allergier och tidigare vistelser.",
+    metric: "5 profiler uppdaterade",
+    icon: "guest",
+    to: "/dashboard/gaster",
+  },
+  {
+    title: "Analys",
+    body: "Beläggning, RevPAR och kanalprestanda i klartext — utan att exportera rapporter.",
+    metric: "91% beläggning",
+    icon: "analytics",
+    to: "/dashboard/analys",
+  },
+  {
+    title: "Kampanjer",
+    body: "Återaktivera tidigare gäster inför lågsäsong och fyll frukost- och middagspassen.",
+    metric: "58% direktbokningar",
+    icon: "campaign",
+    to: "/dashboard/gaster",
+  },
+];
+
+/** Löftena från hotellsidan, visade som resultatband i inloggat läge. */
+export const hotelPromises: [string, string][] = [
+  ["24/7", "gästservice på svenska och engelska"],
+  ["100%", "besvarade samtal och mejl"],
+  ["−41%", "tid i receptionens inkorg"],
+  ["+18%", "bordsbokningar från rumsgäster"],
+];
