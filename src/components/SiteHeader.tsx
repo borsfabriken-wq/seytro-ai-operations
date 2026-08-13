@@ -191,7 +191,7 @@ export function SiteHeader({ solid = false }: { solid?: boolean } = {}) {
         </div>
         <div className="flex shrink-0 items-center gap-3 sm:gap-4">
           <Link
-            to="/dashboard"
+            to="/login"
             className="hidden text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:block"
           >
             Logga in
@@ -246,7 +246,7 @@ export function SiteHeader({ solid = false }: { solid?: boolean } = {}) {
               Boka demo
             </Link>
             <Link
-              to="/dashboard"
+              to="/login"
               onClick={() => setMobileOpen(false)}
               className="rounded-full border border-primary-foreground/40 px-6 py-3 text-center text-sm text-primary-foreground"
             >
