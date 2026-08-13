@@ -28,8 +28,10 @@ function greetingFor(h: number) {
   return "God kväll";
 }
 
-
 export function TodayOverview() {
+  const [greeting, setGreeting] = useState("God dag");
+  useEffect(() => setGreeting(greetingFor(new Date().getHours())), []);
+
   const { data, venue, date, setDate, service, setService, serviceBookings } = useVenue();
 
   const today = new Date();
