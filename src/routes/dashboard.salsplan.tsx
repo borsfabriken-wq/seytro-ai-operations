@@ -190,7 +190,11 @@ function FloorPage() {
     const id = `n${Date.now()}`;
     setBookings((prev) => [...prev, { ...draft, id }]);
     setSelectedBooking(id);
-    setToast("Bokning skapad — välj bord för att placera");
+    setToast(
+      draft.table
+        ? `Bokning skapad · ${venue === "hotell" ? "rum" : "bord"} ${draft.table}${draft.lockedTable ? " (låst)" : ""}`
+        : "Bokning skapad — Seytro placerar automatiskt",
+    );
   };
 
   return (
@@ -485,6 +489,8 @@ function FloorPage() {
       <BookingDialog
         open={dialogOpen}
         unitWord={venue === "hotell" ? "Rum" : "Bord"}
+        guests={data.guests}
+        units={data.units}
         onClose={() => setDialogOpen(false)}
         onSave={addBooking}
       />

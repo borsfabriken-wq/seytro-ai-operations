@@ -16,6 +16,8 @@ export type Booking = {
   tags: string[];
   /** false = ej placerad på salsplanen */
   placed?: boolean;
+  /** true = AI får inte flytta bokningen vid optimering */
+  lockedTable?: boolean;
   end?: string;
   /** Gästdata — samlas in vid varje bokning */
   phone?: string;
