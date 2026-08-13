@@ -163,12 +163,12 @@ export function HotelOverview() {
       </div>
 
       {/* Rumsstatus */}
-      <div id="rumsstatus" className="rounded-2xl border border-border bg-card p-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+      <div id="rumsstatus" className="rounded-2xl border border-border bg-card p-4 sm:p-6">
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
           <h2 className="inline-flex items-center gap-2 text-base font-medium text-forest">
             <BedDouble className="h-4 w-4 text-primary" /> Rumsstatus
           </h2>
-          <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-muted-foreground">
             {Object.entries(statusStyles).map(([key, s]) => (
               <span key={key} className="inline-flex items-center gap-1.5">
                 <span className={`h-2 w-2 rounded-full ${s.dot}`} /> {s.label}
@@ -177,14 +177,14 @@ export function HotelOverview() {
           </div>
         </div>
 
-        <div className="mt-5 grid grid-cols-3 gap-2.5 sm:grid-cols-5 xl:grid-cols-8">
+        <div className="mt-4 grid grid-cols-2 gap-2.5 min-[420px]:grid-cols-3 sm:mt-5 sm:grid-cols-5 xl:grid-cols-8">
           {rooms.map((u) => {
             const s = statusStyles[u.status]!;
             return (
               <Link
                 key={u.id}
                 to="/dashboard/salsplan"
-                className={`rounded-xl border p-3 text-center transition-transform hover:-translate-y-0.5 ${s.chip}`}
+                className={`flex min-h-16 flex-col items-center justify-center rounded-xl border p-3 text-center transition-transform hover:-translate-y-0.5 ${s.chip}`}
               >
                 <p className="text-sm font-medium">{u.label}</p>
                 <p className="mt-0.5 text-[11px] opacity-80">{s.label}</p>
@@ -196,10 +196,10 @@ export function HotelOverview() {
 
       {/* Ankomster & avresor */}
       <div id="uppmärksamhet" className="grid gap-4 lg:grid-cols-2">
-        <div id="ankomster" className="rounded-2xl border border-border bg-card p-6">
+        <div id="ankomster" className="rounded-2xl border border-border bg-card p-4 sm:p-6">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-base font-medium text-forest">Dagens ankomster</h2>
-            <span className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
+            <span className="shrink-0 rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
               {arrivals.length} väntar
             </span>
           </div>
@@ -207,7 +207,7 @@ export function HotelOverview() {
             {arrivals.map((b) => (
               <li
                 key={b.id}
-                className="flex items-center justify-between gap-4 rounded-xl bg-muted/50 px-4 py-3"
+                className="flex flex-col gap-2.5 rounded-xl bg-muted/50 px-4 py-3 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between min-[420px]:gap-4"
               >
                 <div className="min-w-0">
                   <p className="truncate text-sm font-medium text-forest">{b.name}</p>
@@ -215,14 +215,14 @@ export function HotelOverview() {
                     {b.table || "Ej tilldelat rum"} · {b.party} gäster · {b.nights ?? 1} nätter
                   </p>
                 </div>
-                <div className="flex shrink-0 items-center gap-3">
+                <div className="flex shrink-0 items-center justify-between gap-3 min-[420px]:justify-end">
                   <span className="text-xs text-muted-foreground">{b.time}</span>
                   <button
                     type="button"
                     onClick={() =>
                       toast.success("Incheckad", { description: `${b.name} · ${b.table || "rum tilldelas"}` })
                     }
-                    className="rounded-full bg-forest px-3.5 py-1.5 text-xs text-primary-foreground transition-opacity hover:opacity-90"
+                    className="inline-flex min-h-9 items-center rounded-full bg-forest px-4 py-1.5 text-xs text-primary-foreground transition-opacity hover:opacity-90"
                   >
                     Checka in
                   </button>
@@ -231,6 +231,7 @@ export function HotelOverview() {
             ))}
           </ul>
         </div>
+
 
         <div className="rounded-2xl border border-border bg-card p-6">
           <div className="flex items-center justify-between gap-3">
