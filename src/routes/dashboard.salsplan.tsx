@@ -55,7 +55,7 @@ function FloorPage() {
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
   const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
   const [placingId, setPlacingId] = useState<string | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(Boolean(search.new));
   const [toast, setToast] = useState<string | null>(null);
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [dropUnit, setDropUnit] = useState<string | null>(null);
