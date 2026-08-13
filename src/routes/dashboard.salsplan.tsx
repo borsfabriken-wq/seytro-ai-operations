@@ -65,10 +65,17 @@ function FloorPage() {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [openPmId, setOpenPmId] = useState<string | null>(null);
 
+  // Öppna nybokning / förifylld sökning när man kommer från toppraden.
+  useEffect(() => {
+    if (search.new) setDialogOpen(true);
+    if (search.q) setQuery(search.q);
+  }, [search.new, search.q]);
+
   // Passbytet i toppraden styr vilka tider salsplanen visar.
   useEffect(() => {
     setSlot(service === "lunch" ? "12:00" : "19:00");
   }, [service]);
+
 
   useEffect(() => {
     setBookings(data.bookings);
