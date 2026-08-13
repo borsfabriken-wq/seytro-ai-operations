@@ -14,6 +14,7 @@ import { Route as AnalysRouteImport } from './routes/analys'
 import { Route as BokningsassistentRouteImport } from './routes/bokningsassistent'
 import { Route as BokningsreglerRouteImport } from './routes/bokningsregler'
 import { Route as BordsplaceringRouteImport } from './routes/bordsplacering'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as EpostagentRouteImport } from './routes/epostagent'
 import { Route as GastinsiktRouteImport } from './routes/gastinsikt'
@@ -23,6 +24,11 @@ import { Route as RestaurangRouteImport } from './routes/restaurang'
 import { Route as SalsplanRouteImport } from './routes/salsplan'
 import { Route as TillganglighetRouteImport } from './routes/tillganglighet'
 import { Route as VoiceAgentRouteImport } from './routes/voice-agent'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as DashboardAnalysRouteImport } from './routes/dashboard.analys'
+import { Route as DashboardGasterRouteImport } from './routes/dashboard.gaster'
+import { Route as DashboardInkorgRouteImport } from './routes/dashboard.inkorg'
+import { Route as DashboardSalsplanRouteImport } from './routes/dashboard.salsplan'
 import { Route as ForetagKarriarRouteImport } from './routes/foretag.karriar'
 import { Route as ForetagKontaktRouteImport } from './routes/foretag.kontakt'
 import { Route as ForetagOmOssRouteImport } from './routes/foretag.om-oss'
@@ -64,6 +70,11 @@ const BokningsreglerRoute = BokningsreglerRouteImport.update({
 const BordsplaceringRoute = BordsplaceringRouteImport.update({
   id: '/bordsplacering',
   path: '/bordsplacering',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoRoute = DemoRouteImport.update({
@@ -110,6 +121,31 @@ const VoiceAgentRoute = VoiceAgentRouteImport.update({
   id: '/voice-agent',
   path: '/voice-agent',
   getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAnalysRoute = DashboardAnalysRouteImport.update({
+  id: '/analys',
+  path: '/analys',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardGasterRoute = DashboardGasterRouteImport.update({
+  id: '/gaster',
+  path: '/gaster',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardInkorgRoute = DashboardInkorgRouteImport.update({
+  id: '/inkorg',
+  path: '/inkorg',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSalsplanRoute = DashboardSalsplanRouteImport.update({
+  id: '/salsplan',
+  path: '/salsplan',
+  getParentRoute: () => DashboardRoute,
 } as any)
 const ForetagKarriarRoute = ForetagKarriarRouteImport.update({
   id: '/foretag/karriar',
@@ -207,6 +243,7 @@ export interface FileRoutesByFullPath {
   '/bokningsassistent': typeof BokningsassistentRoute
   '/bokningsregler': typeof BokningsreglerRoute
   '/bordsplacering': typeof BordsplaceringRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/demo': typeof DemoRoute
   '/epostagent': typeof EpostagentRoute
   '/gastinsikt': typeof GastinsiktRoute
@@ -216,6 +253,10 @@ export interface FileRoutesByFullPath {
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
+  '/dashboard/analys': typeof DashboardAnalysRoute
+  '/dashboard/gaster': typeof DashboardGasterRoute
+  '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/salsplan': typeof DashboardSalsplanRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
   '/foretag/om-oss': typeof ForetagOmOssRoute
@@ -233,6 +274,7 @@ export interface FileRoutesByFullPath {
   '/resurser/insikter': typeof ResurserInsikterRoute
   '/resurser/kundberattelser': typeof ResurserKundberattelserRoute
   '/resurser/produktnyheter': typeof ResurserProduktnyheterRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -249,6 +291,10 @@ export interface FileRoutesByTo {
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
+  '/dashboard/analys': typeof DashboardAnalysRoute
+  '/dashboard/gaster': typeof DashboardGasterRoute
+  '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/salsplan': typeof DashboardSalsplanRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
   '/foretag/om-oss': typeof ForetagOmOssRoute
@@ -266,6 +312,7 @@ export interface FileRoutesByTo {
   '/resurser/insikter': typeof ResurserInsikterRoute
   '/resurser/kundberattelser': typeof ResurserKundberattelserRoute
   '/resurser/produktnyheter': typeof ResurserProduktnyheterRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -274,6 +321,7 @@ export interface FileRoutesById {
   '/bokningsassistent': typeof BokningsassistentRoute
   '/bokningsregler': typeof BokningsreglerRoute
   '/bordsplacering': typeof BordsplaceringRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/demo': typeof DemoRoute
   '/epostagent': typeof EpostagentRoute
   '/gastinsikt': typeof GastinsiktRoute
@@ -283,6 +331,10 @@ export interface FileRoutesById {
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
+  '/dashboard/analys': typeof DashboardAnalysRoute
+  '/dashboard/gaster': typeof DashboardGasterRoute
+  '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/salsplan': typeof DashboardSalsplanRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
   '/foretag/om-oss': typeof ForetagOmOssRoute
@@ -300,6 +352,7 @@ export interface FileRoutesById {
   '/resurser/insikter': typeof ResurserInsikterRoute
   '/resurser/kundberattelser': typeof ResurserKundberattelserRoute
   '/resurser/produktnyheter': typeof ResurserProduktnyheterRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -309,6 +362,7 @@ export interface FileRouteTypes {
     | '/bokningsassistent'
     | '/bokningsregler'
     | '/bordsplacering'
+    | '/dashboard'
     | '/demo'
     | '/epostagent'
     | '/gastinsikt'
@@ -318,6 +372,10 @@ export interface FileRouteTypes {
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
+    | '/dashboard/analys'
+    | '/dashboard/gaster'
+    | '/dashboard/inkorg'
+    | '/dashboard/salsplan'
     | '/foretag/karriar'
     | '/foretag/kontakt'
     | '/foretag/om-oss'
@@ -335,6 +393,7 @@ export interface FileRouteTypes {
     | '/resurser/insikter'
     | '/resurser/kundberattelser'
     | '/resurser/produktnyheter'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -351,6 +410,10 @@ export interface FileRouteTypes {
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
+    | '/dashboard/analys'
+    | '/dashboard/gaster'
+    | '/dashboard/inkorg'
+    | '/dashboard/salsplan'
     | '/foretag/karriar'
     | '/foretag/kontakt'
     | '/foretag/om-oss'
@@ -368,6 +431,7 @@ export interface FileRouteTypes {
     | '/resurser/insikter'
     | '/resurser/kundberattelser'
     | '/resurser/produktnyheter'
+    | '/dashboard'
   id:
     | '__root__'
     | '/'
@@ -375,6 +439,7 @@ export interface FileRouteTypes {
     | '/bokningsassistent'
     | '/bokningsregler'
     | '/bordsplacering'
+    | '/dashboard'
     | '/demo'
     | '/epostagent'
     | '/gastinsikt'
@@ -384,6 +449,10 @@ export interface FileRouteTypes {
     | '/salsplan'
     | '/tillganglighet'
     | '/voice-agent'
+    | '/dashboard/analys'
+    | '/dashboard/gaster'
+    | '/dashboard/inkorg'
+    | '/dashboard/salsplan'
     | '/foretag/karriar'
     | '/foretag/kontakt'
     | '/foretag/om-oss'
@@ -401,6 +470,7 @@ export interface FileRouteTypes {
     | '/resurser/insikter'
     | '/resurser/kundberattelser'
     | '/resurser/produktnyheter'
+    | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -409,6 +479,7 @@ export interface RootRouteChildren {
   BokningsassistentRoute: typeof BokningsassistentRoute
   BokningsreglerRoute: typeof BokningsreglerRoute
   BordsplaceringRoute: typeof BordsplaceringRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
   DemoRoute: typeof DemoRoute
   EpostagentRoute: typeof EpostagentRoute
   GastinsiktRoute: typeof GastinsiktRoute
@@ -474,6 +545,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BordsplaceringRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo': {
       id: '/demo'
       path: '/demo'
@@ -536,6 +614,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/voice-agent'
       preLoaderRoute: typeof VoiceAgentRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/analys': {
+      id: '/dashboard/analys'
+      path: '/analys'
+      fullPath: '/dashboard/analys'
+      preLoaderRoute: typeof DashboardAnalysRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/gaster': {
+      id: '/dashboard/gaster'
+      path: '/gaster'
+      fullPath: '/dashboard/gaster'
+      preLoaderRoute: typeof DashboardGasterRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/inkorg': {
+      id: '/dashboard/inkorg'
+      path: '/inkorg'
+      fullPath: '/dashboard/inkorg'
+      preLoaderRoute: typeof DashboardInkorgRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/salsplan': {
+      id: '/dashboard/salsplan'
+      path: '/salsplan'
+      fullPath: '/dashboard/salsplan'
+      preLoaderRoute: typeof DashboardSalsplanRouteImport
+      parentRoute: typeof DashboardRoute
     }
     '/foretag/karriar': {
       id: '/foretag/karriar'
@@ -659,12 +772,33 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface DashboardRouteChildren {
+  DashboardAnalysRoute: typeof DashboardAnalysRoute
+  DashboardGasterRoute: typeof DashboardGasterRoute
+  DashboardInkorgRoute: typeof DashboardInkorgRoute
+  DashboardSalsplanRoute: typeof DashboardSalsplanRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardAnalysRoute: DashboardAnalysRoute,
+  DashboardGasterRoute: DashboardGasterRoute,
+  DashboardInkorgRoute: DashboardInkorgRoute,
+  DashboardSalsplanRoute: DashboardSalsplanRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalysRoute: AnalysRoute,
   BokningsassistentRoute: BokningsassistentRoute,
   BokningsreglerRoute: BokningsreglerRoute,
   BordsplaceringRoute: BordsplaceringRoute,
+  DashboardRoute: DashboardRouteWithChildren,
   DemoRoute: DemoRoute,
   EpostagentRoute: EpostagentRoute,
   GastinsiktRoute: GastinsiktRoute,
