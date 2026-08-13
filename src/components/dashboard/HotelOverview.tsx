@@ -53,25 +53,25 @@ export function HotelOverview() {
   const departures = occupied.slice(0, 4);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 sm:space-y-6">
       {/* Rubrik + datum */}
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-4">
+        <div className="min-w-0">
           <h1 className="text-heading text-forest">{greeting}, receptionen</h1>
           <p className="mt-1 text-caption text-muted-foreground">
             Här är läget på {data.label} just nu.
           </p>
         </div>
-        <div className="flex items-center gap-1 rounded-full border border-border bg-card px-2 py-1.5">
+        <div className="flex w-full items-center justify-between gap-1 rounded-full border border-border bg-card px-2 py-1.5 sm:w-auto sm:justify-start">
           <button
             type="button"
             aria-label="Föregående dag"
             onClick={() => shiftDay(-1)}
-            className="rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-forest"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-forest"
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
-          <span className="min-w-[200px] px-2 text-center text-sm capitalize text-forest">
+          <span className="truncate px-2 text-center text-xs capitalize text-forest sm:min-w-[200px] sm:text-sm">
             {date.toLocaleDateString("sv-SE", {
               weekday: "long",
               day: "numeric",
@@ -83,7 +83,7 @@ export function HotelOverview() {
             type="button"
             aria-label="Nästa dag"
             onClick={() => shiftDay(1)}
-            className="rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-forest"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-forest"
           >
             <ChevronRight className="h-4 w-4" />
           </button>
@@ -91,34 +91,34 @@ export function HotelOverview() {
       </div>
 
       {/* Snabbaste vägen */}
-      <div className="flex flex-wrap items-center justify-between gap-6 rounded-2xl bg-forest p-6 text-primary-foreground sm:p-7">
-        <div>
+      <div className="flex flex-col gap-5 rounded-2xl bg-forest p-5 text-primary-foreground sm:p-7 lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:gap-6">
+        <div className="min-w-0">
           <p className="eyebrow text-primary-foreground/60">Snabbaste vägen</p>
-          <h2 className="mt-2 text-2xl font-medium">Checka in gäst</h2>
+          <h2 className="mt-2 text-xl font-medium sm:text-2xl">Checka in gäst</h2>
           <p className="mt-1.5 text-sm text-primary-foreground/70">
             {arrivals.reduce((s, b) => s + b.party, 0)} gäster väntas idag · {clean.length} rum är
             städklara nu
           </p>
         </div>
-        <div className="flex flex-wrap gap-3">
+        <div className="grid gap-2.5 sm:grid-cols-3 lg:flex lg:flex-wrap lg:gap-3">
           <button
             type="button"
             onClick={() => toast.success("Incheckning startad", { description: "Välj gäst i ankomstlistan." })}
-            className="inline-flex items-center gap-2 rounded-full bg-background px-5 py-2.5 text-sm font-medium text-forest transition-opacity hover:opacity-90"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-background px-5 py-2.5 text-sm font-medium text-forest transition-opacity hover:opacity-90"
           >
             <UserRoundPlus className="h-4 w-4" /> Checka in gäst
           </button>
           <button
             type="button"
             onClick={() => toast("Drop in-gäst", { description: `${clean.length} rum kan tilldelas direkt.` })}
-            className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/25 px-5 py-2.5 text-sm transition-colors hover:bg-primary-foreground/10"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-primary-foreground/25 px-5 py-2.5 text-sm transition-colors hover:bg-primary-foreground/10"
           >
             <DoorOpen className="h-4 w-4" /> Drop in-gäst
           </button>
           <button
             type="button"
             onClick={() => navigate({ to: "/dashboard/salsplan", search: { new: true } })}
-            className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/25 px-5 py-2.5 text-sm transition-colors hover:bg-primary-foreground/10"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-primary-foreground/25 px-5 py-2.5 text-sm transition-colors hover:bg-primary-foreground/10"
           >
             <CalendarPlus className="h-4 w-4" /> Ny bokning
           </button>
@@ -126,7 +126,8 @@ export function HotelOverview() {
       </div>
 
       {/* Nyckeltal */}
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+
         <MiniStat
           icon={LogIn}
           label="Incheckade"
