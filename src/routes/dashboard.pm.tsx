@@ -1,9 +1,20 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { ChevronRight, ClipboardList, FilePlus2, Search, Sparkles, Users } from "lucide-react";
+import {
+  ChevronRight,
+  ClipboardList,
+  FilePlus2,
+  Printer,
+  Search,
+  Sparkles,
+  Users,
+} from "lucide-react";
+import { toast } from "sonner";
 import { useVenue } from "@/components/dashboard/DashboardShell";
 import { PmSheet } from "@/components/dashboard/PmSheet";
 import { statusStyles } from "@/lib/dashboard-data";
+import { TemplateManager } from "@/components/dashboard/TemplateManager";
+import { useTemplates } from "@/lib/pm-templates";
 import { kr, pmDocs as seedDocs, pmTotal, uid, type PmDoc } from "@/lib/pm";
 
 export const Route = createFileRoute("/dashboard/pm")({
@@ -35,12 +46,18 @@ function PmPage() {
   const [docs, setDocs] = useState<PmDoc[]>(seedDocs);
   const [selected, setSelected] = useState<string>(seedDocs[0]?.id ?? "");
   const [query, setQuery] = useState("");
+  const [tab, setTab] = useState<"pm" | "mallar">("pm");
+  const [filter, setFilter] = useState<"kommande" | "alla">("kommande");
+  const { templates, addTemplate, removeTemplate } = useTemplates();
+
+  /** Kommande PM = allt som inte är avslutat/arkiverat. */
+  const isUpcoming = (d: PmDoc) => d.status !== "skickad till kök" || d.date === "idag";
 
   const bookingOf = (doc: PmDoc) => data.bookings.find((b) => b.id === doc.bookingId) ?? null;
 
-  const visible = docs.filter((d) =>
-    query ? d.title.toLowerCase().includes(query.toLowerCase()) : true,
-  );
+  const visible = docs
+    .filter((d) => (filter === "kommande" ? isUpcoming(d) : true))
+    .filter((d) => (query ? d.title.toLowerCase().includes(query.toLowerCase()) : true));
   const active = docs.find((d) => d.id === selected) ?? null;
 
   const createBlank = () => {
@@ -96,17 +113,56 @@ function PmPage() {
         <div className="min-w-0">
           <h1 className="text-heading text-forest">PM och förbeställningar</h1>
           <p className="mt-1 text-caption text-muted-foreground">
-            {docs.length} aktiva PM · allt annat sköts automatiskt av Seytro.
+            {docs.length} PM totalt · {templates.length} mallar · resten sköts av Seytro.
           </p>
         </div>
-        <button
-          type="button"
-          onClick={createBlank}
-          className="inline-flex shrink-0 items-center gap-2 rounded-full bg-forest px-4 py-2 text-sm text-primary-foreground transition-opacity hover:opacity-90"
-        >
-          <FilePlus2 className="h-4 w-4" /> Nytt PM
-        </button>
+        <div className="flex shrink-0 items-center gap-2">
+          {active && tab === "pm" && (
+            <button
+              type="button"
+              onClick={() => {
+                toast("Skickar PM till skrivaren", { description: active.title });
+                window.print();
+              }}
+              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-forest"
+            >
+              <Printer className="h-4 w-4" /> Skriv ut beställning
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={createBlank}
+            className="inline-flex items-center gap-2 rounded-full bg-forest px-4 py-2 text-sm text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            <FilePlus2 className="h-4 w-4" /> Nytt PM
+          </button>
+        </div>
       </div>
+
+      <div data-print-hide className="flex w-fit items-center gap-1 rounded-full border border-border bg-card p-1">
+        {(
+          [
+            { id: "pm", label: "PM" },
+            { id: "mallar", label: "Mallar" },
+          ] as const
+        ).map((t) => (
+          <button
+            key={t.id}
+            type="button"
+            onClick={() => setTab(t.id)}
+            className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
+              tab === t.id ? "bg-forest text-primary-foreground" : "text-muted-foreground"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {tab === "mallar" ? (
+        <TemplateManager templates={templates} onAdd={addTemplate} onRemove={removeTemplate} />
+      ) : (
+        <>
 
       {/* Widget: stora sällskap kommer in automatiskt */}
       <section className="rounded-2xl border border-border bg-card p-5">
@@ -167,9 +223,24 @@ function PmPage() {
 
       <div className="grid gap-6 lg:grid-cols-[20rem_minmax(0,1fr)]">
         <section className="h-fit rounded-2xl border border-border bg-card">
-          <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-            <ClipboardList className="h-4 w-4 text-primary" />
-            <h2 className="text-sm font-semibold text-forest">Aktiva PM</h2>
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-3">
+            <h2 className="inline-flex items-center gap-2 text-sm font-semibold text-forest">
+              <ClipboardList className="h-4 w-4 text-primary" /> Alla PM
+            </h2>
+            <div className="flex items-center gap-1 rounded-full bg-muted p-0.5">
+              {(["kommande", "alla"] as const).map((f) => (
+                <button
+                  key={f}
+                  type="button"
+                  onClick={() => setFilter(f)}
+                  className={`rounded-full px-2.5 py-1 text-[11px] capitalize transition-colors ${
+                    filter === f ? "bg-background text-forest" : "text-muted-foreground"
+                  }`}
+                >
+                  {f}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="px-4 py-3">
@@ -220,7 +291,7 @@ function PmPage() {
 
         <div className="rounded-2xl border border-border bg-card p-6">
           {active ? (
-            <PmSheet doc={active} onChange={updateDoc} />
+            <PmSheet doc={active} onChange={updateDoc} templates={templates} />
           ) : (
             <p className="text-sm text-muted-foreground">
               Välj ett PM i listan eller skapa ett nytt.
@@ -228,6 +299,8 @@ function PmPage() {
           )}
         </div>
       </div>
+        </>
+      )}
     </div>
   );
 }
