@@ -100,7 +100,8 @@
   /* Supporting accents — blå/sten-familjen */
   --tide: oklch(0.58 0.13 248);
   --tide-soft: oklch(0.955 0.018 250);
-  --dashboard-header: oklch(0.92 0.018 245);
+  --dashboard-header: oklch(0.975 0.005 250);
+  --dashboard-header-edge: oklch(0.925 0.008 250);
   --ember: oklch(0.58 0.03 80);
   --ember-soft: oklch(0.945 0.008 88);
   --moss: oklch(0.45 0.04 235);
@@ -164,6 +165,7 @@
   --color-tide: var(--tide);
   --color-tide-soft: var(--tide-soft);
   --color-dashboard-header: var(--dashboard-header);
+  --color-dashboard-header-edge: var(--dashboard-header-edge);
   --color-ember: var(--ember);
   --color-ember-soft: var(--ember-soft);
   --color-moss: var(--moss);
