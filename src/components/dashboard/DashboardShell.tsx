@@ -141,10 +141,26 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   const quickDays = buildQuickDays(date);
   const quickActions = [
-    { label: "Kölista", icon: Users },
-    { label: "Drop in", icon: UserPlus },
-    { label: "Snabbokning", icon: Zap },
+    {
+      label: "Kölista",
+      icon: Users,
+      run: () =>
+        toast("Kölista", {
+          description: "3 sällskap i kö – nästa lediga bord ca 20 min.",
+        }),
+    },
+    {
+      label: "Drop in",
+      icon: UserPlus,
+      run: () => navigate({ to: "/dashboard/salsplan", search: { new: true } }),
+    },
+    {
+      label: "Snabbokning",
+      icon: Zap,
+      run: () => navigate({ to: "/dashboard/salsplan", search: { new: true } }),
+    },
   ];
+
 
   return (
     <VenueContext.Provider value={{ venue, setVenue, date, setDate, service, setService }}>
