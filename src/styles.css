@@ -66,44 +66,44 @@
 :root {
   --radius: 0.25rem;
   color-scheme: light;
-  /* Warm ivory canvas — hospitality, not clinical white */
-  --background: oklch(0.995 0.003 95);
-  --foreground: oklch(0.27 0.026 162);
+  /* Palette: FFFFFF · EDEEEB · CCC7BF · 31393C · 3E96F4 */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.315 0.011 220);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.27 0.026 162);
+  --card-foreground: oklch(0.315 0.011 220);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.27 0.026 162);
-  /* Forest green primary — the Seytro brand colour */
-  --primary: oklch(0.42 0.07 162);
-  --primary-foreground: oklch(0.985 0.004 95);
-  --secondary: oklch(0.966 0.008 110);
-  --secondary-foreground: oklch(0.27 0.026 162);
-  --muted: oklch(0.966 0.008 110);
-  --muted-foreground: oklch(0.27 0.026 162 / 66%);
-  /* Warm accent surface */
-  --accent: oklch(0.942 0.014 95);
-  --accent-foreground: oklch(0.27 0.026 162);
-  --destructive: oklch(0.52 0.15 30);
-  --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.905 0.01 120);
-  --input: oklch(0.905 0.01 120);
-  --ring: oklch(0.42 0.07 162);
-  /* Brand tones */
-  --forest: oklch(0.33 0.045 162);
-  --forest-deep: oklch(0.255 0.038 162);
-  --forest-mid: oklch(0.42 0.07 162);
-  --sage: oklch(0.885 0.022 155);
-  --sage-soft: oklch(0.964 0.012 150);
-  --ivory: oklch(0.995 0.003 95);
-  --brass: oklch(0.62 0.07 78);
-  --brass-soft: oklch(0.955 0.02 85);
-  /* Supporting accents — all inside the green/brass family */
-  --tide: oklch(0.47 0.05 185);
-  --tide-soft: oklch(0.964 0.013 180);
-  --ember: oklch(0.6 0.062 68);
-  --ember-soft: oklch(0.962 0.018 78);
-  --moss: oklch(0.46 0.055 155);
-  --moss-soft: oklch(0.961 0.015 155);
+  --popover-foreground: oklch(0.315 0.011 220);
+  /* Signal blue primary */
+  --primary: oklch(0.655 0.155 251);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.945 0.004 120);
+  --secondary-foreground: oklch(0.315 0.011 220);
+  --muted: oklch(0.945 0.004 120);
+  --muted-foreground: oklch(0.315 0.011 220 / 65%);
+  /* Warm stone accent surface */
+  --accent: oklch(0.915 0.008 90);
+  --accent-foreground: oklch(0.315 0.011 220);
+  --destructive: oklch(0.55 0.16 28);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.885 0.007 88);
+  --input: oklch(0.885 0.007 88);
+  --ring: oklch(0.655 0.155 251);
+  /* Brand tones (namn behålls, toner följer paletten) */
+  --forest: oklch(0.315 0.011 220);
+  --forest-deep: oklch(0.255 0.01 220);
+  --forest-mid: oklch(0.655 0.155 251);
+  --sage: oklch(0.82 0.008 85);
+  --sage-soft: oklch(0.945 0.004 120);
+  --ivory: oklch(0.985 0.002 110);
+  --brass: oklch(0.62 0.02 85);
+  --brass-soft: oklch(0.945 0.006 88);
+  /* Supporting accents — blå/sten-familjen */
+  --tide: oklch(0.58 0.13 248);
+  --tide-soft: oklch(0.955 0.018 250);
+  --ember: oklch(0.58 0.03 80);
+  --ember-soft: oklch(0.945 0.008 88);
+  --moss: oklch(0.45 0.04 235);
+  --moss-soft: oklch(0.95 0.008 240);
 
   /* Premium hospitality type scale — fluid from mobile to large screens */
   --text-xs: 0.75rem;
@@ -123,19 +123,19 @@
   --leading-relaxed: 1.6;
   --leading-loose: 1.75;
 
-  --chart-1: oklch(0.42 0.07 162);
-  --chart-2: oklch(0.62 0.07 78);
-  --chart-3: oklch(0.33 0.045 162);
-  --chart-4: oklch(0.885 0.022 155);
-  --chart-5: oklch(0.955 0.02 85);
-  --sidebar: oklch(0.966 0.008 110);
-  --sidebar-foreground: oklch(0.27 0.026 162);
-  --sidebar-primary: oklch(0.42 0.07 162);
-  --sidebar-primary-foreground: oklch(0.985 0.004 95);
-  --sidebar-accent: oklch(0.942 0.014 95);
-  --sidebar-accent-foreground: oklch(0.27 0.026 162);
-  --sidebar-border: oklch(0.905 0.01 120);
-  --sidebar-ring: oklch(0.42 0.07 162);
+  --chart-1: oklch(0.655 0.155 251);
+  --chart-2: oklch(0.315 0.011 220);
+  --chart-3: oklch(0.82 0.008 85);
+  --chart-4: oklch(0.58 0.13 248);
+  --chart-5: oklch(0.945 0.004 120);
+  --sidebar: oklch(0.945 0.004 120);
+  --sidebar-foreground: oklch(0.315 0.011 220);
+  --sidebar-primary: oklch(0.655 0.155 251);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.915 0.008 90);
+  --sidebar-accent-foreground: oklch(0.315 0.011 220);
+  --sidebar-border: oklch(0.885 0.007 88);
+  --sidebar-ring: oklch(0.655 0.155 251);
 }
 
 
