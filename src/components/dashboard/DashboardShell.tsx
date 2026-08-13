@@ -351,20 +351,22 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               </div>
             </div>
             <div className="flex items-center gap-2 overflow-x-auto border-t border-forest/8 px-4 py-2 sm:px-6 lg:hidden">
-              <div className="flex shrink-0 items-center gap-1 rounded-full border border-dashboard-header-edge bg-background p-1">
-                {(["restaurang", "hotell"] as const).map((v) => (
-                  <button
-                    key={v}
-                    type="button"
-                    onClick={() => setVenue(v)}
-                    className={`whitespace-nowrap rounded-full px-3 py-1.5 text-sm transition-colors ${
-                      venue === v ? "bg-forest text-primary-foreground" : "text-muted-foreground"
-                    }`}
-                  >
-                    {v === "restaurang" ? "Restaurang" : "Hotell"}
-                  </button>
-                ))}
-              </div>
+              {canSwitch && (
+                <div className="flex shrink-0 items-center gap-1 rounded-full border border-dashboard-header-edge bg-background p-1">
+                  {venues.map((v) => (
+                    <button
+                      key={v}
+                      type="button"
+                      onClick={() => setVenue(v)}
+                      className={`whitespace-nowrap rounded-full px-3 py-1.5 text-sm transition-colors ${
+                        venue === v ? "bg-forest text-primary-foreground" : "text-muted-foreground"
+                      }`}
+                    >
+                      {v === "restaurang" ? "Restaurang" : "Hotell"}
+                    </button>
+                  ))}
+                </div>
+              )}
               <nav className="flex gap-1">
                 {nav.map((item) => {
                   const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
