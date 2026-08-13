@@ -162,7 +162,7 @@ export function HotelOverview() {
       </div>
 
       {/* Rumsstatus */}
-      <div className="rounded-2xl border border-border bg-card p-6">
+      <div id="rumsstatus" className="rounded-2xl border border-border bg-card p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="inline-flex items-center gap-2 text-base font-medium text-forest">
             <BedDouble className="h-4 w-4 text-primary" /> Rumsstatus
@@ -194,8 +194,8 @@ export function HotelOverview() {
       </div>
 
       {/* Ankomster & avresor */}
-      <div className="grid gap-4 lg:grid-cols-2">
-        <div className="rounded-2xl border border-border bg-card p-6">
+      <div id="uppmärksamhet" className="grid gap-4 lg:grid-cols-2">
+        <div id="ankomster" className="rounded-2xl border border-border bg-card p-6">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-base font-medium text-forest">Dagens ankomster</h2>
             <span className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
