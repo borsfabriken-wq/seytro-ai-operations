@@ -102,20 +102,30 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const stats = [
     {
       label: venue === "hotell" ? "ankomster" : "bokningar",
+      hint:
+        venue === "hotell"
+          ? "Ankommande gäster idag"
+          : "Antal bokade sällskap i valt pass",
       value: active.length,
       icon: CalendarDays,
     },
     {
-      label: venue === "hotell" ? "gäster" : "täckningar",
+      label: "gäster",
+      hint:
+        venue === "hotell"
+          ? "Totalt antal gäster som checkar in"
+          : "Totalt antal personer i valt pass",
       value: active.reduce((s, b) => s + b.party, 0),
       icon: UtensilsCrossed,
     },
     {
       label: "väntar",
+      hint: "Bokningar som inte är bekräftade än",
       value: active.filter((b) => b.status === "väntar").length,
       icon: Clock,
     },
   ];
+
 
   const serviceCounts = servicePeriods.map((p) => ({
     ...p,
@@ -193,21 +203,24 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 z-30 border-b border-border bg-card/90 backdrop-blur">
             <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6">
-              <div className="flex min-w-0 items-center gap-2">
+              <div className="hidden min-w-0 items-stretch divide-x divide-border overflow-hidden rounded-xl border border-border bg-background sm:flex">
                 {stats.map((s) => (
                   <span
                     key={s.label}
-                    title={s.label}
-                    className="hidden items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1.5 text-sm text-forest sm:inline-flex"
+                    title={s.hint}
+                    className="flex items-center gap-2 px-3.5 py-1.5"
                   >
-                    <s.icon className="h-3.5 w-3.5 text-muted-foreground" />
-                    <span className="font-medium">{s.value}</span>
-                    <span className="hidden text-xs text-muted-foreground xl:inline">
-                      {s.label}
+                    <s.icon className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                    <span className="leading-tight">
+                      <span className="block text-sm font-medium text-forest">{s.value}</span>
+                      <span className="block text-[11px] capitalize text-muted-foreground">
+                        {s.label}
+                      </span>
                     </span>
                   </span>
                 ))}
               </div>
+
 
               <DateNav date={date} onChange={setDate} />
 

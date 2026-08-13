@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   AlertTriangle,
@@ -22,14 +23,16 @@ const quickDays = [
 ];
 
 
-function greeting() {
-  const h = new Date().getHours();
+function greetingFor(h: number) {
   if (h < 10) return "God morgon";
   if (h < 17) return "God eftermiddag";
   return "God kväll";
 }
 
 export function TodayOverview() {
+  const [greeting, setGreeting] = useState("God dag");
+  useEffect(() => setGreeting(greetingFor(new Date().getHours())), []);
+
   const { data, venue, date, setDate, service, setService, serviceBookings } = useVenue();
 
   const today = new Date();
@@ -56,7 +59,7 @@ export function TodayOverview() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-heading text-forest">
-            {greeting()}, {data.label}
+            {greeting}, {data.label}
           </h1>
           <p className="mt-1 text-caption capitalize text-muted-foreground">
             {date.toLocaleDateString("sv-SE", {
