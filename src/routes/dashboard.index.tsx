@@ -53,7 +53,7 @@ function OverviewPage() {
     <div className="space-y-8">
       {venue === "hotell" ? <HotelOverview /> : <TodayOverview />}
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         {data.kpis.map((kpi) => (
           <div key={kpi.label} className="rounded-2xl border border-border bg-card p-5">
             <p className="text-caption text-muted-foreground">{kpi.label}</p>
@@ -66,8 +66,8 @@ function OverviewPage() {
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_20rem]">
-        <div className="rounded-2xl border border-border bg-card">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border p-5">
+        <div className="min-w-0 rounded-2xl border border-border bg-card">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border p-4 sm:p-5">
             <div>
               <h1 className="text-heading text-forest">Bokningar</h1>
               <p className="text-caption text-muted-foreground">
@@ -79,7 +79,7 @@ function OverviewPage() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Sök namn"
-                className="rounded-full border border-border bg-background px-3 py-1.5 text-sm outline-none"
+                className="w-full min-w-0 rounded-full border border-border bg-background px-3 py-2 text-sm outline-none sm:w-44"
               />
               {filters.map((f) => (
                 <button
