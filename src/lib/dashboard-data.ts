@@ -14,6 +14,9 @@ export type Booking = {
   source: BookingSource;
   note?: string;
   tags: string[];
+  /** false = ej placerad på salsplanen */
+  placed?: boolean;
+  end?: string;
 };
 
 export type Guest = {
