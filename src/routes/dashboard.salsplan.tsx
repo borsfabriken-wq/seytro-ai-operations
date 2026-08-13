@@ -702,3 +702,36 @@ function Pill({ icon, text }: { icon?: React.ReactNode; text: string }) {
     </span>
   );
 }
+
+function FilterRow({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <p className="eyebrow text-muted-foreground">{label}</p>
+      <div className="mt-1.5 flex flex-wrap gap-1.5">{children}</div>
+    </div>
+  );
+}
+
+function Chip({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`rounded-full border px-2.5 py-1 text-xs capitalize transition-colors ${
+        active
+          ? "border-primary bg-primary/10 text-primary"
+          : "border-border bg-background text-muted-foreground hover:text-forest"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
