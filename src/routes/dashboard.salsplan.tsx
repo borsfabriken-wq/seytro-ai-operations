@@ -248,6 +248,66 @@ function FloorPage() {
             </button>
           </div>
 
+          {filtersOpen && (
+            <div className="space-y-3 border-b border-border bg-muted/30 px-4 py-3">
+              <FilterRow label="Status">
+                <Chip active={statusFilter === "alla"} onClick={() => setStatusFilter("alla")}>
+                  Alla
+                </Chip>
+                {(["väntar", "bekräftad", "anlänt", "avbokad"] as const).map((s) => (
+                  <Chip key={s} active={statusFilter === s} onClick={() => setStatusFilter(s)}>
+                    {s === "väntar" ? "Preliminär" : s}
+                  </Chip>
+                ))}
+              </FilterRow>
+
+              <FilterRow label="Sittning">
+                <Chip active={sittingFilter === "alla"} onClick={() => setSittingFilter("alla")}>
+                  Alla
+                </Chip>
+                {sittings.map((s) => (
+                  <Chip key={s} active={sittingFilter === s} onClick={() => setSittingFilter(s)}>
+                    {s}
+                  </Chip>
+                ))}
+              </FilterRow>
+
+              {allTags.length > 0 && (
+                <FilterRow label="Taggar">
+                  <Chip active={tagFilter === "alla"} onClick={() => setTagFilter("alla")}>
+                    Alla
+                  </Chip>
+                  {allTags.map((t) => (
+                    <Chip key={t} active={tagFilter === t} onClick={() => setTagFilter(t)}>
+                      {t}
+                    </Chip>
+                  ))}
+                </FilterRow>
+              )}
+
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5">
+                  <ArrowUpDown className="h-3.5 w-3.5 text-muted-foreground" />
+                  <select
+                    value={sort}
+                    onChange={(e) => setSort(e.target.value as typeof sort)}
+                    className="rounded-lg border border-border bg-background px-2 py-1 text-xs outline-none"
+                  >
+                    <option value="tid">Sortera: tid</option>
+                    <option value="namn">Sortera: namn</option>
+                    <option value="sallskap">Sortera: störst sällskap</option>
+                    <option value="status">Sortera: status</option>
+                  </select>
+                </div>
+                {activeFilterCount > 0 && (
+                  <button type="button" onClick={resetFilters} className="text-xs text-primary underline">
+                    Rensa filter
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+
           <div className="flex-1 overflow-y-auto text-sm">
             <GroupHeader
               tone="amber"
