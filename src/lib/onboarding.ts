@@ -164,3 +164,25 @@ export function newTable(zone: string, x: number, y: number, label: string): Tab
     shape: "fyrkant",
   };
 }
+
+/** Ersätter demodata med den egna uppsättningen för ett onboardat konto. */
+export function applySetup<
+  T extends {
+    label: string;
+    units: TableUnit[];
+    bookings: unknown[];
+    guests: unknown[];
+    messages: unknown[];
+    kpis: { label: string; value: string; delta: string; hint: string }[];
+  },
+>(base: T, setup: VenueSetup, venue: Venue): T {
+  return {
+    ...base,
+    label: setup.org || base.label,
+    units: venue === "restaurang" ? setup.tables : base.units,
+    bookings: [],
+    guests: [],
+    messages: [],
+    kpis: base.kpis.map((k) => ({ ...k, value: "—", delta: "", hint: "Ny verksamhet" })),
+  };
+}
