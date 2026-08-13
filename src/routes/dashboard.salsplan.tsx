@@ -57,6 +57,11 @@ function FloorPage() {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [openPmId, setOpenPmId] = useState<string | null>(null);
 
+  // Passbytet i toppraden styr vilka tider salsplanen visar.
+  useEffect(() => {
+    setSlot(service === "lunch" ? "12:00" : "19:00");
+  }, [service]);
+
   useEffect(() => {
     setBookings(data.bookings);
     setSelectedBooking(null);
@@ -187,28 +192,6 @@ function FloorPage() {
               ? "inbokade idag"
               : `på ${servicePeriods.find((p) => p.id === service)?.label.toLowerCase()}`}
           </p>
-          {venue === "restaurang" && (
-            <div className="mt-3 inline-flex items-center gap-1 rounded-full bg-muted p-1">
-              {servicePeriods.map((p) => (
-                <button
-                  key={p.id}
-                  type="button"
-                  onClick={() => {
-                    setService(p.id);
-                    setSlot(p.id === "lunch" ? "12:00" : "19:00");
-                  }}
-                  className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
-                    service === p.id
-                      ? "bg-card text-forest shadow-sm"
-                      : "text-muted-foreground hover:text-forest"
-                  }`}
-                >
-                  {p.label}
-                  <span className="ml-2 text-xs text-muted-foreground">{p.span}</span>
-                </button>
-              ))}
-            </div>
-          )}
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {Object.entries(counts).map(([k, v]) => (
@@ -241,7 +224,7 @@ function FloorPage() {
         </div>
       )}
 
-      <div className="grid gap-4 xl:grid-cols-[22rem_minmax(0,1fr)]">
+      <div className="grid gap-6 xl:grid-cols-[23rem_minmax(0,1fr)]">
         {/* Gäster / bokningar */}
         <div className="flex max-h-[44rem] flex-col overflow-hidden rounded-2xl border border-border bg-card">
           <div className="flex items-center gap-2 border-b border-border px-4 py-3">
