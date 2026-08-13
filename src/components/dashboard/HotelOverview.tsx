@@ -233,10 +233,10 @@ export function HotelOverview() {
         </div>
 
 
-        <div className="rounded-2xl border border-border bg-card p-6">
+        <div className="rounded-2xl border border-border bg-card p-4 sm:p-6">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-base font-medium text-forest">Dagens avresor</h2>
-            <span className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
+            <span className="shrink-0 rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
               {departures.length} totalt
             </span>
           </div>
@@ -244,7 +244,7 @@ export function HotelOverview() {
             {departures.map((u) => (
               <li
                 key={u.id}
-                className="flex items-center justify-between gap-4 rounded-xl bg-muted/50 px-4 py-3"
+                className="flex flex-col gap-2.5 rounded-xl bg-muted/50 px-4 py-3 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between min-[420px]:gap-4"
               >
                 <div className="flex min-w-0 items-center gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-background text-xs font-medium text-forest">
@@ -252,7 +252,7 @@ export function HotelOverview() {
                   </span>
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium text-forest">{u.guest}</p>
-                    <p className="mt-0.5 text-xs text-muted-foreground">
+                    <p className="mt-0.5 truncate text-xs text-muted-foreground">
                       Utcheckning {u.until} · {u.zone}
                     </p>
                   </div>
@@ -260,13 +260,14 @@ export function HotelOverview() {
                 <button
                   type="button"
                   onClick={() => toast.success("Utcheckad", { description: `Rum ${u.label} skickat till städ.` })}
-                  className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs text-forest transition-colors hover:border-primary hover:text-primary"
+                  className="inline-flex min-h-9 shrink-0 items-center justify-center gap-1.5 rounded-full border border-border px-4 py-1.5 text-xs text-forest transition-colors hover:border-primary hover:text-primary"
                 >
                   <LogOut className="h-3.5 w-3.5" /> Checka ut
                 </button>
               </li>
             ))}
           </ul>
+
           <p className="mt-4 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
             <BrushCleaning className="h-3.5 w-3.5 text-primary" />
             {dirty.length} rum ligger i städkö efter avresa.
