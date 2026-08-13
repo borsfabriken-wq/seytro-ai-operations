@@ -82,19 +82,30 @@ function buildQuickDays(selected: Date) {
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [venue, setVenueState] = useState<Venue>("restaurang");
+  const [plan, setPlan] = useState<AccountPlan>("hybrid");
   const [date, setDate] = useState<Date>(() => new Date(2026, 7, 13));
   const [service, setService] = useState<ServicePeriod>("middag");
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
+  const venues = venuesForPlan(plan);
+  const canSwitch = venues.length > 1;
 
   useEffect(() => {
+    const p = readAccountPlan();
+    setPlan(p);
+    const allowed = venuesForPlan(p);
     const stored = window.localStorage.getItem("seytro-venue");
-    if (stored === "restaurang" || stored === "hotell") setVenueState(stored);
+    const next =
+      stored === "restaurang" || stored === "hotell"
+        ? (stored as Venue)
+        : allowed[0];
+    setVenueState(allowed.includes(next) ? next : allowed[0]);
   }, []);
 
   const setVenue = (v: Venue) => {
+    if (!venuesForPlan(plan).includes(v)) return;
     window.localStorage.setItem("seytro-venue", v);
     setVenueState(v);
   };
