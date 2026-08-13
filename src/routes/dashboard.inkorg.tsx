@@ -25,7 +25,7 @@ function InboxPage() {
   const active = data.messages.find((m) => m.id === activeId) ?? list[0] ?? data.messages[0];
 
   return (
-    <div className="mx-auto max-w-[96rem] space-y-6">
+    <div className="space-y-8">
       <div>
         <h1 className="text-display text-forest">Inkorg</h1>
         <p className="text-body text-muted-foreground">

@@ -25,7 +25,7 @@ function GuestsPage() {
   const active = data.guests.find((g) => g.id === activeId) ?? guests[0] ?? data.guests[0];
 
   return (
-    <div className="mx-auto max-w-[96rem] space-y-6">
+    <div className="space-y-8">
       <div>
         <h1 className="text-display text-forest">Gästregister</h1>
         <p className="text-body text-muted-foreground">

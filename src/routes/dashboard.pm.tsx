@@ -71,16 +71,16 @@ function PmPage() {
     setDocs((prev) => prev.map((d) => (d.id === next.id ? next : d)));
 
   return (
-    <div className="mx-auto max-w-[86rem] space-y-6">
-      <div className="rounded-2xl border border-border bg-card p-5">
-        <h1 className="text-heading text-forest">PM och förbeställningar</h1>
-        <p className="text-caption text-muted-foreground">
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-display text-forest">PM och förbeställningar</h1>
+        <p className="text-body text-muted-foreground">
           Sällskap och event med fasta menyer som köket ska ha koll på — {docs.length} aktiva PM ·{" "}
           {missing.length} sällskap utan PM.
         </p>
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-[20rem_1fr]">
+      <div className="grid gap-6 lg:grid-cols-[21rem_minmax(0,1fr)]">
         <div className="space-y-4">
           <section className="rounded-2xl border border-border bg-card">
             <div className="flex items-center gap-2 border-b border-border px-4 py-3">

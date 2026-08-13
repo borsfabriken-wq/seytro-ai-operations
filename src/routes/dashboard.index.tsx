@@ -49,7 +49,7 @@ function OverviewPage() {
   );
 
   return (
-    <div className="mx-auto max-w-[96rem] space-y-6">
+    <div className="space-y-8">
       <TodayOverview />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
