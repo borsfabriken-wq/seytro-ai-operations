@@ -25,7 +25,7 @@ function GuestsPage() {
   const active = data.guests.find((g) => g.id === activeId) ?? guests[0] ?? data.guests[0];
 
   return (
-    <div className="mx-auto max-w-[110rem] space-y-6">
+    <div className="mx-auto max-w-[96rem] space-y-6">
       <div>
         <h1 className="text-display text-forest">Gästregister</h1>
         <p className="text-body text-muted-foreground">
@@ -33,7 +33,7 @@ function GuestsPage() {
         </p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <div className="rounded-2xl border border-border bg-card">
           <div className="border-b border-border p-4">
             <input

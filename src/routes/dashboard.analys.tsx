@@ -21,7 +21,7 @@ function AnalyticsPage() {
   const max = Math.max(...data.occupancy.map((o) => o.value));
 
   return (
-    <div className="mx-auto max-w-[110rem] space-y-6">
+    <div className="mx-auto max-w-[96rem] space-y-6">
       <div>
         <h1 className="text-display text-forest">Analys</h1>
         <p className="text-body text-muted-foreground">Rullande 7 dagar · {data.label}</p>

@@ -35,7 +35,7 @@ function OverviewPage() {
   );
 
   return (
-    <div className="mx-auto max-w-[110rem] space-y-6">
+    <div className="mx-auto max-w-[96rem] space-y-6">
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {data.kpis.map((kpi) => (
           <div key={kpi.label} className="rounded-2xl border border-border bg-card p-5">
@@ -48,7 +48,7 @@ function OverviewPage() {
         ))}
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[1fr_20rem]">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="rounded-2xl border border-border bg-card">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border p-5">
             <div>

@@ -25,7 +25,7 @@ function InboxPage() {
   const active = data.messages.find((m) => m.id === activeId) ?? list[0] ?? data.messages[0];
 
   return (
-    <div className="mx-auto max-w-[110rem] space-y-6">
+    <div className="mx-auto max-w-[96rem] space-y-6">
       <div>
         <h1 className="text-display text-forest">Inkorg</h1>
         <p className="text-body text-muted-foreground">
@@ -34,7 +34,7 @@ function InboxPage() {
         </p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[24rem_1fr]">
+      <div className="grid gap-6 lg:grid-cols-[24rem_minmax(0,1fr)]">
         <div className="rounded-2xl border border-border bg-card">
           <div className="flex gap-1 border-b border-border p-3">
             {(["alla", "väntar"] as const).map((t) => (
