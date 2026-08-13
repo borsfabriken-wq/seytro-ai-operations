@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { toast } from "sonner";
 
@@ -12,6 +12,7 @@ import {
   LogOut,
   Plus,
   Search,
+  Settings2,
   UserPlus,
   Users,
   UtensilsCrossed,
@@ -26,6 +27,7 @@ import {
   type Venue,
 } from "@/lib/dashboard-data";
 import { readAccountPlan, venuesForPlan, type AccountPlan } from "@/lib/account";
+import { applySetup, readSetup, type VenueSetup } from "@/lib/onboarding";
 import { DateNav } from "@/components/dashboard/DateNav";
 
 const VenueContext = createContext<{
@@ -35,6 +37,7 @@ const VenueContext = createContext<{
   setDate: (d: Date) => void;
   service: ServicePeriod;
   setService: (s: ServicePeriod) => void;
+  setup: VenueSetup | null;
 }>({
   venue: "restaurang",
   setVenue: () => {},
@@ -42,15 +45,20 @@ const VenueContext = createContext<{
   setDate: () => {},
   service: "middag",
   setService: () => {},
+  setup: null,
 });
 
 export function useVenue() {
-  const { venue, setVenue, date, setDate, service, setService } = useContext(VenueContext);
-  const data = dashboardData[venue];
+  const { venue, setVenue, date, setDate, service, setService, setup } =
+    useContext(VenueContext);
+  const data = useMemo(() => {
+    const base = dashboardData[venue];
+    return setup ? applySetup(base, setup, venue) : base;
+  }, [venue, setup]);
   /** Bokningar för valt pass (hotellet visar hela dygnet). */
   const serviceBookings =
     venue === "hotell" ? data.bookings : data.bookings.filter((b) => serviceOf(b.time) === service);
-  return { venue, setVenue, date, setDate, service, setService, data, serviceBookings };
+  return { venue, setVenue, date, setDate, service, setService, data, serviceBookings, setup };
 }
 
 const nav = [
@@ -87,16 +95,19 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [date, setDate] = useState<Date>(() => new Date(2026, 7, 13));
   const [service, setService] = useState<ServicePeriod>("middag");
   const [query, setQuery] = useState("");
+  const [setup, setSetup] = useState<VenueSetup | null>(null);
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
-  const venues = venuesForPlan(plan);
+  const venues = venuesForPlan(plan, setup?.type);
   const canSwitch = venues.length > 1;
 
   useEffect(() => {
     const p = readAccountPlan();
     setPlan(p);
-    const allowed = venuesForPlan(p);
+    const own = p === "custom" ? readSetup() : null;
+    setSetup(own);
+    const allowed = venuesForPlan(p, own?.type);
     const stored = window.localStorage.getItem("seytro-venue");
     const next =
       stored === "restaurang" || stored === "hotell"
@@ -106,12 +117,15 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   }, []);
 
   const setVenue = (v: Venue) => {
-    if (!venuesForPlan(plan).includes(v)) return;
+    if (!venuesForPlan(plan, setup?.type).includes(v)) return;
     window.localStorage.setItem("seytro-venue", v);
     setVenueState(v);
   };
 
-  const data = dashboardData[venue];
+  const data = useMemo(
+    () => (setup ? applySetup(dashboardData[venue], setup, venue) : dashboardData[venue]),
+    [venue, setup],
+  );
 
   const inService =
     venue === "hotell" ? data.bookings : data.bookings.filter((b) => serviceOf(b.time) === service);
@@ -175,7 +189,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
 
   return (
-    <VenueContext.Provider value={{ venue, setVenue, date, setDate, service, setService }}>
+    <VenueContext.Provider
+      value={{ venue, setVenue, date, setDate, service, setService, setup }}
+    >
       <div className="flex min-h-[100svh] bg-muted/40">
         <aside className="sticky top-0 hidden h-[100svh] w-60 shrink-0 flex-col border-r border-border bg-forest-deep px-4 py-5 text-primary-foreground lg:flex">
           <Link to="/" className="px-2">
@@ -226,6 +242,15 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             })}
           </nav>
 
+          {plan === "custom" && (
+            <Link
+              to="/onboarding"
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-primary-foreground/65 transition-colors hover:text-primary-foreground"
+            >
+              <Settings2 className="h-4 w-4" />
+              Uppsättning
+            </Link>
+          )}
           <Link
             to="/login"
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-primary-foreground/65 transition-colors hover:text-primary-foreground"

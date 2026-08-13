@@ -1,7 +1,7 @@
 import type { Venue } from "@/lib/dashboard-data";
 
-/** Vilken typ av konto som är inloggat. */
-export type AccountPlan = "restaurang" | "hotell" | "hybrid";
+/** Vilken typ av konto som är inloggat. "custom" = egen onboardad verksamhet. */
+export type AccountPlan = "restaurang" | "hotell" | "hybrid" | "custom";
 
 const KEY = "seytro-account";
 
@@ -35,14 +35,21 @@ export const accountPlans: {
   },
 ];
 
-export function venuesForPlan(plan: AccountPlan): Venue[] {
+export function venuesForPlan(plan: AccountPlan, setupType?: Venue | "hybrid"): Venue[] {
+  if (plan === "custom") {
+    if (setupType === "hybrid") return ["hotell", "restaurang"];
+    return [setupType ?? "restaurang"];
+  }
   return accountPlans.find((p) => p.id === plan)?.venues ?? ["restaurang"];
 }
 
 export function readAccountPlan(): AccountPlan {
   if (typeof window === "undefined") return "hybrid";
   const stored = window.localStorage.getItem(KEY);
-  return stored === "restaurang" || stored === "hotell" || stored === "hybrid"
+  return stored === "restaurang" ||
+    stored === "hotell" ||
+    stored === "hybrid" ||
+    stored === "custom"
     ? stored
     : "hybrid";
 }

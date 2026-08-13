@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { ArrowRight, Building2, Hotel, UtensilsCrossed } from "lucide-react";
+import { ArrowRight, Building2, Hotel, Plus, Sparkles, UtensilsCrossed } from "lucide-react";
 
 import { accountPlans, writeAccountPlan, type AccountPlan } from "@/lib/account";
+import { readSetup, type VenueSetup } from "@/lib/onboarding";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -24,20 +26,24 @@ export const Route = createFileRoute("/login")({
   component: LoginPage,
 });
 
-const icons = {
+const icons: Record<AccountPlan, typeof Hotel> = {
   restaurang: UtensilsCrossed,
   hotell: Hotel,
   hybrid: Building2,
-} as const;
+  custom: Sparkles,
+};
 
 function LoginPage() {
   const navigate = useNavigate();
+  const [ownSetup, setOwnSetup] = useState<VenueSetup | null>(null);
 
-  const signIn = (plan: AccountPlan) => {
+  useEffect(() => setOwnSetup(readSetup()), []);
+
+  const signIn = (plan: AccountPlan, venue?: string) => {
     writeAccountPlan(plan);
     window.localStorage.setItem(
       "seytro-venue",
-      plan === "restaurang" ? "restaurang" : "hotell",
+      venue ?? (plan === "restaurang" ? "restaurang" : "hotell"),
     );
     navigate({ to: "/dashboard" });
   };
@@ -54,7 +60,44 @@ function LoginPage() {
           eller en hybridvy när hotellet har restaurang.
         </p>
 
-        <div className="mt-8 grid gap-4">
+        {ownSetup && (
+          <div className="mt-8">
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Din verksamhet
+            </p>
+            <div className="mt-2 flex flex-wrap items-center gap-3 rounded-2xl border border-primary/30 bg-primary/5 p-5">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary/12 text-primary">
+                <Sparkles className="h-5 w-5" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block font-medium">{ownSetup.org || "Namnlös verksamhet"}</span>
+                <span className="block text-sm text-muted-foreground">
+                  {ownSetup.tables.length} bord · {ownSetup.zones.length} zoner · egen uppsättning
+                </span>
+              </span>
+              <Link
+                to="/onboarding"
+                className="rounded-xl border border-border bg-background px-4 py-2 text-sm"
+              >
+                Redigera
+              </Link>
+              <button
+                type="button"
+                onClick={() =>
+                  signIn("custom", ownSetup.type === "hotell" ? "hotell" : "restaurang")
+                }
+                className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"
+              >
+                Öppna drift
+              </button>
+            </div>
+          </div>
+        )}
+
+        <p className="mt-8 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          Demokonton
+        </p>
+        <div className="mt-2 grid gap-4">
           {accountPlans.map((plan) => {
             const Icon = icons[plan.id];
             return (
@@ -78,6 +121,22 @@ function LoginPage() {
             );
           })}
         </div>
+
+        <Link
+          to="/onboarding"
+          className="group mt-4 flex items-center gap-4 rounded-2xl border border-dashed border-border bg-background p-5 transition-colors hover:border-primary/50"
+        >
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+            <Plus className="h-5 w-5" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-medium">Onboarda en ny restaurang</span>
+            <span className="block text-sm text-muted-foreground">
+              Bygg allt från grunden — öppettider, zoner, bordskarta, bokningsregler och AI-kanaler.
+            </span>
+          </span>
+          <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+        </Link>
       </div>
     </main>
   );
