@@ -55,6 +55,7 @@ function FloorPage() {
   const [tagFilter, setTagFilter] = useState<string>("alla");
   const [sort, setSort] = useState<"tid" | "namn" | "sallskap" | "status">("tid");
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [openPmId, setOpenPmId] = useState<string | null>(null);
 
   useEffect(() => {
     setBookings(data.bookings);
@@ -458,6 +459,7 @@ function FloorPage() {
                 placing={placingId === activeBooking.id}
                 onPlace={() => setPlacingId(activeBooking.id)}
                 onUpdate={(patch) => update(activeBooking.id, patch)}
+                onOpenPm={setOpenPmId}
               />
             ) : activeUnit ? (
               <div className="space-y-2">
@@ -479,6 +481,8 @@ function FloorPage() {
           </div>
         </div>
       </div>
+
+      <PmModal pmId={openPmId} onClose={() => setOpenPmId(null)} />
 
       <BookingDialog
         open={dialogOpen}
@@ -502,12 +506,14 @@ function BookingPanel({
   placing,
   onPlace,
   onUpdate,
+  onOpenPm,
 }: {
   booking: Booking;
   unitWord: string;
   placing: boolean;
   onPlace: () => void;
   onUpdate: (patch: Partial<Booking>) => void;
+  onOpenPm?: (pmId: string) => void;
 }) {
   const [tagEditor, setTagEditor] = useState(false);
   const isLarge = booking.party >= 8;
@@ -669,12 +675,14 @@ function BookingPanel({
             </select>
           )}
           {booking.pmId && (
-            <Link
-              to="/dashboard/pm"
-              className="rounded-lg border border-primary/40 bg-primary/8 px-2 py-1 text-xs text-primary"
+            <button
+              type="button"
+              onClick={() => onOpenPm?.(booking.pmId!)}
+              className="flex items-center gap-1.5 rounded-lg border border-primary/40 bg-primary/8 px-2 py-1 text-xs text-primary"
             >
-              Förbeställning finns — öppna PM
-            </Link>
+              <PmBookIcon className="h-3.5 w-3.5" />
+              Förbeställning finns — visa PM
+            </button>
           )}
         </div>
         <textarea
