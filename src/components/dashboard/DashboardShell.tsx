@@ -183,7 +183,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
 
   return (
-    <VenueContext.Provider value={{ venue, setVenue, date, setDate, service, setService }}>
+    <VenueContext.Provider
+      value={{ venue, setVenue, date, setDate, service, setService, setup }}
+    >
       <div className="flex min-h-[100svh] bg-muted/40">
         <aside className="sticky top-0 hidden h-[100svh] w-60 shrink-0 flex-col border-r border-border bg-forest-deep px-4 py-5 text-primary-foreground lg:flex">
           <Link to="/" className="px-2">
