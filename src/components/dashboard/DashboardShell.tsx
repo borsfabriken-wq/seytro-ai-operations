@@ -25,6 +25,7 @@ import {
   type ServicePeriod,
   type Venue,
 } from "@/lib/dashboard-data";
+import { readAccountPlan, venuesForPlan, type AccountPlan } from "@/lib/account";
 import { DateNav } from "@/components/dashboard/DateNav";
 
 const VenueContext = createContext<{
@@ -82,19 +83,30 @@ function buildQuickDays(selected: Date) {
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [venue, setVenueState] = useState<Venue>("restaurang");
+  const [plan, setPlan] = useState<AccountPlan>("hybrid");
   const [date, setDate] = useState<Date>(() => new Date(2026, 7, 13));
   const [service, setService] = useState<ServicePeriod>("middag");
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
+  const venues = venuesForPlan(plan);
+  const canSwitch = venues.length > 1;
 
   useEffect(() => {
+    const p = readAccountPlan();
+    setPlan(p);
+    const allowed = venuesForPlan(p);
     const stored = window.localStorage.getItem("seytro-venue");
-    if (stored === "restaurang" || stored === "hotell") setVenueState(stored);
+    const next =
+      stored === "restaurang" || stored === "hotell"
+        ? (stored as Venue)
+        : allowed[0]!;
+    setVenueState(allowed.includes(next) ? next : allowed[0]!);
   }, []);
 
   const setVenue = (v: Venue) => {
+    if (!venuesForPlan(plan).includes(v)) return;
     window.localStorage.setItem("seytro-venue", v);
     setVenueState(v);
   };
@@ -170,22 +182,24 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             <img src={logoAsset.url} alt="Seytro" className="h-5 w-auto" />
           </Link>
 
-          <div className="mt-8 grid grid-cols-2 gap-1 rounded-full bg-primary-foreground/10 p-1">
-            {(["restaurang", "hotell"] as const).map((v) => (
-              <button
-                key={v}
-                type="button"
-                onClick={() => setVenue(v)}
-                className={`rounded-full px-3 py-1.5 text-center text-sm transition-colors ${
-                  venue === v
-                    ? "bg-primary-foreground text-forest-deep"
-                    : "text-primary-foreground/65 hover:text-primary-foreground"
-                }`}
-              >
-                {v === "restaurang" ? "Restaurang" : "Hotell"}
-              </button>
-            ))}
-          </div>
+          {canSwitch && (
+            <div className="mt-8 grid grid-cols-2 gap-1 rounded-full bg-primary-foreground/10 p-1">
+              {venues.map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  onClick={() => setVenue(v)}
+                  className={`rounded-full px-3 py-1.5 text-center text-sm transition-colors ${
+                    venue === v
+                      ? "bg-primary-foreground text-forest-deep"
+                      : "text-primary-foreground/65 hover:text-primary-foreground"
+                  }`}
+                >
+                  {v === "restaurang" ? "Restaurang" : "Hotell"}
+                </button>
+              ))}
+            </div>
+          )}
           <p className="mt-4 px-3 text-sm text-primary-foreground/85">{data.label}</p>
           <p className="px-3 text-xs text-primary-foreground/45">
             {venue === "hotell" ? "Hotelldrift" : "Restaurangdrift"}
@@ -213,7 +227,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </nav>
 
           <Link
-            to="/"
+            to="/login"
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-primary-foreground/65 transition-colors hover:text-primary-foreground"
           >
             <LogOut className="h-4 w-4" />
@@ -337,20 +351,22 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               </div>
             </div>
             <div className="flex items-center gap-2 overflow-x-auto border-t border-forest/8 px-4 py-2 sm:px-6 lg:hidden">
-              <div className="flex shrink-0 items-center gap-1 rounded-full border border-dashboard-header-edge bg-background p-1">
-                {(["restaurang", "hotell"] as const).map((v) => (
-                  <button
-                    key={v}
-                    type="button"
-                    onClick={() => setVenue(v)}
-                    className={`whitespace-nowrap rounded-full px-3 py-1.5 text-sm transition-colors ${
-                      venue === v ? "bg-forest text-primary-foreground" : "text-muted-foreground"
-                    }`}
-                  >
-                    {v === "restaurang" ? "Restaurang" : "Hotell"}
-                  </button>
-                ))}
-              </div>
+              {canSwitch && (
+                <div className="flex shrink-0 items-center gap-1 rounded-full border border-dashboard-header-edge bg-background p-1">
+                  {venues.map((v) => (
+                    <button
+                      key={v}
+                      type="button"
+                      onClick={() => setVenue(v)}
+                      className={`whitespace-nowrap rounded-full px-3 py-1.5 text-sm transition-colors ${
+                        venue === v ? "bg-forest text-primary-foreground" : "text-muted-foreground"
+                      }`}
+                    >
+                      {v === "restaurang" ? "Restaurang" : "Hotell"}
+                    </button>
+                  ))}
+                </div>
+              )}
               <nav className="flex gap-1">
                 {nav.map((item) => {
                   const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
