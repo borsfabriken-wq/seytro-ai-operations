@@ -45,6 +45,25 @@ const nav = [
   { to: "/dashboard/analys", label: "Analys", icon: BarChart3, exact: false },
 ] as const;
 
+function isSameDay(a: Date, b: Date) {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
+}
+
+function buildQuickDays(selected: Date) {
+  const base = new Date(2026, 7, 13);
+  const anchor = isSameDay(selected, base) || selected > base ? base : selected;
+  return Array.from({ length: 5 }, (_, i) => {
+    const d = new Date(anchor.getFullYear(), anchor.getMonth(), anchor.getDate() + i);
+    const label =
+      i === 0 ? "idag" : i === 1 ? "imorgon" : d.toLocaleDateString("sv-SE", { weekday: "long" });
+    return { date: d, label };
+  });
+}
+
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [venue, setVenueState] = useState<Venue>("restaurang");
   const [date, setDate] = useState<Date>(() => new Date(2026, 7, 13));
