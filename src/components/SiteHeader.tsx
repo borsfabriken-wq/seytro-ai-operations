@@ -190,12 +190,12 @@ export function SiteHeader({ solid = false }: { solid?: boolean } = {}) {
           </div>
         </div>
         <div className="flex shrink-0 items-center gap-3 sm:gap-4">
-          <a
-            href="https://www.seytro.com/login"
+          <Link
+            to="/dashboard"
             className="hidden text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:block"
           >
             Logga in
-          </a>
+          </Link>
           <Link
             to="/demo"
             className="hidden rounded-full border border-primary-foreground/40 px-4 py-1.5 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-forest-deep sm:block"
@@ -245,12 +245,13 @@ export function SiteHeader({ solid = false }: { solid?: boolean } = {}) {
             >
               Boka demo
             </Link>
-            <a
-              href="https://www.seytro.com/login"
+            <Link
+              to="/dashboard"
+              onClick={() => setMobileOpen(false)}
               className="rounded-full border border-primary-foreground/40 px-6 py-3 text-center text-sm text-primary-foreground"
             >
               Logga in
-            </a>
+            </Link>
           </div>
         </div>
       )}
