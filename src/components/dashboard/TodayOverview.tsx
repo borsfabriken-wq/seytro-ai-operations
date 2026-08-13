@@ -101,12 +101,12 @@ export function TodayOverview() {
         {/* Bokningsförfrågningar */}
         <div className="rounded-2xl border border-border bg-card p-5">
           <div className="flex items-start justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <div className="flex min-w-0 items-center gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <CalendarClock className="h-5 w-5" />
               </span>
               <div>
-                <h2 className="text-subheading text-forest">Bokningsförfrågningar</h2>
+                <h2 className="text-base font-medium text-forest">Bokningsförfrågningar</h2>
                 <p className="text-caption text-muted-foreground">Inväntar bekräftelse</p>
               </div>
             </div>
@@ -151,10 +151,10 @@ export function TodayOverview() {
         <div className="rounded-2xl border border-border bg-card p-5">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <h2 className="text-subheading text-forest">Specialgäster</h2>
+              <h2 className="text-base font-medium text-forest">Specialgäster</h2>
               <p className="text-caption text-muted-foreground">Gäster med extra information</p>
             </div>
-            <span className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
+            <span className="shrink-0 rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
               {special.length} noteringar
             </span>
           </div>
@@ -186,7 +186,7 @@ export function TodayOverview() {
         <div className="space-y-4">
           <div className="rounded-2xl border border-border bg-card p-5">
             <div className="flex items-center justify-between">
-              <h2 className="text-subheading text-forest">Dagsrapport</h2>
+              <h2 className="text-base font-medium text-forest">Dagsrapport</h2>
               <Link
                 to="/dashboard/analys"
                 className="inline-flex items-center gap-1 text-xs text-primary"
@@ -206,7 +206,7 @@ export function TodayOverview() {
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-5">
-            <h2 className="text-subheading text-forest">Gårdagens sammanfattning</h2>
+            <h2 className="text-base font-medium text-forest">Gårdagens sammanfattning</h2>
             <div className="mt-4 grid grid-cols-3 gap-2 text-center">
               <div className="rounded-xl bg-muted/50 p-3">
                 <p className="inline-flex items-center gap-1 text-[11px] text-muted-foreground">
