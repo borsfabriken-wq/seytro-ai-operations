@@ -257,7 +257,13 @@ function FloorPage() {
           </div>
 
           {venue === "restaurang" ? (
-            <FloorPlan units={visibleUnits} selected={selectedUnit} onSelect={handleUnit} />
+            <FloorPlan
+              units={visibleUnits}
+              selected={selectedUnit}
+              onSelect={handleUnit}
+              dragging={Boolean(draggingId)}
+              onDropBooking={dropOnUnit}
+            />
           ) : (
             <div className="grid grid-cols-2 gap-3 rounded-2xl border border-border bg-card p-5 sm:grid-cols-4 lg:grid-cols-6">
               {visibleUnits.map((u) => (
@@ -265,8 +271,26 @@ function FloorPage() {
                   key={u.id}
                   type="button"
                   onClick={() => handleUnit(u)}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = "move";
+                    if (dropUnit !== u.id) setDropUnit(u.id);
+                  }}
+                  onDragLeave={() => setDropUnit((v) => (v === u.id ? null : v))}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setDropUnit(null);
+                    const id = e.dataTransfer.getData("text/booking-id");
+                    if (id) dropOnUnit(u, id);
+                  }}
                   className={`rounded-xl border p-4 text-left transition-transform hover:-translate-y-0.5 ${unitStatusStyles[u.status]} ${
-                    selectedUnit === u.id ? "ring-2 ring-primary" : ""
+                    dropUnit === u.id
+                      ? "scale-[1.03] ring-2 ring-primary"
+                      : selectedUnit === u.id
+                        ? "ring-2 ring-primary"
+                        : draggingId
+                          ? "ring-1 ring-primary/30"
+                          : ""
                   }`}
                 >
                   <span className="block text-lg font-medium">{u.label}</span>
