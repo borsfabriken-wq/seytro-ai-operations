@@ -4,11 +4,16 @@ import {
   BarChart3,
   CalendarDays,
   ClipboardList,
+  Clock,
   Inbox,
   LayoutGrid,
   LogOut,
+  Plus,
   Search,
+  UserPlus,
   Users,
+  UtensilsCrossed,
+  Zap,
 } from "lucide-react";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
 import { dashboardData, type Venue } from "@/lib/dashboard-data";
