@@ -1,9 +1,15 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Clock, Lock, Plus, Search, Users } from "lucide-react";
+import { Check, Clock, Plus, Search, Users, X } from "lucide-react";
 import { useVenue } from "@/components/dashboard/DashboardShell";
 import { FloorPlan } from "@/components/dashboard/FloorPlan";
-import { unitStatusStyles, type TableUnit } from "@/lib/dashboard-data";
+import {
+  BookingDialog,
+  pmTemplates,
+  tagGroups,
+  type NewBookingDraft,
+} from "@/components/dashboard/BookingDialog";
+import { unitStatusStyles, type Booking, type TableUnit } from "@/lib/dashboard-data";
 
 export const Route = createFileRoute("/dashboard/salsplan")({
   head: () => ({
@@ -24,24 +30,44 @@ const services = ["17:00", "18:00", "19:00", "20:00", "21:00"];
 
 function FloorPage() {
   const { data, venue } = useVenue();
+  const [bookings, setBookings] = useState<Booking[]>(data.bookings);
   const [query, setQuery] = useState("");
   const [service, setService] = useState("19:00");
-  const [zone, setZone] = useState<string>("Alla");
+  const [zone, setZone] = useState("Alla");
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
   const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
+  const [placingId, setPlacingId] = useState<string | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+
+  useEffect(() => {
+    setBookings(data.bookings);
+    setSelectedBooking(null);
+    setSelectedUnit(null);
+    setPlacingId(null);
+    setZone("Alla");
+  }, [data]);
+
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(null), 2600);
+    return () => clearTimeout(t);
+  }, [toast]);
 
   const zones = useMemo(
     () => ["Alla", ...Array.from(new Set(data.units.map((u) => u.zone)))],
     [data.units],
   );
-
   const visibleUnits = data.units.filter((u) => zone === "Alla" || u.zone === zone);
 
-  const bookings = data.bookings.filter((b) =>
-    b.name.toLowerCase().includes(query.toLowerCase()),
+  const filtered = bookings.filter(
+    (b) =>
+      b.name.toLowerCase().includes(query.toLowerCase()) ||
+      b.tags.some((t) => t.toLowerCase().includes(query.toLowerCase())) ||
+      b.table.toLowerCase().includes(query.toLowerCase()),
   );
-  const unplaced = bookings.filter((b) => b.placed === false);
-  const placed = bookings.filter((b) => b.placed !== false);
+  const unplaced = filtered.filter((b) => b.placed === false);
+  const placed = filtered.filter((b) => b.placed !== false);
 
   const counts = {
     ledigt: visibleUnits.filter((u) => u.status === "ledigt").length,
@@ -50,14 +76,36 @@ function FloorPage() {
     städas: visibleUnits.filter((u) => u.status === "städas").length,
   };
 
-  const guestsUnplaced = unplaced.reduce((s, b) => s + b.party, 0);
-  const guestsPlaced = placed.reduce((s, b) => s + b.party, 0);
-  const activeBooking = data.bookings.find((b) => b.id === selectedBooking) ?? null;
+  const activeBooking = bookings.find((b) => b.id === selectedBooking) ?? null;
   const activeUnit = data.units.find((u) => u.id === selectedUnit) ?? null;
 
+  const update = (id: string, patch: Partial<Booking>) =>
+    setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, ...patch } : b)));
+
   const handleUnit = (u: TableUnit) => {
+    if (placingId) {
+      update(placingId, { table: u.label, placed: true });
+      const name = bookings.find((b) => b.id === placingId)?.name ?? "Bokningen";
+      setPlacingId(null);
+      setSelectedUnit(null);
+      setToast(`${name} placerad på ${venue === "hotell" ? "rum" : "bord"} ${u.label}`);
+      return;
+    }
     setSelectedUnit(u.id === selectedUnit ? null : u.id);
     setSelectedBooking(null);
+  };
+
+  const selectBooking = (id: string) => {
+    setSelectedBooking(id === selectedBooking ? null : id);
+    setSelectedUnit(null);
+    setPlacingId(null);
+  };
+
+  const addBooking = (draft: NewBookingDraft) => {
+    const id = `n${Date.now()}`;
+    setBookings((prev) => [...prev, { ...draft, id }]);
+    setSelectedBooking(id);
+    setToast("Bokning skapad — välj bord för att placera");
   };
 
   return (
@@ -69,7 +117,7 @@ function FloorPage() {
           </h1>
           <p className="text-body text-muted-foreground">
             {visibleUnits.length} {venue === "hotell" ? "rum" : "bord"} ·{" "}
-            {guestsPlaced + guestsUnplaced} gäster inbokade idag
+            {bookings.reduce((s, b) => s + b.party, 0)} gäster inbokade idag
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -83,65 +131,60 @@ function FloorPage() {
           ))}
           <button
             type="button"
-            className="flex items-center gap-1.5 rounded-full bg-forest px-3.5 py-1.5 text-xs text-primary-foreground"
+            onClick={() => setDialogOpen(true)}
+            className="flex items-center gap-1.5 rounded-full bg-primary px-3.5 py-1.5 text-xs text-primary-foreground transition-opacity hover:opacity-90"
           >
             <Plus className="h-3.5 w-3.5" /> Ny bokning
           </button>
         </div>
       </div>
 
+      {placingId && (
+        <div className="flex items-center justify-between gap-3 rounded-xl border border-primary/40 bg-primary/8 px-4 py-2.5 text-sm text-primary">
+          <span>
+            Välj {venue === "hotell" ? "ett rum" : "ett bord"} på planen för{" "}
+            <strong>{bookings.find((b) => b.id === placingId)?.name}</strong>
+          </span>
+          <button type="button" onClick={() => setPlacingId(null)} className="underline">
+            Avbryt
+          </button>
+        </div>
+      )}
+
       <div className="grid gap-4 xl:grid-cols-[22rem_minmax(0,1fr)]">
-        {/* Bokningslista */}
-        <div className="flex max-h-[42rem] flex-col overflow-hidden rounded-2xl border border-border bg-card">
+        {/* Gäster / bokningar */}
+        <div className="flex max-h-[44rem] flex-col overflow-hidden rounded-2xl border border-border bg-card">
           <div className="flex items-center gap-2 border-b border-border px-4 py-3">
             <Search className="h-4 w-4 text-muted-foreground" />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Filter…"
+              placeholder="Sök gäst, tagg eller bord…"
               className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
             />
+            {query && (
+              <button type="button" onClick={() => setQuery("")}>
+                <X className="h-4 w-4 text-muted-foreground" />
+              </button>
+            )}
           </div>
 
           <div className="flex-1 overflow-y-auto text-sm">
             <GroupHeader
               tone="amber"
               title="Ej placerade"
-              meta={`${guestsUnplaced} gäster, ${unplaced.length} bokningar`}
+              meta={`${unplaced.reduce((s, b) => s + b.party, 0)} gäster, ${unplaced.length} bokningar`}
             />
             {unplaced.map((b) => (
-              <BookingRow
-                key={b.id}
-                active={selectedBooking === b.id}
-                onClick={() => {
-                  setSelectedBooking(b.id === selectedBooking ? null : b.id);
-                  setSelectedUnit(null);
-                }}
-                time={b.time}
-                party={b.party}
-                name={b.name}
-                table={b.table}
-              />
+              <BookingRow key={b.id} b={b} active={selectedBooking === b.id} onClick={() => selectBooking(b.id)} />
             ))}
-
             <GroupHeader
               tone="green"
               title="Placerade"
-              meta={`${guestsPlaced} gäster, ${placed.length} bokningar`}
+              meta={`${placed.reduce((s, b) => s + b.party, 0)} gäster, ${placed.length} bokningar`}
             />
             {placed.map((b) => (
-              <BookingRow
-                key={b.id}
-                active={selectedBooking === b.id}
-                onClick={() => {
-                  setSelectedBooking(b.id === selectedBooking ? null : b.id);
-                  setSelectedUnit(null);
-                }}
-                time={b.time}
-                party={b.party}
-                name={b.name}
-                table={b.table}
-              />
+              <BookingRow key={b.id} b={b} active={selectedBooking === b.id} onClick={() => selectBooking(b.id)} />
             ))}
           </div>
         </div>
@@ -208,57 +251,15 @@ function FloorPage() {
             </div>
           )}
 
-          {/* Detaljpanel */}
           <div className="rounded-2xl border border-border bg-card p-5">
             {activeBooking ? (
-              <div className="space-y-3">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <p className="eyebrow text-muted-foreground">
-                      Bokning #{activeBooking.id.toUpperCase()}
-                    </p>
-                    <h2 className="text-subheading text-forest">{activeBooking.name}</h2>
-                  </div>
-                  <div className="flex flex-wrap gap-2 text-xs">
-                    <Pill icon={<Users className="h-3.5 w-3.5" />} text={`${activeBooking.party} gäster`} />
-                    <Pill icon={<Clock className="h-3.5 w-3.5" />} text={`${activeBooking.time}–${activeBooking.end ?? ""}`} />
-                    <Pill text={activeBooking.source} />
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  {activeBooking.note ?? "Ingen bokningskommentar."}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {activeBooking.tags.map((t) => (
-                    <span key={t} className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-2 pt-1">
-                  <button
-                    type="button"
-                    className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm ${
-                      activeBooking.placed === false
-                        ? "bg-amber-500/15 text-amber-700"
-                        : "bg-primary/10 text-primary"
-                    }`}
-                  >
-                    {activeBooking.placed === false
-                      ? `Välj bord · ${activeBooking.party} kvar`
-                      : `Placerad på bord ${activeBooking.table}`}
-                  </button>
-                  <button type="button" className="rounded-lg border border-border px-3 py-2 text-sm text-muted-foreground">
-                    Bekräfta bokning
-                  </button>
-                  <button type="button" className="rounded-lg border border-border px-3 py-2 text-sm text-muted-foreground">
-                    No show
-                  </button>
-                  <button type="button" className="grid h-9 w-9 place-items-center rounded-lg border border-border text-muted-foreground">
-                    <Lock className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
+              <BookingPanel
+                booking={activeBooking}
+                unitWord={venue === "hotell" ? "rum" : "bord"}
+                placing={placingId === activeBooking.id}
+                onPlace={() => setPlacingId(activeBooking.id)}
+                onUpdate={(patch) => update(activeBooking.id, patch)}
+              />
             ) : activeUnit ? (
               <div className="space-y-2">
                 <p className="eyebrow text-muted-foreground">{activeUnit.zone}</p>
@@ -273,11 +274,189 @@ function FloorPage() {
             ) : (
               <p className="text-sm text-muted-foreground">
                 Välj en bokning eller ett {venue === "hotell" ? "rum" : "bord"} för att se detaljer,
-                gästprofil och placeringsförslag från Seytro.
+                taggar, PM och placeringsförslag från Seytro.
               </p>
             )}
           </div>
         </div>
+      </div>
+
+      <BookingDialog
+        open={dialogOpen}
+        unitWord={venue === "hotell" ? "Rum" : "Bord"}
+        onClose={() => setDialogOpen(false)}
+        onSave={addBooking}
+      />
+
+      {toast && (
+        <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-forest px-4 py-2 text-sm text-primary-foreground shadow-lg">
+          {toast}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function BookingPanel({
+  booking,
+  unitWord,
+  placing,
+  onPlace,
+  onUpdate,
+}: {
+  booking: Booking;
+  unitWord: string;
+  placing: boolean;
+  onPlace: () => void;
+  onUpdate: (patch: Partial<Booking>) => void;
+}) {
+  const [tagEditor, setTagEditor] = useState(false);
+  const isLarge = booking.party >= 8;
+
+  const toggleTag = (t: string) =>
+    onUpdate({
+      tags: booking.tags.includes(t) ? booking.tags.filter((x) => x !== t) : [...booking.tags, t],
+    });
+
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="eyebrow text-muted-foreground">Bokning #{booking.id.toUpperCase()}</p>
+          <h2 className="text-subheading text-forest">{booking.name}</h2>
+        </div>
+        <div className="flex flex-wrap gap-2 text-xs">
+          <Pill icon={<Users className="h-3.5 w-3.5" />} text={`${booking.party} gäster`} />
+          <Pill icon={<Clock className="h-3.5 w-3.5" />} text={`${booking.time}${booking.end ? `–${booking.end}` : ""}`} />
+          <Pill text={booking.source} />
+        </div>
+      </div>
+
+      {/* Status */}
+      <div className="flex flex-wrap gap-2">
+        {(["väntar", "bekräftad", "anlänt", "avbokad"] as const).map((s) => (
+          <button
+            key={s}
+            type="button"
+            onClick={() => onUpdate({ status: s })}
+            className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm capitalize ${
+              booking.status === s
+                ? "border-primary bg-primary/10 text-primary"
+                : "border-border text-muted-foreground hover:text-forest"
+            }`}
+          >
+            {booking.status === s && <Check className="h-3.5 w-3.5" />}
+            {s === "väntar" ? "Preliminär" : s}
+          </button>
+        ))}
+      </div>
+
+      {/* Taggar */}
+      <div>
+        <div className="flex items-center gap-2">
+          <p className="eyebrow text-muted-foreground">Taggar</p>
+          <button
+            type="button"
+            onClick={() => setTagEditor((v) => !v)}
+            className="text-xs text-primary underline"
+          >
+            {tagEditor ? "Klar" : "Redigera"}
+          </button>
+        </div>
+        {tagEditor ? (
+          <div className="mt-2 space-y-2">
+            {tagGroups.map((g) => (
+              <div key={g.label}>
+                <p className="text-xs text-muted-foreground">{g.label}</p>
+                <div className="mt-1 flex flex-wrap gap-1.5">
+                  {g.tags.map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => toggleTag(t)}
+                      className={`rounded-full border px-2.5 py-1 text-xs ${
+                        booking.tags.includes(t)
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-border text-muted-foreground"
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-2 flex flex-wrap gap-2">
+            {booking.tags.length === 0 && (
+              <span className="text-sm text-muted-foreground">Inga taggar</span>
+            )}
+            {booking.tags.map((t) => (
+              <span key={t} className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Notering / PM */}
+      <div>
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="eyebrow text-muted-foreground">{isLarge ? "PM & notering" : "Notering"}</p>
+          {isLarge && (
+            <select
+              value=""
+              onChange={(e) => {
+                const tpl = pmTemplates.find((t) => t.label === e.target.value);
+                if (tpl) onUpdate({ note: `${booking.note ? booking.note + "\n\n" : ""}${tpl.text}` });
+              }}
+              className="rounded-lg border border-border bg-background px-2 py-1 text-xs outline-none"
+            >
+              <option value="">Infoga mall…</option>
+              {pmTemplates.map((t) => (
+                <option key={t.label}>{t.label}</option>
+              ))}
+            </select>
+          )}
+        </div>
+        <textarea
+          value={booking.note ?? ""}
+          onChange={(e) => onUpdate({ note: e.target.value })}
+          rows={isLarge ? 6 : 3}
+          placeholder="Skriv en notering…"
+          className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
+        />
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        <button
+          type="button"
+          onClick={onPlace}
+          className={`rounded-lg px-3 py-2 text-sm ${
+            placing
+              ? "bg-primary text-primary-foreground"
+              : booking.placed === false
+                ? "bg-amber-500/15 text-amber-700"
+                : "bg-primary/10 text-primary"
+          }`}
+        >
+          {placing
+            ? `Välj ${unitWord} på planen…`
+            : booking.placed === false
+              ? `Placera på ${unitWord}`
+              : `Placerad på ${unitWord} ${booking.table} · flytta`}
+        </button>
+        {booking.placed !== false && (
+          <button
+            type="button"
+            onClick={() => onUpdate({ placed: false, table: "" })}
+            className="rounded-lg border border-border px-3 py-2 text-sm text-muted-foreground"
+          >
+            Ta bort placering
+          </button>
+        )}
       </div>
     </div>
   );
@@ -295,21 +474,7 @@ function GroupHeader({ title, meta, tone }: { title: string; meta: string; tone:
   );
 }
 
-function BookingRow({
-  time,
-  party,
-  name,
-  table,
-  active,
-  onClick,
-}: {
-  time: string;
-  party: number;
-  name: string;
-  table: string;
-  active: boolean;
-  onClick: () => void;
-}) {
+function BookingRow({ b, active, onClick }: { b: Booking; active: boolean; onClick: () => void }) {
   return (
     <button
       type="button"
@@ -318,12 +483,17 @@ function BookingRow({
         active ? "bg-primary/8" : "hover:bg-muted/50"
       }`}
     >
-      <span className="w-11 text-xs text-muted-foreground">{time}</span>
-      <span className="grid h-6 w-6 place-items-center rounded-md bg-muted text-xs text-forest">
-        {party}
+      <span className="w-11 text-xs text-muted-foreground">{b.time}</span>
+      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-muted text-xs text-forest">
+        {b.party}
       </span>
-      <span className="min-w-0 flex-1 truncate text-forest">{name}</span>
-      <span className="text-xs text-muted-foreground">{table || "—"}</span>
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-forest">{b.name}</span>
+        {b.tags.length > 0 && (
+          <span className="block truncate text-xs text-muted-foreground">{b.tags.join(" · ")}</span>
+        )}
+      </span>
+      <span className="text-xs text-muted-foreground">{b.table || "—"}</span>
     </button>
   );
 }
