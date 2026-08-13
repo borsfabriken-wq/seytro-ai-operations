@@ -26,6 +26,7 @@ import {
   type Venue,
 } from "@/lib/dashboard-data";
 import { readAccountPlan, venuesForPlan, type AccountPlan } from "@/lib/account";
+import { applySetup, readSetup, type VenueSetup } from "@/lib/onboarding";
 import { DateNav } from "@/components/dashboard/DateNav";
 
 const VenueContext = createContext<{
@@ -35,6 +36,7 @@ const VenueContext = createContext<{
   setDate: (d: Date) => void;
   service: ServicePeriod;
   setService: (s: ServicePeriod) => void;
+  setup: VenueSetup | null;
 }>({
   venue: "restaurang",
   setVenue: () => {},
@@ -42,15 +44,18 @@ const VenueContext = createContext<{
   setDate: () => {},
   service: "middag",
   setService: () => {},
+  setup: null,
 });
 
 export function useVenue() {
-  const { venue, setVenue, date, setDate, service, setService } = useContext(VenueContext);
-  const data = dashboardData[venue];
+  const { venue, setVenue, date, setDate, service, setService, setup } =
+    useContext(VenueContext);
+  const base = dashboardData[venue];
+  const data = setup ? applySetup(base, setup, venue) : base;
   /** Bokningar för valt pass (hotellet visar hela dygnet). */
   const serviceBookings =
     venue === "hotell" ? data.bookings : data.bookings.filter((b) => serviceOf(b.time) === service);
-  return { venue, setVenue, date, setDate, service, setService, data, serviceBookings };
+  return { venue, setVenue, date, setDate, service, setService, data, serviceBookings, setup };
 }
 
 const nav = [
