@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { toast } from "sonner";
+
 import {
   BarChart3,
   CalendarDays,
@@ -82,7 +84,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [venue, setVenueState] = useState<Venue>("restaurang");
   const [date, setDate] = useState<Date>(() => new Date(2026, 7, 13));
   const [service, setService] = useState<ServicePeriod>("middag");
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+
 
   useEffect(() => {
     const stored = window.localStorage.getItem("seytro-venue");
@@ -136,10 +141,26 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   const quickDays = buildQuickDays(date);
   const quickActions = [
-    { label: "Kölista", icon: Users },
-    { label: "Drop in", icon: UserPlus },
-    { label: "Snabbokning", icon: Zap },
+    {
+      label: "Kölista",
+      icon: Users,
+      run: () =>
+        toast("Kölista", {
+          description: "3 sällskap i kö – nästa lediga bord ca 20 min.",
+        }),
+    },
+    {
+      label: "Drop in",
+      icon: UserPlus,
+      run: () => navigate({ to: "/dashboard/salsplan", search: { new: true } }),
+    },
+    {
+      label: "Snabbokning",
+      icon: Zap,
+      run: () => navigate({ to: "/dashboard/salsplan", search: { new: true } }),
+    },
   ];
+
 
   return (
     <VenueContext.Provider value={{ venue, setVenue, date, setDate, service, setService }}>
@@ -224,21 +245,34 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               <DateNav date={date} onChange={setDate} />
 
               <div className="flex items-center gap-3">
-                <div className="hidden items-center gap-2 rounded-full border border-dashboard-header-edge bg-background px-3 py-1.5 shadow-sm shadow-forest/5 md:flex">
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    navigate({
+                      to: "/dashboard/salsplan",
+                      search: query ? { q: query } : {},
+                    });
+                  }}
+                  className="hidden items-center gap-2 rounded-full border border-dashboard-header-edge bg-background px-3 py-1.5 shadow-sm shadow-forest/5 md:flex"
+                >
                   <Search className="h-3.5 w-3.5 text-muted-foreground" />
                   <input
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
                     placeholder="Sök gäst eller bokning"
                     className="w-36 bg-transparent text-sm outline-none placeholder:text-muted-foreground xl:w-44"
                   />
-                </div>
+                </form>
                 <button
                   type="button"
+                  onClick={() => navigate({ to: "/dashboard/salsplan", search: { new: true } })}
                   className="grid h-9 w-9 place-items-center rounded-full bg-primary text-primary-foreground shadow-sm shadow-forest/10 transition-opacity hover:opacity-90"
                   aria-label="Ny bokning"
                 >
                   <Plus className="h-4 w-4" />
                 </button>
               </div>
+
             </div>
 
             <div className="flex items-center justify-between gap-4 overflow-x-auto border-t border-forest/8 px-4 py-2.5 sm:px-6">
@@ -292,8 +326,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                   <button
                     key={a.label}
                     type="button"
+                    onClick={a.run}
                     className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1 text-sm text-muted-foreground transition-colors hover:bg-background hover:text-forest"
                   >
+
                     <a.icon className="h-3.5 w-3.5" />
                     {a.label}
                   </button>

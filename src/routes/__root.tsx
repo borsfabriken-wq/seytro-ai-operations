@@ -14,6 +14,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LanguageProvider } from "@/i18n/LanguageProvider";
 import { Translator } from "@/components/Translator";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { Toaster } from "@/components/ui/sonner";
+
 
 function NotFoundComponent() {
   return (
@@ -139,7 +141,9 @@ function RootComponent() {
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
         <LanguageSwitcher />
+        <Toaster position="bottom-right" />
       </LanguageProvider>
     </QueryClientProvider>
+
   );
 }

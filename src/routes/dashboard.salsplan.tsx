@@ -30,8 +30,14 @@ export const Route = createFileRoute("/dashboard/salsplan")({
       { name: "robots", content: "noindex" },
     ],
   }),
+  validateSearch: (search: Record<string, unknown>): { new?: true; q?: string } => ({
+    ...(search["new"] === "1" || search["new"] === true ? { new: true as const } : {}),
+    ...(typeof search["q"] === "string" && search["q"] ? { q: search["q"] } : {}),
+  }),
+
   component: FloorPage,
 });
+
 
 const serviceHours: Record<"lunch" | "middag", string[]> = {
   lunch: ["11:30", "12:00", "12:30", "13:00", "14:00"],
@@ -40,14 +46,16 @@ const serviceHours: Record<"lunch" | "middag", string[]> = {
 
 function FloorPage() {
   const { data, venue, service, setService } = useVenue();
+  const search = Route.useSearch();
   const [bookings, setBookings] = useState<Booking[]>(data.bookings);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(search.q ?? "");
+
   const [slot, setSlot] = useState("19:00");
   const [zone, setZone] = useState("Alla");
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
   const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
   const [placingId, setPlacingId] = useState<string | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(Boolean(search.new));
   const [toast, setToast] = useState<string | null>(null);
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [dropUnit, setDropUnit] = useState<string | null>(null);
@@ -57,10 +65,17 @@ function FloorPage() {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [openPmId, setOpenPmId] = useState<string | null>(null);
 
+  // Öppna nybokning / förifylld sökning när man kommer från toppraden.
+  useEffect(() => {
+    if (search.new) setDialogOpen(true);
+    if (search.q) setQuery(search.q);
+  }, [search.new, search.q]);
+
   // Passbytet i toppraden styr vilka tider salsplanen visar.
   useEffect(() => {
     setSlot(service === "lunch" ? "12:00" : "19:00");
   }, [service]);
+
 
   useEffect(() => {
     setBookings(data.bookings);
