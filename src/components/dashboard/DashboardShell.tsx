@@ -252,9 +252,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       title={p.span}
                       className={`whitespace-nowrap rounded-full px-3.5 py-1 text-sm transition-colors ${
                         service === p.id
-                          ? "bg-white text-forest shadow-sm"
+                          ? "bg-primary/10 text-primary"
                           : "text-muted-foreground hover:text-forest"
                       }`}
+
                     >
                       {p.label}
                       <span className="ml-1.5 text-xs text-muted-foreground">{p.covers}</span>
@@ -277,8 +278,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       className={`whitespace-nowrap rounded-full px-3 py-1 text-sm capitalize transition-colors ${
                         active
                           ? "bg-forest text-primary-foreground shadow-sm"
-                          : "text-muted-foreground hover:bg-white/50 hover:text-forest"
+                          : "text-muted-foreground hover:bg-background hover:text-forest"
                       }`}
+
                     >
                       {q.label}
                     </button>
@@ -290,7 +292,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                   <button
                     key={a.label}
                     type="button"
-                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1 text-sm text-muted-foreground transition-colors hover:bg-white/50 hover:text-forest"
+                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1 text-sm text-muted-foreground transition-colors hover:bg-background hover:text-forest"
                   >
                     <a.icon className="h-3.5 w-3.5" />
                     {a.label}
