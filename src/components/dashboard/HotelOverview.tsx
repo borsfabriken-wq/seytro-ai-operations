@@ -133,6 +133,7 @@ export function HotelOverview() {
           value={`${checkedIn.length}`}
           suffix={`/ ${active.length}`}
           hint={`${occupied.length} rum är belagda av totalt ${rooms.length}.`}
+          scrollTo="rumsstatus"
         />
         <MiniStat
           icon={BedDouble}
@@ -140,6 +141,7 @@ export function HotelOverview() {
           value={`${arrivals.length}`}
           suffix="bokningar"
           hint={`${ready.length} rum är förberedda · ${pending.length} väntar bekräftelse.`}
+          scrollTo="ankomster"
         />
         <MiniStat
           icon={DoorOpen}
@@ -147,6 +149,7 @@ export function HotelOverview() {
           value={`${clean.length}`}
           suffix={`/ ${rooms.length} rum`}
           hint={`${clean.length} städklara · ${dirty.length} behöver städas.`}
+          scrollTo="rumsstatus"
         />
         <MiniStat
           icon={TriangleAlert}
@@ -154,6 +157,7 @@ export function HotelOverview() {
           value={`${pending.length + dirty.length}`}
           suffix="ärenden"
           hint={`${pending.length} obekräftade · ${dirty.length} rum väntar på städ.`}
+          scrollTo="uppmärksamhet"
         />
       </div>
 
