@@ -1,7 +1,7 @@
 import type { Venue } from "@/lib/dashboard-data";
 
-/** Vilken typ av konto som är inloggat. */
-export type AccountPlan = "restaurang" | "hotell" | "hybrid";
+/** Vilken typ av konto som är inloggat. "custom" = egen onboardad verksamhet. */
+export type AccountPlan = "restaurang" | "hotell" | "hybrid" | "custom";
 
 const KEY = "seytro-account";
 
