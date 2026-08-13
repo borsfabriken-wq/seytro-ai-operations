@@ -12,6 +12,7 @@ import {
   LogOut,
   Plus,
   Search,
+  Settings2,
   UserPlus,
   Users,
   UtensilsCrossed,
