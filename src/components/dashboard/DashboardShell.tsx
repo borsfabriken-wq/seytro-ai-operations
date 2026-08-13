@@ -62,6 +62,32 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   const data = dashboardData[venue];
 
+  const active = data.bookings.filter((b) => b.status !== "avbokad");
+  const stats = [
+    {
+      label: venue === "hotell" ? "ankomster" : "bokningar",
+      value: active.length,
+      icon: CalendarDays,
+    },
+    {
+      label: venue === "hotell" ? "gäster" : "täckningar",
+      value: active.reduce((s, b) => s + b.party, 0),
+      icon: UtensilsCrossed,
+    },
+    {
+      label: "väntar",
+      value: active.filter((b) => b.status === "väntar").length,
+      icon: Clock,
+    },
+  ];
+
+  const quickDays = buildQuickDays(date);
+  const quickActions = [
+    { label: "Kölista", icon: Users },
+    { label: "Drop in", icon: UserPlus },
+    { label: "Snabbokning", icon: Zap },
+  ];
+
   return (
     <VenueContext.Provider value={{ venue, setVenue, date, setDate }}>
       <div className="flex min-h-[100svh] bg-muted/40">
