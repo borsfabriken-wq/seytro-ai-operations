@@ -89,21 +89,49 @@ function InboxPage() {
             <h2 className="mt-2 text-heading text-forest">{active.from}</h2>
             <p className="mt-4 rounded-xl bg-muted/50 p-4 text-body text-forest">{active.preview}</p>
             <p className="mt-5 text-caption text-muted-foreground">Seytros förslag på svar</p>
-            <div className="mt-2 rounded-xl border border-primary/20 bg-primary/5 p-4 text-sm text-forest">
-              Tack för ert meddelande! Vi har noterat önskemålet och återkommer med bekräftelse inom
-              kort. Vill ni ändra något mer inför besöket hjälper vi gärna till.
-            </div>
+            {editing ? (
+              <textarea
+                value={draft}
+                onChange={(e) => setDraft(e.target.value)}
+                rows={4}
+                className="mt-2 w-full rounded-xl border border-primary/30 bg-background p-4 text-sm text-forest outline-none focus:border-primary"
+              />
+            ) : (
+              <div className="mt-2 rounded-xl border border-primary/20 bg-primary/5 p-4 text-sm text-forest">
+                {draft}
+              </div>
+            )}
             <div className="mt-5 flex flex-wrap gap-3">
-              <button className="rounded-full bg-forest px-5 py-2 text-sm text-primary-foreground">
+              <button
+                type="button"
+                onClick={() => {
+                  setEditing(false);
+                  setDone((d) => [...new Set([...d, active.id])]);
+                  toast.success("Svar skickat", { description: `Till ${active.from}` });
+                }}
+                className="rounded-full bg-forest px-5 py-2 text-sm text-primary-foreground transition-opacity hover:opacity-90"
+              >
                 Skicka svar
               </button>
-              <button className="rounded-full border border-border px-5 py-2 text-sm text-forest">
-                Redigera
+              <button
+                type="button"
+                onClick={() => setEditing((e) => !e)}
+                className="rounded-full border border-border px-5 py-2 text-sm text-forest transition-colors hover:bg-muted"
+              >
+                {editing ? "Klar med redigering" : "Redigera"}
               </button>
-              <button className="rounded-full border border-border px-5 py-2 text-sm text-muted-foreground">
-                Markera som klar
+              <button
+                type="button"
+                onClick={() => {
+                  setDone((d) => [...new Set([...d, active.id])]);
+                  toast("Markerad som klar", { description: active.from });
+                }}
+                className="rounded-full border border-border px-5 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted"
+              >
+                {done.includes(active.id) ? "Klar ✓" : "Markera som klar"}
               </button>
             </div>
+
           </div>
         )}
       </div>
