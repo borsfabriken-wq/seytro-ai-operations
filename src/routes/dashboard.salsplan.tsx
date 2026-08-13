@@ -233,6 +233,19 @@ function FloorPage() {
                 <X className="h-4 w-4 text-muted-foreground" />
               </button>
             )}
+            <button
+              type="button"
+              onClick={() => setFiltersOpen((v) => !v)}
+              title="Filter och sortering"
+              className={`flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                filtersOpen || activeFilterCount > 0
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-border text-muted-foreground hover:text-forest"
+              }`}
+            >
+              <SlidersHorizontal className="h-3.5 w-3.5" />
+              {activeFilterCount > 0 ? activeFilterCount : "Filter"}
+            </button>
           </div>
 
           <div className="flex-1 overflow-y-auto text-sm">
