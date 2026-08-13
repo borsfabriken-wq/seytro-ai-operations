@@ -106,7 +106,7 @@ function Calendar() {
         </div>
       </div>
 
-      <div className="grid grid-cols-7 gap-1 text-center">
+      <div className="grid grid-cols-7 gap-y-1 text-center">
         {weekdays.map((d, i) => (
           <div
             key={`${d}-${i}`}
@@ -128,7 +128,7 @@ function Calendar() {
               disabled={isPast}
               onClick={() => setSelected(date)}
               className={[
-                "aspect-square rounded-full text-sm transition-colors",
+                "mx-auto flex h-10 w-10 items-center justify-center rounded-full text-sm transition-colors",
                 isSelected
                   ? "bg-forest-deep text-primary-foreground"
                   : isToday
@@ -162,30 +162,43 @@ function DemoPage() {
     <div className="min-h-screen bg-background">
       <SiteHeader solid />
 
-      <main className="mx-auto max-w-6xl px-6 pb-16 pt-32 sm:pb-24 sm:pt-40">
-        <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
+      <main className="site-container pb-24 pt-32 sm:pt-40">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
           {/* Left */}
-          <div className="lg:pt-6">
-            <h1 className="font-display text-5xl leading-[1.05] text-forest-deep sm:text-6xl">
-              Träffa Seytro
-            </h1>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">
-              Se hur AI-driven drift kan förändra din restaurangs gästupplevelse
-              och effektivitet.
+          <div className="lg:sticky lg:top-32 lg:self-start">
+            <p className="eyebrow text-primary">Boka demo</p>
+            <h1 className="mt-3 text-display-lg text-forest-deep">Träffa Seytro</h1>
+            <p className="mt-5 max-w-md text-body-lg text-muted-foreground">
+              Se hur AI-driven drift kan förändra din restaurangs eller ditt hotells
+              gästupplevelse och effektivitet.
             </p>
 
-            <ul className="mt-10 space-y-5">
+            <ul className="mt-9 space-y-4">
               {bullets.map((b) => (
-                <li key={b} className="flex items-start gap-3">
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-forest-deep">
+                <li
+                  key={b}
+                  className="flex items-start gap-3 rounded-2xl border border-border bg-card px-4 py-3.5"
+                >
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary">
                     <Check className="h-3.5 w-3.5 text-primary-foreground" />
                   </span>
-                  <span className="text-base leading-relaxed text-foreground">
-                    {b}
-                  </span>
+                  <span className="text-sm leading-relaxed text-foreground">{b}</span>
                 </li>
               ))}
             </ul>
+
+            <dl className="mt-8 grid grid-cols-3 gap-3">
+              {[
+                { k: "100%", v: "besvarade samtal och mejl" },
+                { k: "24/7", v: "gästservice på sv och en" },
+                { k: "−38%", v: "administrativ tid i salen" },
+              ].map((s) => (
+                <div key={s.k} className="rounded-2xl bg-muted px-4 py-4">
+                  <dt className="text-xl text-forest-deep">{s.k}</dt>
+                  <dd className="mt-1 text-xs leading-snug text-muted-foreground">{s.v}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
           {/* Right — booking widget */}
@@ -199,7 +212,7 @@ function DemoPage() {
               </span>
             </div>
 
-            <h2 className="mt-6 font-display text-2xl leading-snug text-forest-deep">
+            <h2 className="mt-6 text-subheading text-forest-deep">
               30 minuters produktdemo med Seytro
             </h2>
 

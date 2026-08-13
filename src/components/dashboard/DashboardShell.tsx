@@ -139,25 +139,29 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             <img src={logoAsset.url} alt="Seytro" className="h-5 w-auto" />
           </Link>
 
-          <div className="mt-7 rounded-xl bg-primary-foreground/8 p-1">
+          <div className="mt-8 grid grid-cols-2 gap-1 rounded-full bg-primary-foreground/10 p-1">
             {(["restaurang", "hotell"] as const).map((v) => (
               <button
                 key={v}
                 type="button"
                 onClick={() => setVenue(v)}
-                className={`w-full rounded-lg px-3 py-2 text-left text-sm capitalize transition-colors ${
+                className={`rounded-full px-3 py-1.5 text-center text-sm transition-colors ${
                   venue === v
                     ? "bg-primary-foreground text-forest-deep"
-                    : "text-primary-foreground/70 hover:text-primary-foreground"
+                    : "text-primary-foreground/65 hover:text-primary-foreground"
                 }`}
               >
                 {v === "restaurang" ? "Restaurang" : "Hotell"}
               </button>
             ))}
           </div>
-          <p className="mt-3 px-3 text-xs text-primary-foreground/50">{data.label}</p>
+          <p className="mt-4 px-3 text-sm text-primary-foreground/85">{data.label}</p>
+          <p className="px-3 text-xs text-primary-foreground/45">
+            {venue === "hotell" ? "Hotelldrift" : "Restaurangdrift"}
+          </p>
 
-          <nav className="mt-6 flex flex-1 flex-col gap-1">
+          <p className="eyebrow mt-8 px-3 text-primary-foreground/40">Drift</p>
+          <nav className="mt-2 flex flex-1 flex-col gap-0.5">
             {nav.map((item) => {
               const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
               return (
@@ -215,14 +219,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                     className="w-36 bg-transparent text-sm outline-none placeholder:text-muted-foreground xl:w-44"
                   />
                 </div>
-                <select
-                  value={venue}
-                  onChange={(e) => setVenue(e.target.value as Venue)}
-                  className="hidden rounded-full border border-border bg-background px-3 py-1.5 text-sm text-forest sm:block"
-                >
-                  <option value="restaurang">Restaurang</option>
-                  <option value="hotell">Hotell</option>
-                </select>
                 <button
                   type="button"
                   className="grid h-9 w-9 place-items-center rounded-full bg-primary text-primary-foreground transition-opacity hover:opacity-90"
@@ -290,7 +286,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 ))}
               </div>
             </div>
-            <nav className="mt-3 flex gap-1 overflow-x-auto lg:hidden">
+            <nav className="flex gap-1 overflow-x-auto border-t border-border/70 px-4 py-2 sm:px-6 lg:hidden">
               {nav.map((item) => {
                 const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
                 return (
@@ -307,7 +303,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               })}
             </nav>
           </header>
-          <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">{children}</main>
+          <main className="mx-auto w-full max-w-[112rem] flex-1 px-4 py-6 sm:px-6 sm:py-8 lg:px-9 lg:py-10">
+            {children}
+          </main>
         </div>
       </div>
     </VenueContext.Provider>
