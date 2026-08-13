@@ -665,6 +665,14 @@ function BookingPanel({
               ))}
             </select>
           )}
+          {booking.pmId && (
+            <Link
+              to="/dashboard/pm"
+              className="rounded-lg border border-primary/40 bg-primary/8 px-2 py-1 text-xs text-primary"
+            >
+              Förbeställning finns — öppna PM
+            </Link>
+          )}
         </div>
         <textarea
           value={booking.note ?? ""}
