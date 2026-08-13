@@ -28,6 +28,16 @@ export const Route = createFileRoute("/dashboard/salsplan")({
 
 const services = ["17:00", "18:00", "19:00", "20:00", "21:00"];
 
+const sittings = ["Lunch", "Tidig kväll", "Sen kväll"] as const;
+
+/** Delar in en tid (HH:MM) i sittning. */
+function sittingOf(time: string) {
+  const hour = Number(time.slice(0, 2));
+  if (hour < 15) return "Lunch";
+  if (hour < 19) return "Tidig kväll";
+  return "Sen kväll";
+}
+
 function FloorPage() {
   const { data, venue } = useVenue();
   const [bookings, setBookings] = useState<Booking[]>(data.bookings);
