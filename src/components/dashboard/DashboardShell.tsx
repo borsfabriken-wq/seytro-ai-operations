@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { toast } from "sonner";
 
@@ -50,8 +50,10 @@ const VenueContext = createContext<{
 export function useVenue() {
   const { venue, setVenue, date, setDate, service, setService, setup } =
     useContext(VenueContext);
-  const base = dashboardData[venue];
-  const data = setup ? applySetup(base, setup, venue) : base;
+  const data = useMemo(() => {
+    const base = dashboardData[venue];
+    return setup ? applySetup(base, setup, venue) : base;
+  }, [venue, setup]);
   /** Bokningar för valt pass (hotellet visar hela dygnet). */
   const serviceBookings =
     venue === "hotell" ? data.bookings : data.bookings.filter((b) => serviceOf(b.time) === service);
@@ -119,7 +121,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     setVenueState(v);
   };
 
-  const data = setup ? applySetup(dashboardData[venue], setup, venue) : dashboardData[venue];
+  const data = useMemo(
+    () => (setup ? applySetup(dashboardData[venue], setup, venue) : dashboardData[venue]),
+    [venue, setup],
+  );
 
   const inService =
     venue === "hotell" ? data.bookings : data.bookings.filter((b) => serviceOf(b.time) === service);
