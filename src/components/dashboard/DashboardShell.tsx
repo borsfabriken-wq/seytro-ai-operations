@@ -40,6 +40,7 @@ const nav = [
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [venue, setVenueState] = useState<Venue>("restaurang");
+  const [date, setDate] = useState<Date>(() => new Date(2026, 7, 13));
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
