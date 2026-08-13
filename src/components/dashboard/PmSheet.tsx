@@ -1,8 +1,8 @@
 import { Minus, Plus, Printer, Trash2 } from "lucide-react";
+import { templateKinds, type MenuTemplate } from "@/lib/pm-templates";
 import {
   kr,
   lineTotal,
-  menuTemplates,
   pmStatusStyles,
   pmTotal,
   sectionTotal,
@@ -21,9 +21,11 @@ import {
 export function PmSheet({
   doc,
   onChange,
+  templates = [],
 }: {
   doc: PmDoc;
   onChange?: (next: PmDoc) => void;
+  templates?: MenuTemplate[];
 }) {
   const editable = Boolean(onChange);
 
@@ -62,7 +64,7 @@ export function PmSheet({
 
   const addTemplate = (templateId: string) => {
     if (!onChange) return;
-    const tpl = menuTemplates.find((t) => t.id === templateId);
+    const tpl = templates.find((t) => t.id === templateId);
     if (!tpl) return;
     const sections: PmSection[] = tpl.sections.map((s) => ({
       ...s,
@@ -70,7 +72,7 @@ export function PmSheet({
       lines: s.lines.map((l) => ({ ...l, id: uid(), qty: l.qty || doc.party })),
     }));
     const split =
-      tpl.price && tpl.id.startsWith("meny")
+      tpl.price && tpl.kind === "meny"
         ? [...doc.split, { id: uid("sp"), qty: doc.party, name: tpl.label, price: tpl.price }]
         : doc.split;
     onChange({ ...doc, split, sections: [...doc.sections, ...sections] });
@@ -79,7 +81,7 @@ export function PmSheet({
   const total = pmTotal(doc);
 
   return (
-    <div className="space-y-5">
+    <div id="pm-print" className="space-y-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="eyebrow text-muted-foreground">PM · förbeställning</p>
@@ -96,6 +98,7 @@ export function PmSheet({
           <button
             type="button"
             onClick={() => window.print()}
+            data-print-hide
             className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs text-muted-foreground hover:text-forest"
           >
             <Printer className="h-3.5 w-3.5" /> Skriv ut till köket
@@ -137,22 +140,34 @@ export function PmSheet({
       ))}
 
       {editable && (
-        <div className="rounded-xl border border-dashed border-border p-3">
-          <p className="eyebrow text-muted-foreground">Lägg till färdig meny</p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {menuTemplates.map((t) => (
-              <button
-                key={t.id}
-                type="button"
-                onClick={() => addTemplate(t.id)}
-                className="rounded-lg border border-border px-3 py-1.5 text-xs text-muted-foreground hover:border-primary hover:text-primary"
-                title={t.desc}
-              >
-                <Plus className="mr-1 inline h-3 w-3" />
-                {t.label}
-              </button>
-            ))}
-          </div>
+        <div data-print-hide className="rounded-xl border border-dashed border-border p-3">
+          <p className="eyebrow text-muted-foreground">Lägg till från dina mallar</p>
+          {templateKinds.map((kind) => {
+            const list = templates.filter((t) => t.kind === kind.id);
+            if (list.length === 0) return null;
+            return (
+              <div key={kind.id} className="mt-3">
+                <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                  {kind.label}
+                </p>
+                <div className="mt-1.5 flex flex-wrap gap-2">
+                  {list.map((t) => (
+                    <button
+                      key={t.id}
+                      type="button"
+                      onClick={() => addTemplate(t.id)}
+                      className="rounded-lg border border-border px-3 py-1.5 text-xs text-muted-foreground hover:border-primary hover:text-primary"
+                      title={t.desc}
+                    >
+                      <Plus className="mr-1 inline h-3 w-3" />
+                      {t.label}
+                      {t.price ? ` · ${kr(t.price)}` : ""}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
 
