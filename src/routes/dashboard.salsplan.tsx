@@ -97,6 +97,21 @@ function FloorPage() {
     setSelectedBooking(null);
   };
 
+  const dropOnUnit = (u: TableUnit, bookingId: string) => {
+    const b = bookings.find((x) => x.id === bookingId);
+    if (!b) return;
+    update(bookingId, { table: u.label, placed: true });
+    setDraggingId(null);
+    setPlacingId(null);
+    setSelectedBooking(bookingId);
+    setSelectedUnit(null);
+    setToast(
+      `${b.name} placerad på ${venue === "hotell" ? "rum" : "bord"} ${u.label}${
+        b.party > u.seats ? " — obs: fler gäster än platser" : ""
+      }`,
+    );
+  };
+
   const selectBooking = (id: string) => {
     setSelectedBooking(id === selectedBooking ? null : id);
     setSelectedUnit(null);
