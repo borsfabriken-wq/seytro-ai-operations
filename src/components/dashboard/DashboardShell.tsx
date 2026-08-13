@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { toast } from "sonner";
+
 import {
   BarChart3,
   CalendarDays,
@@ -82,7 +84,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [venue, setVenueState] = useState<Venue>("restaurang");
   const [date, setDate] = useState<Date>(() => new Date(2026, 7, 13));
   const [service, setService] = useState<ServicePeriod>("middag");
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+
 
   useEffect(() => {
     const stored = window.localStorage.getItem("seytro-venue");
