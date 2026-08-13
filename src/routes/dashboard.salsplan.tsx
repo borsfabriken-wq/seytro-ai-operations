@@ -39,6 +39,8 @@ function FloorPage() {
   const [placingId, setPlacingId] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const [draggingId, setDraggingId] = useState<string | null>(null);
+  const [dropUnit, setDropUnit] = useState<string | null>(null);
 
   useEffect(() => {
     setBookings(data.bookings);
@@ -93,6 +95,21 @@ function FloorPage() {
     }
     setSelectedUnit(u.id === selectedUnit ? null : u.id);
     setSelectedBooking(null);
+  };
+
+  const dropOnUnit = (u: TableUnit, bookingId: string) => {
+    const b = bookings.find((x) => x.id === bookingId);
+    if (!b) return;
+    update(bookingId, { table: u.label, placed: true });
+    setDraggingId(null);
+    setPlacingId(null);
+    setSelectedBooking(bookingId);
+    setSelectedUnit(null);
+    setToast(
+      `${b.name} placerad på ${venue === "hotell" ? "rum" : "bord"} ${u.label}${
+        b.party > u.seats ? " — obs: fler gäster än platser" : ""
+      }`,
+    );
   };
 
   const selectBooking = (id: string) => {
@@ -176,7 +193,14 @@ function FloorPage() {
               meta={`${unplaced.reduce((s, b) => s + b.party, 0)} gäster, ${unplaced.length} bokningar`}
             />
             {unplaced.map((b) => (
-              <BookingRow key={b.id} b={b} active={selectedBooking === b.id} onClick={() => selectBooking(b.id)} />
+              <BookingRow
+                key={b.id}
+                b={b}
+                active={selectedBooking === b.id}
+                onClick={() => selectBooking(b.id)}
+                onDragStart={() => setDraggingId(b.id)}
+                onDragEnd={() => setDraggingId(null)}
+              />
             ))}
             <GroupHeader
               tone="green"
@@ -184,7 +208,14 @@ function FloorPage() {
               meta={`${placed.reduce((s, b) => s + b.party, 0)} gäster, ${placed.length} bokningar`}
             />
             {placed.map((b) => (
-              <BookingRow key={b.id} b={b} active={selectedBooking === b.id} onClick={() => selectBooking(b.id)} />
+              <BookingRow
+                key={b.id}
+                b={b}
+                active={selectedBooking === b.id}
+                onClick={() => selectBooking(b.id)}
+                onDragStart={() => setDraggingId(b.id)}
+                onDragEnd={() => setDraggingId(null)}
+              />
             ))}
           </div>
         </div>
@@ -226,7 +257,13 @@ function FloorPage() {
           </div>
 
           {venue === "restaurang" ? (
-            <FloorPlan units={visibleUnits} selected={selectedUnit} onSelect={handleUnit} />
+            <FloorPlan
+              units={visibleUnits}
+              selected={selectedUnit}
+              onSelect={handleUnit}
+              dragging={Boolean(draggingId)}
+              onDropBooking={dropOnUnit}
+            />
           ) : (
             <div className="grid grid-cols-2 gap-3 rounded-2xl border border-border bg-card p-5 sm:grid-cols-4 lg:grid-cols-6">
               {visibleUnits.map((u) => (
@@ -234,8 +271,26 @@ function FloorPage() {
                   key={u.id}
                   type="button"
                   onClick={() => handleUnit(u)}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = "move";
+                    if (dropUnit !== u.id) setDropUnit(u.id);
+                  }}
+                  onDragLeave={() => setDropUnit((v) => (v === u.id ? null : v))}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setDropUnit(null);
+                    const id = e.dataTransfer.getData("text/booking-id");
+                    if (id) dropOnUnit(u, id);
+                  }}
                   className={`rounded-xl border p-4 text-left transition-transform hover:-translate-y-0.5 ${unitStatusStyles[u.status]} ${
-                    selectedUnit === u.id ? "ring-2 ring-primary" : ""
+                    dropUnit === u.id
+                      ? "scale-[1.03] ring-2 ring-primary"
+                      : selectedUnit === u.id
+                        ? "ring-2 ring-primary"
+                        : draggingId
+                          ? "ring-1 ring-primary/30"
+                          : ""
                   }`}
                 >
                   <span className="block text-lg font-medium">{u.label}</span>
@@ -474,12 +529,31 @@ function GroupHeader({ title, meta, tone }: { title: string; meta: string; tone:
   );
 }
 
-function BookingRow({ b, active, onClick }: { b: Booking; active: boolean; onClick: () => void }) {
+function BookingRow({
+  b,
+  active,
+  onClick,
+  onDragStart,
+  onDragEnd,
+}: {
+  b: Booking;
+  active: boolean;
+  onClick: () => void;
+  onDragStart?: () => void;
+  onDragEnd?: () => void;
+}) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`flex w-full items-center gap-3 border-b border-border/60 px-4 py-2.5 text-left transition-colors ${
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.setData("text/booking-id", b.id);
+        e.dataTransfer.effectAllowed = "move";
+        onDragStart?.();
+      }}
+      onDragEnd={() => onDragEnd?.()}
+      className={`flex w-full cursor-grab items-center gap-3 border-b border-border/60 px-4 py-2.5 text-left transition-colors active:cursor-grabbing ${
         active ? "bg-primary/8" : "hover:bg-muted/50"
       }`}
     >
