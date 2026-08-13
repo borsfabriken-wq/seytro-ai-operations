@@ -241,6 +241,15 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             })}
           </nav>
 
+          {plan === "custom" && (
+            <Link
+              to="/onboarding"
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-primary-foreground/65 transition-colors hover:text-primary-foreground"
+            >
+              <Settings2 className="h-4 w-4" />
+              Uppsättning
+            </Link>
+          )}
           <Link
             to="/login"
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-primary-foreground/65 transition-colors hover:text-primary-foreground"
