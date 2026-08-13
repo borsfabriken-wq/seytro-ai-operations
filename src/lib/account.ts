@@ -35,14 +35,21 @@ export const accountPlans: {
   },
 ];
 
-export function venuesForPlan(plan: AccountPlan): Venue[] {
+export function venuesForPlan(plan: AccountPlan, setupType?: Venue | "hybrid"): Venue[] {
+  if (plan === "custom") {
+    if (setupType === "hybrid") return ["hotell", "restaurang"];
+    return [setupType ?? "restaurang"];
+  }
   return accountPlans.find((p) => p.id === plan)?.venues ?? ["restaurang"];
 }
 
 export function readAccountPlan(): AccountPlan {
   if (typeof window === "undefined") return "hybrid";
   const stored = window.localStorage.getItem(KEY);
-  return stored === "restaurang" || stored === "hotell" || stored === "hybrid"
+  return stored === "restaurang" ||
+    stored === "hotell" ||
+    stored === "hybrid" ||
+    stored === "custom"
     ? stored
     : "hybrid";
 }
