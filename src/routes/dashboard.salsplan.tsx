@@ -474,12 +474,31 @@ function GroupHeader({ title, meta, tone }: { title: string; meta: string; tone:
   );
 }
 
-function BookingRow({ b, active, onClick }: { b: Booking; active: boolean; onClick: () => void }) {
+function BookingRow({
+  b,
+  active,
+  onClick,
+  onDragStart,
+  onDragEnd,
+}: {
+  b: Booking;
+  active: boolean;
+  onClick: () => void;
+  onDragStart?: () => void;
+  onDragEnd?: () => void;
+}) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`flex w-full items-center gap-3 border-b border-border/60 px-4 py-2.5 text-left transition-colors ${
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.setData("text/booking-id", b.id);
+        e.dataTransfer.effectAllowed = "move";
+        onDragStart?.();
+      }}
+      onDragEnd={() => onDragEnd?.()}
+      className={`flex w-full cursor-grab items-center gap-3 border-b border-border/60 px-4 py-2.5 text-left transition-colors active:cursor-grabbing ${
         active ? "bg-primary/8" : "hover:bg-muted/50"
       }`}
     >
