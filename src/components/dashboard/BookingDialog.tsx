@@ -64,6 +64,7 @@ export function BookingDialog({
     setTags((prev) => (prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]));
 
   const save = () => {
+    const noteText = [note.trim(), pm.trim()].filter(Boolean).join("\n\n");
     onSave({
       time,
       name: name.trim() || "Ny gäst",
@@ -71,7 +72,7 @@ export function BookingDialog({
       table: "",
       status,
       source,
-      note: [note.trim(), pm.trim()].filter(Boolean).join("\n\n") || undefined,
+      ...(noteText ? { note: noteText } : {}),
       tags,
       placed: false,
     });
