@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpDown, Check, Clock, FileText, Plus, Search, SlidersHorizontal, Users, X } from "lucide-react";
 import { useVenue } from "@/components/dashboard/DashboardShell";
 import { FloorPlan } from "@/components/dashboard/FloorPlan";
@@ -664,6 +664,14 @@ function BookingPanel({
                 <option key={t.label}>{t.label}</option>
               ))}
             </select>
+          )}
+          {booking.pmId && (
+            <Link
+              to="/dashboard/pm"
+              className="rounded-lg border border-primary/40 bg-primary/8 px-2 py-1 text-xs text-primary"
+            >
+              Förbeställning finns — öppna PM
+            </Link>
           )}
         </div>
         <textarea

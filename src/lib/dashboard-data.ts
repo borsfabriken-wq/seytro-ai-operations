@@ -23,6 +23,8 @@ export type Booking = {
   company?: string;
   occasion?: string;
   consent?: boolean;
+  /** Kopplat PM (förbeställning med fasta menyer) */
+  pmId?: string;
 };
 
 /** Lunch- eller middagspass utifrån starttid. */
@@ -103,7 +105,8 @@ export const dashboardData: Record<Venue, VenueData> = {
       { id: "l6", time: "13:30", end: "14:30", name: "Lisa Ahl", party: 2, table: "25", status: "bekräftad", source: "Webb", tags: ["Uteservering"], placed: true, email: "lisa.ahl@mail.se", consent: true },
       { id: "b1", time: "17:00", end: "19:00", name: "Familjen Lindqvist", party: 4, table: "12", status: "anlänt", source: "Webb", tags: ["Fönsterbord"], placed: true, phone: "+46 70 331 20 15", consent: true },
       { id: "b2", time: "17:30", end: "19:30", name: "Marcus Ehn", party: 2, table: "5", status: "bekräftad", source: "Röstagent", note: "Firar årsdag", tags: ["VIP", "Årsdag"], placed: true },
-      { id: "b3", time: "18:00", end: "21:00", name: "Nordea Corporate", party: 10, table: "20–21", status: "bekräftad", source: "E-postconcierge", note: "Faktura, meny 3", tags: ["Företag"], placed: true },
+      { id: "b3", time: "18:00", end: "21:00", name: "Nordea Corporate", party: 10, table: "20–21", status: "bekräftad", source: "E-postconcierge", note: "Faktura, meny 3", tags: ["Företag", "PM"], placed: true, pmId: "pm2", email: "events@nordea.se", company: "Nordea", consent: true },
+      { id: "b13", time: "18:30", end: "22:00", name: "Stockholms Handelskammare", party: 13, table: "", status: "bekräftad", source: "E-postconcierge", note: "Förbeställt: 12 × Meny 2 kött, 1 × Meny 2 fisk, fördrink, snacks och vinpaket. Faktura.", tags: ["Företag", "PM", "Sällskap"], placed: false, pmId: "pm1", email: "invoice@stockholmshandelskammare.se", company: "Stockholms Handelskammare Service AB", occasion: "Affärsmiddag", consent: true },
       { id: "b4", time: "18:15", end: "20:15", name: "Sara Holmberg", party: 3, table: "8", status: "väntar", source: "Röstagent", note: "Glutenallergi", tags: ["Allergi"], placed: true },
       { id: "b5", time: "19:00", end: "21:00", name: "Petter Ask", party: 2, table: "3", status: "bekräftad", source: "Telefon", tags: [], placed: true },
       { id: "b6", time: "19:30", end: "21:30", name: "Anna Wiklund", party: 6, table: "15", status: "bekräftad", source: "Webb", note: "Barnstol x1", tags: ["Barn"], placed: true },
