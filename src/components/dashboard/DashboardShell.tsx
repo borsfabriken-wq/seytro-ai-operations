@@ -3,6 +3,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   BarChart3,
   CalendarDays,
+  ClipboardList,
   Inbox,
   LayoutGrid,
   LogOut,
