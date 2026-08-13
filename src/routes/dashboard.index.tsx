@@ -159,25 +159,51 @@ function OverviewPage() {
 
         <div className="space-y-6">
           <div className="rounded-2xl border border-border bg-card p-5">
-            <h2 className="text-subheading text-forest">Augusti 2026</h2>
+            <div className="flex items-center justify-between">
+              <button
+                type="button"
+                aria-label="Föregående månad"
+                onClick={() => shiftMonth(-1)}
+                className="rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-forest"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <h2 className="text-subheading capitalize text-forest">
+                {month.toLocaleDateString("sv-SE", { month: "long", year: "numeric" })}
+              </h2>
+              <button
+                type="button"
+                aria-label="Nästa månad"
+                onClick={() => shiftMonth(1)}
+                className="rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-forest"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
             <div className="mt-4 grid grid-cols-7 gap-1 text-center text-xs text-muted-foreground">
               {days.map((d) => (
                 <span key={d}>{d}</span>
               ))}
-              {dates.map((d, i) => (
-                <button
-                  key={d}
-                  type="button"
-                  onClick={() => setSelectedDay(i)}
-                  className={`mt-2 aspect-square rounded-lg text-sm transition-colors ${
-                    selectedDay === i
-                      ? "bg-forest text-primary-foreground"
-                      : "bg-muted/60 text-forest hover:bg-muted"
-                  }`}
-                >
-                  {d}
-                </button>
-              ))}
+              {cells.map((d, i) =>
+                d === null ? (
+                  <span key={`e${i}`} className="mt-1 aspect-square" />
+                ) : (
+                  <button
+                    key={d}
+                    type="button"
+                    onClick={() => setDate(new Date(month.getFullYear(), month.getMonth(), d))}
+                    className={`mt-1 aspect-square rounded-lg text-sm transition-colors ${
+                      date.getDate() === d &&
+                      date.getMonth() === month.getMonth() &&
+                      date.getFullYear() === month.getFullYear()
+                        ? "bg-forest text-primary-foreground"
+                        : "bg-muted/60 text-forest hover:bg-muted"
+                    }`}
+                  >
+                    {d}
+                  </button>
+                ),
+              )}
             </div>
             <div className="mt-4 space-y-2">
               {data.occupancy.map((o, i) => (
