@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { ClipboardList, FilePlus2, Search } from "lucide-react";
+import { ChevronRight, ClipboardList, FilePlus2, Search, Sparkles, Users } from "lucide-react";
 import { useVenue } from "@/components/dashboard/DashboardShell";
 import { PmSheet } from "@/components/dashboard/PmSheet";
 import { statusStyles } from "@/lib/dashboard-data";
