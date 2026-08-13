@@ -92,16 +92,19 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [date, setDate] = useState<Date>(() => new Date(2026, 7, 13));
   const [service, setService] = useState<ServicePeriod>("middag");
   const [query, setQuery] = useState("");
+  const [setup, setSetup] = useState<VenueSetup | null>(null);
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
-  const venues = venuesForPlan(plan);
+  const venues = venuesForPlan(plan, setup?.type);
   const canSwitch = venues.length > 1;
 
   useEffect(() => {
     const p = readAccountPlan();
     setPlan(p);
-    const allowed = venuesForPlan(p);
+    const own = p === "custom" ? readSetup() : null;
+    setSetup(own);
+    const allowed = venuesForPlan(p, own?.type);
     const stored = window.localStorage.getItem("seytro-venue");
     const next =
       stored === "restaurang" || stored === "hotell"
@@ -111,12 +114,12 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   }, []);
 
   const setVenue = (v: Venue) => {
-    if (!venuesForPlan(plan).includes(v)) return;
+    if (!venuesForPlan(plan, setup?.type).includes(v)) return;
     window.localStorage.setItem("seytro-venue", v);
     setVenueState(v);
   };
 
-  const data = dashboardData[venue];
+  const data = setup ? applySetup(dashboardData[venue], setup, venue) : dashboardData[venue];
 
   const inService =
     venue === "hotell" ? data.bookings : data.bookings.filter((b) => serviceOf(b.time) === service);
