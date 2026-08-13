@@ -39,6 +39,8 @@ function FloorPage() {
   const [placingId, setPlacingId] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const [draggingId, setDraggingId] = useState<string | null>(null);
+  const [dropUnit, setDropUnit] = useState<string | null>(null);
 
   useEffect(() => {
     setBookings(data.bookings);
