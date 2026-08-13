@@ -201,9 +201,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-30 border-b border-border bg-card/90 backdrop-blur">
+          <header className="sticky top-0 z-30 border-b border-border bg-dashboard-header">
             <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6">
-              <div className="hidden min-w-0 items-stretch divide-x divide-border overflow-hidden rounded-xl border border-border bg-background sm:flex">
+              <div className="hidden min-w-0 items-stretch divide-x divide-forest/10 overflow-hidden rounded-xl border border-white/60 bg-white/80 shadow-sm shadow-forest/5 sm:flex">
                 {stats.map((s) => (
                   <span
                     key={s.label}
@@ -212,7 +212,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                   >
                     <s.icon className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                     <span className="leading-tight">
-                      <span className="block text-sm font-medium text-forest">{s.value}</span>
+                      <span className="block text-sm font-semibold text-forest">{s.value}</span>
                       <span className="block text-[11px] capitalize text-muted-foreground">
                         {s.label}
                       </span>
@@ -221,11 +221,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 ))}
               </div>
 
-
               <DateNav date={date} onChange={setDate} />
 
               <div className="flex items-center gap-3">
-                <div className="hidden items-center gap-2 rounded-full border border-border bg-background px-3 py-1.5 md:flex">
+                <div className="hidden items-center gap-2 rounded-full border border-white/60 bg-white/80 px-3 py-1.5 shadow-sm shadow-forest/5 md:flex">
                   <Search className="h-3.5 w-3.5 text-muted-foreground" />
                   <input
                     placeholder="Sök gäst eller bokning"
@@ -234,7 +233,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 </div>
                 <button
                   type="button"
-                  className="grid h-9 w-9 place-items-center rounded-full bg-primary text-primary-foreground transition-opacity hover:opacity-90"
+                  className="grid h-9 w-9 place-items-center rounded-full bg-primary text-primary-foreground shadow-sm shadow-forest/10 transition-opacity hover:opacity-90"
                   aria-label="Ny bokning"
                 >
                   <Plus className="h-4 w-4" />
@@ -242,9 +241,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               </div>
             </div>
 
-            <div className="flex items-center justify-between gap-4 overflow-x-auto border-t border-border/70 px-4 py-2 sm:px-6">
+            <div className="flex items-center justify-between gap-4 overflow-x-auto border-t border-forest/8 px-4 py-2.5 sm:px-6">
               {venue === "restaurang" ? (
-                <div className="flex shrink-0 items-center gap-1 rounded-full bg-muted p-1">
+                <div className="flex shrink-0 items-center gap-1 rounded-full border border-white/60 bg-white/70 p-1 shadow-sm shadow-forest/5">
                   {serviceCounts.map((p) => (
                     <button
                       key={p.id}
@@ -253,7 +252,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       title={p.span}
                       className={`whitespace-nowrap rounded-full px-3.5 py-1 text-sm transition-colors ${
                         service === p.id
-                          ? "bg-card text-forest shadow-sm"
+                          ? "bg-white text-forest shadow-sm"
                           : "text-muted-foreground hover:text-forest"
                       }`}
                     >
@@ -263,7 +262,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                   ))}
                 </div>
               ) : (
-                <p className="hidden shrink-0 truncate text-sm font-medium text-forest lg:block">
+                <p className="hidden shrink-0 truncate text-sm font-semibold text-forest lg:block">
                   {data.label}
                 </p>
               )}
@@ -277,8 +276,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       onClick={() => setDate(q.date)}
                       className={`whitespace-nowrap rounded-full px-3 py-1 text-sm capitalize transition-colors ${
                         active
-                          ? "bg-forest text-primary-foreground"
-                          : "text-muted-foreground hover:text-forest"
+                          ? "bg-forest text-primary-foreground shadow-sm"
+                          : "text-muted-foreground hover:bg-white/50 hover:text-forest"
                       }`}
                     >
                       {q.label}
@@ -291,7 +290,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                   <button
                     key={a.label}
                     type="button"
-                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-forest"
+                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1 text-sm text-muted-foreground transition-colors hover:bg-white/50 hover:text-forest"
                   >
                     <a.icon className="h-3.5 w-3.5" />
                     {a.label}
@@ -299,7 +298,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 ))}
               </div>
             </div>
-            <nav className="flex gap-1 overflow-x-auto border-t border-border/70 px-4 py-2 sm:px-6 lg:hidden">
+            <nav className="flex gap-1 overflow-x-auto border-t border-forest/8 px-4 py-2 sm:px-6 lg:hidden">
               {nav.map((item) => {
                 const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
                 return (
