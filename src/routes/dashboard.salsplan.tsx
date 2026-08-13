@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Check, Clock, Plus, Search, Users, X } from "lucide-react";
+import { ArrowUpDown, Check, Clock, Plus, Search, SlidersHorizontal, Users, X } from "lucide-react";
 import { useVenue } from "@/components/dashboard/DashboardShell";
 import { FloorPlan } from "@/components/dashboard/FloorPlan";
 import {
