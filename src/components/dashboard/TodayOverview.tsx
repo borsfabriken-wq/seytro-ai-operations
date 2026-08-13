@@ -22,12 +22,12 @@ const quickDays = [
 ];
 
 
-function greeting() {
-  const h = new Date().getHours();
+function greetingFor(h: number) {
   if (h < 10) return "God morgon";
   if (h < 17) return "God eftermiddag";
   return "God kväll";
 }
+
 
 export function TodayOverview() {
   const { data, venue, date, setDate, service, setService, serviceBookings } = useVenue();
