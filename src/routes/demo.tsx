@@ -106,7 +106,7 @@ function Calendar() {
         </div>
       </div>
 
-      <div className="grid grid-cols-7 gap-1 text-center">
+      <div className="grid grid-cols-7 gap-y-1 text-center">
         {weekdays.map((d, i) => (
           <div
             key={`${d}-${i}`}
@@ -128,7 +128,7 @@ function Calendar() {
               disabled={isPast}
               onClick={() => setSelected(date)}
               className={[
-                "aspect-square rounded-full text-sm transition-colors",
+                "mx-auto flex h-10 w-10 items-center justify-center rounded-full text-sm transition-colors",
                 isSelected
                   ? "bg-forest-deep text-primary-foreground"
                   : isToday
