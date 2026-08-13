@@ -21,6 +21,7 @@ import { Route as GastinsiktRouteImport } from './routes/gastinsikt'
 import { Route as HotellRouteImport } from './routes/hotell'
 import { Route as KampanjerRouteImport } from './routes/kampanjer'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as RestaurangRouteImport } from './routes/restaurang'
 import { Route as SalsplanRouteImport } from './routes/salsplan'
 import { Route as TillganglighetRouteImport } from './routes/tillganglighet'
@@ -107,6 +108,11 @@ const KampanjerRoute = KampanjerRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RestaurangRoute = RestaurangRouteImport.update({
@@ -262,6 +268,7 @@ export interface FileRoutesByFullPath {
   '/hotell': typeof HotellRoute
   '/kampanjer': typeof KampanjerRoute
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/restaurang': typeof RestaurangRoute
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
@@ -302,6 +309,7 @@ export interface FileRoutesByTo {
   '/hotell': typeof HotellRoute
   '/kampanjer': typeof KampanjerRoute
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/restaurang': typeof RestaurangRoute
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
@@ -344,6 +352,7 @@ export interface FileRoutesById {
   '/hotell': typeof HotellRoute
   '/kampanjer': typeof KampanjerRoute
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/restaurang': typeof RestaurangRoute
   '/salsplan': typeof SalsplanRoute
   '/tillganglighet': typeof TillganglighetRoute
@@ -387,6 +396,7 @@ export interface FileRouteTypes {
     | '/hotell'
     | '/kampanjer'
     | '/login'
+    | '/onboarding'
     | '/restaurang'
     | '/salsplan'
     | '/tillganglighet'
@@ -427,6 +437,7 @@ export interface FileRouteTypes {
     | '/hotell'
     | '/kampanjer'
     | '/login'
+    | '/onboarding'
     | '/restaurang'
     | '/salsplan'
     | '/tillganglighet'
@@ -468,6 +479,7 @@ export interface FileRouteTypes {
     | '/hotell'
     | '/kampanjer'
     | '/login'
+    | '/onboarding'
     | '/restaurang'
     | '/salsplan'
     | '/tillganglighet'
@@ -510,6 +522,7 @@ export interface RootRouteChildren {
   HotellRoute: typeof HotellRoute
   KampanjerRoute: typeof KampanjerRoute
   LoginRoute: typeof LoginRoute
+  OnboardingRoute: typeof OnboardingRoute
   RestaurangRoute: typeof RestaurangRoute
   SalsplanRoute: typeof SalsplanRoute
   TillganglighetRoute: typeof TillganglighetRoute
@@ -617,6 +630,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/restaurang': {
@@ -846,6 +866,7 @@ const rootRouteChildren: RootRouteChildren = {
   HotellRoute: HotellRoute,
   KampanjerRoute: KampanjerRoute,
   LoginRoute: LoginRoute,
+  OnboardingRoute: OnboardingRoute,
   RestaurangRoute: RestaurangRoute,
   SalsplanRoute: SalsplanRoute,
   TillganglighetRoute: TillganglighetRoute,
