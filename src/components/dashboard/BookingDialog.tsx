@@ -44,6 +44,11 @@ export function BookingDialog({
   const [party, setParty] = useState("2");
   const [time, setTime] = useState("19:00");
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [occasion, setOccasion] = useState("");
+  const [consent, setConsent] = useState(false);
   const [source, setSource] = useState<BookingSource>("Telefon");
   const [status, setStatus] = useState<"väntar" | "bekräftad">("väntar");
   const [tags, setTags] = useState<string[]>([]);
@@ -54,6 +59,11 @@ export function BookingDialog({
 
   const partyNumber = Number(party || "0");
   const showPm = partyNumber >= 8;
+
+  const dataFields = [name, phone, email, occasion];
+  const completeness = Math.round(
+    (dataFields.filter((f) => f.trim().length > 0).length / dataFields.length) * 100,
+  );
 
   const press = (key: string) => {
     if (key === "del") setParty((p) => p.slice(0, -1));
@@ -73,11 +83,21 @@ export function BookingDialog({
       status,
       source,
       ...(noteText ? { note: noteText } : {}),
+      ...(phone.trim() ? { phone: phone.trim() } : {}),
+      ...(email.trim() ? { email: email.trim() } : {}),
+      ...(company.trim() ? { company: company.trim() } : {}),
+      ...(occasion.trim() ? { occasion: occasion.trim() } : {}),
+      consent,
       tags,
       placed: false,
     });
     setParty("2");
     setName("");
+    setPhone("");
+    setEmail("");
+    setCompany("");
+    setOccasion("");
+    setConsent(false);
     setTags([]);
     setNote("");
     setPm("");
@@ -131,14 +151,70 @@ export function BookingDialog({
               />
             </Field>
 
-            <Field label="Gäst">
-              <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Namn"
-                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
-              />
-            </Field>
+            <div className="rounded-xl border border-border p-3">
+              <div className="flex items-center justify-between">
+                <p className="eyebrow text-muted-foreground">Gästdata</p>
+                <span className="text-xs text-muted-foreground">{completeness}% ifyllt</span>
+              </div>
+              <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-full rounded-full bg-primary transition-all"
+                  style={{ width: `${completeness}%` }}
+                />
+              </div>
+              <div className="mt-3 space-y-2">
+                <input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Namn"
+                  className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
+                />
+                <div className="grid gap-2 sm:grid-cols-2">
+                  <input
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="Telefon"
+                    inputMode="tel"
+                    className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
+                  />
+                  <input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="E-post"
+                    inputMode="email"
+                    className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
+                  />
+                </div>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  <input
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    placeholder="Företag (valfritt)"
+                    className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
+                  />
+                  <select
+                    value={occasion}
+                    onChange={(e) => setOccasion(e.target.value)}
+                    className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
+                  >
+                    <option value="">Tillfälle…</option>
+                    {["Middag", "Affärsmöte", "Födelsedag", "Årsdag", "Fest", "Turist"].map((o) => (
+                      <option key={o}>{o}</option>
+                    ))}
+                  </select>
+                </div>
+                <label className="flex items-start gap-2 text-xs text-muted-foreground">
+                  <input
+                    type="checkbox"
+                    checked={consent}
+                    onChange={(e) => setConsent(e.target.checked)}
+                    className="mt-0.5"
+                  />
+                  Gästen samtycker till att spara uppgifter för erbjudanden och bättre service.
+                </label>
+              </div>
+            </div>
+
 
             <Field label="Kanal">
               <select

@@ -9,7 +9,13 @@ import {
   tagGroups,
   type NewBookingDraft,
 } from "@/components/dashboard/BookingDialog";
-import { unitStatusStyles, type Booking, type TableUnit } from "@/lib/dashboard-data";
+import {
+  serviceOf,
+  servicePeriods,
+  unitStatusStyles,
+  type Booking,
+  type TableUnit,
+} from "@/lib/dashboard-data";
 
 export const Route = createFileRoute("/dashboard/salsplan")({
   head: () => ({
@@ -26,23 +32,16 @@ export const Route = createFileRoute("/dashboard/salsplan")({
   component: FloorPage,
 });
 
-const services = ["17:00", "18:00", "19:00", "20:00", "21:00"];
-
-const sittings = ["Lunch", "Tidig kväll", "Sen kväll"] as const;
-
-/** Delar in en tid (HH:MM) i sittning. */
-function sittingOf(time: string) {
-  const hour = Number(time.slice(0, 2));
-  if (hour < 15) return "Lunch";
-  if (hour < 19) return "Tidig kväll";
-  return "Sen kväll";
-}
+const serviceHours: Record<"lunch" | "middag", string[]> = {
+  lunch: ["11:30", "12:00", "12:30", "13:00", "14:00"],
+  middag: ["17:00", "18:00", "19:00", "20:00", "21:00"],
+};
 
 function FloorPage() {
-  const { data, venue } = useVenue();
+  const { data, venue, service, setService } = useVenue();
   const [bookings, setBookings] = useState<Booking[]>(data.bookings);
   const [query, setQuery] = useState("");
-  const [service, setService] = useState("19:00");
+  const [slot, setSlot] = useState("19:00");
   const [zone, setZone] = useState("Alla");
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
   const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
@@ -53,7 +52,6 @@ function FloorPage() {
   const [dropUnit, setDropUnit] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<"alla" | Booking["status"]>("alla");
   const [tagFilter, setTagFilter] = useState<string>("alla");
-  const [sittingFilter, setSittingFilter] = useState<"alla" | string>("alla");
   const [sort, setSort] = useState<"tid" | "namn" | "sallskap" | "status">("tid");
   const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -98,8 +96,8 @@ function FloorPage() {
         b.table.toLowerCase().includes(q);
       const matchesStatus = statusFilter === "alla" || b.status === statusFilter;
       const matchesTag = tagFilter === "alla" || b.tags.includes(tagFilter);
-      const matchesSitting = sittingFilter === "alla" || sittingOf(b.time) === sittingFilter;
-      return matchesQuery && matchesStatus && matchesTag && matchesSitting;
+      const matchesService = venue === "hotell" || serviceOf(b.time) === service;
+      return matchesQuery && matchesStatus && matchesTag && matchesService;
     })
     .sort((a, b) => {
       if (sort === "namn") return a.name.localeCompare(b.name, "sv");
@@ -109,12 +107,11 @@ function FloorPage() {
     });
 
   const activeFilterCount =
-    (statusFilter !== "alla" ? 1 : 0) + (tagFilter !== "alla" ? 1 : 0) + (sittingFilter !== "alla" ? 1 : 0);
+    (statusFilter !== "alla" ? 1 : 0) + (tagFilter !== "alla" ? 1 : 0);
 
   const resetFilters = () => {
     setStatusFilter("alla");
     setTagFilter("alla");
-    setSittingFilter("alla");
   };
 
   const unplaced = filtered.filter((b) => b.placed === false);
@@ -183,8 +180,33 @@ function FloorPage() {
           </h1>
           <p className="text-body text-muted-foreground">
             {visibleUnits.length} {venue === "hotell" ? "rum" : "bord"} ·{" "}
-            {bookings.reduce((s, b) => s + b.party, 0)} gäster inbokade idag
+            {filtered.reduce((s, b) => s + b.party, 0)} gäster{" "}
+            {venue === "hotell"
+              ? "inbokade idag"
+              : `på ${servicePeriods.find((p) => p.id === service)?.label.toLowerCase()}`}
           </p>
+          {venue === "restaurang" && (
+            <div className="mt-3 inline-flex items-center gap-1 rounded-full bg-muted p-1">
+              {servicePeriods.map((p) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => {
+                    setService(p.id);
+                    setSlot(p.id === "lunch" ? "12:00" : "19:00");
+                  }}
+                  className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
+                    service === p.id
+                      ? "bg-card text-forest shadow-sm"
+                      : "text-muted-foreground hover:text-forest"
+                  }`}
+                >
+                  {p.label}
+                  <span className="ml-2 text-xs text-muted-foreground">{p.span}</span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {Object.entries(counts).map(([k, v]) => (
@@ -261,16 +283,6 @@ function FloorPage() {
                 ))}
               </FilterRow>
 
-              <FilterRow label="Sittning">
-                <Chip active={sittingFilter === "alla"} onClick={() => setSittingFilter("alla")}>
-                  Alla
-                </Chip>
-                {sittings.map((s) => (
-                  <Chip key={s} active={sittingFilter === s} onClick={() => setSittingFilter(s)}>
-                    {s}
-                  </Chip>
-                ))}
-              </FilterRow>
 
               {allTags.length > 0 && (
                 <FilterRow label="Taggar">
@@ -363,13 +375,13 @@ function FloorPage() {
             </div>
             <div className="flex items-center gap-1 rounded-full border border-border p-1">
               <Clock className="mx-1.5 h-3.5 w-3.5 text-muted-foreground" />
-              {services.map((s) => (
+              {serviceHours[service].map((s) => (
                 <button
                   key={s}
                   type="button"
-                  onClick={() => setService(s)}
+                  onClick={() => setSlot(s)}
                   className={`rounded-full px-2.5 py-1 text-xs ${
-                    service === s ? "bg-primary/12 text-primary" : "text-muted-foreground"
+                    slot === s ? "bg-primary/12 text-primary" : "text-muted-foreground"
                   }`}
                 >
                   {s}
@@ -533,6 +545,55 @@ function BookingPanel({
             {s === "väntar" ? "Preliminär" : s}
           </button>
         ))}
+      </div>
+
+      {/* Gästdata */}
+      <div className="rounded-xl border border-border p-3">
+        <div className="flex items-center justify-between">
+          <p className="eyebrow text-muted-foreground">Gästdata</p>
+          {!booking.consent && (
+            <button
+              type="button"
+              onClick={() => onUpdate({ consent: true })}
+              className="text-xs text-primary underline"
+            >
+              Registrera samtycke
+            </button>
+          )}
+          {booking.consent && (
+            <span className="text-xs text-primary">Samtycke registrerat</span>
+          )}
+        </div>
+        <div className="mt-2 grid gap-2 sm:grid-cols-2">
+          <input
+            value={booking.phone ?? ""}
+            onChange={(e) => onUpdate({ phone: e.target.value })}
+            placeholder="Telefon"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
+          />
+          <input
+            value={booking.email ?? ""}
+            onChange={(e) => onUpdate({ email: e.target.value })}
+            placeholder="E-post"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
+          />
+          <input
+            value={booking.company ?? ""}
+            onChange={(e) => onUpdate({ company: e.target.value })}
+            placeholder="Företag"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
+          />
+          <input
+            value={booking.occasion ?? ""}
+            onChange={(e) => onUpdate({ occasion: e.target.value })}
+            placeholder="Tillfälle"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
+          />
+        </div>
+        <p className="mt-2 text-xs text-muted-foreground">
+          Sparas i gästregistret — Seytro använder det för bekräftelser, uppföljning och
+          personliga erbjudanden.
+        </p>
       </div>
 
       {/* Taggar */}

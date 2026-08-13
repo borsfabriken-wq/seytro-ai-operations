@@ -17,7 +17,25 @@ export type Booking = {
   /** false = ej placerad på salsplanen */
   placed?: boolean;
   end?: string;
+  /** Gästdata — samlas in vid varje bokning */
+  phone?: string;
+  email?: string;
+  company?: string;
+  occasion?: string;
+  consent?: boolean;
 };
+
+/** Lunch- eller middagspass utifrån starttid. */
+export type ServicePeriod = "lunch" | "middag";
+
+export function serviceOf(time: string): ServicePeriod {
+  return Number(time.slice(0, 2)) < 16 ? "lunch" : "middag";
+}
+
+export const servicePeriods: { id: ServicePeriod; label: string; span: string }[] = [
+  { id: "lunch", label: "Lunch", span: "11:00–15:00" },
+  { id: "middag", label: "Middag", span: "17:00–23:00" },
+];
 
 export type Guest = {
   id: string;
@@ -77,7 +95,13 @@ export const dashboardData: Record<Venue, VenueData> = {
       { label: "No-show", value: "1,8%", delta: "−2,4 p.e.", hint: "efter automatisk bekräftelse" },
     ],
     bookings: [
-      { id: "b1", time: "17:00", end: "19:00", name: "Familjen Lindqvist", party: 4, table: "12", status: "anlänt", source: "Webb", tags: ["Fönsterbord"], placed: true },
+      { id: "l1", time: "11:30", end: "12:45", name: "Elin Sandberg", party: 2, table: "2", status: "anlänt", source: "Webb", tags: ["Snabb lunch"], placed: true, phone: "+46 70 445 12 09", email: "elin.sandberg@mail.se", consent: true },
+      { id: "l2", time: "12:00", end: "13:15", name: "Bolander & Co", party: 6, table: "15", status: "bekräftad", source: "E-postconcierge", note: "Affärslunch, samlad nota", tags: ["Företag"], placed: true, company: "Bolander & Co", email: "kontor@bolander.se", consent: true },
+      { id: "l3", time: "12:15", end: "13:30", name: "Karin Nyström", party: 3, table: "11", status: "bekräftad", source: "Röstagent", note: "Laktosfritt", tags: ["Allergi"], placed: true, phone: "+46 76 221 88 41" },
+      { id: "l4", time: "12:30", end: "13:45", name: "Oskar Vinge", party: 2, table: "", status: "väntar", source: "Telefon", tags: [], placed: false, phone: "+46 73 909 44 12" },
+      { id: "l5", time: "13:00", end: "14:15", name: "Team Ramblas", party: 8, table: "", status: "bekräftad", source: "Röstagent", note: "Dagens lunch x8, klara 14:15", tags: ["Sällskap", "Företag"], placed: false, company: "Ramblas AB" },
+      { id: "l6", time: "13:30", end: "14:30", name: "Lisa Ahl", party: 2, table: "25", status: "bekräftad", source: "Webb", tags: ["Uteservering"], placed: true, email: "lisa.ahl@mail.se", consent: true },
+      { id: "b1", time: "17:00", end: "19:00", name: "Familjen Lindqvist", party: 4, table: "12", status: "anlänt", source: "Webb", tags: ["Fönsterbord"], placed: true, phone: "+46 70 331 20 15", consent: true },
       { id: "b2", time: "17:30", end: "19:30", name: "Marcus Ehn", party: 2, table: "5", status: "bekräftad", source: "Röstagent", note: "Firar årsdag", tags: ["VIP", "Årsdag"], placed: true },
       { id: "b3", time: "18:00", end: "21:00", name: "Nordea Corporate", party: 10, table: "20–21", status: "bekräftad", source: "E-postconcierge", note: "Faktura, meny 3", tags: ["Företag"], placed: true },
       { id: "b4", time: "18:15", end: "20:15", name: "Sara Holmberg", party: 3, table: "8", status: "väntar", source: "Röstagent", note: "Glutenallergi", tags: ["Allergi"], placed: true },

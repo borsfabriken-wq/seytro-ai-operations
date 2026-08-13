@@ -16,7 +16,13 @@ import {
   Zap,
 } from "lucide-react";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
-import { dashboardData, type Venue } from "@/lib/dashboard-data";
+import {
+  dashboardData,
+  serviceOf,
+  servicePeriods,
+  type ServicePeriod,
+  type Venue,
+} from "@/lib/dashboard-data";
 import { DateNav } from "@/components/dashboard/DateNav";
 
 const VenueContext = createContext<{
@@ -24,16 +30,24 @@ const VenueContext = createContext<{
   setVenue: (v: Venue) => void;
   date: Date;
   setDate: (d: Date) => void;
+  service: ServicePeriod;
+  setService: (s: ServicePeriod) => void;
 }>({
   venue: "restaurang",
   setVenue: () => {},
   date: new Date(2026, 7, 13),
   setDate: () => {},
+  service: "middag",
+  setService: () => {},
 });
 
 export function useVenue() {
-  const { venue, setVenue, date, setDate } = useContext(VenueContext);
-  return { venue, setVenue, date, setDate, data: dashboardData[venue] };
+  const { venue, setVenue, date, setDate, service, setService } = useContext(VenueContext);
+  const data = dashboardData[venue];
+  /** Bokningar för valt pass (hotellet visar hela dygnet). */
+  const serviceBookings =
+    venue === "hotell" ? data.bookings : data.bookings.filter((b) => serviceOf(b.time) === service);
+  return { venue, setVenue, date, setDate, service, setService, data, serviceBookings };
 }
 
 const nav = [
@@ -67,6 +81,7 @@ function buildQuickDays(selected: Date) {
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [venue, setVenueState] = useState<Venue>("restaurang");
   const [date, setDate] = useState<Date>(() => new Date(2026, 7, 13));
+  const [service, setService] = useState<ServicePeriod>("middag");
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -81,7 +96,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   const data = dashboardData[venue];
 
-  const active = data.bookings.filter((b) => b.status !== "avbokad");
+  const inService =
+    venue === "hotell" ? data.bookings : data.bookings.filter((b) => serviceOf(b.time) === service);
+  const active = inService.filter((b) => b.status !== "avbokad");
   const stats = [
     {
       label: venue === "hotell" ? "ankomster" : "bokningar",
@@ -100,6 +117,13 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     },
   ];
 
+  const serviceCounts = servicePeriods.map((p) => ({
+    ...p,
+    covers: data.bookings
+      .filter((b) => serviceOf(b.time) === p.id && b.status !== "avbokad")
+      .reduce((s, b) => s + b.party, 0),
+  }));
+
   const quickDays = buildQuickDays(date);
   const quickActions = [
     { label: "Kölista", icon: Users },
@@ -108,7 +132,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <VenueContext.Provider value={{ venue, setVenue, date, setDate }}>
+    <VenueContext.Provider value={{ venue, setVenue, date, setDate, service, setService }}>
       <div className="flex min-h-[100svh] bg-muted/40">
         <aside className="sticky top-0 hidden h-[100svh] w-60 shrink-0 flex-col border-r border-border bg-forest-deep px-4 py-5 text-primary-foreground lg:flex">
           <Link to="/" className="px-2">
@@ -210,9 +234,30 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             </div>
 
             <div className="flex items-center justify-between gap-4 overflow-x-auto border-t border-border/70 px-4 py-2 sm:px-6">
-              <p className="hidden shrink-0 truncate text-sm font-medium text-forest lg:block">
-                {data.label}
-              </p>
+              {venue === "restaurang" ? (
+                <div className="flex shrink-0 items-center gap-1 rounded-full bg-muted p-1">
+                  {serviceCounts.map((p) => (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => setService(p.id)}
+                      title={p.span}
+                      className={`whitespace-nowrap rounded-full px-3.5 py-1 text-sm transition-colors ${
+                        service === p.id
+                          ? "bg-card text-forest shadow-sm"
+                          : "text-muted-foreground hover:text-forest"
+                      }`}
+                    >
+                      {p.label}
+                      <span className="ml-1.5 text-xs text-muted-foreground">{p.covers}</span>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className="hidden shrink-0 truncate text-sm font-medium text-forest lg:block">
+                  {data.label}
+                </p>
+              )}
               <div className="flex shrink-0 items-center gap-1">
                 {quickDays.map((q) => {
                   const active = isSameDay(q.date, date);
