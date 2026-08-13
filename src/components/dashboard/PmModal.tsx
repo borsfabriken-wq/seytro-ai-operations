@@ -41,7 +41,9 @@ export function PmModal({ pmId, onClose }: { pmId: string | null; onClose: () =>
         <div className="flex items-center justify-between gap-3 border-b border-border px-5 py-4">
           <div className="min-w-0">
             <p className="eyebrow text-muted-foreground">PM #{doc.id}</p>
-            <p className="truncate text-forest">{doc.guestName}</p>
+            <p className="truncate text-forest">
+              {doc.title} · {doc.party} pers · {doc.date} {doc.time}
+            </p>
           </div>
           <button
             type="button"
