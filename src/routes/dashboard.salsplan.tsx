@@ -41,6 +41,11 @@ function FloorPage() {
   const [toast, setToast] = useState<string | null>(null);
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [dropUnit, setDropUnit] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<"alla" | Booking["status"]>("alla");
+  const [tagFilter, setTagFilter] = useState<string>("alla");
+  const [sittingFilter, setSittingFilter] = useState<"alla" | string>("alla");
+  const [sort, setSort] = useState<"tid" | "namn" | "sallskap" | "status">("tid");
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => {
     setBookings(data.bookings);
