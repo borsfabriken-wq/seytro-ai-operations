@@ -182,22 +182,24 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             <img src={logoAsset.url} alt="Seytro" className="h-5 w-auto" />
           </Link>
 
-          <div className="mt-8 grid grid-cols-2 gap-1 rounded-full bg-primary-foreground/10 p-1">
-            {(["restaurang", "hotell"] as const).map((v) => (
-              <button
-                key={v}
-                type="button"
-                onClick={() => setVenue(v)}
-                className={`rounded-full px-3 py-1.5 text-center text-sm transition-colors ${
-                  venue === v
-                    ? "bg-primary-foreground text-forest-deep"
-                    : "text-primary-foreground/65 hover:text-primary-foreground"
-                }`}
-              >
-                {v === "restaurang" ? "Restaurang" : "Hotell"}
-              </button>
-            ))}
-          </div>
+          {canSwitch && (
+            <div className="mt-8 grid grid-cols-2 gap-1 rounded-full bg-primary-foreground/10 p-1">
+              {venues.map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  onClick={() => setVenue(v)}
+                  className={`rounded-full px-3 py-1.5 text-center text-sm transition-colors ${
+                    venue === v
+                      ? "bg-primary-foreground text-forest-deep"
+                      : "text-primary-foreground/65 hover:text-primary-foreground"
+                  }`}
+                >
+                  {v === "restaurang" ? "Restaurang" : "Hotell"}
+                </button>
+              ))}
+            </div>
+          )}
           <p className="mt-4 px-3 text-sm text-primary-foreground/85">{data.label}</p>
           <p className="px-3 text-xs text-primary-foreground/45">
             {venue === "hotell" ? "Hotelldrift" : "Restaurangdrift"}
