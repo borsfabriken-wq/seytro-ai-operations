@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpDown, Check, Clock, FileText, Plus, Search, SlidersHorizontal, Users, X } from "lucide-react";
 import { useVenue } from "@/components/dashboard/DashboardShell";
 import { FloorPlan } from "@/components/dashboard/FloorPlan";
+import { PmBookIcon, PmModal } from "@/components/dashboard/PmModal";
 import {
   BookingDialog,
   pmTemplates,
@@ -334,6 +335,7 @@ function FloorPage() {
                 onClick={() => selectBooking(b.id)}
                 onDragStart={() => setDraggingId(b.id)}
                 onDragEnd={() => setDraggingId(null)}
+                onOpenPm={setOpenPmId}
               />
             ))}
             <GroupHeader
@@ -349,6 +351,7 @@ function FloorPage() {
                 onClick={() => selectBooking(b.id)}
                 onDragStart={() => setDraggingId(b.id)}
                 onDragEnd={() => setDraggingId(null)}
+                onOpenPm={setOpenPmId}
               />
             ))}
           </div>
@@ -733,17 +736,21 @@ function BookingRow({
   onClick,
   onDragStart,
   onDragEnd,
+  onOpenPm,
 }: {
   b: Booking;
   active: boolean;
   onClick: () => void;
   onDragStart?: () => void;
   onDragEnd?: () => void;
+  onOpenPm?: (pmId: string) => void;
 }) {
   return (
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       onClick={onClick}
+      onKeyDown={(e) => e.key === "Enter" && onClick()}
       draggable
       onDragStart={(e) => {
         e.dataTransfer.setData("text/booking-id", b.id);
@@ -759,6 +766,19 @@ function BookingRow({
       <span className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-muted text-xs text-forest">
         {b.party}
       </span>
+      {b.pmId && (
+        <button
+          type="button"
+          title="Visa PM"
+          onClick={(e) => {
+            e.stopPropagation();
+            onOpenPm?.(b.pmId!);
+          }}
+          className="shrink-0 rounded p-0.5 hover:bg-muted"
+        >
+          <PmBookIcon />
+        </button>
+      )}
       <span className="min-w-0 flex-1">
         <span className="block truncate text-forest">{b.name}</span>
         {b.tags.length > 0 && (
@@ -766,7 +786,7 @@ function BookingRow({
         )}
       </span>
       <span className="text-xs text-muted-foreground">{b.table || "—"}</span>
-    </button>
+    </div>
   );
 }
 
