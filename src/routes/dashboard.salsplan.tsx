@@ -46,8 +46,10 @@ const serviceHours: Record<"lunch" | "middag", string[]> = {
 
 function FloorPage() {
   const { data, venue, service, setService } = useVenue();
+  const search = Route.useSearch();
   const [bookings, setBookings] = useState<Booking[]>(data.bookings);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(search.q ?? "");
+
   const [slot, setSlot] = useState("19:00");
   const [zone, setZone] = useState("Alla");
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
