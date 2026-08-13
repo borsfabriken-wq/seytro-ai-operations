@@ -14,6 +14,9 @@ export type Booking = {
   source: BookingSource;
   note?: string;
   tags: string[];
+  /** false = ej placerad på salsplanen */
+  placed?: boolean;
+  end?: string;
 };
 
 export type Guest = {
@@ -45,6 +48,10 @@ export type TableUnit = {
   guest?: string;
   until?: string;
   zone: string;
+  /** Position i procent på salsplanen (endast restaurang) */
+  x?: number;
+  y?: number;
+  shape?: "rund" | "fyrkant" | "avlang";
 };
 
 type VenueData = {
@@ -70,29 +77,39 @@ export const dashboardData: Record<Venue, VenueData> = {
       { label: "No-show", value: "1,8%", delta: "−2,4 p.e.", hint: "efter automatisk bekräftelse" },
     ],
     bookings: [
-      { id: "b1", time: "17:00", name: "Familjen Lindqvist", party: 4, table: "12", status: "anlänt", source: "Webb", tags: ["Fönsterbord"] },
-      { id: "b2", time: "17:30", name: "Marcus Ehn", party: 2, table: "5", status: "bekräftad", source: "Röstagent", note: "Firar årsdag", tags: ["VIP", "Årsdag"] },
-      { id: "b3", time: "18:00", name: "Nordea Corporate", party: 10, table: "20–21", status: "bekräftad", source: "E-postconcierge", note: "Faktura, meny 3", tags: ["Företag"] },
-      { id: "b4", time: "18:15", name: "Sara Holmberg", party: 3, table: "8", status: "väntar", source: "Röstagent", note: "Glutenallergi", tags: ["Allergi"] },
-      { id: "b5", time: "19:00", name: "Petter Ask", party: 2, table: "3", status: "bekräftad", source: "Telefon", tags: [] },
-      { id: "b6", time: "19:30", name: "Anna Wiklund", party: 6, table: "15", status: "bekräftad", source: "Webb", note: "Barnstol x1", tags: ["Barn"] },
-      { id: "b7", time: "20:00", name: "Jonas Rehn", party: 2, table: "7", status: "väntar", source: "E-postconcierge", tags: ["Återkommande"] },
-      { id: "b8", time: "20:30", name: "Klara Sjögren", party: 4, table: "11", status: "avbokad", source: "Webb", tags: [] },
-      { id: "b9", time: "21:00", name: "Team Melanders", party: 8, table: "22", status: "bekräftad", source: "Röstagent", tags: ["Sen sittning"] },
+      { id: "b1", time: "17:00", end: "19:00", name: "Familjen Lindqvist", party: 4, table: "12", status: "anlänt", source: "Webb", tags: ["Fönsterbord"], placed: true },
+      { id: "b2", time: "17:30", end: "19:30", name: "Marcus Ehn", party: 2, table: "5", status: "bekräftad", source: "Röstagent", note: "Firar årsdag", tags: ["VIP", "Årsdag"], placed: true },
+      { id: "b3", time: "18:00", end: "21:00", name: "Nordea Corporate", party: 10, table: "20–21", status: "bekräftad", source: "E-postconcierge", note: "Faktura, meny 3", tags: ["Företag"], placed: true },
+      { id: "b4", time: "18:15", end: "20:15", name: "Sara Holmberg", party: 3, table: "8", status: "väntar", source: "Röstagent", note: "Glutenallergi", tags: ["Allergi"], placed: true },
+      { id: "b5", time: "19:00", end: "21:00", name: "Petter Ask", party: 2, table: "3", status: "bekräftad", source: "Telefon", tags: [], placed: true },
+      { id: "b6", time: "19:30", end: "21:30", name: "Anna Wiklund", party: 6, table: "15", status: "bekräftad", source: "Webb", note: "Barnstol x1", tags: ["Barn"], placed: true },
+      { id: "b7", time: "20:00", end: "22:00", name: "Jonas Rehn", party: 2, table: "7", status: "väntar", source: "E-postconcierge", tags: ["Återkommande"], placed: true },
+      { id: "b8", time: "20:30", end: "22:30", name: "Klara Sjögren", party: 4, table: "11", status: "avbokad", source: "Webb", tags: [], placed: false },
+      { id: "b9", time: "21:00", end: "23:00", name: "Team Melanders", party: 8, table: "22", status: "bekräftad", source: "Röstagent", tags: ["Sen sittning"], placed: true },
+      { id: "b10", time: "18:30", end: "20:30", name: "Tove Stenquist", party: 9, table: "", status: "väntar", source: "Röstagent", note: "Vanlig middag", tags: ["Sällskap"], placed: false },
+      { id: "b11", time: "19:15", end: "21:15", name: "Marcus Rosander", party: 10, table: "", status: "bekräftad", source: "E-postconcierge", note: "Väntar på bordsplacering", tags: ["Företag"], placed: false },
+      { id: "b12", time: "20:45", end: "22:45", name: "Vendela Lundberg", party: 5, table: "", status: "väntar", source: "Webb", tags: [], placed: false },
     ],
     units: [
-      { id: "t1", label: "1", seats: 2, status: "upptaget", guest: "Ek", until: "19:15", zone: "Fönster" },
-      { id: "t3", label: "3", seats: 2, status: "dukat", guest: "Petter Ask", until: "19:00", zone: "Fönster" },
-      { id: "t5", label: "5", seats: 2, status: "dukat", guest: "Marcus Ehn", until: "17:30", zone: "Fönster" },
-      { id: "t7", label: "7", seats: 2, status: "ledigt", zone: "Bar" },
-      { id: "t8", label: "8", seats: 4, status: "städas", zone: "Bar" },
-      { id: "t11", label: "11", seats: 4, status: "ledigt", zone: "Salong" },
-      { id: "t12", label: "12", seats: 4, status: "upptaget", guest: "Lindqvist", until: "18:45", zone: "Salong" },
-      { id: "t15", label: "15", seats: 6, status: "dukat", guest: "Anna Wiklund", until: "19:30", zone: "Salong" },
-      { id: "t20", label: "20–21", seats: 10, status: "dukat", guest: "Nordea", until: "18:00", zone: "Sällskapsrum" },
-      { id: "t22", label: "22", seats: 8, status: "ledigt", zone: "Sällskapsrum" },
-      { id: "t24", label: "24", seats: 4, status: "upptaget", guest: "Berg", until: "19:00", zone: "Uteservering" },
-      { id: "t25", label: "25", seats: 2, status: "ledigt", zone: "Uteservering" },
+      { id: "t1", label: "1", seats: 2, status: "upptaget", guest: "Ek", until: "19:15", zone: "Matsalen", x: 8, y: 14, shape: "fyrkant" },
+      { id: "t2", label: "2", seats: 2, status: "ledigt", zone: "Matsalen", x: 8, y: 30, shape: "fyrkant" },
+      { id: "t3", label: "3", seats: 2, status: "dukat", guest: "Petter Ask", until: "19:00", zone: "Matsalen", x: 8, y: 46, shape: "fyrkant" },
+      { id: "t5", label: "5", seats: 2, status: "dukat", guest: "Marcus Ehn", until: "17:30", zone: "Matsalen", x: 8, y: 62, shape: "fyrkant" },
+      { id: "t7", label: "7", seats: 2, status: "ledigt", zone: "Matsalen", x: 8, y: 78, shape: "fyrkant" },
+      { id: "t9", label: "9", seats: 2, status: "ledigt", zone: "Bar", x: 26, y: 30, shape: "fyrkant" },
+      { id: "t10", label: "10", seats: 2, status: "upptaget", guest: "Holm", until: "19:00", zone: "Bar", x: 34, y: 30, shape: "fyrkant" },
+      { id: "t11", label: "11", seats: 4, status: "ledigt", zone: "Bar", x: 26, y: 14, shape: "fyrkant" },
+      { id: "t12", label: "12", seats: 4, status: "upptaget", guest: "Lindqvist", until: "18:45", zone: "Bar", x: 34, y: 14, shape: "fyrkant" },
+      { id: "t8", label: "8", seats: 4, status: "städas", zone: "Bar", x: 30, y: 46, shape: "fyrkant" },
+      { id: "t20", label: "20–21", seats: 10, status: "dukat", guest: "Nordea", until: "18:00", zone: "Sällskapsrum", x: 55, y: 16, shape: "avlang" },
+      { id: "t22", label: "22", seats: 8, status: "ledigt", zone: "Sällskapsrum", x: 55, y: 34, shape: "avlang" },
+      { id: "t15", label: "15", seats: 6, status: "dukat", guest: "Anna Wiklund", until: "19:30", zone: "Matsalen", x: 55, y: 56, shape: "rund" },
+      { id: "t30", label: "30", seats: 6, status: "upptaget", guest: "Ahl", until: "20:00", zone: "Matsalen", x: 70, y: 56, shape: "rund" },
+      { id: "t31", label: "31", seats: 6, status: "ledigt", zone: "Matsalen", x: 85, y: 56, shape: "rund" },
+      { id: "t40", label: "40", seats: 4, status: "ledigt", zone: "Uteservering", x: 55, y: 80, shape: "rund" },
+      { id: "t24", label: "24", seats: 4, status: "upptaget", guest: "Berg", until: "19:00", zone: "Uteservering", x: 70, y: 80, shape: "rund" },
+      { id: "t25", label: "25", seats: 2, status: "ledigt", zone: "Uteservering", x: 85, y: 80, shape: "rund" },
+      { id: "t28", label: "28", seats: 4, status: "dukat", guest: "Wallgren", until: "19:30", zone: "Sällskapsrum", x: 78, y: 22, shape: "fyrkant" },
     ],
     guests: [
       { id: "g1", name: "Marcus Ehn", email: "marcus.ehn@mail.se", phone: "+46 70 118 22 40", visits: 14, spend: 21400, last: "12 aug 2026", tags: ["VIP", "Rödvin", "Fönsterbord"] },
