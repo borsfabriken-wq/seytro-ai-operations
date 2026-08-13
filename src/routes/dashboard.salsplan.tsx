@@ -208,7 +208,14 @@ function FloorPage() {
               meta={`${placed.reduce((s, b) => s + b.party, 0)} gäster, ${placed.length} bokningar`}
             />
             {placed.map((b) => (
-              <BookingRow key={b.id} b={b} active={selectedBooking === b.id} onClick={() => selectBooking(b.id)} />
+              <BookingRow
+                key={b.id}
+                b={b}
+                active={selectedBooking === b.id}
+                onClick={() => selectBooking(b.id)}
+                onDragStart={() => setDraggingId(b.id)}
+                onDragEnd={() => setDraggingId(null)}
+              />
             ))}
           </div>
         </div>
