@@ -67,12 +67,46 @@ function FloorPage() {
   );
   const visibleUnits = data.units.filter((u) => zone === "Alla" || u.zone === zone);
 
-  const filtered = bookings.filter(
-    (b) =>
-      b.name.toLowerCase().includes(query.toLowerCase()) ||
-      b.tags.some((t) => t.toLowerCase().includes(query.toLowerCase())) ||
-      b.table.toLowerCase().includes(query.toLowerCase()),
+  const allTags = useMemo(
+    () => Array.from(new Set(bookings.flatMap((b) => b.tags))).sort((a, b) => a.localeCompare(b, "sv")),
+    [bookings],
   );
+
+  const statusOrder: Record<Booking["status"], number> = {
+    anlänt: 0,
+    bekräftad: 1,
+    väntar: 2,
+    avbokad: 3,
+  };
+
+  const filtered = bookings
+    .filter((b) => {
+      const q = query.toLowerCase();
+      const matchesQuery =
+        b.name.toLowerCase().includes(q) ||
+        b.tags.some((t) => t.toLowerCase().includes(q)) ||
+        b.table.toLowerCase().includes(q);
+      const matchesStatus = statusFilter === "alla" || b.status === statusFilter;
+      const matchesTag = tagFilter === "alla" || b.tags.includes(tagFilter);
+      const matchesSitting = sittingFilter === "alla" || sittingOf(b.time) === sittingFilter;
+      return matchesQuery && matchesStatus && matchesTag && matchesSitting;
+    })
+    .sort((a, b) => {
+      if (sort === "namn") return a.name.localeCompare(b.name, "sv");
+      if (sort === "sallskap") return b.party - a.party;
+      if (sort === "status") return statusOrder[a.status] - statusOrder[b.status];
+      return a.time.localeCompare(b.time);
+    });
+
+  const activeFilterCount =
+    (statusFilter !== "alla" ? 1 : 0) + (tagFilter !== "alla" ? 1 : 0) + (sittingFilter !== "alla" ? 1 : 0);
+
+  const resetFilters = () => {
+    setStatusFilter("alla");
+    setTagFilter("alla");
+    setSittingFilter("alla");
+  };
+
   const unplaced = filtered.filter((b) => b.placed === false);
   const placed = filtered.filter((b) => b.placed !== false);
 
