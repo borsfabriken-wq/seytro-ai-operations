@@ -281,15 +281,39 @@ function MiniStat({
   value,
   suffix,
   hint,
+  scrollTo,
 }: {
   icon: typeof BedDouble;
   label: string;
   value: string;
   suffix: string;
   hint: string;
+  scrollTo?: string;
 }) {
+  const clickable = Boolean(scrollTo);
+  const handleClick = () => {
+    if (!scrollTo) return;
+    const el = document.getElementById(scrollTo);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const wrapperClasses = [
+    "rounded-2xl border border-border bg-card p-5 text-left transition-all",
+    clickable
+      ? "cursor-pointer hover:border-primary/40 hover:bg-primary/[0.02] hover:shadow-sm"
+      : "",
+  ].join(" ");
+
   return (
-    <div className="rounded-2xl border border-border bg-card p-5">
+    <button
+      type="button"
+      onClick={handleClick}
+      disabled={!clickable}
+      className={wrapperClasses}
+      aria-label={clickable ? `Gå till ${label.toLowerCase()}` : undefined}
+    >
       <div className="flex items-center gap-2 text-muted-foreground">
         <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-primary">
           <Icon className="h-4 w-4" />
@@ -301,6 +325,6 @@ function MiniStat({
         <span className="text-xs text-muted-foreground">{suffix}</span>
       </p>
       <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{hint}</p>
-    </div>
+    </button>
   );
 }
