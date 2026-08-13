@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useVenue } from "@/components/dashboard/DashboardShell";
+import { TodayOverview } from "@/components/dashboard/TodayOverview";
 import { statusStyles, type BookingStatus } from "@/lib/dashboard-data";
 
 export const Route = createFileRoute("/dashboard/")({
