@@ -357,3 +357,23 @@
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
 }
+
+/* Utskrift: bara PM-arket följer med till skrivaren (köksbeställning). */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #pm-print,
+  #pm-print * {
+    visibility: visible;
+  }
+  #pm-print {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    padding: 0;
+  }
+  [data-print-hide] {
+    display: none !important;
+  }
+}
