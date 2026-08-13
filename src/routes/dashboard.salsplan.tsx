@@ -30,8 +30,13 @@ export const Route = createFileRoute("/dashboard/salsplan")({
       { name: "robots", content: "noindex" },
     ],
   }),
+  validateSearch: (search: Record<string, unknown>) => ({
+    new: search["new"] === "1" || search["new"] === true ? true : undefined,
+    q: typeof search["q"] === "string" ? search["q"] : undefined,
+  }),
   component: FloorPage,
 });
+
 
 const serviceHours: Record<"lunch" | "middag", string[]> = {
   lunch: ["11:30", "12:00", "12:30", "13:00", "14:00"],
