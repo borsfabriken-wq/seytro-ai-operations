@@ -45,6 +45,10 @@ export type TableUnit = {
   guest?: string;
   until?: string;
   zone: string;
+  /** Position i procent på salsplanen (endast restaurang) */
+  x?: number;
+  y?: number;
+  shape?: "rund" | "fyrkant" | "avlang";
 };
 
 type VenueData = {
