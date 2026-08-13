@@ -145,8 +145,8 @@ export function coversPerService(setup: VenueSetup, minutesOpen: number) {
 }
 
 export function minutesBetween(from: string, to: string) {
-  const [fh, fm] = from.split(":").map(Number);
-  const [th, tm] = to.split(":").map(Number);
+  const [fh = 0, fm = 0] = from.split(":").map(Number);
+  const [th = 0, tm = 0] = to.split(":").map(Number);
   return Math.max(0, th * 60 + tm - (fh * 60 + fm));
 }
 
