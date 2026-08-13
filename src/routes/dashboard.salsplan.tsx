@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Check, Clock, Plus, Search, Users, X } from "lucide-react";
+import { ArrowUpDown, Check, Clock, Plus, Search, SlidersHorizontal, Users, X } from "lucide-react";
 import { useVenue } from "@/components/dashboard/DashboardShell";
 import { FloorPlan } from "@/components/dashboard/FloorPlan";
 import {
@@ -28,6 +28,16 @@ export const Route = createFileRoute("/dashboard/salsplan")({
 
 const services = ["17:00", "18:00", "19:00", "20:00", "21:00"];
 
+const sittings = ["Lunch", "Tidig kväll", "Sen kväll"] as const;
+
+/** Delar in en tid (HH:MM) i sittning. */
+function sittingOf(time: string) {
+  const hour = Number(time.slice(0, 2));
+  if (hour < 15) return "Lunch";
+  if (hour < 19) return "Tidig kväll";
+  return "Sen kväll";
+}
+
 function FloorPage() {
   const { data, venue } = useVenue();
   const [bookings, setBookings] = useState<Booking[]>(data.bookings);
@@ -41,6 +51,11 @@ function FloorPage() {
   const [toast, setToast] = useState<string | null>(null);
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [dropUnit, setDropUnit] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<"alla" | Booking["status"]>("alla");
+  const [tagFilter, setTagFilter] = useState<string>("alla");
+  const [sittingFilter, setSittingFilter] = useState<"alla" | string>("alla");
+  const [sort, setSort] = useState<"tid" | "namn" | "sallskap" | "status">("tid");
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => {
     setBookings(data.bookings);
@@ -62,12 +77,46 @@ function FloorPage() {
   );
   const visibleUnits = data.units.filter((u) => zone === "Alla" || u.zone === zone);
 
-  const filtered = bookings.filter(
-    (b) =>
-      b.name.toLowerCase().includes(query.toLowerCase()) ||
-      b.tags.some((t) => t.toLowerCase().includes(query.toLowerCase())) ||
-      b.table.toLowerCase().includes(query.toLowerCase()),
+  const allTags = useMemo(
+    () => Array.from(new Set(bookings.flatMap((b) => b.tags))).sort((a, b) => a.localeCompare(b, "sv")),
+    [bookings],
   );
+
+  const statusOrder: Record<Booking["status"], number> = {
+    anlänt: 0,
+    bekräftad: 1,
+    väntar: 2,
+    avbokad: 3,
+  };
+
+  const filtered = bookings
+    .filter((b) => {
+      const q = query.toLowerCase();
+      const matchesQuery =
+        b.name.toLowerCase().includes(q) ||
+        b.tags.some((t) => t.toLowerCase().includes(q)) ||
+        b.table.toLowerCase().includes(q);
+      const matchesStatus = statusFilter === "alla" || b.status === statusFilter;
+      const matchesTag = tagFilter === "alla" || b.tags.includes(tagFilter);
+      const matchesSitting = sittingFilter === "alla" || sittingOf(b.time) === sittingFilter;
+      return matchesQuery && matchesStatus && matchesTag && matchesSitting;
+    })
+    .sort((a, b) => {
+      if (sort === "namn") return a.name.localeCompare(b.name, "sv");
+      if (sort === "sallskap") return b.party - a.party;
+      if (sort === "status") return statusOrder[a.status] - statusOrder[b.status];
+      return a.time.localeCompare(b.time);
+    });
+
+  const activeFilterCount =
+    (statusFilter !== "alla" ? 1 : 0) + (tagFilter !== "alla" ? 1 : 0) + (sittingFilter !== "alla" ? 1 : 0);
+
+  const resetFilters = () => {
+    setStatusFilter("alla");
+    setTagFilter("alla");
+    setSittingFilter("alla");
+  };
+
   const unplaced = filtered.filter((b) => b.placed === false);
   const placed = filtered.filter((b) => b.placed !== false);
 
@@ -184,7 +233,80 @@ function FloorPage() {
                 <X className="h-4 w-4 text-muted-foreground" />
               </button>
             )}
+            <button
+              type="button"
+              onClick={() => setFiltersOpen((v) => !v)}
+              title="Filter och sortering"
+              className={`flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                filtersOpen || activeFilterCount > 0
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-border text-muted-foreground hover:text-forest"
+              }`}
+            >
+              <SlidersHorizontal className="h-3.5 w-3.5" />
+              {activeFilterCount > 0 ? activeFilterCount : "Filter"}
+            </button>
           </div>
+
+          {filtersOpen && (
+            <div className="space-y-3 border-b border-border bg-muted/30 px-4 py-3">
+              <FilterRow label="Status">
+                <Chip active={statusFilter === "alla"} onClick={() => setStatusFilter("alla")}>
+                  Alla
+                </Chip>
+                {(["väntar", "bekräftad", "anlänt", "avbokad"] as const).map((s) => (
+                  <Chip key={s} active={statusFilter === s} onClick={() => setStatusFilter(s)}>
+                    {s === "väntar" ? "Preliminär" : s}
+                  </Chip>
+                ))}
+              </FilterRow>
+
+              <FilterRow label="Sittning">
+                <Chip active={sittingFilter === "alla"} onClick={() => setSittingFilter("alla")}>
+                  Alla
+                </Chip>
+                {sittings.map((s) => (
+                  <Chip key={s} active={sittingFilter === s} onClick={() => setSittingFilter(s)}>
+                    {s}
+                  </Chip>
+                ))}
+              </FilterRow>
+
+              {allTags.length > 0 && (
+                <FilterRow label="Taggar">
+                  <Chip active={tagFilter === "alla"} onClick={() => setTagFilter("alla")}>
+                    Alla
+                  </Chip>
+                  {allTags.map((t) => (
+                    <Chip key={t} active={tagFilter === t} onClick={() => setTagFilter(t)}>
+                      {t}
+                    </Chip>
+                  ))}
+                </FilterRow>
+              )}
+
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5">
+                  <ArrowUpDown className="h-3.5 w-3.5 text-muted-foreground" />
+                  <select
+                    value={sort}
+                    onChange={(e) => setSort(e.target.value as typeof sort)}
+                    className="rounded-lg border border-border bg-background px-2 py-1 text-xs outline-none"
+                  >
+                    <option value="tid">Sortera: tid</option>
+                    <option value="namn">Sortera: namn</option>
+                    <option value="sallskap">Sortera: störst sällskap</option>
+                    <option value="status">Sortera: status</option>
+                  </select>
+                </div>
+                {activeFilterCount > 0 && (
+                  <button type="button" onClick={resetFilters} className="text-xs text-primary underline">
+                    Rensa filter
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
 
           <div className="flex-1 overflow-y-auto text-sm">
             <GroupHeader
@@ -578,5 +700,38 @@ function Pill({ icon, text }: { icon?: React.ReactNode; text: string }) {
       {icon}
       {text}
     </span>
+  );
+}
+
+function FilterRow({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <p className="eyebrow text-muted-foreground">{label}</p>
+      <div className="mt-1.5 flex flex-wrap gap-1.5">{children}</div>
+    </div>
+  );
+}
+
+function Chip({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`rounded-full border px-2.5 py-1 text-xs capitalize transition-colors ${
+        active
+          ? "border-primary bg-primary/10 text-primary"
+          : "border-border bg-background text-muted-foreground hover:text-forest"
+      }`}
+    >
+      {children}
+    </button>
   );
 }
