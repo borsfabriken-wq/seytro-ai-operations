@@ -11,15 +11,23 @@ import {
 } from "lucide-react";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
 import { dashboardData, type Venue } from "@/lib/dashboard-data";
+import { DateNav } from "@/components/dashboard/DateNav";
 
-const VenueContext = createContext<{ venue: Venue; setVenue: (v: Venue) => void }>({
+const VenueContext = createContext<{
+  venue: Venue;
+  setVenue: (v: Venue) => void;
+  date: Date;
+  setDate: (d: Date) => void;
+}>({
   venue: "restaurang",
   setVenue: () => {},
+  date: new Date(2026, 7, 13),
+  setDate: () => {},
 });
 
 export function useVenue() {
-  const { venue, setVenue } = useContext(VenueContext);
-  return { venue, setVenue, data: dashboardData[venue] };
+  const { venue, setVenue, date, setDate } = useContext(VenueContext);
+  return { venue, setVenue, date, setDate, data: dashboardData[venue] };
 }
 
 const nav = [
@@ -32,6 +40,7 @@ const nav = [
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [venue, setVenueState] = useState<Venue>("restaurang");
+  const [date, setDate] = useState<Date>(() => new Date(2026, 7, 13));
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -47,7 +56,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const data = dashboardData[venue];
 
   return (
-    <VenueContext.Provider value={{ venue, setVenue }}>
+    <VenueContext.Provider value={{ venue, setVenue, date, setDate }}>
       <div className="flex min-h-[100svh] bg-muted/40">
         <aside className="sticky top-0 hidden h-[100svh] w-60 shrink-0 flex-col border-r border-border bg-forest-deep px-4 py-5 text-primary-foreground lg:flex">
           <Link to="/" className="px-2">
@@ -104,9 +113,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 z-30 border-b border-border bg-card/90 px-4 py-3 backdrop-blur sm:px-6">
             <div className="flex items-center justify-between gap-4">
-              <div className="min-w-0">
-                <p className="eyebrow text-muted-foreground">Torsdag 13 augusti</p>
-                <p className="truncate text-base font-medium text-forest">{data.label}</p>
+              <div className="flex min-w-0 items-center gap-3">
+                <DateNav date={date} onChange={setDate} />
+                <p className="hidden truncate text-base font-medium text-forest lg:block">
+                  {data.label}
+                </p>
               </div>
               <div className="flex items-center gap-3">
                 <div className="hidden items-center gap-2 rounded-full border border-border bg-background px-3 py-1.5 md:flex">
