@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { ArrowRight, Building2, Hotel, UtensilsCrossed } from "lucide-react";
+import { ArrowRight, Building2, Hotel, Plus, Sparkles, UtensilsCrossed } from "lucide-react";
 
 import { accountPlans, writeAccountPlan, type AccountPlan } from "@/lib/account";
+import { readSetup, type VenueSetup } from "@/lib/onboarding";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
