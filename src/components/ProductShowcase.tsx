@@ -159,26 +159,15 @@ export function ProductShowcase() {
   return (
     <section
       ref={sectionRef}
-      className="site-container py-24"
+      className="site-container section-y"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-label="Våra produkter"
     >
-      <div className="grid gap-12 lg:grid-cols-[9rem_minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-10">
-        <div className="relative hidden lg:block">
-          <span
-            {...revealProps(
-              0,
-              "absolute -left-4 top-1/2 -translate-y-1/2 whitespace-nowrap text-xs uppercase tracking-[0.2em] text-muted-foreground",
-            )}
-          >
-            En plattform
-          </span>
-        </div>
-
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-16">
         <div>
-          <p {...revealProps(80, "text-xs uppercase tracking-[0.2em] text-muted-foreground")}>Våra produkter</p>
-          <p {...revealProps(160, "mt-4 font-mono text-sm text-muted-foreground")}>
+          <p {...revealProps(80, "eyebrow text-muted-foreground")}>En plattform — våra produkter</p>
+          <p {...revealProps(160, "mt-3 font-mono text-sm text-muted-foreground")}>
             {String(active + 1).padStart(2, "0")} — {String(products.length).padStart(2, "0")}
           </p>
 

@@ -144,10 +144,17 @@ function Index() {
 
       <section id="varfor" className="site-container section-y">
         <p className="eyebrow text-muted-foreground">Varför Seytro</p>
-        <h2 className="mt-6 max-w-2xl text-display">
-          Tre problem varje serviceverksamhet känner igen.
-        </h2>
-        <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-end lg:gap-16">
+          <h2 className="text-display">
+            Tre problem varje serviceverksamhet känner igen.
+          </h2>
+          <p className="text-body-lg text-muted-foreground lg:pb-2">
+            Samma flaskhalsar återkommer i varje restaurang och hotell — obesvarade
+            förfrågningar, manuell placering och gästdata utspridd i olika system.
+            Seytro lägger sig som ett AI-lager ovanpå det ni redan använder.
+          </p>
+        </div>
+        <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {reasons.map((r) => (
             <div
               key={r.num}
