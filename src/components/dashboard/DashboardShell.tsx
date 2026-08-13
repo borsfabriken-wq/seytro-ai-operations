@@ -3,6 +3,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   BarChart3,
   CalendarDays,
+  ClipboardList,
   Inbox,
   LayoutGrid,
   LogOut,
@@ -33,6 +34,7 @@ export function useVenue() {
 const nav = [
   { to: "/dashboard", label: "Översikt", icon: CalendarDays, exact: true },
   { to: "/dashboard/salsplan", label: "Salsplan", icon: LayoutGrid, exact: false },
+  { to: "/dashboard/pm", label: "PM & sällskap", icon: ClipboardList, exact: false },
   { to: "/dashboard/gaster", label: "Gästregister", icon: Users, exact: false },
   { to: "/dashboard/inkorg", label: "Inkorg", icon: Inbox, exact: false },
   { to: "/dashboard/analys", label: "Analys", icon: BarChart3, exact: false },

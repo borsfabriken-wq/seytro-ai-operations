@@ -28,6 +28,7 @@ import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as DashboardAnalysRouteImport } from './routes/dashboard.analys'
 import { Route as DashboardGasterRouteImport } from './routes/dashboard.gaster'
 import { Route as DashboardInkorgRouteImport } from './routes/dashboard.inkorg'
+import { Route as DashboardPmRouteImport } from './routes/dashboard.pm'
 import { Route as DashboardSalsplanRouteImport } from './routes/dashboard.salsplan'
 import { Route as ForetagKarriarRouteImport } from './routes/foretag.karriar'
 import { Route as ForetagKontaktRouteImport } from './routes/foretag.kontakt'
@@ -140,6 +141,11 @@ const DashboardGasterRoute = DashboardGasterRouteImport.update({
 const DashboardInkorgRoute = DashboardInkorgRouteImport.update({
   id: '/inkorg',
   path: '/inkorg',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardPmRoute = DashboardPmRouteImport.update({
+  id: '/pm',
+  path: '/pm',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardSalsplanRoute = DashboardSalsplanRouteImport.update({
@@ -256,6 +262,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/analys': typeof DashboardAnalysRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/pm': typeof DashboardPmRoute
   '/dashboard/salsplan': typeof DashboardSalsplanRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
@@ -294,6 +301,7 @@ export interface FileRoutesByTo {
   '/dashboard/analys': typeof DashboardAnalysRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/pm': typeof DashboardPmRoute
   '/dashboard/salsplan': typeof DashboardSalsplanRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
@@ -334,6 +342,7 @@ export interface FileRoutesById {
   '/dashboard/analys': typeof DashboardAnalysRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/pm': typeof DashboardPmRoute
   '/dashboard/salsplan': typeof DashboardSalsplanRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
@@ -375,6 +384,7 @@ export interface FileRouteTypes {
     | '/dashboard/analys'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
+    | '/dashboard/pm'
     | '/dashboard/salsplan'
     | '/foretag/karriar'
     | '/foretag/kontakt'
@@ -413,6 +423,7 @@ export interface FileRouteTypes {
     | '/dashboard/analys'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
+    | '/dashboard/pm'
     | '/dashboard/salsplan'
     | '/foretag/karriar'
     | '/foretag/kontakt'
@@ -452,6 +463,7 @@ export interface FileRouteTypes {
     | '/dashboard/analys'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
+    | '/dashboard/pm'
     | '/dashboard/salsplan'
     | '/foretag/karriar'
     | '/foretag/kontakt'
@@ -643,6 +655,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardInkorgRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/pm': {
+      id: '/dashboard/pm'
+      path: '/pm'
+      fullPath: '/dashboard/pm'
+      preLoaderRoute: typeof DashboardPmRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/salsplan': {
       id: '/dashboard/salsplan'
       path: '/salsplan'
@@ -776,6 +795,7 @@ interface DashboardRouteChildren {
   DashboardAnalysRoute: typeof DashboardAnalysRoute
   DashboardGasterRoute: typeof DashboardGasterRoute
   DashboardInkorgRoute: typeof DashboardInkorgRoute
+  DashboardPmRoute: typeof DashboardPmRoute
   DashboardSalsplanRoute: typeof DashboardSalsplanRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
 }
@@ -784,6 +804,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardAnalysRoute: DashboardAnalysRoute,
   DashboardGasterRoute: DashboardGasterRoute,
   DashboardInkorgRoute: DashboardInkorgRoute,
+  DashboardPmRoute: DashboardPmRoute,
   DashboardSalsplanRoute: DashboardSalsplanRoute,
   DashboardIndexRoute: DashboardIndexRoute,
 }
