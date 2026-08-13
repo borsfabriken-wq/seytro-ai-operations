@@ -201,7 +201,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-30 border-b border-border bg-dashboard-header">
+          <header className="sticky top-0 z-30 border-b border-dashboard-header-edge bg-dashboard-header">
             <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6">
               <div className="hidden min-w-0 items-stretch divide-x divide-forest/10 overflow-hidden rounded-xl border border-white/60 bg-white/80 shadow-sm shadow-forest/5 sm:flex">
                 {stats.map((s) => (
