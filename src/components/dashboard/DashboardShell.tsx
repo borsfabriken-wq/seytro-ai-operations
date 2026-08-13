@@ -224,21 +224,34 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               <DateNav date={date} onChange={setDate} />
 
               <div className="flex items-center gap-3">
-                <div className="hidden items-center gap-2 rounded-full border border-dashboard-header-edge bg-background px-3 py-1.5 shadow-sm shadow-forest/5 md:flex">
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    navigate({
+                      to: "/dashboard/salsplan",
+                      search: query ? { q: query } : {},
+                    });
+                  }}
+                  className="hidden items-center gap-2 rounded-full border border-dashboard-header-edge bg-background px-3 py-1.5 shadow-sm shadow-forest/5 md:flex"
+                >
                   <Search className="h-3.5 w-3.5 text-muted-foreground" />
                   <input
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
                     placeholder="Sök gäst eller bokning"
                     className="w-36 bg-transparent text-sm outline-none placeholder:text-muted-foreground xl:w-44"
                   />
-                </div>
+                </form>
                 <button
                   type="button"
+                  onClick={() => navigate({ to: "/dashboard/salsplan", search: { new: true } })}
                   className="grid h-9 w-9 place-items-center rounded-full bg-primary text-primary-foreground shadow-sm shadow-forest/10 transition-opacity hover:opacity-90"
                   aria-label="Ny bokning"
                 >
                   <Plus className="h-4 w-4" />
                 </button>
               </div>
+
             </div>
 
             <div className="flex items-center justify-between gap-4 overflow-x-auto border-t border-forest/8 px-4 py-2.5 sm:px-6">
