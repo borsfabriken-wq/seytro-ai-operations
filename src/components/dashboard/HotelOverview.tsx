@@ -319,16 +319,17 @@ function MiniStat({
       aria-label={clickable ? `Gå till ${label.toLowerCase()}` : undefined}
     >
       <div className="flex items-center gap-2 text-muted-foreground">
-        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-primary">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
           <Icon className="h-4 w-4" />
         </span>
-        <p className="eyebrow">{label}</p>
+        <p className="eyebrow min-w-0 break-words">{label}</p>
       </div>
-      <p className="mt-3 flex items-baseline gap-2">
-        <span className="text-3xl font-medium text-forest">{value}</span>
+      <p className="mt-3 flex flex-wrap items-baseline gap-x-2">
+        <span className="text-2xl font-medium text-forest sm:text-3xl">{value}</span>
         <span className="text-xs text-muted-foreground">{suffix}</span>
       </p>
       <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{hint}</p>
+
     </button>
   );
 }
