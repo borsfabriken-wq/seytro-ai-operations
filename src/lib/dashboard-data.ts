@@ -88,7 +88,7 @@ type VenueData = {
 
 export const dashboardData: Record<Venue, VenueData> = {
   restaurang: {
-    label: "Ramblas Söder",
+    label: "Brasserie Astrid",
     unitWord: "Bord",
     kpis: [
       { label: "Täckningar idag", value: "182", delta: "+12%", hint: "mot förra torsdagen" },
