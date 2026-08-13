@@ -201,7 +201,7 @@ function Block({
 }: {
   title: string;
   amount: number;
-  note?: string;
+  note?: string | undefined;
   children: React.ReactNode;
 }) {
   return (
