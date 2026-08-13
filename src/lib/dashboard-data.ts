@@ -23,6 +23,8 @@ export type Booking = {
   company?: string;
   occasion?: string;
   consent?: boolean;
+  /** Kopplat PM (förbeställning med fasta menyer) */
+  pmId?: string;
 };
 
 /** Lunch- eller middagspass utifrån starttid. */
