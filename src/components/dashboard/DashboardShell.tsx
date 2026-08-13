@@ -101,8 +101,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     const next =
       stored === "restaurang" || stored === "hotell"
         ? (stored as Venue)
-        : allowed[0];
-    setVenueState(allowed.includes(next) ? next : allowed[0]);
+        : allowed[0]!;
+    setVenueState(allowed.includes(next) ? next : allowed[0]!);
   }, []);
 
   const setVenue = (v: Venue) => {
