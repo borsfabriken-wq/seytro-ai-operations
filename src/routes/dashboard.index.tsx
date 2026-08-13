@@ -19,12 +19,24 @@ export const Route = createFileRoute("/dashboard/")({
 });
 
 const days = ["Mån", "Tis", "Ons", "Tors", "Fre", "Lör", "Sön"];
-const dates = [10, 11, 12, 13, 14, 15, 16];
 const filters: (BookingStatus | "alla")[] = ["alla", "bekräftad", "väntar", "anlänt", "avbokad"];
 
+function buildMonth(month: Date) {
+  const first = new Date(month.getFullYear(), month.getMonth(), 1);
+  const lead = (first.getDay() + 6) % 7;
+  const total = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
+  const cells: (number | null)[] = Array.from({ length: lead }, () => null);
+  for (let d = 1; d <= total; d += 1) cells.push(d);
+  return cells;
+}
+
 function OverviewPage() {
-  const { data, venue } = useVenue();
-  const [selectedDay, setSelectedDay] = useState(3);
+  const { data, venue, date, setDate } = useVenue();
+  const [month, setMonth] = useState(() => new Date(date.getFullYear(), date.getMonth(), 1));
+  const selectedDay = (date.getDay() + 6) % 7;
+  const cells = buildMonth(month);
+  const shiftMonth = (delta: number) =>
+    setMonth(new Date(month.getFullYear(), month.getMonth() + delta, 1));
   const [filter, setFilter] = useState<BookingStatus | "alla">("alla");
   const [query, setQuery] = useState("");
 
