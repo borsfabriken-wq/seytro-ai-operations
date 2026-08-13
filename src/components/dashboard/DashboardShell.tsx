@@ -11,15 +11,23 @@ import {
 } from "lucide-react";
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
 import { dashboardData, type Venue } from "@/lib/dashboard-data";
+import { DateNav } from "@/components/dashboard/DateNav";
 
-const VenueContext = createContext<{ venue: Venue; setVenue: (v: Venue) => void }>({
+const VenueContext = createContext<{
+  venue: Venue;
+  setVenue: (v: Venue) => void;
+  date: Date;
+  setDate: (d: Date) => void;
+}>({
   venue: "restaurang",
   setVenue: () => {},
+  date: new Date(2026, 7, 13),
+  setDate: () => {},
 });
 
 export function useVenue() {
-  const { venue, setVenue } = useContext(VenueContext);
-  return { venue, setVenue, data: dashboardData[venue] };
+  const { venue, setVenue, date, setDate } = useContext(VenueContext);
+  return { venue, setVenue, date, setDate, data: dashboardData[venue] };
 }
 
 const nav = [
