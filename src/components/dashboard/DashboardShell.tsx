@@ -113,9 +113,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 z-30 border-b border-border bg-card/90 px-4 py-3 backdrop-blur sm:px-6">
             <div className="flex items-center justify-between gap-4">
-              <div className="min-w-0">
-                <p className="eyebrow text-muted-foreground">Torsdag 13 augusti</p>
-                <p className="truncate text-base font-medium text-forest">{data.label}</p>
+              <div className="flex min-w-0 items-center gap-3">
+                <DateNav date={date} onChange={setDate} />
+                <p className="hidden truncate text-base font-medium text-forest lg:block">
+                  {data.label}
+                </p>
               </div>
               <div className="flex items-center gap-3">
                 <div className="hidden items-center gap-2 rounded-full border border-border bg-background px-3 py-1.5 md:flex">
