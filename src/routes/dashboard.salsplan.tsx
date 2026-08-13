@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowUpDown, Check, Clock, Plus, Search, SlidersHorizontal, Users, X } from "lucide-react";
+import { ArrowUpDown, Check, Clock, FileText, Plus, Search, SlidersHorizontal, Users, X } from "lucide-react";
 import { useVenue } from "@/components/dashboard/DashboardShell";
 import { FloorPlan } from "@/components/dashboard/FloorPlan";
 import {
@@ -740,5 +740,80 @@ function Chip({
     >
       {children}
     </button>
+  );
+}
+
+/** Samlat kort över kommande PM-noteringar och stora sällskap. */
+function UpcomingPmCard({
+  bookings,
+  unitWord,
+  activeId,
+  onSelect,
+}: {
+  bookings: Booking[];
+  unitWord: string;
+  activeId: string | null;
+  onSelect: (id: string) => void;
+}) {
+  const items = useMemo(
+    () =>
+      bookings
+        .filter((b) => b.status !== "avbokad" && (b.party >= 8 || Boolean(b.note)))
+        .sort((a, b) => a.time.localeCompare(b.time)),
+    [bookings],
+  );
+
+  return (
+    <div className="rounded-2xl border border-border bg-card p-5">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <FileText className="h-4 w-4 text-primary" />
+          <h3 className="text-sm font-semibold text-forest">PM och stora sällskap</h3>
+        </div>
+        <span className="rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground">
+          {items.length}
+        </span>
+      </div>
+
+      {items.length === 0 ? (
+        <p className="mt-3 text-sm text-muted-foreground">
+          Inga PM eller stora sällskap inbokade för dagen.
+        </p>
+      ) : (
+        <ul className="mt-3 space-y-2">
+          {items.map((b) => (
+            <li key={b.id}>
+              <button
+                type="button"
+                onClick={() => onSelect(b.id)}
+                className={`w-full rounded-xl border p-3 text-left transition-colors ${
+                  activeId === b.id
+                    ? "border-primary bg-primary/5"
+                    : "border-border bg-background hover:border-primary/40"
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-sm font-medium text-forest">{b.name}</span>
+                  <span className="text-xs text-muted-foreground">{b.time}</span>
+                </div>
+                <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
+                  <span className="inline-flex items-center gap-1">
+                    <Users className="h-3.5 w-3.5" />
+                    {b.party} gäster
+                  </span>
+                  <span>{b.table ? `${unitWord} ${b.table}` : `Ej placerad`}</span>
+                  {b.party >= 8 && (
+                    <span className="rounded-full bg-primary/10 px-2 py-0.5 text-primary">
+                      Stort sällskap
+                    </span>
+                  )}
+                </div>
+                {b.note && <p className="mt-1.5 text-xs text-forest/80">PM: {b.note}</p>}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
