@@ -102,20 +102,30 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const stats = [
     {
       label: venue === "hotell" ? "ankomster" : "bokningar",
+      hint:
+        venue === "hotell"
+          ? "Ankommande gäster idag"
+          : "Antal bokade sällskap i valt pass",
       value: active.length,
       icon: CalendarDays,
     },
     {
-      label: venue === "hotell" ? "gäster" : "täckningar",
+      label: "gäster",
+      hint:
+        venue === "hotell"
+          ? "Totalt antal gäster som checkar in"
+          : "Totalt antal personer i valt pass",
       value: active.reduce((s, b) => s + b.party, 0),
       icon: UtensilsCrossed,
     },
     {
       label: "väntar",
+      hint: "Bokningar som inte är bekräftade än",
       value: active.filter((b) => b.status === "väntar").length,
       icon: Clock,
     },
   ];
+
 
   const serviceCounts = servicePeriods.map((p) => ({
     ...p,
