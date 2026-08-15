@@ -33,6 +33,7 @@ import { Route as DashboardEpostRouteImport } from './routes/dashboard.epost'
 import { Route as DashboardEskaleringarRouteImport } from './routes/dashboard.eskaleringar'
 import { Route as DashboardGasterRouteImport } from './routes/dashboard.gaster'
 import { Route as DashboardInkorgRouteImport } from './routes/dashboard.inkorg'
+import { Route as DashboardKonfigurationRouteImport } from './routes/dashboard.konfiguration'
 import { Route as DashboardListorRouteImport } from './routes/dashboard.listor'
 import { Route as DashboardOptimeringRouteImport } from './routes/dashboard.optimering'
 import { Route as DashboardPmRouteImport } from './routes/dashboard.pm'
@@ -176,6 +177,11 @@ const DashboardGasterRoute = DashboardGasterRouteImport.update({
 const DashboardInkorgRoute = DashboardInkorgRouteImport.update({
   id: '/inkorg',
   path: '/inkorg',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardKonfigurationRoute = DashboardKonfigurationRouteImport.update({
+  id: '/konfiguration',
+  path: '/konfiguration',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardListorRoute = DashboardListorRouteImport.update({
@@ -327,6 +333,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/konfiguration': typeof DashboardKonfigurationRoute
   '/dashboard/listor': typeof DashboardListorRoute
   '/dashboard/optimering': typeof DashboardOptimeringRoute
   '/dashboard/pm': typeof DashboardPmRoute
@@ -376,6 +383,7 @@ export interface FileRoutesByTo {
   '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/konfiguration': typeof DashboardKonfigurationRoute
   '/dashboard/listor': typeof DashboardListorRoute
   '/dashboard/optimering': typeof DashboardOptimeringRoute
   '/dashboard/pm': typeof DashboardPmRoute
@@ -427,6 +435,7 @@ export interface FileRoutesById {
   '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/konfiguration': typeof DashboardKonfigurationRoute
   '/dashboard/listor': typeof DashboardListorRoute
   '/dashboard/optimering': typeof DashboardOptimeringRoute
   '/dashboard/pm': typeof DashboardPmRoute
@@ -479,6 +488,7 @@ export interface FileRouteTypes {
     | '/dashboard/eskaleringar'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
+    | '/dashboard/konfiguration'
     | '/dashboard/listor'
     | '/dashboard/optimering'
     | '/dashboard/pm'
@@ -528,6 +538,7 @@ export interface FileRouteTypes {
     | '/dashboard/eskaleringar'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
+    | '/dashboard/konfiguration'
     | '/dashboard/listor'
     | '/dashboard/optimering'
     | '/dashboard/pm'
@@ -578,6 +589,7 @@ export interface FileRouteTypes {
     | '/dashboard/eskaleringar'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
+    | '/dashboard/konfiguration'
     | '/dashboard/listor'
     | '/dashboard/optimering'
     | '/dashboard/pm'
@@ -812,6 +824,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardInkorgRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/konfiguration': {
+      id: '/dashboard/konfiguration'
+      path: '/konfiguration'
+      fullPath: '/dashboard/konfiguration'
+      preLoaderRoute: typeof DashboardKonfigurationRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/listor': {
       id: '/dashboard/listor'
       path: '/listor'
@@ -990,6 +1009,7 @@ interface DashboardRouteChildren {
   DashboardEskaleringarRoute: typeof DashboardEskaleringarRoute
   DashboardGasterRoute: typeof DashboardGasterRoute
   DashboardInkorgRoute: typeof DashboardInkorgRoute
+  DashboardKonfigurationRoute: typeof DashboardKonfigurationRoute
   DashboardListorRoute: typeof DashboardListorRoute
   DashboardOptimeringRoute: typeof DashboardOptimeringRoute
   DashboardPmRoute: typeof DashboardPmRoute
@@ -1007,6 +1027,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardEskaleringarRoute: DashboardEskaleringarRoute,
   DashboardGasterRoute: DashboardGasterRoute,
   DashboardInkorgRoute: DashboardInkorgRoute,
+  DashboardKonfigurationRoute: DashboardKonfigurationRoute,
   DashboardListorRoute: DashboardListorRoute,
   DashboardOptimeringRoute: DashboardOptimeringRoute,
   DashboardPmRoute: DashboardPmRoute,
