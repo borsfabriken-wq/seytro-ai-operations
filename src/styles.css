@@ -66,46 +66,107 @@
 :root {
   --radius: 0.25rem;
   color-scheme: light;
-  /* Palette: FFFFFF · EDEEEB · CCC7BF · 31393C · 3E96F4 */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.315 0.011 220);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.315 0.011 220);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.315 0.011 220);
-  /* Signal blue primary */
-  --primary: oklch(0.655 0.155 251);
+
+  /* ============================================================
+   * SEYTRO BRANDSYSTEM
+   * Bas: #FFFFFF · #F4F6F8 · #CCC7BF · #31393C · #3E96F4
+   * ============================================================ */
+
+  /* --- Ytnivåer -------------------------------------------------- */
+  --surface-0: oklch(1 0 0);                 /* sidbakgrund */
+  --surface-1: oklch(0.972 0.004 240);       /* sektionsyta (is-grå) */
+  --surface-2: oklch(1 0 0);                 /* kort/panel */
+  --surface-3: oklch(1 0 0);                 /* upphöjd yta */
+  --surface-accent: oklch(0.962 0.022 250);  /* markerad yta */
+  --surface-inverse: oklch(0.275 0.008 220); /* mörk yta (sidomeny, footer) */
+
+  /* --- Text ------------------------------------------------------ */
+  --ink: oklch(0.335 0.008 220);
+  --ink-secondary: oklch(0.47 0.008 220);
+  --ink-muted: oklch(0.6 0.007 220);
+  --ink-subtle: oklch(0.72 0.006 220);
+
+  /* --- Accent ---------------------------------------------------- */
+  --accent-base: oklch(0.673 0.152 251);
+  --accent-strong: oklch(0.595 0.148 251);   /* hover/press */
+  --accent-tint: oklch(0.962 0.022 250);     /* ljus markering */
+  --accent-tint-strong: oklch(0.925 0.042 250);
+  --accent-edge: oklch(0.86 0.06 250);
+
+  /* --- Kanter ---------------------------------------------------- */
+  --border-hairline: oklch(0.935 0.004 240);
+  --border-subtle: oklch(0.9 0.005 240);
+  --border-strong: oklch(0.833 0.012 85);    /* sten */
+
+  /* --- Skuggor --------------------------------------------------- */
+  --shadow-hairline: 0 1px 1px oklch(0.335 0.008 220 / 4%);
+  --shadow-soft: 0 1px 2px oklch(0.335 0.008 220 / 5%), 0 4px 12px -6px oklch(0.335 0.008 220 / 8%);
+  --shadow-raised: 0 2px 4px oklch(0.335 0.008 220 / 6%), 0 12px 28px -12px oklch(0.335 0.008 220 / 14%);
+  --shadow-overlay: 0 8px 16px -8px oklch(0.335 0.008 220 / 12%), 0 32px 64px -24px oklch(0.335 0.008 220 / 22%);
+  --shadow-focus: 0 0 0 3px oklch(0.673 0.152 251 / 22%);
+
+  /* --- Status (dova, tonade) ------------------------------------- */
+  --status-free: oklch(0.968 0.022 160);
+  --status-free-fg: oklch(0.44 0.07 160);
+  --status-free-border: oklch(0.9 0.035 160);
+  --status-set: oklch(0.965 0.022 250);
+  --status-set-fg: oklch(0.46 0.09 250);
+  --status-set-border: oklch(0.9 0.04 250);
+  --status-busy: oklch(0.94 0.005 240);
+  --status-busy-fg: oklch(0.335 0.008 220);
+  --status-busy-border: oklch(0.865 0.006 240);
+  --status-clean: oklch(0.966 0.032 85);
+  --status-clean-fg: oklch(0.48 0.075 70);
+  --status-clean-border: oklch(0.9 0.05 85);
+  --status-wait: oklch(0.962 0.022 290);
+  --status-wait-fg: oklch(0.45 0.08 290);
+  --status-wait-border: oklch(0.9 0.032 290);
+  --status-alert: oklch(0.962 0.026 25);
+  --status-alert-fg: oklch(0.48 0.1 25);
+  --status-alert-border: oklch(0.9 0.042 25);
+  --status-done: oklch(0.966 0.003 240);
+  --status-done-fg: oklch(0.55 0.006 220);
+  --status-done-border: oklch(0.905 0.004 240);
+
+  /* --- shadcn-mappning ------------------------------------------- */
+  --background: var(--surface-0);
+  --foreground: var(--ink);
+  --card: var(--surface-2);
+  --card-foreground: var(--ink);
+  --popover: var(--surface-3);
+  --popover-foreground: var(--ink);
+  --primary: var(--accent-base);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.945 0.004 120);
-  --secondary-foreground: oklch(0.315 0.011 220);
-  --muted: oklch(0.945 0.004 120);
-  --muted-foreground: oklch(0.315 0.011 220 / 65%);
-  /* Warm stone accent surface */
-  --accent: oklch(0.915 0.008 90);
-  --accent-foreground: oklch(0.315 0.011 220);
-  --destructive: oklch(0.55 0.16 28);
+  --secondary: var(--surface-1);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface-1);
+  --muted-foreground: var(--ink-muted);
+  --accent: var(--accent-tint);
+  --accent-foreground: var(--ink);
+  --destructive: var(--status-alert-fg);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.885 0.007 88);
-  --input: oklch(0.885 0.007 88);
-  --ring: oklch(0.655 0.155 251);
-  /* Brand tones (namn behålls, toner följer paletten) */
-  --forest: oklch(0.315 0.011 220);
-  --forest-deep: oklch(0.255 0.01 220);
-  --forest-mid: oklch(0.655 0.155 251);
-  --sage: oklch(0.82 0.008 85);
-  --sage-soft: oklch(0.945 0.004 120);
-  --ivory: oklch(0.985 0.002 110);
-  --brass: oklch(0.62 0.02 85);
-  --brass-soft: oklch(0.945 0.006 88);
-  /* Supporting accents — blå/sten-familjen */
-  --tide: oklch(0.58 0.13 248);
-  --tide-soft: oklch(0.955 0.018 250);
-  --dashboard-header: oklch(0.975 0.005 250);
-  --dashboard-header-edge: oklch(0.925 0.008 250);
-  --ember: oklch(0.58 0.03 80);
-  --ember-soft: oklch(0.945 0.008 88);
-  --moss: oklch(0.45 0.04 235);
-  --moss-soft: oklch(0.95 0.008 240);
+  --border: var(--border-subtle);
+  --input: var(--border-subtle);
+  --ring: var(--accent-base);
+
+  /* --- Legacy-alias (mappade till brandsystemet) ------------------ */
+  --forest: var(--ink);
+  --forest-deep: var(--surface-inverse);
+  --forest-mid: var(--accent-base);
+  --sage: var(--border-strong);
+  --sage-soft: var(--surface-1);
+  --ivory: var(--surface-1);
+  --brass: var(--ink-secondary);
+  --brass-soft: var(--surface-1);
+  --tide: var(--accent-strong);
+  --tide-soft: var(--accent-tint);
+  --dashboard-header: var(--surface-1);
+  --dashboard-header-edge: var(--border-subtle);
+  --ember: var(--status-clean-fg);
+  --ember-soft: var(--status-clean);
+  --moss: var(--status-free-fg);
+  --moss-soft: var(--status-free);
+
 
   /* Premium hospitality type scale — fluid from mobile to large screens */
   --text-xs: 0.75rem;
