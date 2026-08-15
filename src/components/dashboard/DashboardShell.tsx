@@ -268,26 +268,37 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             {venue === "hotell" ? "Hotelldrift" : "Restaurangdrift"}
           </p>
 
-          <p className="eyebrow mt-8 px-3 text-primary-foreground/40">Drift</p>
-          <nav className="mt-2 flex flex-1 flex-col gap-0.5">
-            {nav.map((item) => {
-              const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
-                    active
-                      ? "bg-primary-foreground/12 text-primary-foreground"
-                      : "text-primary-foreground/65 hover:bg-primary-foreground/8 hover:text-primary-foreground"
-                  }`}
-                >
-                  <item.icon className="h-4 w-4" />
-                  {item.label}
-                </Link>
-              );
-            })}
+          <nav className="mt-6 flex flex-1 flex-col gap-0.5 overflow-y-auto pb-4">
+            {groups.map((group, gi) => (
+              <div key={group.title ?? `g${gi}`} className={group.title ? "mt-5" : ""}>
+                {group.title && (
+                  <p className="eyebrow px-3 pb-1 text-primary-foreground/40">{group.title}</p>
+                )}
+                <div className="flex flex-col gap-0.5">
+                  {group.items.map((item) => {
+                    const isActive = item.exact
+                      ? pathname === item.to
+                      : pathname.startsWith(item.to);
+                    return (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
+                          isActive
+                            ? "bg-primary-foreground/12 text-primary-foreground"
+                            : "text-primary-foreground/65 hover:bg-primary-foreground/8 hover:text-primary-foreground"
+                        }`}
+                      >
+                        <item.icon className="h-4 w-4 shrink-0" />
+                        {item.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </nav>
+
 
           {plan === "custom" && (
             <Link
