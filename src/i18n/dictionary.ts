@@ -22,6 +22,14 @@ export const en: Record<string, string> = {
  */
 export const patterns: Array<[RegExp, string]> = [
   // sentences
+  [/Bokningar med (Bord|Rum|bord|rum)sförslag/g, "Bookings with suggestions"],
+  [/^AI föreslår /g, "AI suggests "],
+  [/^idag (\d{2}:\d{2})/g, "today $1"],
+  [/(\d+) av (\d+)/g, "$1 of $2"],
+  [/gäster väntas idag/g, "guests expected today"],
+  [/besvarade av röstagenten idag\./g, "answered by the voice agent today."],
+  [/\binbokade idag\b/g, "booked in today"],
+  [/\brullande 7 dagar\b/g, "rolling 7 days"],
   [/har bara (\d+) platser för (\d+) gäster/g, "has only $1 seats for $2 guests"],
   [/överlappar med (\d+) min turtid\./g, "overlap with a $1 min turn time."],
   [/(\d+) ankomster på en timme/g, "$1 arrivals in one hour"],
