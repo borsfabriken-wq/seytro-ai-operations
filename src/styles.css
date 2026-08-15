@@ -188,12 +188,12 @@
   --leading-relaxed: 1.6;
   --leading-loose: 1.75;
 
-  /* Diagram: harmonisk skala i blå/sten-familjen */
-  --chart-1: oklch(0.673 0.152 251);
-  --chart-2: oklch(0.535 0.115 251);
-  --chart-3: oklch(0.775 0.085 250);
-  --chart-4: oklch(0.833 0.012 85);
-  --chart-5: oklch(0.42 0.02 230);
+  /* Diagram: terrakotta- och sandfamiljen */
+  --chart-1: oklch(0.575 0.135 40);
+  --chart-2: oklch(0.455 0.11 36);
+  --chart-3: oklch(0.735 0.085 45);
+  --chart-4: oklch(0.815 0.012 78);
+  --chart-5: oklch(0.38 0.012 60);
 
   /* Sidomeny: mörk kolgrå yta */
   --sidebar: var(--surface-inverse);
