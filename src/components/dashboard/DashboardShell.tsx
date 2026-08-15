@@ -1,5 +1,4 @@
-import {
-  Lightbulb, createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { toast } from "sonner";
 
@@ -10,6 +9,7 @@ import {
   ClipboardList,
   Clock,
   GanttChartSquare as GanttChart,
+  Lightbulb,
   Inbox,
   LayoutGrid,
   ListChecks,
