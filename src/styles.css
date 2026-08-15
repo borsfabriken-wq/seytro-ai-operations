@@ -399,7 +399,8 @@
 
 @utility eyebrow {
   font-size: var(--text-xs);
-  letter-spacing: 0.28em;
+  font-weight: 600;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   line-height: var(--leading-loose);
 }
@@ -409,7 +410,7 @@
   font-weight: 600;
   font-size: var(--text-6xl);
   line-height: var(--leading-tight);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
 }
 
 @utility text-display-lg {
@@ -417,7 +418,7 @@
   font-weight: 600;
   font-size: var(--text-5xl);
   line-height: var(--leading-tight);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.035em;
 }
 
 @utility text-display {
@@ -425,7 +426,7 @@
   font-weight: 600;
   font-size: var(--text-4xl);
   line-height: var(--leading-snug);
-  letter-spacing: -0.015em;
+  letter-spacing: -0.03em;
 }
 
 @utility text-heading {
@@ -433,7 +434,7 @@
   font-weight: 600;
   font-size: var(--text-3xl);
   line-height: var(--leading-normal);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.022em;
 }
 
 @utility text-subheading {
@@ -441,7 +442,7 @@
   font-weight: 600;
   font-size: var(--text-2xl);
   line-height: var(--leading-normal);
-  letter-spacing: -0.005em;
+  letter-spacing: -0.015em;
 }
 
 @utility text-body-lg {
