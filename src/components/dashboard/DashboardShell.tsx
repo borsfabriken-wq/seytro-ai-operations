@@ -143,6 +143,8 @@ function buildQuickDays(selected: Date) {
 }
 
 import { LiveFeed } from "@/components/dashboard/LiveFeed";
+import { CommandPalette, useCommandPalette } from "@/components/dashboard/CommandPalette";
+
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [venue, setVenueState] = useState<Venue>("restaurang");
@@ -151,6 +153,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [service, setService] = useState<ServicePeriod>("middag");
   const [query, setQuery] = useState("");
   const [setup, setSetup] = useState<VenueSetup | null>(null);
+  const { open: paletteOpen, setOpen: setPaletteOpen } = useCommandPalette();
+
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
@@ -251,7 +255,22 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       value={{ venue, setVenue, date, setDate, service, setService, setup }}
     >
       <div data-app-ui className="flex min-h-[100svh] bg-muted/40">
-        <aside className="sticky top-0 hidden h-[100svh] w-60 shrink-0 flex-col border-r border-border bg-forest-deep px-4 py-5 text-primary-foreground lg:flex">
+        <CommandPalette
+          open={paletteOpen}
+          onOpenChange={setPaletteOpen}
+          items={groups.flatMap((g) =>
+            g.items.map((i) => ({ ...i, group: g.title ?? "Översikt" })),
+          )}
+          actions={[
+            {
+              label: "Ny bokning",
+              icon: Plus,
+              run: () => navigate({ to: "/dashboard/salsplan", search: { new: true } }),
+            },
+            ...quickActions.map((a) => ({ label: a.label, icon: a.icon, run: a.run })),
+          ]}
+        />
+        <aside className="side-nav sticky top-0 hidden h-[100svh] w-60 shrink-0 flex-col border-r border-border bg-forest-deep px-4 py-5 text-primary-foreground lg:flex">
           <Link to="/" className="px-2">
             <img src={logoAsset.url} alt="Seytro" className="h-5 w-auto" />
           </Link>
@@ -265,7 +284,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                   onClick={() => setVenue(v)}
                   className={`rounded-full px-3 py-1.5 text-center text-sm transition-colors ${
                     venue === v
-                      ? "bg-primary-foreground text-forest-deep"
+                      ? "bg-primary-foreground text-forest-deep shadow-soft"
                       : "text-primary-foreground/65 hover:text-primary-foreground"
                   }`}
                 >
@@ -274,10 +293,13 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               ))}
             </div>
           )}
-          <p className="mt-4 px-3 text-sm text-primary-foreground/85">{data.label}</p>
-          <p className="px-3 text-xs text-primary-foreground/45">
-            {venue === "hotell" ? "Hotelldrift" : "Restaurangdrift"}
-          </p>
+          <div className="mt-4 rounded-xl border border-primary-foreground/10 bg-primary-foreground/[0.06] px-3 py-2.5">
+            <p className="truncate text-sm text-primary-foreground/90">{data.label}</p>
+            <p className="mt-0.5 flex items-center gap-1.5 text-xs text-primary-foreground/45">
+              <span className="dot bg-status-free-fg text-status-free-fg" />
+              {venue === "hotell" ? "Hotelldrift" : "Restaurangdrift"} · live
+            </p>
+          </div>
 
           <nav className="mt-6 flex flex-1 flex-col gap-0.5 overflow-y-auto pb-4">
             {groups.map((group, gi) => (
@@ -294,13 +316,16 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       <Link
                         key={item.to}
                         to={item.to}
-                        className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
+                        data-active={isActive}
+                        className={`side-link flex items-center gap-3 rounded-lg px-3 py-2 text-sm ${
                           isActive
                             ? "bg-primary-foreground/12 text-primary-foreground"
                             : "text-primary-foreground/65 hover:bg-primary-foreground/8 hover:text-primary-foreground"
                         }`}
                       >
-                        <item.icon className="h-4 w-4 shrink-0" />
+                        <item.icon
+                          className={`h-4 w-4 shrink-0 ${isActive ? "text-primary" : ""}`}
+                        />
                         {item.label}
                       </Link>
                     );
@@ -309,6 +334,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               </div>
             ))}
           </nav>
+
 
 
           {plan === "custom" && (
@@ -330,18 +356,20 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-30 w-full min-w-0 overflow-x-clip border-b border-dashboard-header-edge bg-dashboard-header">
+          <header className="glass-header sticky top-0 z-30 w-full min-w-0 overflow-x-clip border-b border-dashboard-header-edge">
             <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6">
-              <div className="hidden min-w-0 items-stretch divide-x divide-forest/10 overflow-hidden rounded-xl border border-dashboard-header-edge bg-background shadow-soft shadow-soft sm:flex">
+              <div className="hidden min-w-0 items-stretch divide-x divide-forest/10 overflow-hidden rounded-xl border border-border-hairline bg-background shadow-soft sm:flex">
                 {stats.map((s) => (
                   <span
                     key={s.label}
                     title={s.hint}
-                    className="flex items-center gap-2 px-3.5 py-1.5"
+                    className="flex items-center gap-2 px-3.5 py-1.5 transition-colors hover:bg-surface-1"
                   >
                     <s.icon className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                     <span className="leading-tight">
-                      <span className="block text-sm font-semibold text-forest">{s.value}</span>
+                      <span className="kpi-value block text-sm font-semibold text-forest">
+                        {s.value}
+                      </span>
                       <span className="block text-[11px] capitalize text-muted-foreground">
                         {s.label}
                       </span>
@@ -361,7 +389,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       search: query ? { q: query } : {},
                     });
                   }}
-                  className="hidden items-center gap-2 rounded-full border border-dashboard-header-edge bg-background px-3 py-1.5 shadow-soft shadow-soft md:flex"
+                  className="hidden items-center gap-2 rounded-full border border-border-hairline bg-background px-3 py-1.5 shadow-soft transition-shadow focus-within:shadow-raised md:flex"
                 >
                   <Search className="h-3.5 w-3.5 text-muted-foreground" />
                   <input
@@ -370,23 +398,40 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                     placeholder="Sök gäst eller bokning"
                     className="w-36 bg-transparent text-sm outline-none placeholder:text-muted-foreground xl:w-44"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setPaletteOpen(true)}
+                    className="kbd shrink-0"
+                    aria-label="Öppna kommandopalett"
+                  >
+                    ⌘K
+                  </button>
                 </form>
+                <button
+                  type="button"
+                  onClick={() => setPaletteOpen(true)}
+                  className="grid h-9 w-9 place-items-center rounded-full border border-border-hairline bg-background text-muted-foreground shadow-soft transition-colors hover:text-forest md:hidden"
+                  aria-label="Sök"
+                >
+                  <Search className="h-4 w-4" />
+                </button>
                 <LiveFeed venue={venue} />
                 <button
                   type="button"
                   onClick={() => navigate({ to: "/dashboard/salsplan", search: { new: true } })}
-                  className="grid h-9 w-9 place-items-center rounded-full bg-primary text-primary-foreground shadow-soft shadow-forest/10 transition-opacity hover:opacity-90"
+                  className="grid h-9 w-9 place-items-center rounded-full bg-primary text-primary-foreground shadow-raised transition-transform hover:-translate-y-px hover:bg-accent-strong"
                   aria-label="Ny bokning"
                 >
                   <Plus className="h-4 w-4" />
                 </button>
               </div>
 
+
             </div>
 
             <div className="flex items-center justify-between gap-4 overflow-x-auto border-t border-forest/8 px-4 py-2.5 sm:px-6">
               {venue === "restaurang" ? (
-                <div className="flex shrink-0 items-center gap-1 rounded-full border border-dashboard-header-edge bg-background p-1 shadow-soft shadow-soft">
+                <div className="flex shrink-0 items-center gap-1 rounded-full border border-border-hairline bg-background p-1 shadow-soft">
                   {serviceCounts.map((p) => (
                     <button
                       key={p.id}
@@ -395,9 +440,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       title={p.span}
                       className={`whitespace-nowrap rounded-full px-3.5 py-1 text-sm transition-colors ${
                         service === p.id
-                          ? "bg-primary/10 text-primary"
+                          ? "bg-accent-tint text-primary ring-1 ring-accent-edge"
                           : "text-muted-foreground hover:text-forest"
                       }`}
+
 
                     >
                       {p.label}
@@ -481,9 +527,13 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             </div>
 
           </header>
-          <main className="mx-auto w-full max-w-[112rem] flex-1 px-4 py-6 sm:px-6 sm:py-8 lg:px-9 lg:py-10">
+          <main
+            key={pathname}
+            className="mx-auto w-full max-w-[112rem] flex-1 px-4 py-6 duration-300 animate-in fade-in slide-in-from-bottom-1 sm:px-6 sm:py-8 lg:px-9 lg:py-10"
+          >
             {children}
           </main>
+
         </div>
       </div>
     </VenueContext.Provider>

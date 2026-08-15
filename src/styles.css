@@ -568,3 +568,120 @@
   letter-spacing: 0.14em;
   line-height: 1.4;
 }
+
+/* ============================================================
+ * INLOGGAT LÄGE — ytor, kanter, skuggor och tillstånd
+ * ============================================================ */
+
+/* Panel: standardyta för kort i dashboarden */
+@utility panel {
+  background-color: var(--surface-2);
+  border: 1px solid var(--border-hairline);
+  border-radius: 1rem;
+  box-shadow: var(--elev-soft);
+}
+
+/* Interaktivt kort: lyfts mjukt vid hover */
+@utility panel-interactive {
+  transition:
+    box-shadow 180ms cubic-bezier(0.2, 0, 0, 1),
+    transform 180ms cubic-bezier(0.2, 0, 0, 1),
+    border-color 180ms ease;
+}
+.panel-interactive:hover {
+  box-shadow: var(--elev-raised);
+  border-color: var(--border-subtle);
+  transform: translateY(-1px);
+}
+
+/* Diskret glasyta för sticky header */
+@utility glass-header {
+  background-color: color-mix(in oklab, var(--surface-1) 82%, transparent);
+  backdrop-filter: saturate(1.4) blur(14px);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+}
+
+/* Nyckeltal med accentunderstruken siffra */
+@utility kpi-value {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Statusprick */
+@utility dot {
+  display: inline-block;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 3px color-mix(in oklab, currentColor 16%, transparent);
+}
+
+/* Enhetlig tangentbordsfokus i hela inloggat läge */
+[data-app-ui] :is(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: var(--elev-focus);
+  border-radius: 0.5rem;
+}
+
+/* Sidomeny: mjuk djupgradient + aktiv markör */
+[data-app-ui] .side-nav {
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--surface-inverse) 100%, white 0%),
+    color-mix(in oklab, var(--surface-inverse) 92%, black 8%)
+  );
+}
+[data-app-ui] .side-link {
+  position: relative;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+[data-app-ui] .side-link[data-active="true"]::before {
+  content: "";
+  position: absolute;
+  left: -0.5rem;
+  top: 50%;
+  height: 1.15rem;
+  width: 2px;
+  transform: translateY(-50%);
+  border-radius: 9999px;
+  background: var(--accent-base);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--accent-base) 60%, transparent);
+}
+
+/* Diskreta rullningslister i arbetsytan */
+[data-app-ui] * {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--ink) 18%, transparent) transparent;
+}
+[data-app-ui] *::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+[data-app-ui] *::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--ink) 16%, transparent);
+  border-radius: 9999px;
+}
+[data-app-ui] *::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--ink) 26%, transparent);
+}
+[data-app-ui] *::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Tangentbordsgenväg-chip */
+@utility kbd {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.375rem;
+  background: var(--surface-1);
+  padding: 0.0625rem 0.3125rem;
+  font-size: var(--text-ui-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-muted);
+  line-height: 1.4;
+}
