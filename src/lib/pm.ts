@@ -49,7 +49,22 @@ export type PmDoc = {
   sections: PmSection[];
   invoice?: PmInvoice;
   allergies?: string;
+  /** Strukturerad kost/allergi per antal gäster — köket ser exakt hur många portioner som anpassas. */
+  diets?: PmDiet[];
 };
+
+/** En kostanpassning i sällskapet, t.ex. 2 × glutenfri. */
+export type PmDiet = {
+  id: string;
+  label: string;
+  count: number;
+  /** Fritext: hur rätten anpassas, t.ex. "byt smör mot olivolja". */
+  note?: string;
+  /** true = allergi (kritisk), false = kostval. */
+  critical?: boolean;
+};
+
+export const dietsCount = (d: PmDoc) => (d.diets ?? []).reduce((sum, x) => sum + x.count, 0);
 
 export const lineTotal = (l: PmLine) => (l.price ? l.price * l.qty : 0);
 export const sectionTotal = (s: PmSection) => s.lines.reduce((sum, l) => sum + lineTotal(l), 0);
