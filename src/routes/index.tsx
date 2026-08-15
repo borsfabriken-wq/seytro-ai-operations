@@ -168,7 +168,7 @@ function Index() {
       <LogoMarquee />
 
       <section id="varfor" className="site-container section-y">
-        <p className="eyebrow text-muted-foreground">Varför Seytro</p>
+        <p className="label-micro text-muted-foreground">Varför Seytro</p>
         <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-end lg:gap-16">
           <h2 className="text-display">
             Tre problem varje serviceverksamhet känner igen.
@@ -179,18 +179,14 @@ function Index() {
             Seytro lägger sig som ett AI-lager ovanpå det ni redan använder.
           </p>
         </div>
-        <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {reasons.map((r) => (
+        <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border bg-border lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)]">
+          {reasons.map((r, i) => (
             <div
               key={r.num}
-              className="border-t border-border pt-8"
+              className={`bg-card p-8 lg:p-10 ${i === 0 ? "lg:p-12" : ""}`}
             >
-              <span
-                className="text-sm tracking-[0.28em] text-muted-foreground"
-              >
-                {r.num}
-              </span>
-              <h3 className="mt-4 text-subheading">{r.title}</h3>
+              <span className="label-micro text-accent-strong">{r.num}</span>
+              <h3 className={`mt-5 ${i === 0 ? "text-heading" : "text-subheading"}`}>{r.title}</h3>
               <p className="mt-4 text-body text-muted-foreground">{r.body}</p>
             </div>
           ))}
@@ -209,8 +205,8 @@ function Index() {
             ["+21%", "återkommande gäster"],
           ].map(([kpi, label]) => (
             <div key={label}>
-              <p className="font-display text-4xl text-primary-foreground">{kpi}</p>
-              <p className="mt-2 text-sm text-primary-foreground/80">{label}</p>
+              <p className="font-display text-5xl tnum tracking-[-0.04em] text-primary-foreground">{kpi}</p>
+              <p className="mt-3 max-w-[16ch] text-sm text-primary-foreground/70">{label}</p>
             </div>
           ))}
         </div>
@@ -218,7 +214,7 @@ function Index() {
 
       <section id="pelare" className="bg-linear-to-b from-background to-secondary/50">
         <div className="site-container section-y">
-        <p className="eyebrow text-muted-foreground">Funktionerna</p>
+        <p className="label-micro text-muted-foreground">Funktionerna</p>
         <h2 className="mt-6 max-w-2xl text-display">
           Vad plattformen gör — och när den används.
         </h2>
@@ -230,9 +226,7 @@ function Index() {
           {pillars.map((p) => (
             <div key={p.num} className="grid gap-10 border-t border-border pt-12 lg:grid-cols-12">
               <div className="lg:col-span-4">
-                <span
-                  className="inline-block rounded-full bg-muted px-3 py-1 text-xs tracking-[0.28em] text-muted-foreground"
-                >
+                <span className="label-micro inline-block rounded-full bg-accent-tint px-3 py-1.5 text-accent-strong">
                   {p.num}
                 </span>
                 <h3 className="mt-4 text-heading">{p.title}</h3>
@@ -261,7 +255,7 @@ function Index() {
 
       <section className="bg-secondary">
         <div className="site-container py-24">
-          <p className="eyebrow text-muted-foreground">
+          <p className="label-micro text-muted-foreground">
             Så fungerar det
           </p>
           <h2 className="mt-6 max-w-3xl text-display">
@@ -270,7 +264,7 @@ function Index() {
           <div className="mt-14 grid gap-10 lg:grid-cols-3">
             {steps.map(([t, d], i) => (
               <div key={t} className="border-t border-border pt-8">
-                <span className="text-sm tracking-[0.28em] text-brass">
+                <span className="label-micro text-accent-strong">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-4 text-subheading">{t}</h3>
@@ -286,7 +280,7 @@ function Index() {
       </section>
 
       <section id="bransch" className="site-container section-y">
-        <p className="eyebrow text-muted-foreground">Djupdykning</p>
+        <p className="label-micro text-muted-foreground">Djupdykning</p>
         <h2 className="mt-6 max-w-2xl text-display">Vad driver du?</h2>
         <p className="mt-6 max-w-xl text-body text-muted-foreground">
           Samma plattform, olika vardag. Välj din ingång så visar vi hur systemet maxas för just din
@@ -351,7 +345,7 @@ function Index() {
       <section id="vision" className="bg-forest-deep text-primary-foreground">
         <div className="site-container grid items-center gap-16 section-y lg:grid-cols-2">
           <div>
-            <p className="eyebrow text-primary-foreground/60">Vision</p>
+            <p className="label-micro text-primary-foreground/55">Vision</p>
             <h2 className="mt-6 text-display text-primary-foreground">
               Framtidens värdskap är tyst, snabbt och personligt.
             </h2>
