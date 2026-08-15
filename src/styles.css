@@ -534,3 +534,37 @@
     display: none !important;
   }
 }
+
+/* Kompakt typografi i inloggat läge: samma typsnitt, tätare skala.
+   Ligger utanför @layer base så att den vinner över utility-klasserna. */
+[data-app-ui] .text-display-xl,
+[data-app-ui] .text-display-lg,
+[data-app-ui] .text-display {
+  font-size: 1.5rem;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+[data-app-ui] .text-heading {
+  font-size: 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+[data-app-ui] .text-subheading {
+  font-size: 1.0625rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+[data-app-ui] .text-body-lg {
+  font-size: var(--text-ui-lg);
+  line-height: 1.45;
+}
+[data-app-ui] .text-body {
+  font-size: var(--text-ui-base);
+  line-height: 1.5;
+}
+[data-app-ui] .eyebrow {
+  font-size: var(--text-ui-xs);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+}
