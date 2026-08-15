@@ -518,33 +518,41 @@ export function BookingDialog({
             )}
           </div>
 
-          {party >= 8 && (
-            <div className="rounded-xl border border-primary/30 bg-primary/5 p-3">
-              <p className="text-xs font-medium text-primary">
-                Sällskap på {party} gäster — skapa PM
-              </p>
-              <select
-                value=""
-                onChange={(e) => {
-                  const tpl = pmTemplates.find((t) => t.label === e.target.value);
-                  if (tpl) setPm(tpl.text);
-                }}
-                className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
-              >
-                <option value="">Välj mall…</option>
-                {pmTemplates.map((t) => (
-                  <option key={t.label}>{t.label}</option>
-                ))}
-              </select>
-              <textarea
-                value={pm}
-                onChange={(e) => setPm(e.target.value)}
-                rows={5}
-                placeholder="PM för sällskapet…"
-                className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
-              />
-            </div>
-          )}
+          {/* PM direkt i bokningen */}
+          <div className="rounded-xl border border-primary/30 bg-primary/5 p-3">
+            <button
+              type="button"
+              onClick={() => setPmOpen((v) => !v)}
+              className="flex w-full items-start justify-between gap-3 text-left"
+            >
+              <span className="min-w-0">
+                <span className="block text-xs font-medium text-primary">
+                  Skapa PM direkt i bokningen
+                </span>
+                <span className="mt-0.5 block text-[11px] text-muted-foreground">
+                  {party >= 8
+                    ? `Sällskap på ${party} gäster — PM rekommenderas`
+                    : "Fast meny, dryckespaket och speciella artiklar"}
+                </span>
+              </span>
+              <span className="shrink-0 text-[11px] text-muted-foreground">
+                {pmOpen ? "Dölj" : "Öppna"}
+              </span>
+            </button>
+
+            {pmOpen && (
+              <div className="mt-3 rounded-xl border border-border bg-card p-3">
+                <PmComposer
+                  compact
+                  party={party}
+                  templates={templates}
+                  value={pmChoice}
+                  onChange={setPmChoice}
+                />
+              </div>
+            )}
+          </div>
+
 
           <label className="flex items-start gap-2 text-xs text-muted-foreground">
             <input
