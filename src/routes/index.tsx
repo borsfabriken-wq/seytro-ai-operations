@@ -110,32 +110,57 @@ function Index() {
 
 
         <div className="site-container relative flex min-h-[100svh] flex-col justify-end pb-16 pt-32 sm:pb-24 sm:pt-40">
-          <p className="fade-up mb-8 max-w-xl text-caption text-primary-foreground/70">
+          <p className="fade-up mb-8 label-micro text-primary-foreground/60">
             Bokningssystem och gästkommunikation i ett
           </p>
-          <h1 className="fade-up max-w-4xl text-display-xl text-primary-foreground">
-            Bokningar och placering som sköter sig självt.
-          </h1>
-          <p className="fade-up mt-8 max-w-xl text-body-lg text-primary-foreground/75">
-            Seytro är helhetslösningen för bokningar och gästkommunikation. Vi fångar upp
-            förfrågningar ni annars hade missat, svarar i telefon och mejl dygnet runt, placerar
-            varje gäst på rätt plats och tar bort det administrativa rutinarbetet — som ett AI-lager
-            ovanpå de system ni redan använder.
-          </p>
 
-          <div className="fade-up mt-10 flex flex-wrap items-center gap-4">
-            <Link
-              to="/demo"
-              className="rounded-full bg-primary-foreground px-8 py-4 text-sm font-medium text-forest-deep transition-opacity hover:opacity-90"
-            >
-              Boka demo
-            </Link>
-            <a
-              href="#varfor"
-              className="rounded-full border border-primary-foreground/40 px-8 py-4 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground/10"
-            >
-              Så fungerar plattformen
-            </a>
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.75fr)] lg:items-end">
+            <div>
+              <h1 className="fade-up max-w-4xl text-display-xl text-primary-foreground">
+                Bokningar och placering som sköter sig självt.
+              </h1>
+              <p className="fade-up mt-8 max-w-xl text-body-lg text-primary-foreground/75">
+                Ett AI-lager ovanpå de system ni redan har: varje samtal och mejl besvaras, varje
+                gäst placeras rätt och rutinadministrationen försvinner.
+              </p>
+
+              <div className="fade-up mt-10 flex flex-wrap items-center gap-4">
+                <Link
+                  to="/demo"
+                  className="rounded-full bg-primary-foreground px-8 py-4 text-sm font-semibold tracking-[-0.01em] text-forest-deep transition-opacity hover:opacity-90"
+                >
+                  Boka demo
+                </Link>
+                <a
+                  href="#varfor"
+                  className="rounded-full border border-primary-foreground/30 px-8 py-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-foreground/10"
+                >
+                  Så fungerar plattformen
+                </a>
+              </div>
+            </div>
+
+            <div className="fade-up hidden rounded-2xl border border-primary-foreground/15 bg-forest-deep/50 p-6 backdrop-blur-md lg:block">
+              <p className="label-micro text-primary-foreground/55">Igår, live i driften</p>
+              <div className="mt-5 space-y-4">
+                {[
+                  ["Besvarade samtal", "142", "0 missade"],
+                  ["Bokningar via AI", "68", "+14 mot snitt"],
+                  ["Placeringar optimerade", "31", "+22 täckningar"],
+                ].map(([label, value, note]) => (
+                  <div
+                    key={label}
+                    className="flex items-baseline justify-between gap-4 border-b border-primary-foreground/10 pb-3 last:border-0 last:pb-0"
+                  >
+                    <span className="text-sm text-primary-foreground/70">{label}</span>
+                    <span className="text-right">
+                      <span className="font-display text-2xl tnum text-primary-foreground">{value}</span>
+                      <span className="ml-3 text-xs text-primary-foreground/55">{note}</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
