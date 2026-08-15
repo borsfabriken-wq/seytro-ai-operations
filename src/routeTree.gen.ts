@@ -28,10 +28,19 @@ import { Route as TillganglighetRouteImport } from './routes/tillganglighet'
 import { Route as VoiceAgentRouteImport } from './routes/voice-agent'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as DashboardAnalysRouteImport } from './routes/dashboard.analys'
+import { Route as DashboardAssistentRouteImport } from './routes/dashboard.assistent'
+import { Route as DashboardEpostRouteImport } from './routes/dashboard.epost'
+import { Route as DashboardEskaleringarRouteImport } from './routes/dashboard.eskaleringar'
 import { Route as DashboardGasterRouteImport } from './routes/dashboard.gaster'
 import { Route as DashboardInkorgRouteImport } from './routes/dashboard.inkorg'
+import { Route as DashboardKonfigurationRouteImport } from './routes/dashboard.konfiguration'
+import { Route as DashboardListorRouteImport } from './routes/dashboard.listor'
+import { Route as DashboardOptimeringRouteImport } from './routes/dashboard.optimering'
 import { Route as DashboardPmRouteImport } from './routes/dashboard.pm'
 import { Route as DashboardSalsplanRouteImport } from './routes/dashboard.salsplan'
+import { Route as DashboardSamtalRouteImport } from './routes/dashboard.samtal'
+import { Route as DashboardTidslinjeRouteImport } from './routes/dashboard.tidslinje'
+import { Route as DashboardVantelistaRouteImport } from './routes/dashboard.vantelista'
 import { Route as ForetagKarriarRouteImport } from './routes/foretag.karriar'
 import { Route as ForetagKontaktRouteImport } from './routes/foretag.kontakt'
 import { Route as ForetagOmOssRouteImport } from './routes/foretag.om-oss'
@@ -145,6 +154,21 @@ const DashboardAnalysRoute = DashboardAnalysRouteImport.update({
   path: '/analys',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardAssistentRoute = DashboardAssistentRouteImport.update({
+  id: '/assistent',
+  path: '/assistent',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardEpostRoute = DashboardEpostRouteImport.update({
+  id: '/epost',
+  path: '/epost',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardEskaleringarRoute = DashboardEskaleringarRouteImport.update({
+  id: '/eskaleringar',
+  path: '/eskaleringar',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardGasterRoute = DashboardGasterRouteImport.update({
   id: '/gaster',
   path: '/gaster',
@@ -155,6 +179,21 @@ const DashboardInkorgRoute = DashboardInkorgRouteImport.update({
   path: '/inkorg',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardKonfigurationRoute = DashboardKonfigurationRouteImport.update({
+  id: '/konfiguration',
+  path: '/konfiguration',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardListorRoute = DashboardListorRouteImport.update({
+  id: '/listor',
+  path: '/listor',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardOptimeringRoute = DashboardOptimeringRouteImport.update({
+  id: '/optimering',
+  path: '/optimering',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardPmRoute = DashboardPmRouteImport.update({
   id: '/pm',
   path: '/pm',
@@ -163,6 +202,21 @@ const DashboardPmRoute = DashboardPmRouteImport.update({
 const DashboardSalsplanRoute = DashboardSalsplanRouteImport.update({
   id: '/salsplan',
   path: '/salsplan',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSamtalRoute = DashboardSamtalRouteImport.update({
+  id: '/samtal',
+  path: '/samtal',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardTidslinjeRoute = DashboardTidslinjeRouteImport.update({
+  id: '/tidslinje',
+  path: '/tidslinje',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardVantelistaRoute = DashboardVantelistaRouteImport.update({
+  id: '/vantelista',
+  path: '/vantelista',
   getParentRoute: () => DashboardRoute,
 } as any)
 const ForetagKarriarRoute = ForetagKarriarRouteImport.update({
@@ -274,10 +328,19 @@ export interface FileRoutesByFullPath {
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
   '/dashboard/analys': typeof DashboardAnalysRoute
+  '/dashboard/assistent': typeof DashboardAssistentRoute
+  '/dashboard/epost': typeof DashboardEpostRoute
+  '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/konfiguration': typeof DashboardKonfigurationRoute
+  '/dashboard/listor': typeof DashboardListorRoute
+  '/dashboard/optimering': typeof DashboardOptimeringRoute
   '/dashboard/pm': typeof DashboardPmRoute
   '/dashboard/salsplan': typeof DashboardSalsplanRoute
+  '/dashboard/samtal': typeof DashboardSamtalRoute
+  '/dashboard/tidslinje': typeof DashboardTidslinjeRoute
+  '/dashboard/vantelista': typeof DashboardVantelistaRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
   '/foretag/om-oss': typeof ForetagOmOssRoute
@@ -315,10 +378,19 @@ export interface FileRoutesByTo {
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
   '/dashboard/analys': typeof DashboardAnalysRoute
+  '/dashboard/assistent': typeof DashboardAssistentRoute
+  '/dashboard/epost': typeof DashboardEpostRoute
+  '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/konfiguration': typeof DashboardKonfigurationRoute
+  '/dashboard/listor': typeof DashboardListorRoute
+  '/dashboard/optimering': typeof DashboardOptimeringRoute
   '/dashboard/pm': typeof DashboardPmRoute
   '/dashboard/salsplan': typeof DashboardSalsplanRoute
+  '/dashboard/samtal': typeof DashboardSamtalRoute
+  '/dashboard/tidslinje': typeof DashboardTidslinjeRoute
+  '/dashboard/vantelista': typeof DashboardVantelistaRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
   '/foretag/om-oss': typeof ForetagOmOssRoute
@@ -358,10 +430,19 @@ export interface FileRoutesById {
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
   '/dashboard/analys': typeof DashboardAnalysRoute
+  '/dashboard/assistent': typeof DashboardAssistentRoute
+  '/dashboard/epost': typeof DashboardEpostRoute
+  '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/konfiguration': typeof DashboardKonfigurationRoute
+  '/dashboard/listor': typeof DashboardListorRoute
+  '/dashboard/optimering': typeof DashboardOptimeringRoute
   '/dashboard/pm': typeof DashboardPmRoute
   '/dashboard/salsplan': typeof DashboardSalsplanRoute
+  '/dashboard/samtal': typeof DashboardSamtalRoute
+  '/dashboard/tidslinje': typeof DashboardTidslinjeRoute
+  '/dashboard/vantelista': typeof DashboardVantelistaRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
   '/foretag/om-oss': typeof ForetagOmOssRoute
@@ -402,10 +483,19 @@ export interface FileRouteTypes {
     | '/tillganglighet'
     | '/voice-agent'
     | '/dashboard/analys'
+    | '/dashboard/assistent'
+    | '/dashboard/epost'
+    | '/dashboard/eskaleringar'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
+    | '/dashboard/konfiguration'
+    | '/dashboard/listor'
+    | '/dashboard/optimering'
     | '/dashboard/pm'
     | '/dashboard/salsplan'
+    | '/dashboard/samtal'
+    | '/dashboard/tidslinje'
+    | '/dashboard/vantelista'
     | '/foretag/karriar'
     | '/foretag/kontakt'
     | '/foretag/om-oss'
@@ -443,10 +533,19 @@ export interface FileRouteTypes {
     | '/tillganglighet'
     | '/voice-agent'
     | '/dashboard/analys'
+    | '/dashboard/assistent'
+    | '/dashboard/epost'
+    | '/dashboard/eskaleringar'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
+    | '/dashboard/konfiguration'
+    | '/dashboard/listor'
+    | '/dashboard/optimering'
     | '/dashboard/pm'
     | '/dashboard/salsplan'
+    | '/dashboard/samtal'
+    | '/dashboard/tidslinje'
+    | '/dashboard/vantelista'
     | '/foretag/karriar'
     | '/foretag/kontakt'
     | '/foretag/om-oss'
@@ -485,10 +584,19 @@ export interface FileRouteTypes {
     | '/tillganglighet'
     | '/voice-agent'
     | '/dashboard/analys'
+    | '/dashboard/assistent'
+    | '/dashboard/epost'
+    | '/dashboard/eskaleringar'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
+    | '/dashboard/konfiguration'
+    | '/dashboard/listor'
+    | '/dashboard/optimering'
     | '/dashboard/pm'
     | '/dashboard/salsplan'
+    | '/dashboard/samtal'
+    | '/dashboard/tidslinje'
+    | '/dashboard/vantelista'
     | '/foretag/karriar'
     | '/foretag/kontakt'
     | '/foretag/om-oss'
@@ -681,6 +789,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardAnalysRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/assistent': {
+      id: '/dashboard/assistent'
+      path: '/assistent'
+      fullPath: '/dashboard/assistent'
+      preLoaderRoute: typeof DashboardAssistentRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/epost': {
+      id: '/dashboard/epost'
+      path: '/epost'
+      fullPath: '/dashboard/epost'
+      preLoaderRoute: typeof DashboardEpostRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/eskaleringar': {
+      id: '/dashboard/eskaleringar'
+      path: '/eskaleringar'
+      fullPath: '/dashboard/eskaleringar'
+      preLoaderRoute: typeof DashboardEskaleringarRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/gaster': {
       id: '/dashboard/gaster'
       path: '/gaster'
@@ -695,6 +824,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardInkorgRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/konfiguration': {
+      id: '/dashboard/konfiguration'
+      path: '/konfiguration'
+      fullPath: '/dashboard/konfiguration'
+      preLoaderRoute: typeof DashboardKonfigurationRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/listor': {
+      id: '/dashboard/listor'
+      path: '/listor'
+      fullPath: '/dashboard/listor'
+      preLoaderRoute: typeof DashboardListorRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/optimering': {
+      id: '/dashboard/optimering'
+      path: '/optimering'
+      fullPath: '/dashboard/optimering'
+      preLoaderRoute: typeof DashboardOptimeringRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/pm': {
       id: '/dashboard/pm'
       path: '/pm'
@@ -707,6 +857,27 @@ declare module '@tanstack/react-router' {
       path: '/salsplan'
       fullPath: '/dashboard/salsplan'
       preLoaderRoute: typeof DashboardSalsplanRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/samtal': {
+      id: '/dashboard/samtal'
+      path: '/samtal'
+      fullPath: '/dashboard/samtal'
+      preLoaderRoute: typeof DashboardSamtalRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/tidslinje': {
+      id: '/dashboard/tidslinje'
+      path: '/tidslinje'
+      fullPath: '/dashboard/tidslinje'
+      preLoaderRoute: typeof DashboardTidslinjeRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/vantelista': {
+      id: '/dashboard/vantelista'
+      path: '/vantelista'
+      fullPath: '/dashboard/vantelista'
+      preLoaderRoute: typeof DashboardVantelistaRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/foretag/karriar': {
@@ -833,19 +1004,37 @@ declare module '@tanstack/react-router' {
 
 interface DashboardRouteChildren {
   DashboardAnalysRoute: typeof DashboardAnalysRoute
+  DashboardAssistentRoute: typeof DashboardAssistentRoute
+  DashboardEpostRoute: typeof DashboardEpostRoute
+  DashboardEskaleringarRoute: typeof DashboardEskaleringarRoute
   DashboardGasterRoute: typeof DashboardGasterRoute
   DashboardInkorgRoute: typeof DashboardInkorgRoute
+  DashboardKonfigurationRoute: typeof DashboardKonfigurationRoute
+  DashboardListorRoute: typeof DashboardListorRoute
+  DashboardOptimeringRoute: typeof DashboardOptimeringRoute
   DashboardPmRoute: typeof DashboardPmRoute
   DashboardSalsplanRoute: typeof DashboardSalsplanRoute
+  DashboardSamtalRoute: typeof DashboardSamtalRoute
+  DashboardTidslinjeRoute: typeof DashboardTidslinjeRoute
+  DashboardVantelistaRoute: typeof DashboardVantelistaRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardAnalysRoute: DashboardAnalysRoute,
+  DashboardAssistentRoute: DashboardAssistentRoute,
+  DashboardEpostRoute: DashboardEpostRoute,
+  DashboardEskaleringarRoute: DashboardEskaleringarRoute,
   DashboardGasterRoute: DashboardGasterRoute,
   DashboardInkorgRoute: DashboardInkorgRoute,
+  DashboardKonfigurationRoute: DashboardKonfigurationRoute,
+  DashboardListorRoute: DashboardListorRoute,
+  DashboardOptimeringRoute: DashboardOptimeringRoute,
   DashboardPmRoute: DashboardPmRoute,
   DashboardSalsplanRoute: DashboardSalsplanRoute,
+  DashboardSamtalRoute: DashboardSamtalRoute,
+  DashboardTidslinjeRoute: DashboardTidslinjeRoute,
+  DashboardVantelistaRoute: DashboardVantelistaRoute,
   DashboardIndexRoute: DashboardIndexRoute,
 }
 

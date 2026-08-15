@@ -3,21 +3,28 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 import {
+  AlertTriangle,
   BarChart3,
   CalendarDays,
   ClipboardList,
   Clock,
+  GanttChartSquare as GanttChart,
   Inbox,
   LayoutGrid,
+  ListChecks,
   LogOut,
+  PhoneCall,
   Plus,
   Search,
   Settings2,
+  Sparkle,
   UserPlus,
   Users,
   UtensilsCrossed,
+  Wand2,
   Zap,
 } from "lucide-react";
+
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
 import {
   dashboardData,
@@ -61,14 +68,54 @@ export function useVenue() {
   return { venue, setVenue, date, setDate, service, setService, data, serviceBookings, setup };
 }
 
-const nav = [
-  { to: "/dashboard", label: "Översikt", icon: CalendarDays, exact: true },
-  { to: "/dashboard/salsplan", label: "Salsplan", icon: LayoutGrid, exact: false },
-  { to: "/dashboard/pm", label: "PM & sällskap", icon: ClipboardList, exact: false },
-  { to: "/dashboard/gaster", label: "Gästregister", icon: Users, exact: false },
-  { to: "/dashboard/inkorg", label: "Inkorg", icon: Inbox, exact: false },
-  { to: "/dashboard/analys", label: "Analys", icon: BarChart3, exact: false },
-] as const;
+type NavItem = { to: string; label: string; icon: typeof CalendarDays; exact?: boolean };
+type NavGroup = { title?: string; items: NavItem[] };
+
+function navGroups(venue: Venue): NavGroup[] {
+  const isHotel = venue === "hotell";
+  return [
+    {
+      items: [
+        { to: "/dashboard", label: "Hem", icon: LayoutGrid, exact: true },
+        { to: "/dashboard/assistent", label: "Assistent", icon: Sparkle },
+      ],
+    },
+    {
+      title: "Kommunikation",
+      items: [
+        { to: "/dashboard/epost", label: "E-post", icon: Inbox },
+        { to: "/dashboard/samtal", label: "Samtal", icon: PhoneCall },
+        { to: "/dashboard/eskaleringar", label: "Eskaleringar", icon: AlertTriangle },
+      ],
+    },
+    {
+      title: "Drift",
+      items: isHotel
+        ? [
+            { to: "/dashboard/salsplan", label: "Rum", icon: LayoutGrid },
+            { to: "/dashboard/listor", label: "Listor", icon: ListChecks },
+            { to: "/dashboard/vantelista", label: "Väntelista", icon: Clock },
+          ]
+        : [
+            { to: "/dashboard/salsplan", label: "Bord", icon: LayoutGrid },
+            { to: "/dashboard/tidslinje", label: "Tidslinje", icon: GanttChart },
+            { to: "/dashboard/optimering", label: "Optimering", icon: Wand2 },
+            { to: "/dashboard/listor", label: "Listor", icon: ListChecks },
+            { to: "/dashboard/vantelista", label: "Väntelista", icon: Clock },
+          ],
+    },
+    {
+      title: isHotel ? "Hotell" : "Restaurang",
+      items: [
+        { to: "/dashboard/gaster", label: "Gäster", icon: Users },
+        ...(isHotel ? [] : [{ to: "/dashboard/pm", label: "PM & sällskap", icon: ClipboardList }]),
+        { to: "/dashboard/analys", label: "Analys", icon: BarChart3 },
+        { to: "/dashboard/konfiguration", label: "Konfiguration", icon: Settings2 },
+      ],
+    },
+  ];
+}
+
 
 function isSameDay(a: Date, b: Date) {
   return (
@@ -101,6 +148,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   const venues = venuesForPlan(plan, setup?.type);
   const canSwitch = venues.length > 1;
+  const groups = useMemo(() => navGroups(venue), [venue]);
+  const flatNav = useMemo(() => groups.flatMap((g) => g.items), [groups]);
+
 
   useEffect(() => {
     const p = readAccountPlan();
@@ -221,26 +271,37 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             {venue === "hotell" ? "Hotelldrift" : "Restaurangdrift"}
           </p>
 
-          <p className="eyebrow mt-8 px-3 text-primary-foreground/40">Drift</p>
-          <nav className="mt-2 flex flex-1 flex-col gap-0.5">
-            {nav.map((item) => {
-              const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
-                    active
-                      ? "bg-primary-foreground/12 text-primary-foreground"
-                      : "text-primary-foreground/65 hover:bg-primary-foreground/8 hover:text-primary-foreground"
-                  }`}
-                >
-                  <item.icon className="h-4 w-4" />
-                  {item.label}
-                </Link>
-              );
-            })}
+          <nav className="mt-6 flex flex-1 flex-col gap-0.5 overflow-y-auto pb-4">
+            {groups.map((group, gi) => (
+              <div key={group.title ?? `g${gi}`} className={group.title ? "mt-5" : ""}>
+                {group.title && (
+                  <p className="eyebrow px-3 pb-1 text-primary-foreground/40">{group.title}</p>
+                )}
+                <div className="flex flex-col gap-0.5">
+                  {group.items.map((item) => {
+                    const isActive = item.exact
+                      ? pathname === item.to
+                      : pathname.startsWith(item.to);
+                    return (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
+                          isActive
+                            ? "bg-primary-foreground/12 text-primary-foreground"
+                            : "text-primary-foreground/65 hover:bg-primary-foreground/8 hover:text-primary-foreground"
+                        }`}
+                      >
+                        <item.icon className="h-4 w-4 shrink-0" />
+                        {item.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </nav>
+
 
           {plan === "custom" && (
             <Link
@@ -393,7 +454,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 </div>
               )}
               <nav className="flex gap-1">
-                {nav.map((item) => {
+                {flatNav.map((item) => {
                   const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
                   return (
                     <Link
