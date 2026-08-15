@@ -431,7 +431,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
             <div className="flex items-center justify-between gap-4 overflow-x-auto border-t border-forest/8 px-4 py-2.5 sm:px-6">
               {venue === "restaurang" ? (
-                <div className="flex shrink-0 items-center gap-1 rounded-full border border-dashboard-header-edge bg-background p-1 shadow-soft shadow-soft">
+                <div className="flex shrink-0 items-center gap-1 rounded-full border border-border-hairline bg-background p-1 shadow-soft">
                   {serviceCounts.map((p) => (
                     <button
                       key={p.id}
@@ -440,9 +440,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       title={p.span}
                       className={`whitespace-nowrap rounded-full px-3.5 py-1 text-sm transition-colors ${
                         service === p.id
-                          ? "bg-primary/10 text-primary"
+                          ? "bg-accent-tint text-primary ring-1 ring-accent-edge"
                           : "text-muted-foreground hover:text-forest"
                       }`}
+
 
                     >
                       {p.label}
