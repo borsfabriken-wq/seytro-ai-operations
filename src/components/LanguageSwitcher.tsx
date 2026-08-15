@@ -7,7 +7,7 @@ export function LanguageSwitcher() {
   return (
     <div
       data-no-translate
-      className="fixed bottom-4 right-4 z-[60] flex items-center gap-0.5 rounded-full border border-border/70 bg-background/80 px-1 py-1 text-[11px] font-medium tracking-[0.12em] shadow-sm backdrop-blur-md"
+      className="fixed bottom-4 right-4 z-[60] flex items-center gap-0.5 rounded-full border border-border/70 bg-background/80 px-1 py-1 text-[11px] font-medium tracking-[0.12em] shadow-soft backdrop-blur-md"
     >
       {(["sv", "en"] as const).map((code) => (
         <button

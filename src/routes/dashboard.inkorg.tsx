@@ -79,7 +79,7 @@ function InboxPage() {
                   </span>
                   <span
                     className={`mt-2 inline-block rounded-full px-2 py-0.5 text-[11px] ${
-                      m.handled ? "bg-primary/10 text-primary" : "bg-amber-500/15 text-amber-700"
+                      m.handled ? "bg-status-set text-status-set-fg" : "bg-status-wait text-status-wait-fg"
                     }`}
                   >
                     {m.handled ? "Hanterat" : "Väntar"}

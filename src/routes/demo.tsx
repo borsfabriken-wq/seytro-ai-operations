@@ -202,7 +202,7 @@ function DemoPage() {
           </div>
 
           {/* Right — booking widget */}
-          <div className="rounded-3xl border border-border bg-card p-7 shadow-[0_18px_50px_-24px_color-mix(in_oklab,var(--forest)_35%,transparent)] sm:p-9">
+          <div className="rounded-3xl border border-border bg-card p-7 shadow-raised sm:p-9">
             <div className="flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-forest-deep text-sm font-medium tracking-wide text-primary-foreground">
                 CA

@@ -162,7 +162,7 @@ export function BookingDialog({
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-foreground/30 backdrop-blur-[2px]">
       <button type="button" aria-label="Stäng" className="flex-1" onClick={onClose} />
-      <aside className="flex h-full w-full max-w-md flex-col border-l border-border bg-card shadow-2xl sm:max-w-lg">
+      <aside className="flex h-full w-full max-w-md flex-col border-l border-border bg-card shadow-overlay sm:max-w-lg">
         {/* Header */}
         <div className="flex items-start justify-between gap-3 border-b border-border px-5 py-4">
           <div className="min-w-0">

@@ -88,7 +88,7 @@ function Toggle({
         }`}
       >
         <span
-          className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${
+          className={`absolute top-0.5 h-5 w-5 rounded-full bg-surface-0 shadow-soft transition-all ${
             checked ? "left-[22px]" : "left-0.5"
           }`}
         />
@@ -577,7 +577,7 @@ function OnboardingPage() {
                 ))}
               </dl>
               {setup.tables.length === 0 && (
-                <p className="mt-4 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-700">
+                <p className="mt-4 rounded-xl border border-status-clean-border bg-status-clean p-3 text-sm text-status-clean-fg">
                   Du har inga bord ännu — gå tillbaka till bordskartan så kan AI:n placera gäster.
                 </p>
               )}

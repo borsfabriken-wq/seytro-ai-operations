@@ -22,10 +22,10 @@ function greetingFor(h: number) {
 }
 
 const statusStyles: Record<string, { chip: string; label: string; dot: string }> = {
-  ledigt: { chip: "border-emerald-200 bg-emerald-50 text-emerald-800", label: "Städklart", dot: "bg-emerald-500" },
-  städas: { chip: "border-amber-200 bg-amber-50 text-amber-800", label: "Städas", dot: "bg-amber-500" },
-  upptaget: { chip: "border-rose-200 bg-rose-50 text-rose-800", label: "Upptaget", dot: "bg-rose-500" },
-  dukat: { chip: "border-primary/25 bg-primary/5 text-primary", label: "Ankomstklart", dot: "bg-primary" },
+  ledigt: { chip: "border-status-free-border bg-status-free text-status-free-fg", label: "Städklart", dot: "bg-status-free-fg" },
+  städas: { chip: "border-status-clean-border bg-status-clean text-status-clean-fg", label: "Städas", dot: "bg-status-clean-fg" },
+  upptaget: { chip: "border-status-busy-border bg-status-busy text-status-busy-fg", label: "Upptaget", dot: "bg-status-busy-fg" },
+  dukat: { chip: "border-status-set-border bg-status-set text-status-set-fg", label: "Ankomstklart", dot: "bg-primary" },
 };
 
 export function HotelOverview() {
@@ -305,7 +305,7 @@ function MiniStat({
   const wrapperClasses = [
     "rounded-2xl border border-border bg-card p-4 text-left transition-all sm:p-5",
     clickable
-      ? "cursor-pointer hover:border-primary/40 hover:bg-primary/[0.02] hover:shadow-sm"
+      ? "cursor-pointer hover:border-primary/40 hover:bg-primary/[0.02] hover:shadow-soft"
       : "",
   ].join(" ");
 

@@ -2,10 +2,10 @@ import { useState } from "react";
 import type { TableUnit } from "@/lib/dashboard-data";
 
 const fill: Record<TableUnit["status"], string> = {
-  ledigt: "border-border bg-card text-muted-foreground",
-  dukat: "border-primary/40 bg-primary/12 text-primary",
-  upptaget: "border-forest bg-forest text-primary-foreground",
-  städas: "border-amber-500/40 bg-amber-500/15 text-amber-700",
+  ledigt: "border-border-subtle bg-surface-2 text-ink-muted shadow-hairline",
+  dukat: "border-status-set-border bg-status-set text-status-set-fg",
+  upptaget: "border-surface-inverse bg-surface-inverse text-primary-foreground",
+  städas: "border-status-clean-border bg-status-clean text-status-clean-fg",
 };
 
 const shapeClass: Record<NonNullable<TableUnit["shape"]>, string> = {
