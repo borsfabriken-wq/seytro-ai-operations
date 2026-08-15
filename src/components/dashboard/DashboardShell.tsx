@@ -143,6 +143,8 @@ function buildQuickDays(selected: Date) {
 }
 
 import { LiveFeed } from "@/components/dashboard/LiveFeed";
+import { CommandPalette, useCommandPalette } from "@/components/dashboard/CommandPalette";
+
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [venue, setVenueState] = useState<Venue>("restaurang");
