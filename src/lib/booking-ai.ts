@@ -12,7 +12,7 @@ export type RiskAssessment = {
   level: RiskLevel;
   score: number;
   reasons: string[];
-  action?: string;
+  action?: string | undefined;
 };
 
 /** No-show-risk utifrån kanal, storlek, status och historik. */
