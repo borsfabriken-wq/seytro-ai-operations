@@ -242,10 +242,10 @@ export const statusStyles: Record<BookingStatus, string> = {
 };
 
 export const unitStatusStyles: Record<TableUnit["status"], string> = {
-  ledigt: "border-border bg-card text-muted-foreground",
-  dukat: "border-primary/30 bg-primary/8 text-primary",
-  upptaget: "border-forest/40 bg-forest text-primary-foreground",
-  städas: "border-amber-500/30 bg-amber-500/10 text-amber-700",
+  ledigt: "border-status-free-border bg-status-free text-status-free-fg",
+  dukat: "border-status-set-border bg-status-set text-status-set-fg",
+  upptaget: "border-status-busy-border bg-status-busy text-status-busy-fg",
+  städas: "border-status-clean-border bg-status-clean text-status-clean-fg",
 };
 
 /** Funktionerna från Seytro för hotell, kopplade till dashboardens vyer. */
