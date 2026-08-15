@@ -292,8 +292,14 @@
   --shadow-focus: var(--elev-focus);
 
 
-  --font-display: "Instrument Sans", "Inter Tight", system-ui, sans-serif;
-  --font-sans: "Inter Tight", system-ui, sans-serif;
+  --font-display: "Sora", system-ui, sans-serif;
+  --font-sans: "Manrope", system-ui, sans-serif;
+
+  /* Kompakt UI-skala för inloggat läge */
+  --text-ui-xs: 0.6875rem;
+  --text-ui-sm: 0.8125rem;
+  --text-ui-base: 0.9375rem;
+  --text-ui-lg: 1.0625rem;
 }
 
 @layer base {
