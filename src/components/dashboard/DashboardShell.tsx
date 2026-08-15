@@ -153,6 +153,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [service, setService] = useState<ServicePeriod>("middag");
   const [query, setQuery] = useState("");
   const [setup, setSetup] = useState<VenueSetup | null>(null);
+  const { open: paletteOpen, setOpen: setPaletteOpen } = useCommandPalette();
+
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
