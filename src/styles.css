@@ -68,72 +68,73 @@
   color-scheme: light;
 
   /* ============================================================
-   * SEYTRO BRANDSYSTEM — Bläck & Terrakotta
-   * Bas: #FBFAF8 · #F3F0EB · #E8E3DC · #1C1B1A · #C4573C
+   * SEYTRO BRANDSYSTEM — Sval sten & Skogsgrön
+   * Bas: #FAFBFC · #F1F3F5 · #E4E7EA · #1A1D1F · #1F4E3D
+   * 90 % neutralt · 7 % bläck · 3 % signalgrön
    * ============================================================ */
 
   /* --- Ytnivåer -------------------------------------------------- */
-  --surface-0: oklch(0.985 0.003 85);        /* sidbakgrund, varm off-white */
-  --surface-1: oklch(0.962 0.006 80);        /* sektionsyta, ljus sand */
-  --surface-2: oklch(0.995 0.002 85);        /* kort/panel */
+  --surface-0: oklch(0.985 0.003 250);       /* sidbakgrund, sval off-white */
+  --surface-1: oklch(0.963 0.005 250);       /* sektionsyta, ljus sten */
+  --surface-2: oklch(0.995 0.002 250);       /* kort/panel */
   --surface-3: oklch(1 0 0);                 /* upphöjd yta */
-  --surface-accent: oklch(0.945 0.022 45);   /* markerad yta, terrakottaton */
-  --surface-inverse: oklch(0.225 0.006 60);  /* mörk bläckyta (sidomeny, footer) */
+  --surface-accent: oklch(0.955 0.018 162);  /* markerad yta, grön ton */
+  --surface-inverse: oklch(0.235 0.008 240); /* mörk bläckyta (sidomeny, footer) */
 
   /* --- Text ------------------------------------------------------ */
-  --ink: oklch(0.235 0.005 60);
-  --ink-secondary: oklch(0.42 0.006 60);
-  --ink-muted: oklch(0.575 0.006 70);
-  --ink-subtle: oklch(0.705 0.006 75);
+  --ink: oklch(0.245 0.006 245);
+  --ink-secondary: oklch(0.425 0.007 245);
+  --ink-muted: oklch(0.578 0.008 245);
+  --ink-subtle: oklch(0.708 0.008 245);
 
-  /* --- Accent (terrakotta) --------------------------------------- */
-  --accent-base: oklch(0.575 0.135 40);
-  --accent-strong: oklch(0.505 0.125 38);    /* hover/press */
-  --accent-tint: oklch(0.955 0.018 45);      /* ljus markering */
-  --accent-tint-strong: oklch(0.915 0.038 44);
-  --accent-edge: oklch(0.845 0.058 42);
+  /* --- Accent (skogsgrön) ---------------------------------------- */
+  --accent-base: oklch(0.408 0.068 162);
+  --accent-strong: oklch(0.338 0.062 163);   /* hover/press */
+  --accent-tint: oklch(0.962 0.016 162);     /* ljus markering */
+  --accent-tint-strong: oklch(0.925 0.034 162);
+  --accent-edge: oklch(0.858 0.048 162);
 
   /* --- Kanter ---------------------------------------------------- */
-  --border-hairline: oklch(0.925 0.006 80);
-  --border-subtle: oklch(0.888 0.008 80);
-  --border-strong: oklch(0.815 0.012 78);    /* sand */
+  --border-hairline: oklch(0.928 0.004 245);
+  --border-subtle: oklch(0.892 0.006 245);
+  --border-strong: oklch(0.822 0.008 245);   /* sten */
 
   /* --- Skuggor --------------------------------------------------- */
-  --elev-hairline: 0 1px 1px oklch(0.235 0.005 60 / 5%);
-  --elev-soft: 0 1px 2px oklch(0.235 0.005 60 / 6%), 0 4px 12px -6px oklch(0.235 0.005 60 / 10%);
-  --elev-raised: 0 2px 4px oklch(0.235 0.005 60 / 7%), 0 12px 28px -12px oklch(0.235 0.005 60 / 16%);
-  --elev-overlay: 0 8px 16px -8px oklch(0.235 0.005 60 / 14%), 0 32px 64px -24px oklch(0.235 0.005 60 / 26%);
-  --elev-focus: 0 0 0 3px oklch(0.575 0.135 40 / 24%);
+  --elev-hairline: 0 1px 1px oklch(0.245 0.006 245 / 5%);
+  --elev-soft: 0 1px 2px oklch(0.245 0.006 245 / 6%), 0 4px 12px -6px oklch(0.245 0.006 245 / 10%);
+  --elev-raised: 0 2px 4px oklch(0.245 0.006 245 / 7%), 0 12px 28px -12px oklch(0.245 0.006 245 / 16%);
+  --elev-overlay: 0 8px 16px -8px oklch(0.245 0.006 245 / 14%), 0 32px 64px -24px oklch(0.245 0.006 245 / 26%);
+  --elev-focus: 0 0 0 3px oklch(0.408 0.068 162 / 26%);
 
-  /* --- Status (monokromt + terrakotta som enda signalfärg) --------- */
+  /* --- Status (monokromt + skogsgrön som enda signalfärg) --------- */
   /* Ledigt: ljus, nedtonad */
-  --status-free: oklch(0.975 0.004 85);
-  --status-free-fg: oklch(0.5 0.006 65);
-  --status-free-border: oklch(0.9 0.007 80);
-  /* Dukat/förberett: neutral sand */
-  --status-set: oklch(0.945 0.006 80);
-  --status-set-fg: oklch(0.42 0.006 60);
-  --status-set-border: oklch(0.878 0.008 78);
+  --status-free: oklch(0.977 0.003 250);
+  --status-free-fg: oklch(0.502 0.007 245);
+  --status-free-border: oklch(0.905 0.005 245);
+  /* Dukat/förberett: neutral sten */
+  --status-set: oklch(0.947 0.005 248);
+  --status-set-fg: oklch(0.425 0.007 245);
+  --status-set-border: oklch(0.882 0.006 245);
   /* Upptaget: mättad bläckyta */
-  --status-busy: oklch(0.285 0.006 60);
-  --status-busy-fg: oklch(0.975 0.003 85);
-  --status-busy-border: oklch(0.285 0.006 60);
+  --status-busy: oklch(0.29 0.008 242);
+  --status-busy-fg: oklch(0.977 0.003 250);
+  --status-busy-border: oklch(0.29 0.008 242);
   /* Städas: ljus grå, låg vikt */
-  --status-clean: oklch(0.962 0.005 82);
-  --status-clean-fg: oklch(0.545 0.006 70);
-  --status-clean-border: oklch(0.892 0.007 80);
-  /* Väntar / behöver åtgärd: terrakotta */
-  --status-wait: oklch(0.952 0.022 44);
-  --status-wait-fg: oklch(0.505 0.13 38);
-  --status-wait-border: oklch(0.862 0.05 42);
-  /* Varning / allergi: kraftigare terrakotta */
-  --status-alert: oklch(0.935 0.042 34);
-  --status-alert-fg: oklch(0.47 0.145 32);
-  --status-alert-border: oklch(0.8 0.09 34);
+  --status-clean: oklch(0.963 0.004 248);
+  --status-clean-fg: oklch(0.548 0.007 245);
+  --status-clean-border: oklch(0.895 0.005 245);
+  /* Väntar / behöver åtgärd: skogsgrön */
+  --status-wait: oklch(0.958 0.018 162);
+  --status-wait-fg: oklch(0.372 0.066 162);
+  --status-wait-border: oklch(0.872 0.042 162);
+  /* Varning / allergi: kraftigare grön signal */
+  --status-alert: oklch(0.938 0.036 158);
+  --status-alert-fg: oklch(0.318 0.068 160);
+  --status-alert-border: oklch(0.808 0.07 160);
   /* Klart / avbokat: neutral, nedtonad */
-  --status-done: oklch(0.955 0.004 80);
-  --status-done-fg: oklch(0.6 0.005 70);
-  --status-done-border: oklch(0.895 0.006 80);
+  --status-done: oklch(0.956 0.004 248);
+  --status-done-fg: oklch(0.602 0.006 245);
+  --status-done-border: oklch(0.898 0.005 245);
 
   /* --- shadcn-mappning ------------------------------------------- */
   --background: var(--surface-0);
