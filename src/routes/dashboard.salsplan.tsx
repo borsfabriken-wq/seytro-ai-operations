@@ -413,6 +413,11 @@ function FloorPage() {
               bookings={bookings}
               selected={selectedUnit}
               onSelect={handleUnit}
+              onOpenBooking={(b) => {
+                setSelectedBooking(b.id);
+                setSelectedUnit(null);
+                setPlacingId(null);
+              }}
               dragging={Boolean(draggingId)}
               onDropBooking={dropOnUnit}
             />
