@@ -1,63 +1,79 @@
-# AI-driven bokningsdashboard — nästa nivå
+# Bokningsdashboard — bästa av seytro.com plus nya AI-funktioner
 
-seytro.com/dashboard kräver inloggning (jag omdirigeras till /login), så jag kan inte läsa av den befintliga vyn själv. Du skickar skärmbilder — layout och detaljer i den befintliga produkten matchas in när bilderna kommer. Fram till dess bygger planen på det som redan finns här (översikt, salsplan, gäster, inkorg, PM, analys) plus de fyra AI-områden du valde.
+Skärmbilderna visar den riktiga produkten på seytro.com/dashboard. Planen tar in dess struktur och lägger till de fyra AI-områden du valde. Allt byggs i vårt nuvarande tema (signalblå accent, isgrå ytor, mjuka skuggor) — inte den mörkgröna/beige tonen i skärmbilderna.
 
-## 1. AI-bokningskö och förfrågningar
+## Ny navigationsstruktur
 
-Ny vy `Bokningskö` som samlar allt inkommande (telefon, mejl, webbformulär, walk-in) på ett ställe:
+Sidomenyn görs om till samma logik som seytro.com, med restaurangens namn överst och användarkort längst ned:
 
-- Varje ärende visas som ett kort: gäst, önskat datum/tid, sällskap, kanal, transkript eller mejltext.
-- AI föreslår färdigt svar och bordsförslag. Personalen godkänner, justerar eller avslår med ett klick.
-- Statusspår: `AI hanterar` → `Väntar på godkännande` → `Bekräftad` / `Avböjd`.
-- Autopilot-läge per kanal: full automatik, eller "kräver godkännande över X gäster".
-- Räknare i headern visar hur många ärenden AI löste själv idag.
+```text
+Brasserie Astrid · Bokningssystem
+  Hem
+  Assistent
+KOMMUNIKATION
+  E-post   Samtal   Eskaleringar
+DRIFT
+  Bord   Tidslinje   Optimering   Listor   Väntelista
+RESTAURANG
+  Gäster   Konfiguration
+  Inställningar   Logga ut
+  [Elias · Ägare]
+```
 
-## 2. Smart bordsoptimering
+Hotellkontot behåller sin nuvarande meny; hybridkonton växlar som idag.
 
-Byggs in i salsplanen:
+## Vyer som byggs eller görs om
 
-- "Optimera sittning"-knapp som föreslår omplaceringar för att få in fler bokningar; förslagen visas som spöklika förhandsbord innan de accepteras.
-- Turnover-prognos per bord (förväntad frigöringstid) och färgmarkering för bord som ligger efter schemat.
-- Överbokningsskydd som varnar innan en bokning skapas som spränger kapaciteten i ett pass.
-- Låsta bord respekteras alltid av optimeringen (finns redan i bokningsdialogen).
-- Kapacitetsmätare per pass: bokad andel, lediga stolar, längsta lucka.
+**Hem** — hälsning, lunch/middagstider på raden under, datumnavigering till höger. Fyra nyckeltal: Täckningar (andel av totala platser), Bokningar (kvar att anlända), Lediga bord, Kräver uppmärksamhet. Under dem två kort: Nästa ankomster (med genväg till tidslinjen) och Kräver uppmärksamhet. Längst ned en bred "Fråga assistenten"-rad.
 
-## 3. Väntelista och no-show-risk
+**Assistent** (ny) — chattvy mot Seytro AI med snabbfrågor: "Placera en drop-in", "Dagens läge", "Bokningar med risk", "Kommande ankomster". Svaren genereras från dagens bokningsdata och kan utföra åtgärder (skapa bokning, flytta bord, öppna gästkort).
 
-- Väntelista som egen panel: gäst, önskad tid, flexibilitet, kontaktsätt.
-- När en bokning avbokas matchar AI automatiskt mot väntelistan och skickar erbjudande med tidsgräns.
-- Riskpoäng per bokning (låg/medel/hög) baserat på historik, ledtid, sällskapsstorlek och kanal.
-- Automatiska påminnelser och bekräftelseförfrågningar för högriskbokningar, med resultat synligt på bokningsraden.
-- Drop-in-flöde kopplat till lediga bord i realtid.
+**E-post** (ersätter Inkorg) — trekolumn: inkorgslista med filter (Alla / Olästa / Från gäster), meddelandevy och svarsfält. Överst reglaget för AI-hantering: **Auto / Utkast / Av**. AI-hanterade trådar märks med "AI hanterad".
 
-## 4. Gästprofil och merförsäljning
+**Samtal** (ny) — lista över inkommande/utgående/missade samtal med AI-sammanfattning per rad. Detaljpanel till höger med sammanfattning, full transkription (AI-värd/gäst) och "Ring tillbaka".
 
-- Utökat gästregister: besökshistorik, snittnota, favoritbord, allergier, taggar (VIP, presspersonal, stamgäst), no-show-historik.
-- Gästkort som slide-over från alla vyer (bokning, salsplan, inkorg) — samma mönster som bokningspanelen.
-- AI-genererade merförsäljningsförslag inför besöket (vinpaket, tillägg, firande) som kan skickas som förbokningsmejl.
-- Kampanjmotor: segment (t.ex. "inte besökt på 90 dagar"), AI-skrivet utskick, resultatuppföljning.
-- Automatisk uppföljning efter besök med recensionsförfrågan.
+**Eskaleringar** (ny) — allt AI inte kan lösa: klagomål, återuppringning, specialönskemål. Filter Kräver åtgärd / Pågår / Löst / Alla, sökfält och "Logga något" för manuella ärenden.
 
-## Genomgående
+**Bord** (dagens Salsplan) — datumrad, täckningsräknare, servicetider, knappar Slå ihop bord / Lägg till bord / Ny bokning. Golvflikar (zoner), statusräknare Sittande / Reserverade / Lediga, reservationslista till vänster och zoombar salsplan med legend.
 
-- Samma designspråk som resten av appen: signalblå accent, isgrå ytor, mjuka skuggor, dova statusfärger, inga nya färger.
-- Allt AI-genererat märks tydligt och går alltid att ändra manuellt.
-- Fullt responsivt, samma marginaler och knapptillgänglighet på mobil och surfplatta.
+**Tidslinje** (ny) — Gantt-vy: bord som rader, tid som kolumner, bokningar som block. Filter för pass (Hela dagen / Lunch / Middag), zon, sökning, zoomreglage samt knapparna Väntelista och Ny bokning. Bokningspanelen öppnas som slide-over till höger, som idag.
+
+**Optimering** (ny) — tre kort: rummet som det står, efter föreslagna flyttar, extra täckningar som frigörs. Lista med konkreta flyttförslag som kan accepteras var för sig eller alla på en gång; låsta bord rörs aldrig. Tomt läge: "Rummet är redan optimalt". Knapp för att räkna om.
+
+**Listor** (ny) — tabellvy över bokningar med datum, tid, gäst + referens, sällskap, bord och status. Filter Denna dag / Kommande, statusfilter (Sittande, Bekräftad, Väntar, Klar, No-show, Avbokad), service- och zonfilter, sökning. Fot med "X bokningar · Y täckningar".
+
+**Väntelista** (ny) — gäster som väntar på tid, med flexibilitet och kontaktsätt. Vid avbokning matchar AI automatiskt och skickar erbjudande med tidsgräns; resultatet syns på raden.
+
+**Gäster** — utökat register: besökshistorik, snittnota, favoritbord, allergier, taggar (VIP, stamgäst, press), no-show-historik. Gästkort öppnas som slide-over från alla vyer. AI-förslag på merförsäljning inför besöket och kampanjsegment (t.ex. "inte besökt på 90 dagar") med AI-skrivet utskick.
+
+**Konfiguration** — samlar det som idag ligger i onboarding: öppettider, zoner, bordskarta, bokningsregler, PM-mallar och AI-inställningar per kanal.
+
+PM & sällskap behålls som egen vy och länkas från Konfiguration.
+
+## AI-funktionerna genomgående
+
+- **Bokningskö**: varje inkommande ärende (samtal, mejl, webb) får AI-förslag som personalen godkänner, justerar eller avslår. Autopilot per kanal, med tröskel för när människa måste titta.
+- **Bordsoptimering**: förslag visas som spökbord innan de accepteras; turnover-prognos per bord och överbokningsvarning.
+- **No-show-risk**: riskpoäng (låg/medel/hög) per bokning baserat på historik, ledtid, sällskapsstorlek och kanal, med automatiska bekräftelsepåminnelser för högrisk.
+- **Gästtillväxt**: merförsäljning, kampanjer och uppföljning efter besök.
+
+Allt AI-genererat märks tydligt och går alltid att ändra manuellt.
 
 ## Teknisk del
 
-- Datamodellen i `src/lib/dashboard-data.ts` utökas med: `RequestItem` (kanal, transkript, AI-förslag, status), `WaitlistEntry`, `noShowRisk` på `Booking`, samt utökad `Guest` med historik och taggar. Allt fortsatt demo-data i klienten — ingen backend i detta steg.
-- Ny logikmodul `src/lib/booking-ai.ts` för optimeringsförslag, riskpoäng och väntelistematchning (deterministiska regler mot demo-data).
-- Nya rutter: `src/routes/dashboard.bokningsko.tsx` och `src/routes/dashboard.vantelista.tsx`; nya komponenter `RequestCard.tsx`, `GuestSheet.tsx`, `WaitlistPanel.tsx`, `OptimizePanel.tsx` under `src/components/dashboard/`.
-- `FloorPlan.tsx` och `dashboard.salsplan.tsx` byggs ut med förslagsläge och turnover-indikator; `DashboardShell.tsx` får de nya flikarna och en AI-räknare.
+- `src/lib/dashboard-data.ts` utökas: `CallRecord` (riktning, sammanfattning, transkript), `EmailThread` (AI-status auto/utkast/av), `Escalation`, `WaitlistEntry`, `RequestItem`, `noShowRisk` på `Booking`, samt utökad `Guest`.
+- Ny modul `src/lib/booking-ai.ts` för optimeringsförslag, riskpoäng och väntelistematchning (deterministiska regler mot demo-data).
+- Nya rutter: `dashboard.assistent.tsx`, `dashboard.epost.tsx` (ersätter `dashboard.inkorg.tsx`), `dashboard.samtal.tsx`, `dashboard.eskaleringar.tsx`, `dashboard.tidslinje.tsx`, `dashboard.optimering.tsx`, `dashboard.listor.tsx`, `dashboard.vantelista.tsx`, `dashboard.konfiguration.tsx`.
+- Nya komponenter under `src/components/dashboard/`: `Timeline.tsx`, `CallPanel.tsx`, `EmailPane.tsx`, `OptimizePanel.tsx`, `WaitlistPanel.tsx`, `GuestSheet.tsx`, `AssistantChat.tsx`.
+- `DashboardShell.tsx` byggs om till grupperad sidomeny med sektionsrubriker och användarkort; nuvarande topprad med datum och statistik behålls.
+- Assistenten körs mot Lovable AI med dagens bokningsdata som kontext. All demo-data ligger kvar i klienten — ingen databas i detta steg.
 
 ## Ordning
 
-1. Datamodell och AI-logik
-2. Bokningskö
-3. Väntelista och riskpoäng
-4. Bordsoptimering i salsplanen
-5. Gästprofil och merförsäljning
-6. Responsiv genomgång
-
-När dina skärmbilder kommer justerar jag layout och terminologi så att det matchar den befintliga dashboarden innan implementationen börjar.
+1. Sidomeny och navigationsstruktur
+2. Hem, Listor, Tidslinje
+3. E-post, Samtal, Eskaleringar
+4. Optimering och väntelista med AI-logik
+5. Gäster och merförsäljning
+6. Assistenten
+7. Responsiv genomgång på mobil och surfplatta
