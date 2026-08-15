@@ -108,20 +108,20 @@ export function PmSheet({
       </div>
 
       {(doc.diets?.length ?? 0) > 0 && (
-        <div className="rounded-xl border border-amber-300/70 bg-amber-50 p-3">
-          <p className="text-xs font-medium text-amber-900">
+        <div className="rounded-xl border border-status-alert-border bg-status-alert p-3">
+          <p className="text-xs font-medium text-status-alert-fg">
             Kost och allergier · {dietsCount(doc)} av {doc.party} gäster
           </p>
           <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
             {doc.diets?.map((d) => (
-              <li key={d.id} className="flex items-start gap-2 text-xs text-amber-900">
-                <span className="mt-px shrink-0 rounded bg-amber-200/70 px-1.5 py-0.5 tabular-nums">
+              <li key={d.id} className="flex items-start gap-2 text-xs text-status-alert-fg">
+                <span className="mt-px shrink-0 rounded bg-status-alert-border/60 px-1.5 py-0.5 tabular-nums">
                   {d.count}×
                 </span>
                 <span className="min-w-0">
                   <span className="font-medium">{d.label}</span>
                   {d.critical && <span className="ml-1 uppercase">· allergi</span>}
-                  {d.note && <span className="block text-amber-800/80">{d.note}</span>}
+                  {d.note && <span className="block text-status-alert-fg/80">{d.note}</span>}
                 </span>
               </li>
             ))}

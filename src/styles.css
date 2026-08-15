@@ -68,65 +68,72 @@
   color-scheme: light;
 
   /* ============================================================
-   * SEYTRO BRANDSYSTEM
-   * Bas: #FFFFFF · #F4F6F8 · #CCC7BF · #31393C · #3E96F4
+   * SEYTRO BRANDSYSTEM — Bläck & Terrakotta
+   * Bas: #FBFAF8 · #F3F0EB · #E8E3DC · #1C1B1A · #C4573C
    * ============================================================ */
 
   /* --- Ytnivåer -------------------------------------------------- */
-  --surface-0: oklch(1 0 0);                 /* sidbakgrund */
-  --surface-1: oklch(0.972 0.004 240);       /* sektionsyta (is-grå) */
-  --surface-2: oklch(1 0 0);                 /* kort/panel */
+  --surface-0: oklch(0.985 0.003 85);        /* sidbakgrund, varm off-white */
+  --surface-1: oklch(0.962 0.006 80);        /* sektionsyta, ljus sand */
+  --surface-2: oklch(0.995 0.002 85);        /* kort/panel */
   --surface-3: oklch(1 0 0);                 /* upphöjd yta */
-  --surface-accent: oklch(0.962 0.022 250);  /* markerad yta */
-  --surface-inverse: oklch(0.275 0.008 220); /* mörk yta (sidomeny, footer) */
+  --surface-accent: oklch(0.945 0.022 45);   /* markerad yta, terrakottaton */
+  --surface-inverse: oklch(0.225 0.006 60);  /* mörk bläckyta (sidomeny, footer) */
 
   /* --- Text ------------------------------------------------------ */
-  --ink: oklch(0.335 0.008 220);
-  --ink-secondary: oklch(0.47 0.008 220);
-  --ink-muted: oklch(0.6 0.007 220);
-  --ink-subtle: oklch(0.72 0.006 220);
+  --ink: oklch(0.235 0.005 60);
+  --ink-secondary: oklch(0.42 0.006 60);
+  --ink-muted: oklch(0.575 0.006 70);
+  --ink-subtle: oklch(0.705 0.006 75);
 
-  /* --- Accent ---------------------------------------------------- */
-  --accent-base: oklch(0.673 0.152 251);
-  --accent-strong: oklch(0.595 0.148 251);   /* hover/press */
-  --accent-tint: oklch(0.962 0.022 250);     /* ljus markering */
-  --accent-tint-strong: oklch(0.925 0.042 250);
-  --accent-edge: oklch(0.86 0.06 250);
+  /* --- Accent (terrakotta) --------------------------------------- */
+  --accent-base: oklch(0.575 0.135 40);
+  --accent-strong: oklch(0.505 0.125 38);    /* hover/press */
+  --accent-tint: oklch(0.955 0.018 45);      /* ljus markering */
+  --accent-tint-strong: oklch(0.915 0.038 44);
+  --accent-edge: oklch(0.845 0.058 42);
 
   /* --- Kanter ---------------------------------------------------- */
-  --border-hairline: oklch(0.935 0.004 240);
-  --border-subtle: oklch(0.9 0.005 240);
-  --border-strong: oklch(0.833 0.012 85);    /* sten */
+  --border-hairline: oklch(0.925 0.006 80);
+  --border-subtle: oklch(0.888 0.008 80);
+  --border-strong: oklch(0.815 0.012 78);    /* sand */
 
   /* --- Skuggor --------------------------------------------------- */
-  --elev-hairline: 0 1px 1px oklch(0.335 0.008 220 / 4%);
-  --elev-soft: 0 1px 2px oklch(0.335 0.008 220 / 5%), 0 4px 12px -6px oklch(0.335 0.008 220 / 8%);
-  --elev-raised: 0 2px 4px oklch(0.335 0.008 220 / 6%), 0 12px 28px -12px oklch(0.335 0.008 220 / 14%);
-  --elev-overlay: 0 8px 16px -8px oklch(0.335 0.008 220 / 12%), 0 32px 64px -24px oklch(0.335 0.008 220 / 22%);
-  --elev-focus: 0 0 0 3px oklch(0.673 0.152 251 / 22%);
+  --elev-hairline: 0 1px 1px oklch(0.235 0.005 60 / 5%);
+  --elev-soft: 0 1px 2px oklch(0.235 0.005 60 / 6%), 0 4px 12px -6px oklch(0.235 0.005 60 / 10%);
+  --elev-raised: 0 2px 4px oklch(0.235 0.005 60 / 7%), 0 12px 28px -12px oklch(0.235 0.005 60 / 16%);
+  --elev-overlay: 0 8px 16px -8px oklch(0.235 0.005 60 / 14%), 0 32px 64px -24px oklch(0.235 0.005 60 / 26%);
+  --elev-focus: 0 0 0 3px oklch(0.575 0.135 40 / 24%);
 
-  /* --- Status (dova, tonade) ------------------------------------- */
-  --status-free: oklch(0.968 0.022 160);
-  --status-free-fg: oklch(0.44 0.07 160);
-  --status-free-border: oklch(0.9 0.035 160);
-  --status-set: oklch(0.965 0.022 250);
-  --status-set-fg: oklch(0.46 0.09 250);
-  --status-set-border: oklch(0.9 0.04 250);
-  --status-busy: oklch(0.94 0.005 240);
-  --status-busy-fg: oklch(0.335 0.008 220);
-  --status-busy-border: oklch(0.865 0.006 240);
-  --status-clean: oklch(0.966 0.032 85);
-  --status-clean-fg: oklch(0.48 0.075 70);
-  --status-clean-border: oklch(0.9 0.05 85);
-  --status-wait: oklch(0.962 0.022 290);
-  --status-wait-fg: oklch(0.45 0.08 290);
-  --status-wait-border: oklch(0.9 0.032 290);
-  --status-alert: oklch(0.962 0.026 25);
-  --status-alert-fg: oklch(0.48 0.1 25);
-  --status-alert-border: oklch(0.9 0.042 25);
-  --status-done: oklch(0.966 0.003 240);
-  --status-done-fg: oklch(0.55 0.006 220);
-  --status-done-border: oklch(0.905 0.004 240);
+  /* --- Status (monokromt + terrakotta som enda signalfärg) --------- */
+  /* Ledigt: ljus, nedtonad */
+  --status-free: oklch(0.975 0.004 85);
+  --status-free-fg: oklch(0.5 0.006 65);
+  --status-free-border: oklch(0.9 0.007 80);
+  /* Dukat/förberett: neutral sand */
+  --status-set: oklch(0.945 0.006 80);
+  --status-set-fg: oklch(0.42 0.006 60);
+  --status-set-border: oklch(0.878 0.008 78);
+  /* Upptaget: mättad bläckyta */
+  --status-busy: oklch(0.285 0.006 60);
+  --status-busy-fg: oklch(0.975 0.003 85);
+  --status-busy-border: oklch(0.285 0.006 60);
+  /* Städas: ljus grå, låg vikt */
+  --status-clean: oklch(0.962 0.005 82);
+  --status-clean-fg: oklch(0.545 0.006 70);
+  --status-clean-border: oklch(0.892 0.007 80);
+  /* Väntar / behöver åtgärd: terrakotta */
+  --status-wait: oklch(0.952 0.022 44);
+  --status-wait-fg: oklch(0.505 0.13 38);
+  --status-wait-border: oklch(0.862 0.05 42);
+  /* Varning / allergi: kraftigare terrakotta */
+  --status-alert: oklch(0.935 0.042 34);
+  --status-alert-fg: oklch(0.47 0.145 32);
+  --status-alert-border: oklch(0.8 0.09 34);
+  /* Klart / avbokat: neutral, nedtonad */
+  --status-done: oklch(0.955 0.004 80);
+  --status-done-fg: oklch(0.6 0.005 70);
+  --status-done-border: oklch(0.895 0.006 80);
 
   /* --- shadcn-mappning ------------------------------------------- */
   --background: var(--surface-0);
@@ -136,7 +143,7 @@
   --popover: var(--surface-3);
   --popover-foreground: var(--ink);
   --primary: var(--accent-base);
-  --primary-foreground: oklch(1 0 0);
+  --primary-foreground: oklch(0.995 0.002 85);
   --secondary: var(--surface-1);
   --secondary-foreground: var(--ink);
   --muted: var(--surface-1);
@@ -144,7 +151,7 @@
   --accent: var(--accent-tint);
   --accent-foreground: var(--ink);
   --destructive: var(--status-alert-fg);
-  --destructive-foreground: oklch(1 0 0);
+  --destructive-foreground: oklch(0.995 0.002 85);
   --border: var(--border-subtle);
   --input: var(--border-subtle);
   --ring: var(--accent-base);
@@ -162,9 +169,11 @@
   --tide-soft: var(--accent-tint);
   --dashboard-header: var(--surface-1);
   --dashboard-header-edge: var(--border-subtle);
-  --ember: var(--status-clean-fg);
-  --ember-soft: var(--status-clean);
-  --moss: var(--status-free-fg);
+  --dashboard-footer: oklch(0.955 0.006 80);
+  --dashboard-footer-edge: var(--border-subtle);
+  --ember: var(--status-alert-fg);
+  --ember-soft: var(--status-alert);
+  --moss: var(--ink-secondary);
   --moss-soft: var(--status-free);
 
 
@@ -186,12 +195,12 @@
   --leading-relaxed: 1.6;
   --leading-loose: 1.75;
 
-  /* Diagram: harmonisk skala i blå/sten-familjen */
-  --chart-1: oklch(0.673 0.152 251);
-  --chart-2: oklch(0.535 0.115 251);
-  --chart-3: oklch(0.775 0.085 250);
-  --chart-4: oklch(0.833 0.012 85);
-  --chart-5: oklch(0.42 0.02 230);
+  /* Diagram: terrakotta- och sandfamiljen */
+  --chart-1: oklch(0.575 0.135 40);
+  --chart-2: oklch(0.455 0.11 36);
+  --chart-3: oklch(0.735 0.085 45);
+  --chart-4: oklch(0.815 0.012 78);
+  --chart-5: oklch(0.38 0.012 60);
 
   /* Sidomeny: mörk kolgrå yta */
   --sidebar: var(--surface-inverse);
@@ -230,6 +239,8 @@
   --color-tide-soft: var(--tide-soft);
   --color-dashboard-header: var(--dashboard-header);
   --color-dashboard-header-edge: var(--dashboard-header-edge);
+  --color-dashboard-footer: var(--dashboard-footer);
+  --color-dashboard-footer-edge: var(--dashboard-footer-edge);
   --color-ember: var(--ember);
   --color-ember-soft: var(--ember-soft);
   --color-moss: var(--moss);
@@ -596,9 +607,23 @@
 
 /* Diskret glasyta för sticky header */
 @utility glass-header {
-  background-color: color-mix(in oklab, var(--surface-1) 82%, transparent);
+  background-color: color-mix(in oklab, var(--surface-1) 84%, transparent);
   backdrop-filter: saturate(1.4) blur(14px);
-  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 0 color-mix(in oklab, var(--ink) 4%, transparent);
+}
+
+/* Zon: toppyta ovanför arbetsytan */
+@utility zone-top {
+  background-color: var(--dashboard-header);
+  border-bottom: 1px solid var(--dashboard-header-edge);
+}
+
+/* Zon: åtgärdsrad i botten av paneler och dialoger */
+@utility zone-bottom {
+  background-color: var(--dashboard-footer);
+  border-top: 1px solid var(--dashboard-footer-edge);
+  box-shadow: 0 -1px 0 color-mix(in oklab, var(--ink) 3%, transparent);
 }
 
 /* Nyckeltal med accentunderstruken siffra */

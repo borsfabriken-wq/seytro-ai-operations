@@ -230,7 +230,7 @@ export function PmComposer({
                 <div className="flex items-center gap-3">
                   <span className="flex min-w-0 flex-1 items-center gap-1.5 truncate text-sm text-forest">
                     {d.critical ? (
-                      <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-amber-600" />
+                      <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-status-alert-fg" />
                     ) : (
                       <Leaf className="h-3.5 w-3.5 shrink-0 text-primary" />
                     )}
@@ -274,7 +274,7 @@ export function PmComposer({
           </p>
         )}
         {dietGuests > party && (
-          <p className="mt-1 text-[11px] text-amber-700">
+          <p className="mt-1 text-[11px] text-status-alert-fg">
             Fler anpassningar än gäster — kontrollera antalet.
           </p>
         )}

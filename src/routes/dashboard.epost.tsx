@@ -167,7 +167,7 @@ function EmailPage() {
               )}
             </div>
 
-            <div className="border-t border-border p-4">
+            <div className="zone-bottom p-4">
               {mode !== "av" && (
                 <button
                   type="button"
