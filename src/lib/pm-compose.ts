@@ -2,7 +2,7 @@
  * Enkel "byggare" för PM: välj en fast meny, ett fast dryckespaket och
  * eventuella speciella artiklar. Allt räknas per gäst och betalas på plats.
  */
-import { uid, type PmDoc, type PmSection } from "@/lib/pm";
+import { uid, type PmDiet, type PmDoc, type PmSection } from "@/lib/pm";
 import type { MenuTemplate } from "@/lib/pm-templates";
 
 export type PmExtra = { id: string; name: string; price: number; qty: number };
@@ -11,10 +11,34 @@ export type PmChoice = {
   menuId: string | null;
   drinkId: string | null;
   extras: PmExtra[];
+  /** Kost och allergier per antal gäster. */
+  diets: PmDiet[];
   note: string;
 };
 
-export const emptyChoice: PmChoice = { menuId: null, drinkId: null, extras: [], note: "" };
+export const emptyChoice: PmChoice = {
+  menuId: null,
+  drinkId: null,
+  extras: [],
+  diets: [],
+  note: "",
+};
+
+/** Vanliga kostval och allergier — klickas in med antal gäster. */
+export const dietOptions: { id: string; label: string; critical?: boolean }[] = [
+  { id: "vegetarisk", label: "Vegetarisk" },
+  { id: "vegansk", label: "Vegansk" },
+  { id: "glutenfri", label: "Glutenfri", critical: true },
+  { id: "laktosfri", label: "Laktosfri" },
+  { id: "notallergi", label: "Nötallergi", critical: true },
+  { id: "skaldjur", label: "Skaldjursallergi", critical: true },
+  { id: "fisk", label: "Ingen fisk" },
+  { id: "flaskfri", label: "Fläskfritt" },
+  { id: "halal", label: "Halal" },
+  { id: "gravid", label: "Gravid — inget rått" },
+];
+
+export const dietsGuests = (diets: PmDiet[]) => diets.reduce((sum, d) => sum + d.count, 0);
 
 /** Vanliga tillägg som personalen kan klicka in direkt. */
 export const specialArticles: { name: string; price: number }[] = [
@@ -51,8 +75,27 @@ export function buildPmDoc(
   const menu = findTpl(templates, choice.menuId);
   const drink = findTpl(templates, choice.drinkId);
 
+  const adapted = Math.min(party, dietsGuests(choice.diets));
+  const standard = Math.max(0, party - adapted);
+
+  const menuSplit = menu
+    ? adapted > 0
+      ? [
+          ...(standard > 0
+            ? [{ id: uid("sp"), qty: standard, name: menu.label, price: menu.price }]
+            : []),
+          {
+            id: uid("sp"),
+            qty: adapted,
+            name: `${menu.label} — anpassad kost`,
+            price: menu.price,
+          },
+        ]
+      : [{ id: uid("sp"), qty: party, name: menu.label, price: menu.price }]
+    : [];
+
   const split = [
-    ...(menu ? [{ id: uid("sp"), qty: party, name: menu.label, price: menu.price }] : []),
+    ...menuSplit,
     ...(drink ? [{ id: uid("sp"), qty: party, name: drink.label, price: drink.price }] : []),
   ];
 
@@ -63,6 +106,23 @@ export function buildPmDoc(
           id: uid("s"),
           lines: s.lines.map((l) => ({ ...l, id: uid() })),
         }))
+      : [];
+
+  const dietSection: PmSection[] =
+    choice.diets.length > 0
+      ? [
+          {
+            id: uid("s"),
+            title: "Anpassad kost och allergier",
+            note: "Ingår i menypriset — köket anpassar rätterna. Kontrollera vid servering.",
+            lines: choice.diets.map((d) => ({
+              id: uid(),
+              qty: d.count,
+              name: d.critical ? `${d.label} (allergi)` : d.label,
+              ...(d.note?.trim() ? { desc: d.note.trim() } : {}),
+            })),
+          },
+        ]
       : [];
 
   const extraSection: PmSection[] =
@@ -85,7 +145,8 @@ export function buildPmDoc(
     ...base,
     party,
     split,
-    sections: [...fromTemplate(menu), ...fromTemplate(drink), ...extraSection],
+    sections: [...fromTemplate(menu), ...fromTemplate(drink), ...dietSection, ...extraSection],
+    ...(choice.diets.length > 0 ? { diets: choice.diets } : {}),
     ...(choice.note.trim() ? { allergies: choice.note.trim() } : {}),
   };
 }
@@ -98,6 +159,7 @@ export function choiceSummary(choice: PmChoice, templates: MenuTemplate[], party
     menu ? `${party} × ${menu.label}` : null,
     drink ? `${party} × ${drink.label}` : null,
     ...choice.extras.map((e) => `${e.qty} × ${e.name}`),
+    ...choice.diets.map((d) => `${d.count} × ${d.label}`),
     choice.note.trim() ? `Önskemål: ${choice.note.trim()}` : null,
   ].filter(Boolean);
   return rows.length ? `PM: ${rows.join(" · ")}` : "";
