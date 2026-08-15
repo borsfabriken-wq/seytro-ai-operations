@@ -136,6 +136,8 @@ function buildQuickDays(selected: Date) {
   });
 }
 
+import { LiveFeed } from "@/components/dashboard/LiveFeed";
+
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [venue, setVenueState] = useState<Venue>("restaurang");
   const [plan, setPlan] = useState<AccountPlan>("hybrid");
@@ -363,6 +365,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                     className="w-36 bg-transparent text-sm outline-none placeholder:text-muted-foreground xl:w-44"
                   />
                 </form>
+                <LiveFeed venue={venue} />
                 <button
                   type="button"
                   onClick={() => navigate({ to: "/dashboard/salsplan", search: { new: true } })}

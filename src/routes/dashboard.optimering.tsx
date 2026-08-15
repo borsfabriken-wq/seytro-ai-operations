@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { publishLive } from "@/lib/live-events";
 import { CheckCircle2, Lock, RefreshCw, Wand2 } from "lucide-react";
 
 import { useVenue } from "@/components/dashboard/DashboardShell";
@@ -22,7 +23,7 @@ export const Route = createFileRoute("/dashboard/optimering")({
 });
 
 function OptimizePage() {
-  const { serviceBookings, data } = useVenue();
+  const { serviceBookings, data, venue } = useVenue();
   const [accepted, setAccepted] = useState<string[]>([]);
 
   const moves = useMemo(
@@ -96,6 +97,16 @@ function OptimizePage() {
               type="button"
               onClick={() => {
                 setAccepted(moves.map((m) => m.id));
+                for (const m of moves) {
+                  publishLive({
+                    kind: "flytt",
+                    venue,
+                    auto: true,
+                    title: "Placering flyttad",
+                    detail: `${m.guest} · bord ${m.from} → ${m.to} kl ${m.time}`,
+                    payload: { name: m.guest, unit: m.to },
+                  });
+                }
                 toast.success("Alla flyttar accepterade");
               }}
               className="rounded-full bg-primary px-4 py-1.5 text-sm text-primary-foreground"
@@ -122,6 +133,14 @@ function OptimizePage() {
                   type="button"
                   onClick={() => {
                     setAccepted((a) => [...a, m.id]);
+                    publishLive({
+                      kind: "flytt",
+                      venue,
+                      auto: true,
+                      title: "Placering flyttad",
+                      detail: `${m.guest} · bord ${m.from} → ${m.to} kl ${m.time}`,
+                      payload: { name: m.guest, unit: m.to },
+                    });
                     toast.success(`${m.guest} flyttad till bord ${m.to}`);
                   }}
                   className="rounded-full bg-primary px-3.5 py-1.5 text-xs text-primary-foreground"

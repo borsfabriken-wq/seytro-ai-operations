@@ -1,11 +1,13 @@
 import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { Bot, Plus } from "lucide-react";
+import { Bot, Plus, Radio } from "lucide-react";
 
 import { useVenue } from "@/components/dashboard/DashboardShell";
 import { opsData, type WaitlistEntry } from "@/lib/ops-data";
 import { matchWaitlist } from "@/lib/booking-ai";
+import { useLiveSubscription } from "@/components/dashboard/LiveFeed";
+import { publishLive, timeAgo, type LiveEvent } from "@/lib/live-events";
 
 export const Route = createFileRoute("/dashboard/vantelista")({
   head: () => ({
@@ -53,6 +55,71 @@ function WaitlistPage() {
 
   const setStatus = (id: string, status: WaitlistEntry["status"]) =>
     setEntries((prev) => prev.map((e) => (e.id === id ? { ...e, status } : e)));
+
+  const [liveLog, setLiveLog] = useState<LiveEvent[]>([]);
+
+  // Automatiska uppdateringar: nya gäster, matchningar, svar och avbokningar
+  // skrivs direkt in i listan utan att sidan laddas om.
+  useLiveSubscription(
+    ["vantelista-ny", "vantelista-match", "vantelista-svar", "avbokning"],
+    (event) => {
+      if (event.venue !== venue) return;
+      setLiveLog((prev) => [event, ...prev].slice(0, 5));
+      const name = String(event.payload?.["name"] ?? "");
+
+      if (event.kind === "vantelista-ny") {
+        setEntries((prev) => [
+          {
+            id: event.id,
+            name: name || "Ny gäst",
+            phone: "—",
+            party: Number(event.payload?.["party"] ?? 2),
+            wanted: String(event.payload?.["wanted"] ?? "19:00"),
+            flexibility: "Flexibel",
+            created: "nyss",
+            status: "väntar",
+            note: "Inlagd automatiskt av röstagenten.",
+          },
+          ...prev,
+        ]);
+        return;
+      }
+
+      if (event.kind === "vantelista-match") {
+        setEntries((prev) => {
+          const target = prev.find((e) => e.status === "väntar" && (!name || e.name === name));
+          if (!target) return prev;
+          return prev.map((e) =>
+            e.id === target.id
+              ? {
+                  ...e,
+                  status: "erbjuden",
+                  offer: {
+                    time: e.wanted,
+                    table: String(event.payload?.["unit"] ?? "—"),
+                    expires: "om 15 min",
+                  },
+                }
+              : e,
+          );
+        });
+        return;
+      }
+
+      if (event.kind === "vantelista-svar") {
+        setEntries((prev) => {
+          const target = prev.find((e) => e.status === "erbjuden" && (!name || e.name === name));
+          return target
+            ? prev.map((e) => (e.id === target.id ? { ...e, status: "omvandlad" } : e))
+            : prev;
+        });
+        return;
+      }
+
+      // Avbokning frigör kapacitet — kör om AI-matchningen mot väntelistan.
+      setEntries((prev) => [...prev]);
+    },
+  );
 
   return (
     <div className="space-y-6">
@@ -112,6 +179,12 @@ function WaitlistPage() {
                 ]);
                 setForm({ name: "", phone: "", party: "2", wanted: "19:00" });
                 setAdding(false);
+                publishLive({
+                  kind: "vantelista-ny",
+                  venue,
+                  title: "Ny gäst i väntelistan",
+                  detail: `${form.name} · ${Number(form.party) || 2} pers · önskar ${form.wanted}`,
+                });
                 toast.success("Gästen är tillagd i väntelistan");
               }}
               className="rounded-full bg-primary px-4 py-2 text-sm text-primary-foreground"
@@ -119,6 +192,23 @@ function WaitlistPage() {
               Spara
             </button>
           </div>
+        </div>
+      )}
+
+      {liveLog.length > 0 && (
+        <div className="rounded-2xl border border-border bg-card p-4">
+          <p className="mb-2 flex items-center gap-1.5 label-micro text-muted-foreground">
+            <Radio className="h-3 w-3 text-primary" /> Liveuppdateringar
+          </p>
+          <ul className="space-y-1">
+            {liveLog.map((event) => (
+              <li key={event.id} className="flex flex-wrap gap-x-2 text-sm text-forest">
+                <span className="font-medium">{event.title}</span>
+                <span className="text-muted-foreground">{event.detail}</span>
+                <span className="text-xs text-muted-foreground/80">{timeAgo(event.at)}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 
@@ -140,6 +230,13 @@ function WaitlistPage() {
                   type="button"
                   onClick={() => {
                     setStatus(m.entry.id, "erbjuden");
+                    publishLive({
+                      kind: "vantelista-erbjudande",
+                      venue,
+                      title: "Erbjudande skickat",
+                      detail: `${m.entry.name} · bord ${m.table} kl ${m.time} — svar inom 15 min`,
+                      payload: { name: m.entry.name, unit: m.table },
+                    });
                     toast.success("Erbjudande skickat", {
                       description: `${m.entry.name} har 15 minuter på sig att svara.`,
                     });
@@ -207,6 +304,13 @@ function WaitlistPage() {
                   type="button"
                   onClick={() => {
                     setStatus(e.id, "omvandlad");
+                    publishLive({
+                      kind: "vantelista-omvandlad",
+                      venue,
+                      title: "Väntelista omvandlad",
+                      detail: `${e.name} · ${e.party} pers kl ${e.wanted} är nu en bokning`,
+                      payload: { name: e.name },
+                    });
                     toast.success("Omvandlad till bokning", { description: e.name });
                   }}
                   className="rounded-full bg-primary px-3.5 py-1.5 text-xs text-primary-foreground"
