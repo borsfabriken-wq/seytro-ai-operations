@@ -735,7 +735,6 @@ export const app: Record<string, string> = {
   "Skapa PM direkt i bokningen": "Create the PM with the booking",
   "Fast meny, dryckespaket och speciella artiklar": "Set menu, drinks package and special items",
   "Öppna": "Open",
-  "Dölj": "Hide",
   "Tårta med ljus": "Cake with candles",
   "Välkomstdryck bubbel": "Sparkling welcome drink",
   "Alkoholfri välkomstdryck": "Non-alcoholic welcome drink",
