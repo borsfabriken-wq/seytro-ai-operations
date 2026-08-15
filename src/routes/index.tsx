@@ -110,32 +110,57 @@ function Index() {
 
 
         <div className="site-container relative flex min-h-[100svh] flex-col justify-end pb-16 pt-32 sm:pb-24 sm:pt-40">
-          <p className="fade-up mb-8 max-w-xl text-caption text-primary-foreground/70">
+          <p className="fade-up mb-8 label-micro text-primary-foreground/60">
             Bokningssystem och gästkommunikation i ett
           </p>
-          <h1 className="fade-up max-w-4xl text-display-xl text-primary-foreground">
-            Bokningar och placering som sköter sig självt.
-          </h1>
-          <p className="fade-up mt-8 max-w-xl text-body-lg text-primary-foreground/75">
-            Seytro är helhetslösningen för bokningar och gästkommunikation. Vi fångar upp
-            förfrågningar ni annars hade missat, svarar i telefon och mejl dygnet runt, placerar
-            varje gäst på rätt plats och tar bort det administrativa rutinarbetet — som ett AI-lager
-            ovanpå de system ni redan använder.
-          </p>
 
-          <div className="fade-up mt-10 flex flex-wrap items-center gap-4">
-            <Link
-              to="/demo"
-              className="rounded-full bg-primary-foreground px-8 py-4 text-sm font-medium text-forest-deep transition-opacity hover:opacity-90"
-            >
-              Boka demo
-            </Link>
-            <a
-              href="#varfor"
-              className="rounded-full border border-primary-foreground/40 px-8 py-4 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground/10"
-            >
-              Så fungerar plattformen
-            </a>
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.75fr)] lg:items-end">
+            <div>
+              <h1 className="fade-up max-w-4xl text-display-xl text-primary-foreground">
+                Bokningar och placering som sköter sig självt.
+              </h1>
+              <p className="fade-up mt-8 max-w-xl text-body-lg text-primary-foreground/75">
+                Ett AI-lager ovanpå de system ni redan har: varje samtal och mejl besvaras, varje
+                gäst placeras rätt och rutinadministrationen försvinner.
+              </p>
+
+              <div className="fade-up mt-10 flex flex-wrap items-center gap-4">
+                <Link
+                  to="/demo"
+                  className="rounded-full bg-primary-foreground px-8 py-4 text-sm font-semibold tracking-[-0.01em] text-forest-deep transition-opacity hover:opacity-90"
+                >
+                  Boka demo
+                </Link>
+                <a
+                  href="#varfor"
+                  className="rounded-full border border-primary-foreground/30 px-8 py-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-foreground/10"
+                >
+                  Så fungerar plattformen
+                </a>
+              </div>
+            </div>
+
+            <div className="fade-up hidden rounded-2xl border border-primary-foreground/15 bg-forest-deep/50 p-6 backdrop-blur-md lg:block">
+              <p className="label-micro text-primary-foreground/55">Igår, live i driften</p>
+              <div className="mt-5 space-y-4">
+                {[
+                  ["Besvarade samtal", "142", "0 missade"],
+                  ["Bokningar via AI", "68", "+14 mot snitt"],
+                  ["Placeringar optimerade", "31", "+22 täckningar"],
+                ].map(([label, value, note]) => (
+                  <div
+                    key={label}
+                    className="flex items-baseline justify-between gap-4 border-b border-primary-foreground/10 pb-3 last:border-0 last:pb-0"
+                  >
+                    <span className="text-sm text-primary-foreground/70">{label}</span>
+                    <span className="text-right">
+                      <span className="font-display text-2xl tnum text-primary-foreground">{value}</span>
+                      <span className="ml-3 text-xs text-primary-foreground/55">{note}</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -143,7 +168,7 @@ function Index() {
       <LogoMarquee />
 
       <section id="varfor" className="site-container section-y">
-        <p className="eyebrow text-muted-foreground">Varför Seytro</p>
+        <p className="label-micro text-muted-foreground">Varför Seytro</p>
         <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-end lg:gap-16">
           <h2 className="text-display">
             Tre problem varje serviceverksamhet känner igen.
@@ -154,18 +179,14 @@ function Index() {
             Seytro lägger sig som ett AI-lager ovanpå det ni redan använder.
           </p>
         </div>
-        <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {reasons.map((r) => (
+        <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border bg-border lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)]">
+          {reasons.map((r, i) => (
             <div
               key={r.num}
-              className="border-t border-border pt-8"
+              className={`bg-card p-8 lg:p-10 ${i === 0 ? "lg:p-12" : ""}`}
             >
-              <span
-                className="text-sm tracking-[0.28em] text-muted-foreground"
-              >
-                {r.num}
-              </span>
-              <h3 className="mt-4 text-subheading">{r.title}</h3>
+              <span className="label-micro text-accent-strong">{r.num}</span>
+              <h3 className="mt-5 text-subheading">{r.title}</h3>
               <p className="mt-4 text-body text-muted-foreground">{r.body}</p>
             </div>
           ))}
@@ -184,8 +205,8 @@ function Index() {
             ["+21%", "återkommande gäster"],
           ].map(([kpi, label]) => (
             <div key={label}>
-              <p className="font-display text-4xl text-primary-foreground">{kpi}</p>
-              <p className="mt-2 text-sm text-primary-foreground/80">{label}</p>
+              <p className="font-display text-5xl tnum tracking-[-0.04em] text-primary-foreground">{kpi}</p>
+              <p className="mt-3 max-w-[16ch] text-sm text-primary-foreground/70">{label}</p>
             </div>
           ))}
         </div>
@@ -193,7 +214,7 @@ function Index() {
 
       <section id="pelare" className="bg-linear-to-b from-background to-secondary/50">
         <div className="site-container section-y">
-        <p className="eyebrow text-muted-foreground">Funktionerna</p>
+        <p className="label-micro text-muted-foreground">Funktionerna</p>
         <h2 className="mt-6 max-w-2xl text-display">
           Vad plattformen gör — och när den används.
         </h2>
@@ -205,9 +226,7 @@ function Index() {
           {pillars.map((p) => (
             <div key={p.num} className="grid gap-10 border-t border-border pt-12 lg:grid-cols-12">
               <div className="lg:col-span-4">
-                <span
-                  className="inline-block rounded-full bg-muted px-3 py-1 text-xs tracking-[0.28em] text-muted-foreground"
-                >
+                <span className="label-micro inline-block rounded-full bg-accent-tint px-3 py-1.5 text-accent-strong">
                   {p.num}
                 </span>
                 <h3 className="mt-4 text-heading">{p.title}</h3>
@@ -236,7 +255,7 @@ function Index() {
 
       <section className="bg-secondary">
         <div className="site-container py-24">
-          <p className="eyebrow text-muted-foreground">
+          <p className="label-micro text-muted-foreground">
             Så fungerar det
           </p>
           <h2 className="mt-6 max-w-3xl text-display">
@@ -245,7 +264,7 @@ function Index() {
           <div className="mt-14 grid gap-10 lg:grid-cols-3">
             {steps.map(([t, d], i) => (
               <div key={t} className="border-t border-border pt-8">
-                <span className="text-sm tracking-[0.28em] text-brass">
+                <span className="label-micro text-accent-strong">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-4 text-subheading">{t}</h3>
@@ -261,7 +280,7 @@ function Index() {
       </section>
 
       <section id="bransch" className="site-container section-y">
-        <p className="eyebrow text-muted-foreground">Djupdykning</p>
+        <p className="label-micro text-muted-foreground">Djupdykning</p>
         <h2 className="mt-6 max-w-2xl text-display">Vad driver du?</h2>
         <p className="mt-6 max-w-xl text-body text-muted-foreground">
           Samma plattform, olika vardag. Välj din ingång så visar vi hur systemet maxas för just din
@@ -326,7 +345,7 @@ function Index() {
       <section id="vision" className="bg-forest-deep text-primary-foreground">
         <div className="site-container grid items-center gap-16 section-y lg:grid-cols-2">
           <div>
-            <p className="eyebrow text-primary-foreground/60">Vision</p>
+            <p className="label-micro text-primary-foreground/55">Vision</p>
             <h2 className="mt-6 text-display text-primary-foreground">
               Framtidens värdskap är tyst, snabbt och personligt.
             </h2>
