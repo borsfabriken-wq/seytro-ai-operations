@@ -1,6 +1,7 @@
 import { Minus, Plus, Printer, Trash2 } from "lucide-react";
 import { templateKinds, type MenuTemplate } from "@/lib/pm-templates";
 import {
+  dietsCount,
   kr,
   lineTotal,
   pmStatusStyles,
@@ -105,6 +106,28 @@ export function PmSheet({
           </button>
         </div>
       </div>
+
+      {(doc.diets?.length ?? 0) > 0 && (
+        <div className="rounded-xl border border-amber-300/70 bg-amber-50 p-3">
+          <p className="text-xs font-medium text-amber-900">
+            Kost och allergier · {dietsCount(doc)} av {doc.party} gäster
+          </p>
+          <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
+            {doc.diets?.map((d) => (
+              <li key={d.id} className="flex items-start gap-2 text-xs text-amber-900">
+                <span className="mt-px shrink-0 rounded bg-amber-200/70 px-1.5 py-0.5 tabular-nums">
+                  {d.count}×
+                </span>
+                <span className="min-w-0">
+                  <span className="font-medium">{d.label}</span>
+                  {d.critical && <span className="ml-1 uppercase">· allergi</span>}
+                  {d.note && <span className="block text-amber-800/80">{d.note}</span>}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {doc.allergies && (
         <p className="rounded-xl border border-status-clean-border bg-status-clean px-3 py-2 text-xs text-status-clean-fg">
