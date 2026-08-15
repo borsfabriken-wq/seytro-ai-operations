@@ -195,8 +195,8 @@ function PmPage() {
                   <span
                     className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] ${
                       doc
-                        ? "bg-emerald-500/15 text-emerald-700"
-                        : "bg-amber-500/15 text-amber-700"
+                        ? "bg-status-free text-status-free-fg"
+                        : "bg-status-clean text-status-clean-fg"
                     }`}
                   >
                     {doc ? "PM klart" : "AI förbereder"}

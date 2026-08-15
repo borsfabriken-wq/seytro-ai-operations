@@ -107,7 +107,7 @@ export function PmSheet({
       </div>
 
       {doc.allergies && (
-        <p className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-700">
+        <p className="rounded-xl border border-status-clean-border bg-status-clean px-3 py-2 text-xs text-status-clean-fg">
           Allergier och önskemål: {doc.allergies}
         </p>
       )}

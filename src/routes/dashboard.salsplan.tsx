@@ -496,7 +496,7 @@ function FloorPage() {
       />
 
       {toast && (
-        <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-forest px-4 py-2 text-sm text-primary-foreground shadow-lg">
+        <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-surface-inverse px-4 py-2 text-sm text-primary-foreground shadow-overlay">
           {toast}
         </div>
       )}
@@ -706,7 +706,7 @@ function BookingPanel({
             placing
               ? "bg-primary text-primary-foreground"
               : booking.placed === false
-                ? "bg-amber-500/15 text-amber-700"
+                ? "bg-status-clean text-status-clean-fg"
                 : "bg-primary/10 text-primary"
           }`}
         >
@@ -734,7 +734,7 @@ function GroupHeader({ title, meta, tone }: { title: string; meta: string; tone:
   return (
     <div
       className={`sticky top-0 px-4 py-2 text-xs font-medium ${
-        tone === "amber" ? "bg-amber-500/15 text-amber-800" : "bg-emerald-500/15 text-emerald-800"
+        tone === "amber" ? "bg-status-clean text-status-clean-fg" : "bg-status-free text-status-free-fg"
       }`}
     >
       {title} <span className="font-normal opacity-75">({meta})</span>
