@@ -144,7 +144,7 @@
   --popover: var(--surface-3);
   --popover-foreground: var(--ink);
   --primary: var(--accent-base);
-  --primary-foreground: oklch(0.995 0.002 85);
+  --primary-foreground: oklch(0.995 0.002 250);
   --secondary: var(--surface-1);
   --secondary-foreground: var(--ink);
   --muted: var(--surface-1);
@@ -152,7 +152,7 @@
   --accent: var(--accent-tint);
   --accent-foreground: var(--ink);
   --destructive: var(--status-alert-fg);
-  --destructive-foreground: oklch(0.995 0.002 85);
+  --destructive-foreground: oklch(0.995 0.002 250);
   --border: var(--border-subtle);
   --input: var(--border-subtle);
   --ring: var(--accent-base);
@@ -170,7 +170,7 @@
   --tide-soft: var(--accent-tint);
   --dashboard-header: var(--surface-1);
   --dashboard-header-edge: var(--border-subtle);
-  --dashboard-footer: oklch(0.955 0.006 80);
+  --dashboard-footer: oklch(0.956 0.005 248);
   --dashboard-footer-edge: var(--border-subtle);
   --ember: var(--status-alert-fg);
   --ember-soft: var(--status-alert);
@@ -196,12 +196,12 @@
   --leading-relaxed: 1.6;
   --leading-loose: 1.75;
 
-  /* Diagram: terrakotta- och sandfamiljen */
-  --chart-1: oklch(0.575 0.135 40);
-  --chart-2: oklch(0.455 0.11 36);
-  --chart-3: oklch(0.735 0.085 45);
-  --chart-4: oklch(0.815 0.012 78);
-  --chart-5: oklch(0.38 0.012 60);
+  /* Diagram: grön- och stenfamiljen */
+  --chart-1: oklch(0.408 0.068 162);
+  --chart-2: oklch(0.548 0.062 160);
+  --chart-3: oklch(0.702 0.05 162);
+  --chart-4: oklch(0.822 0.008 245);
+  --chart-5: oklch(0.385 0.01 245);
 
   /* Sidomeny: mörk kolgrå yta */
   --sidebar: var(--surface-inverse);
