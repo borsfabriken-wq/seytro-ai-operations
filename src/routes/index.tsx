@@ -186,7 +186,7 @@ function Index() {
               className={`bg-card p-8 lg:p-10 ${i === 0 ? "lg:p-12" : ""}`}
             >
               <span className="label-micro text-accent-strong">{r.num}</span>
-              <h3 className={`mt-5 ${i === 0 ? "text-heading" : "text-subheading"}`}>{r.title}</h3>
+              <h3 className="mt-5 text-subheading">{r.title}</h3>
               <p className="mt-4 text-body text-muted-foreground">{r.body}</p>
             </div>
           ))}
