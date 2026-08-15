@@ -23,7 +23,7 @@ export const Route = createFileRoute("/dashboard/optimering")({
 });
 
 function OptimizePage() {
-  const { serviceBookings, data } = useVenue();
+  const { serviceBookings, data, venue } = useVenue();
   const [accepted, setAccepted] = useState<string[]>([]);
 
   const moves = useMemo(
