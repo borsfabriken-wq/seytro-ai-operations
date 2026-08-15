@@ -158,7 +158,7 @@ function ConfigPage() {
             <Card title="Verksamhetsprofil" desc="Uppgifterna används i bekräftelser och av AI-agenterna.">
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field label="Namn">
-                  <input className={inputClass} defaultValue={setup?.name ?? data.venueName} />
+                  <input className={inputClass} defaultValue={setup?.org ?? "Astrid Restaurang"} />
                 </Field>
                 <Field label="Typ">
                   <select className={inputClass} defaultValue={venue}>
