@@ -61,14 +61,54 @@ export function useVenue() {
   return { venue, setVenue, date, setDate, service, setService, data, serviceBookings, setup };
 }
 
-const nav = [
-  { to: "/dashboard", label: "Översikt", icon: CalendarDays, exact: true },
-  { to: "/dashboard/salsplan", label: "Salsplan", icon: LayoutGrid, exact: false },
-  { to: "/dashboard/pm", label: "PM & sällskap", icon: ClipboardList, exact: false },
-  { to: "/dashboard/gaster", label: "Gästregister", icon: Users, exact: false },
-  { to: "/dashboard/inkorg", label: "Inkorg", icon: Inbox, exact: false },
-  { to: "/dashboard/analys", label: "Analys", icon: BarChart3, exact: false },
-] as const;
+type NavItem = { to: string; label: string; icon: typeof CalendarDays; exact?: boolean };
+type NavGroup = { title?: string; items: NavItem[] };
+
+function navGroups(venue: Venue): NavGroup[] {
+  const isHotel = venue === "hotell";
+  return [
+    {
+      items: [
+        { to: "/dashboard", label: "Hem", icon: LayoutGrid, exact: true },
+        { to: "/dashboard/assistent", label: "Assistent", icon: Sparkle },
+      ],
+    },
+    {
+      title: "Kommunikation",
+      items: [
+        { to: "/dashboard/epost", label: "E-post", icon: Inbox },
+        { to: "/dashboard/samtal", label: "Samtal", icon: PhoneCall },
+        { to: "/dashboard/eskaleringar", label: "Eskaleringar", icon: AlertTriangle },
+      ],
+    },
+    {
+      title: "Drift",
+      items: isHotel
+        ? [
+            { to: "/dashboard/salsplan", label: "Rum", icon: LayoutGrid },
+            { to: "/dashboard/listor", label: "Listor", icon: ListChecks },
+            { to: "/dashboard/vantelista", label: "Väntelista", icon: Clock },
+          ]
+        : [
+            { to: "/dashboard/salsplan", label: "Bord", icon: LayoutGrid },
+            { to: "/dashboard/tidslinje", label: "Tidslinje", icon: GanttChart },
+            { to: "/dashboard/optimering", label: "Optimering", icon: Wand2 },
+            { to: "/dashboard/listor", label: "Listor", icon: ListChecks },
+            { to: "/dashboard/vantelista", label: "Väntelista", icon: Clock },
+          ],
+    },
+    {
+      title: isHotel ? "Hotell" : "Restaurang",
+      items: [
+        { to: "/dashboard/gaster", label: "Gäster", icon: Users },
+        ...(isHotel ? [] : [{ to: "/dashboard/pm", label: "PM & sällskap", icon: ClipboardList }]),
+        { to: "/dashboard/analys", label: "Analys", icon: BarChart3 },
+        { to: "/dashboard/konfiguration", label: "Konfiguration", icon: Settings2 },
+      ],
+    },
+  ];
+}
+
 
 function isSameDay(a: Date, b: Date) {
   return (
