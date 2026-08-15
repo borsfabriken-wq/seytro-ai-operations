@@ -34,6 +34,7 @@ import { Route as DashboardEskaleringarRouteImport } from './routes/dashboard.es
 import { Route as DashboardForslagRouteImport } from './routes/dashboard.forslag'
 import { Route as DashboardGasterRouteImport } from './routes/dashboard.gaster'
 import { Route as DashboardInkorgRouteImport } from './routes/dashboard.inkorg'
+import { Route as DashboardKalenderRouteImport } from './routes/dashboard.kalender'
 import { Route as DashboardKonfigurationRouteImport } from './routes/dashboard.konfiguration'
 import { Route as DashboardListorRouteImport } from './routes/dashboard.listor'
 import { Route as DashboardOptimeringRouteImport } from './routes/dashboard.optimering'
@@ -183,6 +184,11 @@ const DashboardGasterRoute = DashboardGasterRouteImport.update({
 const DashboardInkorgRoute = DashboardInkorgRouteImport.update({
   id: '/inkorg',
   path: '/inkorg',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardKalenderRoute = DashboardKalenderRouteImport.update({
+  id: '/kalender',
+  path: '/kalender',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardKonfigurationRoute = DashboardKonfigurationRouteImport.update({
@@ -340,6 +346,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/forslag': typeof DashboardForslagRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/kalender': typeof DashboardKalenderRoute
   '/dashboard/konfiguration': typeof DashboardKonfigurationRoute
   '/dashboard/listor': typeof DashboardListorRoute
   '/dashboard/optimering': typeof DashboardOptimeringRoute
@@ -391,6 +398,7 @@ export interface FileRoutesByTo {
   '/dashboard/forslag': typeof DashboardForslagRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/kalender': typeof DashboardKalenderRoute
   '/dashboard/konfiguration': typeof DashboardKonfigurationRoute
   '/dashboard/listor': typeof DashboardListorRoute
   '/dashboard/optimering': typeof DashboardOptimeringRoute
@@ -444,6 +452,7 @@ export interface FileRoutesById {
   '/dashboard/forslag': typeof DashboardForslagRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
+  '/dashboard/kalender': typeof DashboardKalenderRoute
   '/dashboard/konfiguration': typeof DashboardKonfigurationRoute
   '/dashboard/listor': typeof DashboardListorRoute
   '/dashboard/optimering': typeof DashboardOptimeringRoute
@@ -498,6 +507,7 @@ export interface FileRouteTypes {
     | '/dashboard/forslag'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
+    | '/dashboard/kalender'
     | '/dashboard/konfiguration'
     | '/dashboard/listor'
     | '/dashboard/optimering'
@@ -549,6 +559,7 @@ export interface FileRouteTypes {
     | '/dashboard/forslag'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
+    | '/dashboard/kalender'
     | '/dashboard/konfiguration'
     | '/dashboard/listor'
     | '/dashboard/optimering'
@@ -601,6 +612,7 @@ export interface FileRouteTypes {
     | '/dashboard/forslag'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
+    | '/dashboard/kalender'
     | '/dashboard/konfiguration'
     | '/dashboard/listor'
     | '/dashboard/optimering'
@@ -843,6 +855,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardInkorgRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/kalender': {
+      id: '/dashboard/kalender'
+      path: '/kalender'
+      fullPath: '/dashboard/kalender'
+      preLoaderRoute: typeof DashboardKalenderRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/konfiguration': {
       id: '/dashboard/konfiguration'
       path: '/konfiguration'
@@ -1029,6 +1048,7 @@ interface DashboardRouteChildren {
   DashboardForslagRoute: typeof DashboardForslagRoute
   DashboardGasterRoute: typeof DashboardGasterRoute
   DashboardInkorgRoute: typeof DashboardInkorgRoute
+  DashboardKalenderRoute: typeof DashboardKalenderRoute
   DashboardKonfigurationRoute: typeof DashboardKonfigurationRoute
   DashboardListorRoute: typeof DashboardListorRoute
   DashboardOptimeringRoute: typeof DashboardOptimeringRoute
@@ -1048,6 +1068,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardForslagRoute: DashboardForslagRoute,
   DashboardGasterRoute: DashboardGasterRoute,
   DashboardInkorgRoute: DashboardInkorgRoute,
+  DashboardKalenderRoute: DashboardKalenderRoute,
   DashboardKonfigurationRoute: DashboardKonfigurationRoute,
   DashboardListorRoute: DashboardListorRoute,
   DashboardOptimeringRoute: DashboardOptimeringRoute,

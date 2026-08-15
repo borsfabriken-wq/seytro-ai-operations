@@ -6,6 +6,7 @@ import {
   AlertTriangle,
   BarChart3,
   CalendarDays,
+  CalendarRange,
   ClipboardList,
   Clock,
   GanttChartSquare as GanttChart,
@@ -94,12 +95,14 @@ function navGroups(venue: Venue): NavGroup[] {
       items: isHotel
         ? [
             { to: "/dashboard/salsplan", label: "Rum", icon: LayoutGrid },
+            { to: "/dashboard/kalender", label: "Kalender", icon: CalendarRange },
             { to: "/dashboard/listor", label: "Listor", icon: ListChecks },
             { to: "/dashboard/vantelista", label: "Väntelista", icon: Clock },
             { to: "/dashboard/forslag", label: "AI-förslag", icon: Lightbulb },
           ]
         : [
             { to: "/dashboard/salsplan", label: "Bord", icon: LayoutGrid },
+            { to: "/dashboard/kalender", label: "Kalender", icon: CalendarRange },
             { to: "/dashboard/tidslinje", label: "Tidslinje", icon: GanttChart },
             { to: "/dashboard/optimering", label: "Optimering", icon: Wand2 },
             { to: "/dashboard/forslag", label: "AI-förslag", icon: Lightbulb },
