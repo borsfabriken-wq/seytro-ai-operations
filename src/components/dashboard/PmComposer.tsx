@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Check, Minus, Plus, Trash2, Wallet } from "lucide-react";
+import { AlertTriangle, Check, Leaf, Minus, Plus, Trash2, Wallet } from "lucide-react";
 
 import { kr } from "@/lib/pm";
 import type { MenuTemplate } from "@/lib/pm-templates";
 import {
   choiceTotal,
   extrasTotal,
+  dietOptions,
+  dietsGuests,
   findTpl,
   specialArticles,
   type PmChoice,
@@ -58,6 +60,28 @@ export function PmComposer({
         .map((e) => (e.id === id ? { ...e, qty: Math.max(0, qty) } : e))
         .filter((e) => e.qty > 0),
     });
+
+  const addDiet = (id: string, label: string, critical?: boolean) => {
+    const existing = value.diets.find((d) => d.id === id);
+    if (existing) {
+      set({ diets: value.diets.map((d) => (d.id === id ? { ...d, count: d.count + 1 } : d)) });
+      return;
+    }
+    set({ diets: [...value.diets, { id, label, count: 1, ...(critical ? { critical } : {}) }] });
+  };
+
+  const setDiet = (id: string, patch: { count?: number; note?: string }) =>
+    set({
+      diets: value.diets
+        .map((d) =>
+          d.id === id
+            ? { ...d, ...patch, count: Math.max(0, patch.count ?? d.count) }
+            : d,
+        )
+        .filter((d) => d.count > 0),
+    });
+
+  const dietGuests = dietsGuests(value.diets);
 
   const total = choiceTotal(value, templates, party);
   const perGuest = party > 0 ? Math.round(total / party) : 0;
@@ -177,6 +201,82 @@ export function PmComposer({
               </li>
             ))}
           </ul>
+        )}
+      </Step>
+
+      <Step index={4} title="Kost och allergier" hint="Antal gäster som får anpassad rätt">
+        <div className="flex flex-wrap gap-1.5">
+          {dietOptions.map((d) => (
+            <button
+              key={d.id}
+              type="button"
+              onClick={() => addDiet(d.id, d.label, d.critical)}
+              className={`rounded-full border px-3 py-1.5 text-xs transition-colors ${
+                value.diets.some((x) => x.id === d.id)
+                  ? "border-primary bg-primary/8 text-primary"
+                  : "border-border text-muted-foreground hover:border-primary hover:text-primary"
+              }`}
+            >
+              <Plus className="mr-1 inline h-3 w-3" />
+              {d.label}
+            </button>
+          ))}
+        </div>
+
+        {value.diets.length > 0 && (
+          <ul className="mt-3 space-y-2">
+            {value.diets.map((d) => (
+              <li key={d.id} className="rounded-xl border border-border p-2.5">
+                <div className="flex items-center gap-3">
+                  <span className="flex min-w-0 flex-1 items-center gap-1.5 truncate text-sm text-forest">
+                    {d.critical ? (
+                      <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-amber-600" />
+                    ) : (
+                      <Leaf className="h-3.5 w-3.5 shrink-0 text-primary" />
+                    )}
+                    {d.label}
+                  </span>
+                  <div className="flex shrink-0 items-center gap-1">
+                    <Round onClick={() => setDiet(d.id, { count: d.count - 1 })}>
+                      <Minus className="h-3 w-3" />
+                    </Round>
+                    <span className="w-6 text-center text-sm tabular-nums text-forest">
+                      {d.count}
+                    </span>
+                    <Round onClick={() => setDiet(d.id, { count: d.count + 1 })}>
+                      <Plus className="h-3 w-3" />
+                    </Round>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setDiet(d.id, { count: 0 })}
+                    className="shrink-0 text-muted-foreground hover:text-destructive"
+                    aria-label={`Ta bort ${d.label}`}
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+                <input
+                  value={d.note ?? ""}
+                  onChange={(e) => setDiet(d.id, { note: e.target.value })}
+                  placeholder="Hur anpassas rätten? T.ex. byt smör mot olivolja"
+                  className="mt-2 w-full rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs outline-none focus:border-primary"
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {dietGuests > 0 && (
+          <p className="mt-2 text-[11px] text-muted-foreground">
+            {dietGuests} av {party} gäster får anpassad rätt · {Math.max(0, party - dietGuests)}{" "}
+            standard. Anpassningarna ingår i menypriset.
+          </p>
+        )}
+        {dietGuests > party && (
+          <p className="mt-1 text-[11px] text-amber-700">
+            Fler anpassningar än gäster — kontrollera antalet.
+          </p>
         )}
       </Step>
 
