@@ -162,7 +162,7 @@ function EmailAgentPage() {
           {benefits.map(({ icon: Icon, title, text }) => (
             <div
               key={title}
-              className="rounded-2xl border border-border bg-card p-8 transition-shadow hover:shadow-lg"
+              className="rounded-2xl border border-border bg-card p-8 transition-shadow hover:shadow-raised"
             >
               <div className="grid h-12 w-12 place-items-center rounded-full bg-forest/10">
                 <Icon className="h-5 w-5 text-forest" strokeWidth={1.5} />

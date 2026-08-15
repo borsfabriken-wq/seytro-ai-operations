@@ -174,7 +174,7 @@ export function SiteHeader({ solid = false }: { solid?: boolean } = {}) {
       <nav
         className={`mx-auto flex items-center justify-between gap-3 transition-all duration-500 ease-out ${
           scrolled
-            ? "max-w-4xl rounded-full border border-primary-foreground/10 bg-forest-deep/90 px-4 py-2.5 shadow-2xl backdrop-blur-md sm:px-6"
+            ? "max-w-4xl rounded-full border border-primary-foreground/10 bg-forest-deep/90 px-4 py-2.5 shadow-overlay backdrop-blur-md sm:px-6"
             : "max-w-7xl rounded-none border border-transparent bg-transparent px-5 py-5 shadow-none sm:px-10 sm:py-6 2xl:max-w-[96rem] 2xl:px-16"
         }`}
       >
@@ -215,7 +215,7 @@ export function SiteHeader({ solid = false }: { solid?: boolean } = {}) {
       </nav>
 
       {mobileOpen && (
-        <div className="mx-3 mt-2 max-h-[calc(100dvh-6rem)] sm:mx-6 overflow-y-auto rounded-3xl border border-primary-foreground/10 bg-forest-deep/95 p-5 text-primary-foreground shadow-2xl backdrop-blur-md lg:hidden">
+        <div className="mx-3 mt-2 max-h-[calc(100dvh-6rem)] sm:mx-6 overflow-y-auto rounded-3xl border border-primary-foreground/10 bg-forest-deep/95 p-5 text-primary-foreground shadow-overlay backdrop-blur-md lg:hidden">
           <div className="flex flex-col divide-y divide-primary-foreground/10">
             {mobileNav.map((group) => (
               <div key={group.label} className="py-3">

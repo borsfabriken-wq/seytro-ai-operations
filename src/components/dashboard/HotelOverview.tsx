@@ -305,7 +305,7 @@ function MiniStat({
   const wrapperClasses = [
     "rounded-2xl border border-border bg-card p-4 text-left transition-all sm:p-5",
     clickable
-      ? "cursor-pointer hover:border-primary/40 hover:bg-primary/[0.02] hover:shadow-sm"
+      ? "cursor-pointer hover:border-primary/40 hover:bg-primary/[0.02] hover:shadow-soft"
       : "",
   ].join(" ");
 

@@ -263,7 +263,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 z-30 w-full min-w-0 overflow-x-clip border-b border-dashboard-header-edge bg-dashboard-header">
             <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6">
-              <div className="hidden min-w-0 items-stretch divide-x divide-forest/10 overflow-hidden rounded-xl border border-dashboard-header-edge bg-background shadow-sm shadow-forest/5 sm:flex">
+              <div className="hidden min-w-0 items-stretch divide-x divide-forest/10 overflow-hidden rounded-xl border border-dashboard-header-edge bg-background shadow-soft shadow-soft sm:flex">
                 {stats.map((s) => (
                   <span
                     key={s.label}
@@ -292,7 +292,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       search: query ? { q: query } : {},
                     });
                   }}
-                  className="hidden items-center gap-2 rounded-full border border-dashboard-header-edge bg-background px-3 py-1.5 shadow-sm shadow-forest/5 md:flex"
+                  className="hidden items-center gap-2 rounded-full border border-dashboard-header-edge bg-background px-3 py-1.5 shadow-soft shadow-soft md:flex"
                 >
                   <Search className="h-3.5 w-3.5 text-muted-foreground" />
                   <input
@@ -305,7 +305,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 <button
                   type="button"
                   onClick={() => navigate({ to: "/dashboard/salsplan", search: { new: true } })}
-                  className="grid h-9 w-9 place-items-center rounded-full bg-primary text-primary-foreground shadow-sm shadow-forest/10 transition-opacity hover:opacity-90"
+                  className="grid h-9 w-9 place-items-center rounded-full bg-primary text-primary-foreground shadow-soft shadow-forest/10 transition-opacity hover:opacity-90"
                   aria-label="Ny bokning"
                 >
                   <Plus className="h-4 w-4" />
@@ -316,7 +316,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
             <div className="flex items-center justify-between gap-4 overflow-x-auto border-t border-forest/8 px-4 py-2.5 sm:px-6">
               {venue === "restaurang" ? (
-                <div className="flex shrink-0 items-center gap-1 rounded-full border border-dashboard-header-edge bg-background p-1 shadow-sm shadow-forest/5">
+                <div className="flex shrink-0 items-center gap-1 rounded-full border border-dashboard-header-edge bg-background p-1 shadow-soft shadow-soft">
                   {serviceCounts.map((p) => (
                     <button
                       key={p.id}
@@ -350,7 +350,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       onClick={() => setDate(q.date)}
                       className={`whitespace-nowrap rounded-full px-3 py-1 text-sm capitalize transition-colors ${
                         active
-                          ? "bg-forest text-primary-foreground shadow-sm"
+                          ? "bg-forest text-primary-foreground shadow-soft"
                           : "text-muted-foreground hover:bg-background hover:text-forest"
                       }`}
 

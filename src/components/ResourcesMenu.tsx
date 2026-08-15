@@ -28,7 +28,7 @@ export function ResourcesMenu({ open }: { open: boolean }) {
           : "pointer-events-none -translate-y-1 opacity-0"
       }`}
     >
-      <div className="grid w-[min(90vw,36rem)] grid-cols-1 gap-8 rounded-2xl border border-border bg-card p-7 shadow-2xl sm:grid-cols-2">
+      <div className="grid w-[min(90vw,36rem)] grid-cols-1 gap-8 rounded-2xl border border-border bg-card p-7 shadow-overlay sm:grid-cols-2">
         {columns.map((col) => (
           <div key={col.title}>
             <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">

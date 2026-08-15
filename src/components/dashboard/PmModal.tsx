@@ -37,7 +37,7 @@ export function PmModal({ pmId, onClose }: { pmId: string | null; onClose: () =>
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-forest/40 p-4 backdrop-blur-sm sm:p-8">
       <button type="button" aria-label="Stäng" className="fixed inset-0 cursor-default" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-3xl rounded-3xl border border-border bg-card shadow-2xl">
+      <div className="relative z-10 w-full max-w-3xl rounded-3xl border border-border bg-card shadow-overlay">
         <div className="flex items-center justify-between gap-3 border-b border-border px-5 py-4">
           <div className="min-w-0">
             <p className="eyebrow text-muted-foreground">PM #{doc.id}</p>

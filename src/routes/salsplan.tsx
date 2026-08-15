@@ -163,7 +163,7 @@ function FloorPlanPage() {
             <h3 className="mt-4 text-2xl font-medium leading-tight sm:text-3xl">
               En levande vy över borden.
             </h3>
-            <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-background shadow-sm">
+            <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-background shadow-soft">
               <img
                 src={floorPlanAsset.url}
                 alt="Exempel på interaktiv salsplan med bordsnummer"
@@ -184,7 +184,7 @@ function FloorPlanPage() {
           {benefits.map(({ icon: Icon, title, text }) => (
             <div
               key={title}
-              className="rounded-2xl border border-border bg-card p-8 transition-shadow hover:shadow-lg"
+              className="rounded-2xl border border-border bg-card p-8 transition-shadow hover:shadow-raised"
             >
               <div className="grid h-12 w-12 place-items-center rounded-full bg-forest/10">
                 <Icon className="h-5 w-5 text-forest" strokeWidth={1.5} />
