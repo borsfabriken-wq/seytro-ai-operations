@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLanguage } from "@/i18n/LanguageProvider";
-import { en } from "@/i18n/dictionary";
+import { en, patterns } from "@/i18n/dictionary";
 
 const originals = new WeakMap<Node, string>();
 const attrOriginals = new WeakMap<Element, Record<string, string>>();
@@ -11,8 +11,13 @@ const norm = (s: string) => s.replace(/\s+/g, " ").trim();
 function translateText(raw: string): string | null {
   const key = norm(raw);
   if (!key) return null;
-  const hit = en[key];
-  if (!hit) return null;
+  let hit = en[key];
+  if (!hit) {
+    let out = key;
+    for (const [re, rep] of patterns) out = out.replace(re, rep);
+    if (out === key) return null;
+    hit = out;
+  }
   // preserve leading/trailing whitespace of the original node
   const lead = raw.match(/^\s*/)?.[0] ?? "";
   const trail = raw.match(/\s*$/)?.[0] ?? "";
