@@ -356,18 +356,20 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-30 w-full min-w-0 overflow-x-clip border-b border-dashboard-header-edge bg-dashboard-header">
+          <header className="glass-header sticky top-0 z-30 w-full min-w-0 overflow-x-clip border-b border-dashboard-header-edge">
             <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6">
-              <div className="hidden min-w-0 items-stretch divide-x divide-forest/10 overflow-hidden rounded-xl border border-dashboard-header-edge bg-background shadow-soft shadow-soft sm:flex">
+              <div className="hidden min-w-0 items-stretch divide-x divide-forest/10 overflow-hidden rounded-xl border border-border-hairline bg-background shadow-soft sm:flex">
                 {stats.map((s) => (
                   <span
                     key={s.label}
                     title={s.hint}
-                    className="flex items-center gap-2 px-3.5 py-1.5"
+                    className="flex items-center gap-2 px-3.5 py-1.5 transition-colors hover:bg-surface-1"
                   >
                     <s.icon className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                     <span className="leading-tight">
-                      <span className="block text-sm font-semibold text-forest">{s.value}</span>
+                      <span className="kpi-value block text-sm font-semibold text-forest">
+                        {s.value}
+                      </span>
                       <span className="block text-[11px] capitalize text-muted-foreground">
                         {s.label}
                       </span>
@@ -387,7 +389,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       search: query ? { q: query } : {},
                     });
                   }}
-                  className="hidden items-center gap-2 rounded-full border border-dashboard-header-edge bg-background px-3 py-1.5 shadow-soft shadow-soft md:flex"
+                  className="hidden items-center gap-2 rounded-full border border-border-hairline bg-background px-3 py-1.5 shadow-soft transition-shadow focus-within:shadow-raised md:flex"
                 >
                   <Search className="h-3.5 w-3.5 text-muted-foreground" />
                   <input
@@ -396,17 +398,34 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                     placeholder="Sök gäst eller bokning"
                     className="w-36 bg-transparent text-sm outline-none placeholder:text-muted-foreground xl:w-44"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setPaletteOpen(true)}
+                    className="kbd shrink-0"
+                    aria-label="Öppna kommandopalett"
+                  >
+                    ⌘K
+                  </button>
                 </form>
+                <button
+                  type="button"
+                  onClick={() => setPaletteOpen(true)}
+                  className="grid h-9 w-9 place-items-center rounded-full border border-border-hairline bg-background text-muted-foreground shadow-soft transition-colors hover:text-forest md:hidden"
+                  aria-label="Sök"
+                >
+                  <Search className="h-4 w-4" />
+                </button>
                 <LiveFeed venue={venue} />
                 <button
                   type="button"
                   onClick={() => navigate({ to: "/dashboard/salsplan", search: { new: true } })}
-                  className="grid h-9 w-9 place-items-center rounded-full bg-primary text-primary-foreground shadow-soft shadow-forest/10 transition-opacity hover:opacity-90"
+                  className="grid h-9 w-9 place-items-center rounded-full bg-primary text-primary-foreground shadow-raised transition-transform hover:-translate-y-px hover:bg-accent-strong"
                   aria-label="Ny bokning"
                 >
                   <Plus className="h-4 w-4" />
                 </button>
               </div>
+
 
             </div>
 
