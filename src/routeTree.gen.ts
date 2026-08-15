@@ -33,6 +33,7 @@ import { Route as DashboardGasterRouteImport } from './routes/dashboard.gaster'
 import { Route as DashboardInkorgRouteImport } from './routes/dashboard.inkorg'
 import { Route as DashboardPmRouteImport } from './routes/dashboard.pm'
 import { Route as DashboardSalsplanRouteImport } from './routes/dashboard.salsplan'
+import { Route as DashboardSamtalRouteImport } from './routes/dashboard.samtal'
 import { Route as ForetagKarriarRouteImport } from './routes/foretag.karriar'
 import { Route as ForetagKontaktRouteImport } from './routes/foretag.kontakt'
 import { Route as ForetagOmOssRouteImport } from './routes/foretag.om-oss'
@@ -171,6 +172,11 @@ const DashboardSalsplanRoute = DashboardSalsplanRouteImport.update({
   path: '/salsplan',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardSamtalRoute = DashboardSamtalRouteImport.update({
+  id: '/samtal',
+  path: '/samtal',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const ForetagKarriarRoute = ForetagKarriarRouteImport.update({
   id: '/foretag/karriar',
   path: '/foretag/karriar',
@@ -285,6 +291,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/inkorg': typeof DashboardInkorgRoute
   '/dashboard/pm': typeof DashboardPmRoute
   '/dashboard/salsplan': typeof DashboardSalsplanRoute
+  '/dashboard/samtal': typeof DashboardSamtalRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
   '/foretag/om-oss': typeof ForetagOmOssRoute
@@ -327,6 +334,7 @@ export interface FileRoutesByTo {
   '/dashboard/inkorg': typeof DashboardInkorgRoute
   '/dashboard/pm': typeof DashboardPmRoute
   '/dashboard/salsplan': typeof DashboardSalsplanRoute
+  '/dashboard/samtal': typeof DashboardSamtalRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
   '/foretag/om-oss': typeof ForetagOmOssRoute
@@ -371,6 +379,7 @@ export interface FileRoutesById {
   '/dashboard/inkorg': typeof DashboardInkorgRoute
   '/dashboard/pm': typeof DashboardPmRoute
   '/dashboard/salsplan': typeof DashboardSalsplanRoute
+  '/dashboard/samtal': typeof DashboardSamtalRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
   '/foretag/om-oss': typeof ForetagOmOssRoute
@@ -416,6 +425,7 @@ export interface FileRouteTypes {
     | '/dashboard/inkorg'
     | '/dashboard/pm'
     | '/dashboard/salsplan'
+    | '/dashboard/samtal'
     | '/foretag/karriar'
     | '/foretag/kontakt'
     | '/foretag/om-oss'
@@ -458,6 +468,7 @@ export interface FileRouteTypes {
     | '/dashboard/inkorg'
     | '/dashboard/pm'
     | '/dashboard/salsplan'
+    | '/dashboard/samtal'
     | '/foretag/karriar'
     | '/foretag/kontakt'
     | '/foretag/om-oss'
@@ -501,6 +512,7 @@ export interface FileRouteTypes {
     | '/dashboard/inkorg'
     | '/dashboard/pm'
     | '/dashboard/salsplan'
+    | '/dashboard/samtal'
     | '/foretag/karriar'
     | '/foretag/kontakt'
     | '/foretag/om-oss'
@@ -728,6 +740,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardSalsplanRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/samtal': {
+      id: '/dashboard/samtal'
+      path: '/samtal'
+      fullPath: '/dashboard/samtal'
+      preLoaderRoute: typeof DashboardSamtalRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/foretag/karriar': {
       id: '/foretag/karriar'
       path: '/foretag/karriar'
@@ -857,6 +876,7 @@ interface DashboardRouteChildren {
   DashboardInkorgRoute: typeof DashboardInkorgRoute
   DashboardPmRoute: typeof DashboardPmRoute
   DashboardSalsplanRoute: typeof DashboardSalsplanRoute
+  DashboardSamtalRoute: typeof DashboardSamtalRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
@@ -867,6 +887,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardInkorgRoute: DashboardInkorgRoute,
   DashboardPmRoute: DashboardPmRoute,
   DashboardSalsplanRoute: DashboardSalsplanRoute,
+  DashboardSamtalRoute: DashboardSamtalRoute,
   DashboardIndexRoute: DashboardIndexRoute,
 }
 
