@@ -15,6 +15,12 @@ import {
   X,
 } from "lucide-react";
 import type { Booking, BookingSource, Guest, TableUnit } from "@/lib/dashboard-data";
+import { PmComposer } from "@/components/dashboard/PmComposer";
+import { useTemplates } from "@/lib/pm-templates";
+import { uid } from "@/lib/pm";
+import { addPmDoc } from "@/lib/pm-store";
+import { buildPmDoc, choiceSummary, emptyChoice, type PmChoice } from "@/lib/pm-compose";
+
 
 export const tagGroups: { label: string; tags: string[] }[] = [
   { label: "Gästtyp", tags: ["VIP", "Stamgäst", "Företag", "Barnfamilj", "Press"] },
