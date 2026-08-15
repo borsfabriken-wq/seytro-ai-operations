@@ -52,7 +52,7 @@ function PmPage() {
   const [selected, setSelected] = useState<string>(stored[0]?.id ?? seedDocs[0]?.id ?? "");
   const [query, setQuery] = useState("");
   const [tab, setTab] = useState<"pm" | "mallar">("pm");
-  const [mode, setMode] = useState<"bygg" | "utskrift">("bygg");
+  const [mode, setMode] = useState<"bygg" | "utskrift">("utskrift");
   const [filter, setFilter] = useState<"kommande" | "alla">("kommande");
   const [choices, setChoices] = useState<Record<string, PmChoice>>({});
   const { templates, addTemplate, removeTemplate } = useTemplates();
@@ -311,7 +311,12 @@ function PmPage() {
                     <li key={d.id}>
                       <button
                         type="button"
-                        onClick={() => setSelected(d.id)}
+                        onClick={() => {
+                          setSelected(d.id);
+                          setMode(
+                            d.split.length === 0 && d.sections.length === 0 ? "bygg" : "utskrift",
+                          );
+                        }}
                         className={`w-full px-4 py-3 text-left transition-colors ${
                           selected === d.id ? "bg-primary/8" : "hover:bg-muted/50"
                         }`}
