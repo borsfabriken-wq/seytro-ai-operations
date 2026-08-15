@@ -129,7 +129,7 @@ export function FloorPlan({
             </span>
 
             {guest ? (
-              <span className="mt-1 max-w-[6.5rem] truncate text-[10px] leading-none opacity-80">
+              <span className="mt-1 w-full truncate text-[10px] leading-none opacity-80">
                 {guest.split(" ")[0]}
                 {until ? ` · ${until}` : ""}
               </span>
