@@ -168,13 +168,13 @@ function ConfigPage() {
                   </select>
                 </Field>
                 <Field label="Telefon">
-                  <input className={inputClass} defaultValue="+46 8 555 120 00" />
+                  <input className={inputClass} defaultValue={setup?.phone ?? "+46 8 555 120 00"} />
                 </Field>
                 <Field label="E-post">
-                  <input className={inputClass} defaultValue="bokning@seytro.com" />
+                  <input className={inputClass} defaultValue={setup?.email ?? "bokning@seytro.com"} />
                 </Field>
                 <Field label="Adress">
-                  <input className={inputClass} defaultValue="Birger Jarlsgatan 12, Stockholm" />
+                  <input className={inputClass} defaultValue={setup?.address ?? "Birger Jarlsgatan 12, Stockholm"} />
                 </Field>
                 <Field label="Tidszon">
                   <select className={inputClass} defaultValue="Europe/Stockholm">
