@@ -251,7 +251,22 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       value={{ venue, setVenue, date, setDate, service, setService, setup }}
     >
       <div data-app-ui className="flex min-h-[100svh] bg-muted/40">
-        <aside className="sticky top-0 hidden h-[100svh] w-60 shrink-0 flex-col border-r border-border bg-forest-deep px-4 py-5 text-primary-foreground lg:flex">
+        <CommandPalette
+          open={paletteOpen}
+          onOpenChange={setPaletteOpen}
+          items={groups.flatMap((g) =>
+            g.items.map((i) => ({ ...i, group: g.title ?? "Översikt" })),
+          )}
+          actions={[
+            {
+              label: "Ny bokning",
+              icon: Plus,
+              run: () => navigate({ to: "/dashboard/salsplan", search: { new: true } }),
+            },
+            ...quickActions.map((a) => ({ label: a.label, icon: a.icon, run: a.run })),
+          ]}
+        />
+        <aside className="side-nav sticky top-0 hidden h-[100svh] w-60 shrink-0 flex-col border-r border-border bg-forest-deep px-4 py-5 text-primary-foreground lg:flex">
           <Link to="/" className="px-2">
             <img src={logoAsset.url} alt="Seytro" className="h-5 w-auto" />
           </Link>
@@ -265,7 +280,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                   onClick={() => setVenue(v)}
                   className={`rounded-full px-3 py-1.5 text-center text-sm transition-colors ${
                     venue === v
-                      ? "bg-primary-foreground text-forest-deep"
+                      ? "bg-primary-foreground text-forest-deep shadow-soft"
                       : "text-primary-foreground/65 hover:text-primary-foreground"
                   }`}
                 >
@@ -274,10 +289,13 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               ))}
             </div>
           )}
-          <p className="mt-4 px-3 text-sm text-primary-foreground/85">{data.label}</p>
-          <p className="px-3 text-xs text-primary-foreground/45">
-            {venue === "hotell" ? "Hotelldrift" : "Restaurangdrift"}
-          </p>
+          <div className="mt-4 rounded-xl border border-primary-foreground/10 bg-primary-foreground/[0.06] px-3 py-2.5">
+            <p className="truncate text-sm text-primary-foreground/90">{data.label}</p>
+            <p className="mt-0.5 flex items-center gap-1.5 text-xs text-primary-foreground/45">
+              <span className="dot bg-status-free-fg text-status-free-fg" />
+              {venue === "hotell" ? "Hotelldrift" : "Restaurangdrift"} · live
+            </p>
+          </div>
 
           <nav className="mt-6 flex flex-1 flex-col gap-0.5 overflow-y-auto pb-4">
             {groups.map((group, gi) => (
@@ -294,13 +312,16 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       <Link
                         key={item.to}
                         to={item.to}
-                        className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
+                        data-active={isActive}
+                        className={`side-link flex items-center gap-3 rounded-lg px-3 py-2 text-sm ${
                           isActive
                             ? "bg-primary-foreground/12 text-primary-foreground"
                             : "text-primary-foreground/65 hover:bg-primary-foreground/8 hover:text-primary-foreground"
                         }`}
                       >
-                        <item.icon className="h-4 w-4 shrink-0" />
+                        <item.icon
+                          className={`h-4 w-4 shrink-0 ${isActive ? "text-primary" : ""}`}
+                        />
                         {item.label}
                       </Link>
                     );
@@ -309,6 +330,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               </div>
             ))}
           </nav>
+
 
 
           {plan === "custom" && (
