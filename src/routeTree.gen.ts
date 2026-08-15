@@ -28,6 +28,7 @@ import { Route as TillganglighetRouteImport } from './routes/tillganglighet'
 import { Route as VoiceAgentRouteImport } from './routes/voice-agent'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as DashboardAnalysRouteImport } from './routes/dashboard.analys'
+import { Route as DashboardAssistentRouteImport } from './routes/dashboard.assistent'
 import { Route as DashboardEpostRouteImport } from './routes/dashboard.epost'
 import { Route as DashboardEskaleringarRouteImport } from './routes/dashboard.eskaleringar'
 import { Route as DashboardGasterRouteImport } from './routes/dashboard.gaster'
@@ -150,6 +151,11 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
 const DashboardAnalysRoute = DashboardAnalysRouteImport.update({
   id: '/analys',
   path: '/analys',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAssistentRoute = DashboardAssistentRouteImport.update({
+  id: '/assistent',
+  path: '/assistent',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardEpostRoute = DashboardEpostRouteImport.update({
@@ -316,6 +322,7 @@ export interface FileRoutesByFullPath {
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
   '/dashboard/analys': typeof DashboardAnalysRoute
+  '/dashboard/assistent': typeof DashboardAssistentRoute
   '/dashboard/epost': typeof DashboardEpostRoute
   '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
@@ -364,6 +371,7 @@ export interface FileRoutesByTo {
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
   '/dashboard/analys': typeof DashboardAnalysRoute
+  '/dashboard/assistent': typeof DashboardAssistentRoute
   '/dashboard/epost': typeof DashboardEpostRoute
   '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
@@ -414,6 +422,7 @@ export interface FileRoutesById {
   '/tillganglighet': typeof TillganglighetRoute
   '/voice-agent': typeof VoiceAgentRoute
   '/dashboard/analys': typeof DashboardAnalysRoute
+  '/dashboard/assistent': typeof DashboardAssistentRoute
   '/dashboard/epost': typeof DashboardEpostRoute
   '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
@@ -465,6 +474,7 @@ export interface FileRouteTypes {
     | '/tillganglighet'
     | '/voice-agent'
     | '/dashboard/analys'
+    | '/dashboard/assistent'
     | '/dashboard/epost'
     | '/dashboard/eskaleringar'
     | '/dashboard/gaster'
@@ -513,6 +523,7 @@ export interface FileRouteTypes {
     | '/tillganglighet'
     | '/voice-agent'
     | '/dashboard/analys'
+    | '/dashboard/assistent'
     | '/dashboard/epost'
     | '/dashboard/eskaleringar'
     | '/dashboard/gaster'
@@ -562,6 +573,7 @@ export interface FileRouteTypes {
     | '/tillganglighet'
     | '/voice-agent'
     | '/dashboard/analys'
+    | '/dashboard/assistent'
     | '/dashboard/epost'
     | '/dashboard/eskaleringar'
     | '/dashboard/gaster'
@@ -765,6 +777,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardAnalysRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/assistent': {
+      id: '/dashboard/assistent'
+      path: '/assistent'
+      fullPath: '/dashboard/assistent'
+      preLoaderRoute: typeof DashboardAssistentRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/epost': {
       id: '/dashboard/epost'
       path: '/epost'
@@ -966,6 +985,7 @@ declare module '@tanstack/react-router' {
 
 interface DashboardRouteChildren {
   DashboardAnalysRoute: typeof DashboardAnalysRoute
+  DashboardAssistentRoute: typeof DashboardAssistentRoute
   DashboardEpostRoute: typeof DashboardEpostRoute
   DashboardEskaleringarRoute: typeof DashboardEskaleringarRoute
   DashboardGasterRoute: typeof DashboardGasterRoute
@@ -982,6 +1002,7 @@ interface DashboardRouteChildren {
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardAnalysRoute: DashboardAnalysRoute,
+  DashboardAssistentRoute: DashboardAssistentRoute,
   DashboardEpostRoute: DashboardEpostRoute,
   DashboardEskaleringarRoute: DashboardEskaleringarRoute,
   DashboardGasterRoute: DashboardGasterRoute,
