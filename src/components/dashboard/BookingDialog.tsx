@@ -605,7 +605,7 @@ export function BookingDialog({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center gap-2 border-t border-border px-5 py-4">
+        <div className="zone-bottom flex items-center gap-2 px-5 py-4">
           <button
             type="button"
             onClick={onClose}
