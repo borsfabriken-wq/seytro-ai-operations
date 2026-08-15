@@ -42,13 +42,24 @@ Hotellkontot behåller sin nuvarande meny; hybridkonton växlar som idag.
 
 **Listor** (ny) — tabellvy över bokningar med datum, tid, gäst + referens, sällskap, bord och status. Filter Denna dag / Kommande, statusfilter (Sittande, Bekräftad, Väntar, Klar, No-show, Avbokad), service- och zonfilter, sökning. Fot med "X bokningar · Y täckningar".
 
-**Väntelista** (ny) — gäster som väntar på tid, med flexibilitet och kontaktsätt. Vid avbokning matchar AI automatiskt och skickar erbjudande med tidsgräns; resultatet syns på raden.
+**Väntelista** (ny) — statusfilter Öppna / Väntar / Erbjudna / Omvandlade / Avbokade, räknare "X väntar", sökfält och "Lägg till gäst". Varje rad har namn, sällskap, önskad tid, telefon och ett klick för att omvandla till riktig bokning. Telefon- och e-postagenten lägger själv in gäster här. Vid avbokning matchar AI automatiskt och skickar erbjudande med tidsgräns.
 
-**Gäster** — utökat register: besökshistorik, snittnota, favoritbord, allergier, taggar (VIP, stamgäst, press), no-show-historik. Gästkort öppnas som slide-over från alla vyer. AI-förslag på merförsäljning inför besöket och kampanjsegment (t.ex. "inte besökt på 90 dagar") med AI-skrivet utskick.
+**Gäster** — filter Alla / VIP / Stamgäster / Allergier, sökfält och "Ny gäst" som slide-over (namn, telefon, e-post, taggar VIP/Allergi/Födelsedag/Stamgäst/Fönster, anteckning). Listan visar initialavatar, kontaktuppgifter, taggar och antal besök. Gästkortet öppnas som slide-over från alla vyer och visar historik, snittnota, favoritbord, no-show-historik samt AI-förslag på merförsäljning och kampanjsegment.
 
-**Konfiguration** — samlar det som idag ligger i onboarding: öppettider, zoner, bordskarta, bokningsregler, PM-mallar och AI-inställningar per kanal.
+**Konfiguration** — en lång sida med sektioner och en spara-knapp som visar "Inga ändringar" tills något ändras:
+- Restaurangprofil: namn, publik bokningsslug, logotyp-URL, adress, publik telefon/e-post/webbplats, växel för webbokning, tidszon.
+- Servicetider: lunch och middag var för sig med på/av, öppnar/stänger och veckodagar.
+- Bokningsregler: standard sittningstid, max sällskap online, bokningsbart antal dagar framåt, minsta framförhållning, max täckningar per 15 minuter, avbokningsstopp, påminnelse, samt växlar för autobekräftelse, depositionskrav och väntelista när fullt.
+- Sittningstider och tempo: tabell med sällskapsintervall och tid för lunch respektive middag, vändtid mellan sällskap, tak för täckningar/sällskap som anländer samtidigt och kortaste lucka värd att sälja.
+- Stora sällskap och privat matsal: gräns för vad som räknas som stort, samt växlar för godkännande, deposition och PM-krav.
+- Menyer och allergener: ladda upp meny (PDF/foto) eller lägg in rätter för hand, med priser och allergener som AI använder.
+- Gästtaggar: hantera taggar och se hur många bokningar som bär varje tagg.
+- Stängningar: datum, omfattning (hel dag eller pass) och orsak.
+- Gäst-SMS: leverantör, avsändarnamn, API-uppgifter och bokningstelefonnummer.
+- Våningar och bord: lista över zoner med antal bord och platser, byt namn eller ta bort; bord redigeras på Bord-vyn.
 
-PM & sällskap behålls som egen vy och länkas från Konfiguration.
+PM & sällskap behålls som egen vy och länkas från Konfiguration; PM-mallarna flyttas in som en sektion där.
+
 
 ## AI-funktionerna genomgående
 
