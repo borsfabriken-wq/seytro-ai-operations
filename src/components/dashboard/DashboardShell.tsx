@@ -3,21 +3,28 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 import {
+  AlertTriangle,
   BarChart3,
   CalendarDays,
   ClipboardList,
   Clock,
+  GanttChartSquare as GanttChart,
   Inbox,
   LayoutGrid,
+  ListChecks,
   LogOut,
+  PhoneCall,
   Plus,
   Search,
   Settings2,
+  Sparkle,
   UserPlus,
   Users,
   UtensilsCrossed,
+  Wand2,
   Zap,
 } from "lucide-react";
+
 import logoAsset from "@/assets/seytro-logo.png.asset.json";
 import {
   dashboardData,
