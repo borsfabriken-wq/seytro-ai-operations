@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  Lightbulb, createContext, useContext, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { toast } from "sonner";
 
@@ -95,11 +96,13 @@ function navGroups(venue: Venue): NavGroup[] {
             { to: "/dashboard/salsplan", label: "Rum", icon: LayoutGrid },
             { to: "/dashboard/listor", label: "Listor", icon: ListChecks },
             { to: "/dashboard/vantelista", label: "Väntelista", icon: Clock },
+            { to: "/dashboard/forslag", label: "AI-förslag", icon: Lightbulb },
           ]
         : [
             { to: "/dashboard/salsplan", label: "Bord", icon: LayoutGrid },
             { to: "/dashboard/tidslinje", label: "Tidslinje", icon: GanttChart },
             { to: "/dashboard/optimering", label: "Optimering", icon: Wand2 },
+            { to: "/dashboard/forslag", label: "AI-förslag", icon: Lightbulb },
             { to: "/dashboard/listor", label: "Listor", icon: ListChecks },
             { to: "/dashboard/vantelista", label: "Väntelista", icon: Clock },
           ],
