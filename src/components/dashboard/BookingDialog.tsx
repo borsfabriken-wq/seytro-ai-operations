@@ -82,6 +82,10 @@ export function BookingDialog({
   const [tags, setTags] = useState<string[]>([]);
   const [note, setNote] = useState("");
   const [pm, setPm] = useState("");
+  const [pmOpen, setPmOpen] = useState(false);
+  const [pmChoice, setPmChoice] = useState<PmChoice>({ ...emptyChoice });
+  const { templates } = useTemplates();
+
   const [table, setTable] = useState("");
   const [lockedTable, setLockedTable] = useState(false);
   const [showTags, setShowTags] = useState(false);
