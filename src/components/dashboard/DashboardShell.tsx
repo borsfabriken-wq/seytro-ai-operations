@@ -527,9 +527,13 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             </div>
 
           </header>
-          <main className="mx-auto w-full max-w-[112rem] flex-1 px-4 py-6 sm:px-6 sm:py-8 lg:px-9 lg:py-10">
+          <main
+            key={pathname}
+            className="mx-auto w-full max-w-[112rem] flex-1 px-4 py-6 duration-300 animate-in fade-in slide-in-from-bottom-1 sm:px-6 sm:py-8 lg:px-9 lg:py-10"
+          >
             {children}
           </main>
+
         </div>
       </div>
     </VenueContext.Provider>
