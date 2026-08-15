@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpDown, Check, Clock, FileText, Plus, Search, SlidersHorizontal, Users, X } from "lucide-react";
 import { useVenue } from "@/components/dashboard/DashboardShell";
-import { FloorPlan } from "@/components/dashboard/FloorPlan";
+import { FloorPlan, floorStateOf } from "@/components/dashboard/FloorPlan";
 import { PmBookIcon, PmModal } from "@/components/dashboard/PmModal";
 import {
   BookingDialog,
@@ -139,12 +139,18 @@ function FloorPage() {
   const unplaced = filtered.filter((b) => b.placed === false);
   const placed = filtered.filter((b) => b.placed !== false);
 
-  const counts = {
-    ledigt: visibleUnits.filter((u) => u.status === "ledigt").length,
-    dukat: visibleUnits.filter((u) => u.status === "dukat").length,
-    upptaget: visibleUnits.filter((u) => u.status === "upptaget").length,
-    städas: visibleUnits.filter((u) => u.status === "städas").length,
-  };
+  const counts =
+    venue === "hotell"
+      ? {
+          ledigt: visibleUnits.filter((u) => u.status === "ledigt").length,
+          dukat: visibleUnits.filter((u) => u.status === "dukat").length,
+          upptaget: visibleUnits.filter((u) => u.status === "upptaget").length,
+          städas: visibleUnits.filter((u) => u.status === "städas").length,
+        }
+      : {
+          Tillgängligt: visibleUnits.filter((u) => floorStateOf(u) === "tillgängligt").length,
+          Upptaget: visibleUnits.filter((u) => floorStateOf(u) === "upptaget").length,
+        };
 
   const activeBooking = bookings.find((b) => b.id === selectedBooking) ?? null;
   const activeUnit = data.units.find((u) => u.id === selectedUnit) ?? null;
@@ -216,7 +222,12 @@ function FloorPage() {
           {Object.entries(counts).map(([k, v]) => (
             <span
               key={k}
-              className={`rounded-full border px-3 py-1 text-xs capitalize ${unitStatusStyles[k as keyof typeof counts]}`}
+              className={`rounded-full border px-3 py-1 text-xs capitalize ${
+                unitStatusStyles[k as TableUnit["status"]] ??
+                (k === "Upptaget"
+                  ? "border-transparent bg-surface-inverse text-primary-foreground"
+                  : "border-border-subtle bg-surface-2 text-muted-foreground")
+              }`}
             >
               {k} · {v}
             </span>
@@ -399,6 +410,7 @@ function FloorPage() {
           {venue === "restaurang" ? (
             <FloorPlan
               units={visibleUnits}
+              bookings={bookings}
               selected={selectedUnit}
               onSelect={handleUnit}
               dragging={Boolean(draggingId)}
