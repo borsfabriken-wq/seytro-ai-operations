@@ -235,6 +235,63 @@
   --color-moss: var(--moss);
   --color-moss-soft: var(--moss-soft);
 
+  /* Brandsystem: ytnivåer */
+  --color-surface-0: var(--surface-0);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-surface-accent: var(--surface-accent);
+  --color-surface-inverse: var(--surface-inverse);
+
+  /* Brandsystem: text */
+  --color-ink: var(--ink);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+
+  /* Brandsystem: accent */
+  --color-accent-base: var(--accent-base);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-tint: var(--accent-tint);
+  --color-accent-tint-strong: var(--accent-tint-strong);
+  --color-accent-edge: var(--accent-edge);
+
+  /* Brandsystem: kanter */
+  --color-border-hairline: var(--border-hairline);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+
+  /* Brandsystem: status */
+  --color-status-free: var(--status-free);
+  --color-status-free-fg: var(--status-free-fg);
+  --color-status-free-border: var(--status-free-border);
+  --color-status-set: var(--status-set);
+  --color-status-set-fg: var(--status-set-fg);
+  --color-status-set-border: var(--status-set-border);
+  --color-status-busy: var(--status-busy);
+  --color-status-busy-fg: var(--status-busy-fg);
+  --color-status-busy-border: var(--status-busy-border);
+  --color-status-clean: var(--status-clean);
+  --color-status-clean-fg: var(--status-clean-fg);
+  --color-status-clean-border: var(--status-clean-border);
+  --color-status-wait: var(--status-wait);
+  --color-status-wait-fg: var(--status-wait-fg);
+  --color-status-wait-border: var(--status-wait-border);
+  --color-status-alert: var(--status-alert);
+  --color-status-alert-fg: var(--status-alert-fg);
+  --color-status-alert-border: var(--status-alert-border);
+  --color-status-done: var(--status-done);
+  --color-status-done-fg: var(--status-done-fg);
+  --color-status-done-border: var(--status-done-border);
+
+  /* Brandsystem: skuggor */
+  --shadow-hairline: var(--shadow-hairline);
+  --shadow-soft: var(--shadow-soft);
+  --shadow-raised: var(--shadow-raised);
+  --shadow-overlay: var(--shadow-overlay);
+  --shadow-focus: var(--shadow-focus);
+
+
   --font-display: "Instrument Sans", "Inter Tight", system-ui, sans-serif;
   --font-sans: "Inter Tight", system-ui, sans-serif;
 }
