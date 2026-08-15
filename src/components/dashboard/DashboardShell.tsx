@@ -148,6 +148,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   const venues = venuesForPlan(plan, setup?.type);
   const canSwitch = venues.length > 1;
+  const groups = useMemo(() => navGroups(venue), [venue]);
+  const flatNav = useMemo(() => groups.flatMap((g) => g.items), [groups]);
+
 
   useEffect(() => {
     const p = readAccountPlan();
