@@ -36,6 +36,7 @@ import { Route as DashboardListorRouteImport } from './routes/dashboard.listor'
 import { Route as DashboardPmRouteImport } from './routes/dashboard.pm'
 import { Route as DashboardSalsplanRouteImport } from './routes/dashboard.salsplan'
 import { Route as DashboardSamtalRouteImport } from './routes/dashboard.samtal'
+import { Route as DashboardTidslinjeRouteImport } from './routes/dashboard.tidslinje'
 import { Route as ForetagKarriarRouteImport } from './routes/foretag.karriar'
 import { Route as ForetagKontaktRouteImport } from './routes/foretag.kontakt'
 import { Route as ForetagOmOssRouteImport } from './routes/foretag.om-oss'
@@ -189,6 +190,11 @@ const DashboardSamtalRoute = DashboardSamtalRouteImport.update({
   path: '/samtal',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardTidslinjeRoute = DashboardTidslinjeRouteImport.update({
+  id: '/tidslinje',
+  path: '/tidslinje',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const ForetagKarriarRoute = ForetagKarriarRouteImport.update({
   id: '/foretag/karriar',
   path: '/foretag/karriar',
@@ -306,6 +312,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/pm': typeof DashboardPmRoute
   '/dashboard/salsplan': typeof DashboardSalsplanRoute
   '/dashboard/samtal': typeof DashboardSamtalRoute
+  '/dashboard/tidslinje': typeof DashboardTidslinjeRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
   '/foretag/om-oss': typeof ForetagOmOssRoute
@@ -351,6 +358,7 @@ export interface FileRoutesByTo {
   '/dashboard/pm': typeof DashboardPmRoute
   '/dashboard/salsplan': typeof DashboardSalsplanRoute
   '/dashboard/samtal': typeof DashboardSamtalRoute
+  '/dashboard/tidslinje': typeof DashboardTidslinjeRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
   '/foretag/om-oss': typeof ForetagOmOssRoute
@@ -398,6 +406,7 @@ export interface FileRoutesById {
   '/dashboard/pm': typeof DashboardPmRoute
   '/dashboard/salsplan': typeof DashboardSalsplanRoute
   '/dashboard/samtal': typeof DashboardSamtalRoute
+  '/dashboard/tidslinje': typeof DashboardTidslinjeRoute
   '/foretag/karriar': typeof ForetagKarriarRoute
   '/foretag/kontakt': typeof ForetagKontaktRoute
   '/foretag/om-oss': typeof ForetagOmOssRoute
@@ -446,6 +455,7 @@ export interface FileRouteTypes {
     | '/dashboard/pm'
     | '/dashboard/salsplan'
     | '/dashboard/samtal'
+    | '/dashboard/tidslinje'
     | '/foretag/karriar'
     | '/foretag/kontakt'
     | '/foretag/om-oss'
@@ -491,6 +501,7 @@ export interface FileRouteTypes {
     | '/dashboard/pm'
     | '/dashboard/salsplan'
     | '/dashboard/samtal'
+    | '/dashboard/tidslinje'
     | '/foretag/karriar'
     | '/foretag/kontakt'
     | '/foretag/om-oss'
@@ -537,6 +548,7 @@ export interface FileRouteTypes {
     | '/dashboard/pm'
     | '/dashboard/salsplan'
     | '/dashboard/samtal'
+    | '/dashboard/tidslinje'
     | '/foretag/karriar'
     | '/foretag/kontakt'
     | '/foretag/om-oss'
@@ -785,6 +797,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardSamtalRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/tidslinje': {
+      id: '/dashboard/tidslinje'
+      path: '/tidslinje'
+      fullPath: '/dashboard/tidslinje'
+      preLoaderRoute: typeof DashboardTidslinjeRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/foretag/karriar': {
       id: '/foretag/karriar'
       path: '/foretag/karriar'
@@ -917,6 +936,7 @@ interface DashboardRouteChildren {
   DashboardPmRoute: typeof DashboardPmRoute
   DashboardSalsplanRoute: typeof DashboardSalsplanRoute
   DashboardSamtalRoute: typeof DashboardSamtalRoute
+  DashboardTidslinjeRoute: typeof DashboardTidslinjeRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
@@ -930,6 +950,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardPmRoute: DashboardPmRoute,
   DashboardSalsplanRoute: DashboardSalsplanRoute,
   DashboardSamtalRoute: DashboardSamtalRoute,
+  DashboardTidslinjeRoute: DashboardTidslinjeRoute,
   DashboardIndexRoute: DashboardIndexRoute,
 }
 
