@@ -15,6 +15,12 @@ import {
   X,
 } from "lucide-react";
 import type { Booking, BookingSource, Guest, TableUnit } from "@/lib/dashboard-data";
+import { PmComposer } from "@/components/dashboard/PmComposer";
+import { useTemplates } from "@/lib/pm-templates";
+import { uid } from "@/lib/pm";
+import { addPmDoc } from "@/lib/pm-store";
+import { buildPmDoc, choiceSummary, emptyChoice, type PmChoice } from "@/lib/pm-compose";
+
 
 export const tagGroups: { label: string; tags: string[] }[] = [
   { label: "Gästtyp", tags: ["VIP", "Stamgäst", "Företag", "Barnfamilj", "Press"] },
@@ -76,6 +82,10 @@ export function BookingDialog({
   const [tags, setTags] = useState<string[]>([]);
   const [note, setNote] = useState("");
   const [pm, setPm] = useState("");
+  const [pmOpen, setPmOpen] = useState(false);
+  const [pmChoice, setPmChoice] = useState<PmChoice>({ ...emptyChoice });
+  const { templates } = useTemplates();
+
   const [table, setTable] = useState("");
   const [lockedTable, setLockedTable] = useState(false);
   const [showTags, setShowTags] = useState(false);
@@ -125,11 +135,37 @@ export function BookingDialog({
   const toggleTag = (t: string) =>
     setTags((prev) => (prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]));
 
+  const hasPm =
+    pmOpen && (pmChoice.menuId || pmChoice.drinkId || pmChoice.extras.length > 0);
+
   const save = () => {
-    const noteText = [note.trim(), pm.trim()].filter(Boolean).join("\n\n");
+    const guestName = name.trim() || "Ny gäst";
+    const summary = hasPm ? choiceSummary(pmChoice, templates, Math.max(1, party)) : "";
+    const noteText = [note.trim(), pm.trim(), summary].filter(Boolean).join("\n\n");
+
+    if (hasPm) {
+      addPmDoc(
+        buildPmDoc(
+          {
+            id: uid("pm"),
+            title: `${guestName} — ${Math.max(1, party)} personer`,
+            date: "idag",
+            time,
+            party: Math.max(1, party),
+            status: "utkast",
+            ...(company.trim() ? { contact: company.trim() } : {}),
+            ...(phone.trim() ? { phone: phone.trim() } : {}),
+            ...(email.trim() ? { email: email.trim() } : {}),
+          },
+          pmChoice,
+          templates,
+        ),
+      );
+    }
+
     onSave({
       time,
-      name: name.trim() || "Ny gäst",
+      name: guestName,
       party: Math.max(1, party),
       table,
       status,
@@ -152,10 +188,13 @@ export function BookingDialog({
     setTags([]);
     setNote("");
     setPm("");
+    setPmChoice({ ...emptyChoice });
+    setPmOpen(false);
     setTable("");
     setLockedTable(false);
     onClose();
   };
+
 
   const unit = unitWord.toLowerCase();
 
@@ -518,33 +557,41 @@ export function BookingDialog({
             )}
           </div>
 
-          {party >= 8 && (
-            <div className="rounded-xl border border-primary/30 bg-primary/5 p-3">
-              <p className="text-xs font-medium text-primary">
-                Sällskap på {party} gäster — skapa PM
-              </p>
-              <select
-                value=""
-                onChange={(e) => {
-                  const tpl = pmTemplates.find((t) => t.label === e.target.value);
-                  if (tpl) setPm(tpl.text);
-                }}
-                className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
-              >
-                <option value="">Välj mall…</option>
-                {pmTemplates.map((t) => (
-                  <option key={t.label}>{t.label}</option>
-                ))}
-              </select>
-              <textarea
-                value={pm}
-                onChange={(e) => setPm(e.target.value)}
-                rows={5}
-                placeholder="PM för sällskapet…"
-                className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
-              />
-            </div>
-          )}
+          {/* PM direkt i bokningen */}
+          <div className="rounded-xl border border-primary/30 bg-primary/5 p-3">
+            <button
+              type="button"
+              onClick={() => setPmOpen((v) => !v)}
+              className="flex w-full items-start justify-between gap-3 text-left"
+            >
+              <span className="min-w-0">
+                <span className="block text-xs font-medium text-primary">
+                  Skapa PM direkt i bokningen
+                </span>
+                <span className="mt-0.5 block text-[11px] text-muted-foreground">
+                  {party >= 8
+                    ? `Sällskap på ${party} gäster — PM rekommenderas`
+                    : "Fast meny, dryckespaket och speciella artiklar"}
+                </span>
+              </span>
+              <span className="shrink-0 text-[11px] text-muted-foreground">
+                {pmOpen ? "Dölj" : "Öppna"}
+              </span>
+            </button>
+
+            {pmOpen && (
+              <div className="mt-3 rounded-xl border border-border bg-card p-3">
+                <PmComposer
+                  compact
+                  party={party}
+                  templates={templates}
+                  value={pmChoice}
+                  onChange={setPmChoice}
+                />
+              </div>
+            )}
+          </div>
+
 
           <label className="flex items-start gap-2 text-xs text-muted-foreground">
             <input
