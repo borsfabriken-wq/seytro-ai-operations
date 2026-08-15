@@ -125,11 +125,37 @@ export function BookingDialog({
   const toggleTag = (t: string) =>
     setTags((prev) => (prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]));
 
+  const hasPm =
+    pmOpen && (pmChoice.menuId || pmChoice.drinkId || pmChoice.extras.length > 0);
+
   const save = () => {
-    const noteText = [note.trim(), pm.trim()].filter(Boolean).join("\n\n");
+    const guestName = name.trim() || "Ny gäst";
+    const summary = hasPm ? choiceSummary(pmChoice, templates, Math.max(1, party)) : "";
+    const noteText = [note.trim(), pm.trim(), summary].filter(Boolean).join("\n\n");
+
+    if (hasPm) {
+      addPmDoc(
+        buildPmDoc(
+          {
+            id: uid("pm"),
+            title: `${guestName} — ${Math.max(1, party)} personer`,
+            date: "idag",
+            time,
+            party: Math.max(1, party),
+            status: "utkast",
+            ...(company.trim() ? { contact: company.trim() } : {}),
+            ...(phone.trim() ? { phone: phone.trim() } : {}),
+            ...(email.trim() ? { email: email.trim() } : {}),
+          },
+          pmChoice,
+          templates,
+        ),
+      );
+    }
+
     onSave({
       time,
-      name: name.trim() || "Ny gäst",
+      name: guestName,
       party: Math.max(1, party),
       table,
       status,
@@ -152,10 +178,13 @@ export function BookingDialog({
     setTags([]);
     setNote("");
     setPm("");
+    setPmChoice({ ...emptyChoice });
+    setPmOpen(false);
     setTable("");
     setLockedTable(false);
     onClose();
   };
+
 
   const unit = unitWord.toLowerCase();
 
