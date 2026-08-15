@@ -232,6 +232,8 @@
   --color-tide-soft: var(--tide-soft);
   --color-dashboard-header: var(--dashboard-header);
   --color-dashboard-header-edge: var(--dashboard-header-edge);
+  --color-dashboard-footer: var(--dashboard-footer);
+  --color-dashboard-footer-edge: var(--dashboard-footer-edge);
   --color-ember: var(--ember);
   --color-ember-soft: var(--ember-soft);
   --color-moss: var(--moss);
