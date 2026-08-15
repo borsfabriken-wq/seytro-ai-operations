@@ -9,6 +9,7 @@ import {
   ClipboardList,
   Clock,
   GanttChartSquare as GanttChart,
+  Lightbulb,
   Inbox,
   LayoutGrid,
   ListChecks,
@@ -95,11 +96,13 @@ function navGroups(venue: Venue): NavGroup[] {
             { to: "/dashboard/salsplan", label: "Rum", icon: LayoutGrid },
             { to: "/dashboard/listor", label: "Listor", icon: ListChecks },
             { to: "/dashboard/vantelista", label: "Väntelista", icon: Clock },
+            { to: "/dashboard/forslag", label: "AI-förslag", icon: Lightbulb },
           ]
         : [
             { to: "/dashboard/salsplan", label: "Bord", icon: LayoutGrid },
             { to: "/dashboard/tidslinje", label: "Tidslinje", icon: GanttChart },
             { to: "/dashboard/optimering", label: "Optimering", icon: Wand2 },
+            { to: "/dashboard/forslag", label: "AI-förslag", icon: Lightbulb },
             { to: "/dashboard/listor", label: "Listor", icon: ListChecks },
             { to: "/dashboard/vantelista", label: "Väntelista", icon: Clock },
           ],

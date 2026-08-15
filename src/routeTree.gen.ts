@@ -31,6 +31,7 @@ import { Route as DashboardAnalysRouteImport } from './routes/dashboard.analys'
 import { Route as DashboardAssistentRouteImport } from './routes/dashboard.assistent'
 import { Route as DashboardEpostRouteImport } from './routes/dashboard.epost'
 import { Route as DashboardEskaleringarRouteImport } from './routes/dashboard.eskaleringar'
+import { Route as DashboardForslagRouteImport } from './routes/dashboard.forslag'
 import { Route as DashboardGasterRouteImport } from './routes/dashboard.gaster'
 import { Route as DashboardInkorgRouteImport } from './routes/dashboard.inkorg'
 import { Route as DashboardKonfigurationRouteImport } from './routes/dashboard.konfiguration'
@@ -167,6 +168,11 @@ const DashboardEpostRoute = DashboardEpostRouteImport.update({
 const DashboardEskaleringarRoute = DashboardEskaleringarRouteImport.update({
   id: '/eskaleringar',
   path: '/eskaleringar',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardForslagRoute = DashboardForslagRouteImport.update({
+  id: '/forslag',
+  path: '/forslag',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardGasterRoute = DashboardGasterRouteImport.update({
@@ -331,6 +337,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/assistent': typeof DashboardAssistentRoute
   '/dashboard/epost': typeof DashboardEpostRoute
   '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
+  '/dashboard/forslag': typeof DashboardForslagRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
   '/dashboard/konfiguration': typeof DashboardKonfigurationRoute
@@ -381,6 +388,7 @@ export interface FileRoutesByTo {
   '/dashboard/assistent': typeof DashboardAssistentRoute
   '/dashboard/epost': typeof DashboardEpostRoute
   '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
+  '/dashboard/forslag': typeof DashboardForslagRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
   '/dashboard/konfiguration': typeof DashboardKonfigurationRoute
@@ -433,6 +441,7 @@ export interface FileRoutesById {
   '/dashboard/assistent': typeof DashboardAssistentRoute
   '/dashboard/epost': typeof DashboardEpostRoute
   '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
+  '/dashboard/forslag': typeof DashboardForslagRoute
   '/dashboard/gaster': typeof DashboardGasterRoute
   '/dashboard/inkorg': typeof DashboardInkorgRoute
   '/dashboard/konfiguration': typeof DashboardKonfigurationRoute
@@ -486,6 +495,7 @@ export interface FileRouteTypes {
     | '/dashboard/assistent'
     | '/dashboard/epost'
     | '/dashboard/eskaleringar'
+    | '/dashboard/forslag'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
     | '/dashboard/konfiguration'
@@ -536,6 +546,7 @@ export interface FileRouteTypes {
     | '/dashboard/assistent'
     | '/dashboard/epost'
     | '/dashboard/eskaleringar'
+    | '/dashboard/forslag'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
     | '/dashboard/konfiguration'
@@ -587,6 +598,7 @@ export interface FileRouteTypes {
     | '/dashboard/assistent'
     | '/dashboard/epost'
     | '/dashboard/eskaleringar'
+    | '/dashboard/forslag'
     | '/dashboard/gaster'
     | '/dashboard/inkorg'
     | '/dashboard/konfiguration'
@@ -810,6 +822,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardEskaleringarRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/forslag': {
+      id: '/dashboard/forslag'
+      path: '/forslag'
+      fullPath: '/dashboard/forslag'
+      preLoaderRoute: typeof DashboardForslagRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/gaster': {
       id: '/dashboard/gaster'
       path: '/gaster'
@@ -1007,6 +1026,7 @@ interface DashboardRouteChildren {
   DashboardAssistentRoute: typeof DashboardAssistentRoute
   DashboardEpostRoute: typeof DashboardEpostRoute
   DashboardEskaleringarRoute: typeof DashboardEskaleringarRoute
+  DashboardForslagRoute: typeof DashboardForslagRoute
   DashboardGasterRoute: typeof DashboardGasterRoute
   DashboardInkorgRoute: typeof DashboardInkorgRoute
   DashboardKonfigurationRoute: typeof DashboardKonfigurationRoute
@@ -1025,6 +1045,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardAssistentRoute: DashboardAssistentRoute,
   DashboardEpostRoute: DashboardEpostRoute,
   DashboardEskaleringarRoute: DashboardEskaleringarRoute,
+  DashboardForslagRoute: DashboardForslagRoute,
   DashboardGasterRoute: DashboardGasterRoute,
   DashboardInkorgRoute: DashboardInkorgRoute,
   DashboardKonfigurationRoute: DashboardKonfigurationRoute,
