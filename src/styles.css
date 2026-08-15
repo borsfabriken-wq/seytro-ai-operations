@@ -99,11 +99,11 @@
   --border-strong: oklch(0.833 0.012 85);    /* sten */
 
   /* --- Skuggor --------------------------------------------------- */
-  --shadow-hairline: 0 1px 1px oklch(0.335 0.008 220 / 4%);
-  --shadow-soft: 0 1px 2px oklch(0.335 0.008 220 / 5%), 0 4px 12px -6px oklch(0.335 0.008 220 / 8%);
-  --shadow-raised: 0 2px 4px oklch(0.335 0.008 220 / 6%), 0 12px 28px -12px oklch(0.335 0.008 220 / 14%);
-  --shadow-overlay: 0 8px 16px -8px oklch(0.335 0.008 220 / 12%), 0 32px 64px -24px oklch(0.335 0.008 220 / 22%);
-  --shadow-focus: 0 0 0 3px oklch(0.673 0.152 251 / 22%);
+  --elev-hairline: 0 1px 1px oklch(0.335 0.008 220 / 4%);
+  --elev-soft: 0 1px 2px oklch(0.335 0.008 220 / 5%), 0 4px 12px -6px oklch(0.335 0.008 220 / 8%);
+  --elev-raised: 0 2px 4px oklch(0.335 0.008 220 / 6%), 0 12px 28px -12px oklch(0.335 0.008 220 / 14%);
+  --elev-overlay: 0 8px 16px -8px oklch(0.335 0.008 220 / 12%), 0 32px 64px -24px oklch(0.335 0.008 220 / 22%);
+  --elev-focus: 0 0 0 3px oklch(0.673 0.152 251 / 22%);
 
   /* --- Status (dova, tonade) ------------------------------------- */
   --status-free: oklch(0.968 0.022 160);
@@ -285,11 +285,11 @@
   --color-status-done-border: var(--status-done-border);
 
   /* Brandsystem: skuggor */
-  --shadow-hairline: var(--shadow-hairline);
-  --shadow-soft: var(--shadow-soft);
-  --shadow-raised: var(--shadow-raised);
-  --shadow-overlay: var(--shadow-overlay);
-  --shadow-focus: var(--shadow-focus);
+  --shadow-hairline: var(--elev-hairline);
+  --shadow-soft: var(--elev-soft);
+  --shadow-raised: var(--elev-raised);
+  --shadow-overlay: var(--elev-overlay);
+  --shadow-focus: var(--elev-focus);
 
 
   --font-display: "Instrument Sans", "Inter Tight", system-ui, sans-serif;
