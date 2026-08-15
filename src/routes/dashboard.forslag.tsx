@@ -50,6 +50,10 @@ function SuggestionsPage() {
   const [nonce, setNonce] = useState(0);
 
   const units = data.units;
+  const unit = data.unitWord ?? "bord";
+  const Unit = unit.charAt(0).toUpperCase() + unit.slice(1);
+  const swap = (text: string) =>
+    unit === "bord" ? text : text.replace(/Bord /g, `${Unit} `).replace(/bord /g, `${unit} `);
 
   const conflicts = useMemo(
     () => detectConflicts(serviceBookings, units).filter((c) => !resolved.includes(c.id)),
@@ -76,7 +80,7 @@ function SuggestionsPage() {
 
   const cards = [
     { label: "Kapacitetskonflikter", value: String(conflicts.length) },
-    { label: "Bokningar med bordsförslag", value: String(perBooking.length) },
+    { label: `Bokningar med ${unit}sförslag`, value: String(perBooking.length) },
     {
       label: "Topptimme",
       value: peak ? `${peak.time} · ${peak.covers} gäster` : "—",
@@ -93,7 +97,7 @@ function SuggestionsPage() {
         <div>
           <h1 className="text-display text-forest">AI-förslag</h1>
           <p className="text-body text-muted-foreground">
-            AI läser hela passet, hittar krockar och föreslår bord, zon, tid och bemanning.
+            AI läser hela passet, hittar krockar och föreslår {unit}, zon, tid och bemanning.
           </p>
         </div>
         <button
@@ -141,7 +145,7 @@ function SuggestionsPage() {
             >
               <div className="min-w-0">
                 <p className="flex flex-wrap items-center gap-2 text-forest">
-                  {c.title}
+                  {swap(c.title)}
                   <span
                     className={`rounded-full border px-2 py-0.5 text-[11px] ${
                       c.severity === "hög"
@@ -152,7 +156,7 @@ function SuggestionsPage() {
                     {c.kind}
                   </span>
                 </p>
-                <p className="text-xs text-muted-foreground">{c.detail}</p>
+                <p className="text-xs text-muted-foreground">{swap(c.detail)}</p>
               </div>
               <div className="flex items-center gap-2">
                 {c.fix && (
@@ -172,7 +176,7 @@ function SuggestionsPage() {
                     }}
                     className="rounded-full bg-primary px-3.5 py-1.5 text-xs text-primary-foreground"
                   >
-                    {c.fix.label}
+                    {swap(c.fix.label)}
                   </button>
                 )}
                 <button
@@ -192,7 +196,7 @@ function SuggestionsPage() {
       <section className="rounded-2xl border border-border bg-card">
         <div className="flex items-center gap-2 border-b border-border px-5 py-4">
           <Lightbulb className="h-4 w-4 text-muted-foreground" />
-          <p className="text-sm text-forest">Bästa bord, zon och tid per bokning</p>
+          <p className="text-sm text-forest">Bästa {unit}, zon och tid per bokning</p>
         </div>
         {perBooking.length === 0 ? (
           <p className="px-5 py-10 text-center text-sm text-muted-foreground">
@@ -206,7 +210,7 @@ function SuggestionsPage() {
                   {booking.name}{" "}
                   <span className="text-sm text-muted-foreground">
                     · {booking.party} pers · {booking.time}
-                    {booking.table ? ` · bord ${booking.table}` : " · ej placerad"}
+                    {booking.table ? ` · ${unit} ${booking.table}` : " · ej placerad"}
                   </span>
                 </p>
                 {booking.lockedTable && (
@@ -236,7 +240,7 @@ function SuggestionsPage() {
                             detail: `${booking.name} · bord ${t.table.label} (${t.table.zone}) kl ${booking.time}`,
                             payload: { name: booking.name, unit: t.table.label },
                           });
-                          toast.success(`${booking.name} placerad på bord ${t.table.label}`);
+                          toast.success(`${booking.name} placerad på ${unit} ${t.table.label}`);
                         }}
                         className={`rounded-xl border p-3 text-left transition-colors disabled:opacity-60 ${
                           i === 0
@@ -247,7 +251,7 @@ function SuggestionsPage() {
                         <p className="flex items-center justify-between text-sm text-forest">
                           <span className="flex items-center gap-1.5">
                             <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
-                            Bord {t.table.label}
+                            {Unit} {t.table.label}
                           </span>
                           <span className="tabular-nums text-xs text-muted-foreground">
                             {t.score} p
