@@ -451,7 +451,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 </div>
               )}
               <nav className="flex gap-1">
-                {nav.map((item) => {
+                {flatNav.map((item) => {
                   const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
                   return (
                     <Link
