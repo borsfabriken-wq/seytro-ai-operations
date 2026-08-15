@@ -58,7 +58,7 @@ type Drag = { bookingId: string; grabMinutes: number };
 
 function CalendarPage() {
   const { data, venue } = useVenue();
-  const unitWord = data.unitWord ?? "bord";
+  const unitWord = (data.unitWord ?? "bord").toLowerCase();
   const Unit = unitWord.charAt(0).toUpperCase() + unitWord.slice(1);
 
   const [bookings, setBookings] = useState<Booking[]>(data.bookings);
