@@ -66,7 +66,11 @@ export function freeTablesFor(
   units: TableUnit[],
   atTime?: string,
 ) {
-  const probe: Booking = atTime ? { ...booking, time: atTime, end: undefined } : booking;
+  let probe: Booking = booking;
+  if (atTime) {
+    const { end: _end, ...rest } = booking;
+    probe = { ...rest, time: atTime };
+  }
   return units.filter((unit) => {
     const clash = bookings.some(
       (other) =>
@@ -148,7 +152,6 @@ export function detectConflicts(bookings: Booking[], units: TableUnit[]): Capaci
 
   // 3. Oplacerade bokningar.
   for (const b of list) {
-    if (b.placed || !b.table === false) continue;
     if (b.placed) continue;
     const best = bestTables(b, list, units)[0];
     out.push({
