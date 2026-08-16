@@ -255,10 +255,12 @@ export function FloorPlan({
                     ? "scale-[1.08] ring-2 ring-primary"
                     : isSelected || peek?.id === u.id
                       ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
-                      : dragging && state === "tillgängligt"
-                        ? "ring-1 ring-primary/40"
-                        : ""
-                }`}
+                      : isHit
+                        ? "ring-2 ring-primary/70 ring-offset-2 ring-offset-background"
+                        : dragging && state === "tillgängligt"
+                          ? "ring-1 ring-primary/40"
+                          : ""
+                } ${isHit === false ? "opacity-25" : ""}`}
               >
                 <span className="text-[11px] font-medium leading-none tabular-nums">
                   {u.label}
