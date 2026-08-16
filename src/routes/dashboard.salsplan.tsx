@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpDown, Check, Clock, FileText, Plus, Search, SlidersHorizontal, Users, X } from "lucide-react";
 import { useVenue } from "@/components/dashboard/DashboardShell";
@@ -68,6 +68,17 @@ function FloorPage() {
   const [drawerId, setDrawerId] = useState<string | null>(null);
   const [quickOpen, setQuickOpen] = useState(false);
   const [quickIndex, setQuickIndex] = useState(0);
+  const quickRef = useRef<HTMLDivElement>(null);
+
+  // Stäng snabbsökens träfflista när man klickar utanför.
+  useEffect(() => {
+    if (!quickOpen) return;
+    const onDown = (e: MouseEvent) => {
+      if (!quickRef.current?.contains(e.target as Node)) setQuickOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [quickOpen]);
 
   // Öppna nybokning / förifylld sökning när man kommer från toppraden.
   useEffect(() => {
@@ -362,7 +373,7 @@ function FloorPage() {
       <div className="grid gap-6 xl:grid-cols-[23rem_minmax(0,1fr)]">
         {/* Gäster / bokningar */}
         <div className="flex max-h-[44rem] flex-col overflow-hidden rounded-2xl border border-border bg-card">
-          <div className="relative border-b border-border px-4 py-3">
+          <div ref={quickRef} className="relative border-b border-border px-4 py-3">
             <div className="flex items-center gap-2">
               <Search className="h-4 w-4 text-muted-foreground" />
               <input
