@@ -202,6 +202,7 @@ export function FloorPlan({
             const guest = booking?.name ?? u.guest;
             const party = booking?.party;
             const f = footprint(u);
+            const isHit = hits ? hits.has(u.id) : null;
 
             return (
               <button
