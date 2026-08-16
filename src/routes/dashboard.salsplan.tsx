@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpDown, Check, Clock, FileText, Plus, Search, SlidersHorizontal, Users, X } from "lucide-react";
 import { useVenue } from "@/components/dashboard/DashboardShell";
@@ -66,6 +66,19 @@ function FloorPage() {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [openPmId, setOpenPmId] = useState<string | null>(null);
   const [drawerId, setDrawerId] = useState<string | null>(null);
+  const [quickOpen, setQuickOpen] = useState(false);
+  const [quickIndex, setQuickIndex] = useState(0);
+  const quickRef = useRef<HTMLDivElement>(null);
+
+  // Stäng snabbsökens träfflista när man klickar utanför.
+  useEffect(() => {
+    if (!quickOpen) return;
+    const onDown = (e: MouseEvent) => {
+      if (!quickRef.current?.contains(e.target as Node)) setQuickOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [quickOpen]);
 
   // Öppna nybokning / förifylld sökning när man kommer från toppraden.
   useEffect(() => {
@@ -165,6 +178,98 @@ function FloorPage() {
           (Boolean(drawerBooking.email) && g.email === drawerBooking.email),
       ) ?? null)
     : null;
+
+  /** Snabbsök: träffar både bord/rum och bokningar i en enda lista. */
+  type QuickHit =
+    | { kind: "bord"; key: string; badge: string; title: string; meta: string; unitId: string }
+    | { kind: "bokning"; key: string; badge: string; title: string; meta: string; bookingId: string };
+
+  const quickResults = useMemo<QuickHit[]>(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    const unitHits: QuickHit[] = data.units
+      .filter(
+        (u) => u.label.toLowerCase().includes(q) || u.zone.toLowerCase().includes(q),
+      )
+      .slice(0, 6)
+      .map((u) => {
+        const b = bookings.find(
+          (x) => x.table === u.label && x.placed !== false && x.status !== "avbokad",
+        );
+        return {
+          kind: "bord" as const,
+          key: `u-${u.id}`,
+          badge: u.label,
+          title: `${venue === "hotell" ? "Rum" : "Bord"} ${u.label} · ${u.zone}`,
+          meta: b ? `${b.time} · ${b.name} (${b.party})` : `${u.seats} platser · tillgängligt`,
+          unitId: u.id,
+        };
+      });
+
+    const bookingHits: QuickHit[] = bookings
+      .filter(
+        (b) =>
+          b.name.toLowerCase().includes(q) ||
+          b.table.toLowerCase().includes(q) ||
+          b.time.includes(q) ||
+          (b.phone ?? "").includes(q) ||
+          (b.company ?? "").toLowerCase().includes(q) ||
+          b.tags.some((t) => t.toLowerCase().includes(q)),
+      )
+      .sort((a, b) => a.time.localeCompare(b.time))
+      .slice(0, 8)
+      .map((b) => ({
+        kind: "bokning" as const,
+        key: `b-${b.id}`,
+        badge: String(b.party),
+        title: b.name,
+        meta: `${b.time}${b.end ? `–${b.end}` : ""} · ${
+          b.table ? `${venue === "hotell" ? "rum" : "bord"} ${b.table}` : "ej placerad"
+        }${b.tags.length ? ` · ${b.tags.join(", ")}` : ""}`,
+        bookingId: b.id,
+      }));
+
+    return [...unitHits, ...bookingHits];
+  }, [query, bookings, data.units, venue]);
+
+  /** Bord som matchar sökningen lyfts fram på planen, övriga tonas ned. */
+  const highlightUnits = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return null;
+    return data.units
+      .filter((u) => {
+        if (u.label.toLowerCase().includes(q) || u.zone.toLowerCase().includes(q)) return true;
+        return bookings.some(
+          (b) =>
+            b.table === u.label &&
+            b.placed !== false &&
+            (b.name.toLowerCase().includes(q) ||
+              b.time.includes(q) ||
+              b.tags.some((t) => t.toLowerCase().includes(q))),
+        );
+      })
+      .map((u) => u.id);
+  }, [query, bookings, data.units]);
+
+  const pickQuick = (hit: QuickHit) => {
+    setQuickOpen(false);
+    if (hit.kind === "bord") {
+      const unit = data.units.find((u) => u.id === hit.unitId);
+      setSelectedUnit(hit.unitId);
+      setSelectedBooking(null);
+      if (unit) setZone(unit.zone);
+      const booking = bookings.find(
+        (b) => b.table === unit?.label && b.placed !== false && b.status !== "avbokad",
+      );
+      if (booking) setSelectedBooking(booking.id);
+      return;
+    }
+    setSelectedUnit(null);
+    setSelectedBooking(hit.bookingId);
+    setDrawerId(hit.bookingId);
+  };
+
+
 
   const update = (id: string, patch: Partial<Booking>) =>
     setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, ...patch } : b)));
@@ -268,33 +373,88 @@ function FloorPage() {
       <div className="grid gap-6 xl:grid-cols-[23rem_minmax(0,1fr)]">
         {/* Gäster / bokningar */}
         <div className="flex max-h-[44rem] flex-col overflow-hidden rounded-2xl border border-border bg-card">
-          <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-            <Search className="h-4 w-4 text-muted-foreground" />
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Sök gäst, tagg eller bord…"
-              className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-            />
-            {query && (
-              <button type="button" onClick={() => setQuery("")}>
-                <X className="h-4 w-4 text-muted-foreground" />
+          <div ref={quickRef} className="relative border-b border-border px-4 py-3">
+            <div className="flex items-center gap-2">
+              <Search className="h-4 w-4 text-muted-foreground" />
+              <input
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setQuickOpen(true);
+                  setQuickIndex(0);
+                }}
+                onFocus={() => setQuickOpen(true)}
+                onKeyDown={(e) => {
+                  if (!quickResults.length) return;
+                  if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    setQuickOpen(true);
+                    setQuickIndex((i) => (i + 1) % quickResults.length);
+                  } else if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    setQuickIndex((i) => (i - 1 + quickResults.length) % quickResults.length);
+                  } else if (e.key === "Enter") {
+                    e.preventDefault();
+                    const hit = quickResults[quickIndex];
+                    if (hit) pickQuick(hit);
+                  } else if (e.key === "Escape") {
+                    setQuickOpen(false);
+                  }
+                }}
+                placeholder="Snabbsök bord, gäst, tagg eller tid…"
+                className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+              />
+              {query && (
+                <button type="button" aria-label="Rensa sökning" onClick={() => setQuery("")}>
+                  <X className="h-4 w-4 text-muted-foreground" />
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setFiltersOpen((v) => !v)}
+                title="Filter och sortering"
+                className={`flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                  filtersOpen || activeFilterCount > 0
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border text-muted-foreground hover:text-forest"
+                }`}
+              >
+                <SlidersHorizontal className="h-3.5 w-3.5" />
+                {activeFilterCount > 0 ? activeFilterCount : "Filter"}
               </button>
+            </div>
+
+            {quickOpen && query.trim().length > 0 && (
+              <div className="drawer-backdrop absolute left-3 right-3 top-full z-30 mt-1 max-h-80 overflow-y-auto rounded-xl border border-border bg-card p-1 shadow-overlay">
+                {quickResults.length === 0 && (
+                  <p className="px-3 py-3 text-xs text-muted-foreground">Inga träffar</p>
+                )}
+                {quickResults.map((r, i) => (
+                  <button
+                    key={r.key}
+                    type="button"
+                    onMouseEnter={() => setQuickIndex(i)}
+                    onClick={() => pickQuick(r)}
+                    className={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-sm transition-colors ${
+                      i === quickIndex ? "bg-primary/8 text-forest" : "hover:bg-muted/60"
+                    }`}
+                  >
+                    <span className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-muted text-[10px] text-forest">
+                      {r.badge}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-forest">{r.title}</span>
+                      <span className="block truncate text-xs text-muted-foreground">{r.meta}</span>
+                    </span>
+                    <span className="shrink-0 text-[10px] uppercase tracking-wider text-muted-foreground">
+                      {r.kind === "bord" ? (venue === "hotell" ? "rum" : "bord") : "bokning"}
+                    </span>
+                  </button>
+                ))}
+              </div>
             )}
-            <button
-              type="button"
-              onClick={() => setFiltersOpen((v) => !v)}
-              title="Filter och sortering"
-              className={`flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors ${
-                filtersOpen || activeFilterCount > 0
-                  ? "border-primary bg-primary/10 text-primary"
-                  : "border-border text-muted-foreground hover:text-forest"
-              }`}
-            >
-              <SlidersHorizontal className="h-3.5 w-3.5" />
-              {activeFilterCount > 0 ? activeFilterCount : "Filter"}
-            </button>
           </div>
+
 
           {filtersOpen && (
             <div className="space-y-3 border-b border-border bg-muted/30 px-4 py-3">
@@ -432,6 +592,7 @@ function FloorPage() {
               }}
               dragging={Boolean(draggingId)}
               onDropBooking={dropOnUnit}
+              highlight={highlightUnits}
             />
           ) : (
             <div className="grid grid-cols-2 gap-3 rounded-2xl border border-border bg-card p-5 sm:grid-cols-4 lg:grid-cols-6">

@@ -38,6 +38,7 @@ export function FloorPlan({
   onOpenBooking,
   dragging = false,
   onDropBooking,
+  highlight,
 }: {
   units: TableUnit[];
   bookings?: Booking[];
@@ -46,6 +47,8 @@ export function FloorPlan({
   onOpenBooking?: (booking: Booking) => void;
   dragging?: boolean;
   onDropBooking?: (unit: TableUnit, bookingId: string) => void;
+  /** Id på bord som matchar aktuell sökning — övriga tonas ned. */
+  highlight?: string[] | null;
 }) {
   const [over, setOver] = useState<string | null>(null);
   const [zoom, setZoom] = useState(1);
@@ -103,6 +106,7 @@ export function FloorPlan({
   const peekBooking = peekUnit ? bookingFor(peekUnit) : null;
 
   const occupied = placed.filter((u) => floorStateOf(u) === "upptaget").length;
+  const hits = highlight && highlight.length > 0 ? new Set(highlight) : null;
 
   return (
     <div className="relative rounded-[1.75rem] border border-border-subtle bg-card">
@@ -198,6 +202,7 @@ export function FloorPlan({
             const guest = booking?.name ?? u.guest;
             const party = booking?.party;
             const f = footprint(u);
+            const isHit = hits ? hits.has(u.id) : null;
 
             return (
               <button
@@ -250,10 +255,12 @@ export function FloorPlan({
                     ? "scale-[1.08] ring-2 ring-primary"
                     : isSelected || peek?.id === u.id
                       ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
-                      : dragging && state === "tillgängligt"
-                        ? "ring-1 ring-primary/40"
-                        : ""
-                }`}
+                      : isHit
+                        ? "ring-2 ring-primary/70 ring-offset-2 ring-offset-background"
+                        : dragging && state === "tillgängligt"
+                          ? "ring-1 ring-primary/40"
+                          : ""
+                } ${isHit === false ? "opacity-25" : ""}`}
               >
                 <span className="text-[11px] font-medium leading-none tabular-nums">
                   {u.label}
