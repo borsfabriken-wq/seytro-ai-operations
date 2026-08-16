@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { ArrowRight, Lock, Minus, Plus, Users, X } from "lucide-react";
+import { ArrowRight, Clock, FileText, Lock, Minus, Plus, Users, X } from "lucide-react";
 import type { Booking, TableUnit } from "@/lib/dashboard-data";
 
 /** Endast två relevanta lägen i salen: tillgängligt eller upptaget av ett sällskap. */
@@ -273,55 +273,70 @@ export function FloorPlan({
             );
           })}
 
-          {/* Liten ruta vid klick */}
+          {/* Liten, kompakt popup vid bordsklick */}
           {peekUnit && peek && (
             <div
-              className="absolute z-20 w-60 -translate-x-1/2 translate-y-2 rounded-2xl border border-border-subtle bg-card p-3 text-left shadow-overlay"
+              className="absolute z-20 w-56 -translate-x-1/2 translate-y-2 overflow-hidden rounded-xl border border-border-subtle bg-card p-2.5 text-left shadow-overlay"
               style={{ left: peek.x, top: peek.y }}
             >
               <div className="flex items-start justify-between gap-2">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-                    Bord {peekUnit.label} · {peekUnit.zone}
-                  </p>
-                  <p className="mt-0.5 text-sm font-medium text-forest">
-                    {peekBooking?.name ?? peekUnit.guest ?? "Tillgängligt"}
-                  </p>
+                <div className="flex items-center gap-1.5">
+                  <span className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                    Bord {peekUnit.label}
+                  </span>
+                  <span className="text-[10px] text-muted-foreground">{peekUnit.zone}</span>
                 </div>
                 <button
                   type="button"
                   aria-label="Stäng"
                   onClick={() => setPeek(null)}
-                  className="text-muted-foreground hover:text-forest"
+                  className="rounded-full p-0.5 text-muted-foreground hover:bg-muted hover:text-forest"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
               </div>
 
               {peekBooking ? (
-                <>
-                  <p className="mt-1 text-xs tabular-nums text-muted-foreground">
-                    {peekBooking.time}
-                    {peekBooking.end ? `–${peekBooking.end}` : ""} · {peekBooking.party} gäster ·{" "}
-                    {peekUnit.seats} platser
-                  </p>
+                <div className="mt-2 space-y-2">
+                  <div>
+                    <p className="text-sm font-semibold text-foreground leading-tight">
+                      {peekBooking.name}
+                    </p>
+                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
+                      <span className="inline-flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        {peekBooking.time}
+                        {peekBooking.end ? `–${peekBooking.end}` : ""}
+                      </span>
+                      <span className="inline-flex items-center gap-1">
+                        <Users className="h-3 w-3" />
+                        {peekBooking.party}/{peekUnit.seats}
+                      </span>
+                    </div>
+                  </div>
+
                   {peekBooking.tags.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-1">
+                    <div className="flex flex-wrap gap-1">
                       {peekBooking.tags.map((t) => (
                         <span
                           key={t}
-                          className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] text-primary"
+                          className="rounded-full border border-border-subtle bg-background px-1.5 py-0.5 text-[10px] text-muted-foreground"
                         >
                           {t}
                         </span>
                       ))}
                     </div>
                   )}
+
                   {peekBooking.note && (
-                    <p className="mt-2 rounded-xl bg-muted px-2.5 py-1.5 text-[11px] leading-relaxed text-forest">
-                      {peekBooking.note}
-                    </p>
+                    <div className="rounded-lg border-l-2 border-primary bg-accent/40 px-2 py-1.5">
+                      <p className="flex items-start gap-1 text-[11px] leading-snug text-foreground">
+                        <FileText className="mt-0.5 h-3 w-3 shrink-0 text-primary" />
+                        {peekBooking.note}
+                      </p>
+                    </div>
                   )}
+
                   {onOpenBooking && (
                     <button
                       type="button"
@@ -329,17 +344,18 @@ export function FloorPlan({
                         onOpenBooking(peekBooking);
                         setPeek(null);
                       }}
-                      className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-forest px-3 py-1.5 text-xs text-primary-foreground"
+                      className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-primary px-2.5 py-1.5 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90"
                     >
                       Öppna bokning och profil
                       <ArrowRight className="h-3 w-3" />
                     </button>
                   )}
-                </>
+                </div>
               ) : (
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {peekUnit.seats} platser · inga gäster på detta pass
-                </p>
+                <div className="mt-2 space-y-0.5">
+                  <p className="text-xs font-medium text-muted-foreground">Ledigt</p>
+                  <p className="text-[11px] text-muted-foreground">{peekUnit.seats} platser</p>
+                </div>
               )}
             </div>
           )}
