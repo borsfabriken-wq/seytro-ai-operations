@@ -268,33 +268,88 @@ function FloorPage() {
       <div className="grid gap-6 xl:grid-cols-[23rem_minmax(0,1fr)]">
         {/* Gäster / bokningar */}
         <div className="flex max-h-[44rem] flex-col overflow-hidden rounded-2xl border border-border bg-card">
-          <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-            <Search className="h-4 w-4 text-muted-foreground" />
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Sök gäst, tagg eller bord…"
-              className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-            />
-            {query && (
-              <button type="button" onClick={() => setQuery("")}>
-                <X className="h-4 w-4 text-muted-foreground" />
+          <div className="relative border-b border-border px-4 py-3">
+            <div className="flex items-center gap-2">
+              <Search className="h-4 w-4 text-muted-foreground" />
+              <input
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setQuickOpen(true);
+                  setQuickIndex(0);
+                }}
+                onFocus={() => setQuickOpen(true)}
+                onKeyDown={(e) => {
+                  if (!quickResults.length) return;
+                  if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    setQuickOpen(true);
+                    setQuickIndex((i) => (i + 1) % quickResults.length);
+                  } else if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    setQuickIndex((i) => (i - 1 + quickResults.length) % quickResults.length);
+                  } else if (e.key === "Enter") {
+                    e.preventDefault();
+                    const hit = quickResults[quickIndex];
+                    if (hit) pickQuick(hit);
+                  } else if (e.key === "Escape") {
+                    setQuickOpen(false);
+                  }
+                }}
+                placeholder="Snabbsök bord, gäst, tagg eller tid…"
+                className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+              />
+              {query && (
+                <button type="button" aria-label="Rensa sökning" onClick={() => setQuery("")}>
+                  <X className="h-4 w-4 text-muted-foreground" />
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setFiltersOpen((v) => !v)}
+                title="Filter och sortering"
+                className={`flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                  filtersOpen || activeFilterCount > 0
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border text-muted-foreground hover:text-forest"
+                }`}
+              >
+                <SlidersHorizontal className="h-3.5 w-3.5" />
+                {activeFilterCount > 0 ? activeFilterCount : "Filter"}
               </button>
+            </div>
+
+            {quickOpen && query.trim().length > 0 && (
+              <div className="drawer-backdrop absolute left-3 right-3 top-full z-30 mt-1 max-h-80 overflow-y-auto rounded-xl border border-border bg-card p-1 shadow-overlay">
+                {quickResults.length === 0 && (
+                  <p className="px-3 py-3 text-xs text-muted-foreground">Inga träffar</p>
+                )}
+                {quickResults.map((r, i) => (
+                  <button
+                    key={r.key}
+                    type="button"
+                    onMouseEnter={() => setQuickIndex(i)}
+                    onClick={() => pickQuick(r)}
+                    className={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-sm transition-colors ${
+                      i === quickIndex ? "bg-primary/8 text-forest" : "hover:bg-muted/60"
+                    }`}
+                  >
+                    <span className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-muted text-[10px] text-forest">
+                      {r.kind === "bord" ? r.badge : r.badge}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-forest">{r.title}</span>
+                      <span className="block truncate text-xs text-muted-foreground">{r.meta}</span>
+                    </span>
+                    <span className="shrink-0 text-[10px] uppercase tracking-wider text-muted-foreground">
+                      {r.kind}
+                    </span>
+                  </button>
+                ))}
+              </div>
             )}
-            <button
-              type="button"
-              onClick={() => setFiltersOpen((v) => !v)}
-              title="Filter och sortering"
-              className={`flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors ${
-                filtersOpen || activeFilterCount > 0
-                  ? "border-primary bg-primary/10 text-primary"
-                  : "border-border text-muted-foreground hover:text-forest"
-              }`}
-            >
-              <SlidersHorizontal className="h-3.5 w-3.5" />
-              {activeFilterCount > 0 ? activeFilterCount : "Filter"}
-            </button>
           </div>
+
 
           {filtersOpen && (
             <div className="space-y-3 border-b border-border bg-muted/30 px-4 py-3">
