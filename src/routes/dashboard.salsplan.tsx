@@ -505,6 +505,28 @@ function FloorPage() {
         </div>
       </div>
 
+      <BookingDrawer
+        open={Boolean(drawerBooking)}
+        booking={drawerBooking}
+        guest={drawerGuest}
+        unitWord={venue === "hotell" ? "rum" : "bord"}
+        onClose={() => setDrawerId(null)}
+      >
+        {drawerBooking && (
+          <BookingPanel
+            booking={drawerBooking}
+            unitWord={venue === "hotell" ? "rum" : "bord"}
+            placing={placingId === drawerBooking.id}
+            onPlace={() => {
+              setPlacingId(drawerBooking.id);
+              setDrawerId(null);
+            }}
+            onUpdate={(patch) => update(drawerBooking.id, patch)}
+            onOpenPm={setOpenPmId}
+          />
+        )}
+      </BookingDrawer>
+
       <PmModal pmId={openPmId} onClose={() => setOpenPmId(null)} />
 
       <BookingDialog
