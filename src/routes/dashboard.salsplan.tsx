@@ -85,6 +85,7 @@ function FloorPage() {
     setSelectedUnit(null);
     setPlacingId(null);
     setZone("Alla");
+    setDrawerId(null);
   }, [data]);
 
   useEffect(() => {
