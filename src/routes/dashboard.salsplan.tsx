@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpDown, Check, Clock, FileText, Plus, Search, SlidersHorizontal, Users, X } from "lucide-react";
 import { useVenue } from "@/components/dashboard/DashboardShell";
 import { FloorPlan, floorStateOf } from "@/components/dashboard/FloorPlan";
+import { BookingDrawer } from "@/components/dashboard/BookingDrawer";
 import { PmBookIcon, PmModal } from "@/components/dashboard/PmModal";
 import {
   BookingDialog,
