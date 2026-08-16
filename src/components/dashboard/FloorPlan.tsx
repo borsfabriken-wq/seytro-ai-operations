@@ -38,6 +38,7 @@ export function FloorPlan({
   onOpenBooking,
   dragging = false,
   onDropBooking,
+  highlight,
 }: {
   units: TableUnit[];
   bookings?: Booking[];
@@ -46,6 +47,8 @@ export function FloorPlan({
   onOpenBooking?: (booking: Booking) => void;
   dragging?: boolean;
   onDropBooking?: (unit: TableUnit, bookingId: string) => void;
+  /** Id på bord som matchar aktuell sökning — övriga tonas ned. */
+  highlight?: string[] | null;
 }) {
   const [over, setOver] = useState<string | null>(null);
   const [zoom, setZoom] = useState(1);
