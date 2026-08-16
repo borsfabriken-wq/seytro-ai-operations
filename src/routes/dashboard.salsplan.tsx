@@ -420,6 +420,7 @@ function FloorPage() {
                 setSelectedBooking(b.id);
                 setSelectedUnit(null);
                 setPlacingId(null);
+                setDrawerId(b.id);
               }}
               dragging={Boolean(draggingId)}
               onDropBooking={dropOnUnit}
