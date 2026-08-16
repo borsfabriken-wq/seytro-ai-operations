@@ -106,6 +106,7 @@ export function FloorPlan({
   const peekBooking = peekUnit ? bookingFor(peekUnit) : null;
 
   const occupied = placed.filter((u) => floorStateOf(u) === "upptaget").length;
+  const hits = highlight && highlight.length > 0 ? new Set(highlight) : null;
 
   return (
     <div className="relative rounded-[1.75rem] border border-border-subtle bg-card">
