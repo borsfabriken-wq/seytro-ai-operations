@@ -317,18 +317,25 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                         key={item.to}
                         to={item.to}
                         data-active={isActive}
-                        className={`side-link flex items-center gap-3 rounded-lg px-3 py-2 text-sm ${
+                        className={`side-link relative flex items-center gap-3 rounded-lg py-1.5 pl-3 pr-3 text-sm ${
                           isActive
-                            ? "bg-primary-foreground/12 text-primary-foreground"
-                            : "text-primary-foreground/65 hover:bg-primary-foreground/8 hover:text-primary-foreground"
+                            ? "bg-primary-foreground/12 font-medium text-primary-foreground"
+                            : "text-primary-foreground/60 hover:bg-primary-foreground/8 hover:text-primary-foreground"
                         }`}
                       >
+                        <span
+                          aria-hidden
+                          className={`absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-primary transition-opacity ${
+                            isActive ? "opacity-100" : "opacity-0"
+                          }`}
+                        />
                         <item.icon
-                          className={`h-4 w-4 shrink-0 ${isActive ? "text-primary" : ""}`}
+                          className={`h-4 w-4 shrink-0 ${isActive ? "text-primary" : "text-primary-foreground/50"}`}
                         />
                         {item.label}
                       </Link>
                     );
+
                   })}
                 </div>
               </div>

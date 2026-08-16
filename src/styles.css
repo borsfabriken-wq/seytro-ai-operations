@@ -78,8 +78,8 @@
   --surface-1: oklch(0.963 0.005 250);       /* sektionsyta, ljus sten */
   --surface-2: oklch(0.995 0.002 250);       /* kort/panel */
   --surface-3: oklch(1 0 0);                 /* upphöjd yta */
-  --surface-accent: oklch(0.955 0.018 162);  /* markerad yta, grön ton */
-  --surface-inverse: oklch(0.235 0.008 240); /* mörk bläckyta (sidomeny, footer) */
+  --surface-accent: oklch(0.962 0.024 254);  /* markerad yta, blå ton */
+  --surface-inverse: oklch(0.298 0.008 220); /* grafit #31393C (sidomeny, footer) */
 
   /* --- Text ------------------------------------------------------ */
   --ink: oklch(0.245 0.006 245);
@@ -87,12 +87,12 @@
   --ink-muted: oklch(0.578 0.008 245);
   --ink-subtle: oklch(0.708 0.008 245);
 
-  /* --- Accent (skogsgrön) ---------------------------------------- */
-  --accent-base: oklch(0.408 0.068 162);
-  --accent-strong: oklch(0.338 0.062 163);   /* hover/press */
-  --accent-tint: oklch(0.962 0.016 162);     /* ljus markering */
-  --accent-tint-strong: oklch(0.925 0.034 162);
-  --accent-edge: oklch(0.858 0.048 162);
+  /* --- Accent (klarblå — enda signalfärgen) ----------------------- */
+  --accent-base: oklch(0.652 0.163 254);     /* #3E96F4 */
+  --accent-strong: oklch(0.575 0.158 254);   /* hover/press */
+  --accent-tint: oklch(0.968 0.017 254);     /* ljus markering */
+  --accent-tint-strong: oklch(0.935 0.038 254);
+  --accent-edge: oklch(0.855 0.072 254);
 
   /* --- Kanter ---------------------------------------------------- */
   --border-hairline: oklch(0.928 0.004 245);
@@ -104,37 +104,41 @@
   --elev-soft: 0 1px 2px oklch(0.245 0.006 245 / 6%), 0 4px 12px -6px oklch(0.245 0.006 245 / 10%);
   --elev-raised: 0 2px 4px oklch(0.245 0.006 245 / 7%), 0 12px 28px -12px oklch(0.245 0.006 245 / 16%);
   --elev-overlay: 0 8px 16px -8px oklch(0.245 0.006 245 / 14%), 0 32px 64px -24px oklch(0.245 0.006 245 / 26%);
-  --elev-focus: 0 0 0 3px oklch(0.408 0.068 162 / 26%);
+  --elev-focus: 0 0 0 3px oklch(0.652 0.163 254 / 30%);
 
-  /* --- Status (monokromt + skogsgrön som enda signalfärg) --------- */
+  /* --- Status (nedtonad grafitskala, blått = uppmärksamhet) ------- */
   /* Ledigt: ljus, nedtonad */
-  --status-free: oklch(0.977 0.003 250);
-  --status-free-fg: oklch(0.502 0.007 245);
-  --status-free-border: oklch(0.905 0.005 245);
+  --status-free: oklch(0.982 0.002 250);
+  --status-free-fg: oklch(0.512 0.007 240);
+  --status-free-border: oklch(0.912 0.005 240);
   /* Dukat/förberett: neutral sten */
-  --status-set: oklch(0.947 0.005 248);
-  --status-set-fg: oklch(0.425 0.007 245);
-  --status-set-border: oklch(0.882 0.006 245);
-  /* Upptaget: mättad bläckyta */
-  --status-busy: oklch(0.29 0.008 242);
-  --status-busy-fg: oklch(0.977 0.003 250);
-  --status-busy-border: oklch(0.29 0.008 242);
+  --status-set: oklch(0.952 0.004 240);
+  --status-set-fg: oklch(0.435 0.007 240);
+  --status-set-border: oklch(0.888 0.006 240);
+  /* Upptaget: mättad grafityta */
+  --status-busy: oklch(0.298 0.008 220);
+  --status-busy-fg: oklch(0.982 0.002 250);
+  --status-busy-border: oklch(0.298 0.008 220);
   /* Städas: ljus grå, låg vikt */
-  --status-clean: oklch(0.963 0.004 248);
-  --status-clean-fg: oklch(0.548 0.007 245);
-  --status-clean-border: oklch(0.895 0.005 245);
-  /* Väntar / behöver åtgärd: skogsgrön */
-  --status-wait: oklch(0.958 0.018 162);
-  --status-wait-fg: oklch(0.372 0.066 162);
-  --status-wait-border: oklch(0.872 0.042 162);
-  /* Varning / allergi: kraftigare grön signal */
-  --status-alert: oklch(0.938 0.036 158);
-  --status-alert-fg: oklch(0.318 0.068 160);
-  --status-alert-border: oklch(0.808 0.07 160);
+  --status-clean: oklch(0.966 0.003 240);
+  --status-clean-fg: oklch(0.558 0.006 240);
+  --status-clean-border: oklch(0.902 0.005 240);
+  /* Väntar / behöver åtgärd: bärnsten-tint */
+  --status-wait: oklch(0.965 0.032 84);
+  --status-wait-fg: oklch(0.512 0.108 68);
+  --status-wait-border: oklch(0.888 0.062 82);
+  /* Anlänt / aktivt: blå tint */
+  --status-active: oklch(0.966 0.024 254);
+  --status-active-fg: oklch(0.508 0.135 254);
+  --status-active-border: oklch(0.878 0.058 254);
+  /* Varning / allergi / konflikt: dämpad röd */
+  --status-alert: oklch(0.955 0.032 24);
+  --status-alert-fg: oklch(0.532 0.168 26);
+  --status-alert-border: oklch(0.872 0.062 24);
   /* Klart / avbokat: neutral, nedtonad */
-  --status-done: oklch(0.956 0.004 248);
-  --status-done-fg: oklch(0.602 0.006 245);
-  --status-done-border: oklch(0.898 0.005 245);
+  --status-done: oklch(0.958 0.003 240);
+  --status-done-fg: oklch(0.618 0.006 240);
+  --status-done-border: oklch(0.902 0.005 240);
 
   /* --- shadcn-mappning ------------------------------------------- */
   --background: var(--surface-0);
@@ -196,12 +200,12 @@
   --leading-relaxed: 1.6;
   --leading-loose: 1.75;
 
-  /* Diagram: grön- och stenfamiljen */
-  --chart-1: oklch(0.408 0.068 162);
-  --chart-2: oklch(0.548 0.062 160);
-  --chart-3: oklch(0.702 0.05 162);
-  --chart-4: oklch(0.822 0.008 245);
-  --chart-5: oklch(0.385 0.01 245);
+  /* Diagram: blå- och grafitfamiljen */
+  --chart-1: oklch(0.652 0.163 254);
+  --chart-2: oklch(0.575 0.158 254);
+  --chart-3: oklch(0.762 0.088 254);
+  --chart-4: oklch(0.828 0.008 240);
+  --chart-5: oklch(0.398 0.01 240);
 
   /* Sidomeny: mörk kolgrå yta */
   --sidebar: var(--surface-inverse);
@@ -289,6 +293,10 @@
   --color-status-wait: var(--status-wait);
   --color-status-wait-fg: var(--status-wait-fg);
   --color-status-wait-border: var(--status-wait-border);
+  --color-status-active: var(--status-active);
+  --color-status-active-fg: var(--status-active-fg);
+  --color-status-active-border: var(--status-active-border);
+
   --color-status-alert: var(--status-alert);
   --color-status-alert-fg: var(--status-alert-fg);
   --color-status-alert-border: var(--status-alert-border);
@@ -304,8 +312,8 @@
   --shadow-focus: var(--elev-focus);
 
 
-  --font-display: "Sora", system-ui, sans-serif;
-  --font-sans: "Manrope", system-ui, sans-serif;
+  --font-display: "Urbanist", system-ui, sans-serif;
+  --font-sans: "Epilogue", system-ui, sans-serif;
 
   /* Kompakt UI-skala för inloggat läge */
   --text-ui-xs: 0.6875rem;
