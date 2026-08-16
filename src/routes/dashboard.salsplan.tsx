@@ -440,14 +440,14 @@ function FloorPage() {
                     }`}
                   >
                     <span className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-muted text-[10px] text-forest">
-                      {r.kind === "bord" ? r.badge : r.badge}
+                      {r.badge}
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-forest">{r.title}</span>
                       <span className="block truncate text-xs text-muted-foreground">{r.meta}</span>
                     </span>
                     <span className="shrink-0 text-[10px] uppercase tracking-wider text-muted-foreground">
-                      {r.kind}
+                      {r.kind === "bord" ? (venue === "hotell" ? "rum" : "bord") : "bokning"}
                     </span>
                   </button>
                 ))}
