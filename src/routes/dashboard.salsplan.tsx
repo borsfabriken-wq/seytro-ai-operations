@@ -166,6 +166,98 @@ function FloorPage() {
       ) ?? null)
     : null;
 
+  /** Snabbsök: träffar både bord/rum och bokningar i en enda lista. */
+  type QuickHit =
+    | { kind: "bord"; key: string; badge: string; title: string; meta: string; unitId: string }
+    | { kind: "bokning"; key: string; badge: string; title: string; meta: string; bookingId: string };
+
+  const quickResults = useMemo<QuickHit[]>(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    const unitHits: QuickHit[] = data.units
+      .filter(
+        (u) => u.label.toLowerCase().includes(q) || u.zone.toLowerCase().includes(q),
+      )
+      .slice(0, 6)
+      .map((u) => {
+        const b = bookings.find(
+          (x) => x.table === u.label && x.placed !== false && x.status !== "avbokad",
+        );
+        return {
+          kind: "bord" as const,
+          key: `u-${u.id}`,
+          badge: u.label,
+          title: `${venue === "hotell" ? "Rum" : "Bord"} ${u.label} · ${u.zone}`,
+          meta: b ? `${b.time} · ${b.name} (${b.party})` : `${u.seats} platser · tillgängligt`,
+          unitId: u.id,
+        };
+      });
+
+    const bookingHits: QuickHit[] = bookings
+      .filter(
+        (b) =>
+          b.name.toLowerCase().includes(q) ||
+          b.table.toLowerCase().includes(q) ||
+          b.time.includes(q) ||
+          (b.phone ?? "").includes(q) ||
+          (b.company ?? "").toLowerCase().includes(q) ||
+          b.tags.some((t) => t.toLowerCase().includes(q)),
+      )
+      .sort((a, b) => a.time.localeCompare(b.time))
+      .slice(0, 8)
+      .map((b) => ({
+        kind: "bokning" as const,
+        key: `b-${b.id}`,
+        badge: String(b.party),
+        title: b.name,
+        meta: `${b.time}${b.end ? `–${b.end}` : ""} · ${
+          b.table ? `${venue === "hotell" ? "rum" : "bord"} ${b.table}` : "ej placerad"
+        }${b.tags.length ? ` · ${b.tags.join(", ")}` : ""}`,
+        bookingId: b.id,
+      }));
+
+    return [...unitHits, ...bookingHits];
+  }, [query, bookings, data.units, venue]);
+
+  /** Bord som matchar sökningen lyfts fram på planen, övriga tonas ned. */
+  const highlightUnits = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return null;
+    return data.units
+      .filter((u) => {
+        if (u.label.toLowerCase().includes(q) || u.zone.toLowerCase().includes(q)) return true;
+        return bookings.some(
+          (b) =>
+            b.table === u.label &&
+            b.placed !== false &&
+            (b.name.toLowerCase().includes(q) ||
+              b.time.includes(q) ||
+              b.tags.some((t) => t.toLowerCase().includes(q))),
+        );
+      })
+      .map((u) => u.id);
+  }, [query, bookings, data.units]);
+
+  const pickQuick = (hit: QuickHit) => {
+    setQuickOpen(false);
+    if (hit.kind === "bord") {
+      const unit = data.units.find((u) => u.id === hit.unitId);
+      setSelectedUnit(hit.unitId);
+      setSelectedBooking(null);
+      if (unit) setZone(unit.zone);
+      const booking = bookings.find(
+        (b) => b.table === unit?.label && b.placed !== false && b.status !== "avbokad",
+      );
+      if (booking) setSelectedBooking(booking.id);
+      return;
+    }
+    setSelectedUnit(null);
+    setSelectedBooking(hit.bookingId);
+    setDrawerId(hit.bookingId);
+  };
+
+
+
   const update = (id: string, patch: Partial<Booking>) =>
     setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, ...patch } : b)));
 
