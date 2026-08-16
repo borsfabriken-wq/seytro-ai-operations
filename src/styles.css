@@ -293,6 +293,10 @@
   --color-status-wait: var(--status-wait);
   --color-status-wait-fg: var(--status-wait-fg);
   --color-status-wait-border: var(--status-wait-border);
+  --color-status-active: var(--status-active);
+  --color-status-active-fg: var(--status-active-fg);
+  --color-status-active-border: var(--status-active-border);
+
   --color-status-alert: var(--status-alert);
   --color-status-alert-fg: var(--status-alert-fg);
   --color-status-alert-border: var(--status-alert-border);
