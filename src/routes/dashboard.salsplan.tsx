@@ -157,6 +157,14 @@ function FloorPage() {
 
   const activeBooking = bookings.find((b) => b.id === selectedBooking) ?? null;
   const activeUnit = data.units.find((u) => u.id === selectedUnit) ?? null;
+  const drawerBooking = bookings.find((b) => b.id === drawerId) ?? null;
+  const drawerGuest = drawerBooking
+    ? (data.guests.find(
+        (g) =>
+          g.name.toLowerCase() === drawerBooking.name.toLowerCase() ||
+          (Boolean(drawerBooking.email) && g.email === drawerBooking.email),
+      ) ?? null)
+    : null;
 
   const update = (id: string, patch: Partial<Booking>) =>
     setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, ...patch } : b)));
