@@ -711,3 +711,27 @@
   color: var(--ink-muted);
   line-height: 1.4;
 }
+
+/* Sidopanel för bokning och gästprofil */
+.drawer-backdrop {
+  animation: drawer-fade 0.22s ease-out both;
+}
+
+.drawer-panel {
+  animation: drawer-slide 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes drawer-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes drawer-slide {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer-backdrop,
+  .drawer-panel { animation: none; }
+}

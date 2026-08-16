@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpDown, Check, Clock, FileText, Plus, Search, SlidersHorizontal, Users, X } from "lucide-react";
 import { useVenue } from "@/components/dashboard/DashboardShell";
 import { FloorPlan, floorStateOf } from "@/components/dashboard/FloorPlan";
+import { BookingDrawer } from "@/components/dashboard/BookingDrawer";
 import { PmBookIcon, PmModal } from "@/components/dashboard/PmModal";
 import {
   BookingDialog,
@@ -64,6 +65,7 @@ function FloorPage() {
   const [sort, setSort] = useState<"tid" | "namn" | "sallskap" | "status">("tid");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [openPmId, setOpenPmId] = useState<string | null>(null);
+  const [drawerId, setDrawerId] = useState<string | null>(null);
 
   // Öppna nybokning / förifylld sökning när man kommer från toppraden.
   useEffect(() => {
@@ -83,6 +85,7 @@ function FloorPage() {
     setSelectedUnit(null);
     setPlacingId(null);
     setZone("Alla");
+    setDrawerId(null);
   }, [data]);
 
   useEffect(() => {
@@ -154,6 +157,14 @@ function FloorPage() {
 
   const activeBooking = bookings.find((b) => b.id === selectedBooking) ?? null;
   const activeUnit = data.units.find((u) => u.id === selectedUnit) ?? null;
+  const drawerBooking = bookings.find((b) => b.id === drawerId) ?? null;
+  const drawerGuest = drawerBooking
+    ? (data.guests.find(
+        (g) =>
+          g.name.toLowerCase() === drawerBooking.name.toLowerCase() ||
+          (Boolean(drawerBooking.email) && g.email === drawerBooking.email),
+      ) ?? null)
+    : null;
 
   const update = (id: string, patch: Partial<Booking>) =>
     setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, ...patch } : b)));
@@ -417,6 +428,7 @@ function FloorPage() {
                 setSelectedBooking(b.id);
                 setSelectedUnit(null);
                 setPlacingId(null);
+                setDrawerId(b.id);
               }}
               dragging={Boolean(draggingId)}
               onDropBooking={dropOnUnit}
@@ -500,6 +512,28 @@ function FloorPage() {
           </div>
         </div>
       </div>
+
+      <BookingDrawer
+        open={Boolean(drawerBooking)}
+        booking={drawerBooking}
+        guest={drawerGuest}
+        unitWord={venue === "hotell" ? "rum" : "bord"}
+        onClose={() => setDrawerId(null)}
+      >
+        {drawerBooking && (
+          <BookingPanel
+            booking={drawerBooking}
+            unitWord={venue === "hotell" ? "rum" : "bord"}
+            placing={placingId === drawerBooking.id}
+            onPlace={() => {
+              setPlacingId(drawerBooking.id);
+              setDrawerId(null);
+            }}
+            onUpdate={(patch) => update(drawerBooking.id, patch)}
+            onOpenPm={setOpenPmId}
+          />
+        )}
+      </BookingDrawer>
 
       <PmModal pmId={openPmId} onClose={() => setOpenPmId(null)} />
 
