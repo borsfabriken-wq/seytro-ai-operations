@@ -65,6 +65,7 @@ function FloorPage() {
   const [sort, setSort] = useState<"tid" | "namn" | "sallskap" | "status">("tid");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [openPmId, setOpenPmId] = useState<string | null>(null);
+  const [drawerId, setDrawerId] = useState<string | null>(null);
 
   // Öppna nybokning / förifylld sökning när man kommer från toppraden.
   useEffect(() => {
