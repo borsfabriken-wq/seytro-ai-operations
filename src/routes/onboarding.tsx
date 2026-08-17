@@ -11,11 +11,14 @@ import {
   Plus,
   Settings2,
   Sparkles,
+  UtensilsCrossed,
   X,
 } from "lucide-react";
 import { toast } from "sonner";
 
 import { FloorPlanEditor } from "@/components/dashboard/FloorPlanEditor";
+import { MenuBuilder } from "@/components/onboarding/MenuBuilder";
+import { writeTemplates } from "@/lib/pm-templates";
 import { writeAccountPlan } from "@/lib/account";
 import {
   coversPerService,
@@ -53,8 +56,9 @@ const steps = [
   { id: 1, label: "Öppettider", icon: CalendarClock },
   { id: 2, label: "Zoner & bordskarta", icon: LayoutGrid },
   { id: 3, label: "Bokningsregler", icon: Settings2 },
-  { id: 4, label: "Kanaler & AI", icon: MessageSquare },
-  { id: 5, label: "Klart", icon: Sparkles },
+  { id: 4, label: "Menyer & dryck", icon: UtensilsCrossed },
+  { id: 5, label: "Kanaler & AI", icon: MessageSquare },
+  { id: 6, label: "Klart", icon: Sparkles },
 ] as const;
 
 const field =
@@ -468,7 +472,7 @@ function OnboardingPage() {
             </div>
           )}
 
-          {step === 4 && (
+          {step === 5 && (
             <div className="grid gap-5 lg:grid-cols-2">
               <div className="lg:col-span-2">
                 <h2 className="text-xl">Kanaler och AI</h2>
@@ -547,7 +551,7 @@ function OnboardingPage() {
             </div>
           )}
 
-          {step === 5 && (
+          {step === 6 && (
             <div>
               <h2 className="text-xl">Klart att köra</h2>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -594,7 +598,7 @@ function OnboardingPage() {
           >
             <ArrowLeft className="h-4 w-4" /> Tillbaka
           </button>
-          {step < 5 ? (
+          {step < 6 ? (
             <button
               type="button"
               onClick={() => canContinue && setStep((s) => s + 1)}
