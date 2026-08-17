@@ -20,6 +20,7 @@ import { useTemplates } from "@/lib/pm-templates";
 import { uid } from "@/lib/pm";
 import { addPmDoc } from "@/lib/pm-store";
 import { buildPmDoc, choiceSummary, emptyChoice, type PmChoice } from "@/lib/pm-compose";
+import { periodQuickTimes, readSetup } from "@/lib/onboarding";
 
 
 export const tagGroups: { label: string; tags: string[] }[] = [
