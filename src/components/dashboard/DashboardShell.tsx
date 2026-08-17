@@ -143,6 +143,8 @@ function buildQuickDays(selected: Date) {
 }
 
 import { LiveFeed } from "@/components/dashboard/LiveFeed";
+import { GuestChatButton } from "@/components/dashboard/GuestChat";
+
 import { CommandPalette, useCommandPalette } from "@/components/dashboard/CommandPalette";
 
 
