@@ -85,7 +85,9 @@ function navGroups(venue: Venue): NavGroup[] {
     {
       title: "Kommunikation",
       items: [
+        { to: "/dashboard/chatt", label: "Gästchatt", icon: MessageSquare },
         { to: "/dashboard/epost", label: "E-post", icon: Inbox },
+
         { to: "/dashboard/samtal", label: "Samtal", icon: PhoneCall },
         { to: "/dashboard/eskaleringar", label: "Eskaleringar", icon: AlertTriangle },
       ],
