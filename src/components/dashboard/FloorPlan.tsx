@@ -28,7 +28,7 @@ function body(u: TableUnit): Body {
   const seats = u.seats ?? 2;
   const shape = u.shape ?? "fyrkant";
   if (shape === "bar") return { w: 15, h: 7.5, radius: "0.4rem", round: false };
-  if (shape === "lounge") return { w: 2.6, h: 2.6, radius: "999px", round: true };
+  if (shape === "lounge") return { w: 3.2, h: 3.2, radius: "999px", round: true };
   if (shape === "rund") {
     const d = 3.4 + seats * 0.25;
     return { w: d, h: d, radius: "999px", round: true };
