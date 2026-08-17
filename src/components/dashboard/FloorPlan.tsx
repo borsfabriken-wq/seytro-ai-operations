@@ -116,28 +116,16 @@ export function FloorPlan({
     });
   }, [units]);
 
-  const zoneAreas = useMemo(() => {
-    const map = new Map<string, { x1: number; y1: number; x2: number; y2: number }>();
+  /** Diskret etikett per zon, satt vid zonens övre vänstra hörn. */
+  const zoneLabels = useMemo(() => {
+    const map = new Map<string, { x: number; y: number }>();
     for (const u of placed) {
-      const f = footprint(u);
-      const box = map.get(u.zone);
-      const x1 = (u.x ?? 50) - f.w / 2 - 2.5;
-      const x2 = (u.x ?? 50) + f.w / 2 + 2.5;
-      const y1 = (u.y ?? 50) - f.h / 2 - 5;
-      const y2 = (u.y ?? 50) + f.h / 2 + 3;
-      map.set(
-        u.zone,
-        box
-          ? {
-              x1: Math.min(box.x1, x1),
-              y1: Math.min(box.y1, y1),
-              x2: Math.max(box.x2, x2),
-              y2: Math.max(box.y2, y2),
-            }
-          : { x1, y1, x2, y2 },
-      );
+      const x = u.x ?? 50;
+      const y = u.y ?? 50;
+      const cur = map.get(u.zone);
+      map.set(u.zone, cur ? { x: Math.min(cur.x, x), y: Math.min(cur.y, y) } : { x, y });
     }
-    return Array.from(map, ([zone, b]) => ({ zone, ...b }));
+    return Array.from(map, ([zone, p]) => ({ zone, ...p }));
   }, [placed]);
 
   const peekUnit = peek ? placed.find((u) => u.id === peek.id) ?? null : null;
