@@ -89,6 +89,8 @@ export function emptySetup(): VenueSetup {
     hours: defaultHours(),
     zones: ["Matsalen", "Bar", "Uteservering"],
     tables: [],
+    menus: [],
+
     rules: {
       slotMinutes: 15,
       durationSmall: 105,
