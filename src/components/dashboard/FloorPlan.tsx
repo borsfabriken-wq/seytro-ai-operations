@@ -13,16 +13,54 @@ export const floorStateLabel: Record<FloorState, string> = {
   upptaget: "Upptaget",
 };
 
-const zooms = [0.8, 1, 1.3, 1.7] as const;
+const zooms = [0.8, 1, 1.3, 1.7, 2.2] as const;
 
-/** Bordets storlek i procent av planens bredd/höjd, utifrån form och antal platser. */
-function footprint(u: TableUnit) {
+/** Planen är 16:10 — höjdprocent är 1.6× tätare än breddprocent. */
+const ASPECT = 1.6;
+/** Marginal runt bordskroppen där stolarna ritas (i breddprocent). */
+const CHAIR_PAD = 0.95;
+
+type Body = { w: number; h: number; radius: string; round: boolean };
+
+/** Bordskroppens storlek i breddprocent, utifrån form och antal platser. */
+function body(u: TableUnit): Body {
   const seats = u.seats ?? 2;
   const shape = u.shape ?? "fyrkant";
-  const base = Math.min(9, 4.2 + seats * 0.35);
-  if (shape === "avlang") return { w: base * 1.9, h: base * 0.95, radius: "0.9rem" };
-  if (shape === "rund") return { w: base * 1.25, h: base * 1.25, radius: "999px" };
-  return { w: base * 1.15, h: base * 1.15, radius: "0.65rem" };
+  if (shape === "bar") return { w: 13, h: 7, radius: "0.35rem", round: false };
+  if (shape === "lounge") return { w: 1.9, h: 1.9, radius: "999px", round: true };
+  if (shape === "rund") {
+    const d = 2.6 + seats * 0.25;
+    return { w: d, h: d, radius: "999px", round: true };
+  }
+  if (shape === "avlang") return { w: 2.4 + seats * 0.5, h: 2.6, radius: "0.3rem", round: false };
+  if (seats <= 2) return { w: 2.5, h: 2.0, radius: "0.25rem", round: false };
+  if (seats <= 4) return { w: 3.1, h: 2.5, radius: "0.25rem", round: false };
+  return { w: 3.8, h: 3.0, radius: "0.3rem", round: false };
+}
+
+/** Stolarnas placering i andel av hela bordsrutan (kropp + stolsmarginal). */
+function chairs(u: TableUnit, b: Body): { x: number; y: number }[] {
+  const seats = Math.max(1, Math.min(u.seats ?? 2, 20));
+  if (u.shape === "lounge") return [];
+  if (b.round) {
+    return Array.from({ length: seats }, (_, i) => {
+      const a = (i / seats) * Math.PI * 2 - Math.PI / 2;
+      return { x: 0.5 + 0.43 * Math.cos(a), y: 0.5 + 0.43 * Math.sin(a) };
+    });
+  }
+  const sides = u.shape === "bar" || seats > 8;
+  const perSide = sides ? Math.max(1, Math.round(seats * 0.12)) : 0;
+  const rest = seats - perSide * 2;
+  const top = Math.ceil(rest / 2);
+  const bottom = rest - top;
+  const out: { x: number; y: number }[] = [];
+  for (let i = 0; i < top; i++) out.push({ x: (i + 1) / (top + 1), y: 0.06 });
+  for (let i = 0; i < bottom; i++) out.push({ x: (i + 1) / (bottom + 1), y: 0.94 });
+  for (let i = 0; i < perSide; i++) {
+    out.push({ x: 0.05, y: (i + 1) / (perSide + 1) });
+    out.push({ x: 0.95, y: (i + 1) / (perSide + 1) });
+  }
+  return out;
 }
 
 /**
