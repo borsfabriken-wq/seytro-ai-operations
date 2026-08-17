@@ -7,6 +7,9 @@ import type { MenuTemplate } from "@/lib/pm-templates";
 
 export type PmExtra = { id: string; name: string; price: number; qty: number };
 
+/** Fritt skrivet block i PM:et — används när ingen mall passar. */
+export type PmFreeBlock = { id: string; title: string; body: string };
+
 export type PmChoice = {
   menuId: string | null;
   drinkId: string | null;
@@ -14,6 +17,8 @@ export type PmChoice = {
   /** Kost och allergier per antal gäster. */
   diets: PmDiet[];
   note: string;
+  /** Egna, fritt skrivna avsnitt som skrivs ut i PM:et. */
+  freeBlocks?: PmFreeBlock[];
 };
 
 export const emptyChoice: PmChoice = {
@@ -22,6 +27,7 @@ export const emptyChoice: PmChoice = {
   extras: [],
   diets: [],
   note: "",
+  freeBlocks: [],
 };
 
 /** Vanliga kostval och allergier — klickas in med antal gäster. */
@@ -141,11 +147,31 @@ export function buildPmDoc(
         ]
       : [];
 
+  /** Fritt skrivna avsnitt — varje rad blir en egen utskriftsrad. */
+  const freeSections: PmSection[] = (choice.freeBlocks ?? [])
+    .filter((f) => f.title.trim() || f.body.trim())
+    .map((f) => ({
+      id: uid("s"),
+      title: f.title.trim() || "Eget avsnitt",
+      lines: f.body
+        .split("\n")
+        .map((l) => l.replace(/^[-•\s]+/, "").trim())
+        .filter(Boolean)
+        .map((l) => ({ id: uid(), qty: 1, name: l })),
+    }))
+    .filter((s) => s.lines.length > 0);
+
   return {
     ...base,
     party,
     split,
-    sections: [...fromTemplate(menu), ...fromTemplate(drink), ...dietSection, ...extraSection],
+    sections: [
+      ...fromTemplate(menu),
+      ...fromTemplate(drink),
+      ...dietSection,
+      ...extraSection,
+      ...freeSections,
+    ],
     ...(choice.diets.length > 0 ? { diets: choice.diets } : {}),
     ...(choice.note.trim() ? { allergies: choice.note.trim() } : {}),
   };
@@ -160,6 +186,9 @@ export function choiceSummary(choice: PmChoice, templates: MenuTemplate[], party
     drink ? `${party} × ${drink.label}` : null,
     ...choice.extras.map((e) => `${e.qty} × ${e.name}`),
     ...choice.diets.map((d) => `${d.count} × ${d.label}`),
+    ...(choice.freeBlocks ?? [])
+      .filter((f) => f.title.trim() || f.body.trim())
+      .map((f) => `${f.title.trim() || "Eget"}: ${f.body.trim().replace(/\s*\n\s*/g, ", ")}`),
     choice.note.trim() ? `Önskemål: ${choice.note.trim()}` : null,
   ].filter(Boolean);
   return rows.length ? `PM: ${rows.join(" · ")}` : "";

@@ -136,7 +136,12 @@ export function BookingDialog({
     setTags((prev) => (prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]));
 
   const hasPm =
-    pmOpen && (pmChoice.menuId || pmChoice.drinkId || pmChoice.extras.length > 0);
+    pmOpen &&
+    (pmChoice.menuId ||
+      pmChoice.drinkId ||
+      pmChoice.extras.length > 0 ||
+      pmChoice.diets.length > 0 ||
+      (pmChoice.freeBlocks ?? []).some((f) => f.title.trim() || f.body.trim()));
 
   const save = () => {
     const guestName = name.trim() || "Ny gäst";
@@ -201,7 +206,7 @@ export function BookingDialog({
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-foreground/30 backdrop-blur-[2px]">
       <button type="button" aria-label="Stäng" className="flex-1" onClick={onClose} />
-      <aside className="flex h-full w-full max-w-md flex-col border-l border-border bg-card shadow-overlay sm:max-w-lg">
+      <aside className="flex h-full w-full max-w-md flex-col border-l border-border/70 bg-card shadow-overlay sm:max-w-lg">
         {/* Header */}
         <div className="flex items-start justify-between gap-3 border-b border-border px-5 py-4">
           <div className="min-w-0">
@@ -231,7 +236,7 @@ export function BookingDialog({
                   if (!guestId) setName(e.target.value);
                 }}
                 placeholder="Sök gäst: namn, telefon eller e-post"
-                className="w-full rounded-xl border border-border bg-background py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary"
+                className="w-full rounded-2xl border border-border/70 bg-background py-3 pl-9 pr-3 text-sm tracking-tight outline-none transition-shadow focus:border-primary focus:ring-4 focus:ring-primary/10"
               />
             </div>
             {matches.length > 0 && (
@@ -266,7 +271,7 @@ export function BookingDialog({
 
           {/* Vald profil */}
           {guest && (
-            <div className="rounded-xl border border-primary/30 bg-primary/5 p-3">
+            <div className="rounded-2xl border border-primary/25 bg-primary/[0.06] p-3.5">
               <div className="flex items-center justify-between gap-2">
                 <p className="text-sm font-medium text-forest">Återkommande gäst</p>
                 <button
@@ -318,13 +323,13 @@ export function BookingDialog({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Gästens namn"
-              className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-primary"
+              className="w-full rounded-2xl border border-border/70 bg-background px-3.5 py-3 text-sm tracking-tight outline-none transition-shadow focus:border-primary focus:ring-4 focus:ring-primary/10"
             />
           )}
 
           {/* Sällskap + tid */}
           <div className="grid gap-3 sm:grid-cols-2">
-            <div className="rounded-xl border border-border p-3">
+            <div className="rounded-2xl border border-border/70 bg-card p-3.5">
               <p className="eyebrow text-muted-foreground">Antal gäster</p>
               <div className="mt-2 flex items-center justify-between">
                 <Round onClick={() => setParty((p) => Math.max(1, p - 1))}>
@@ -339,7 +344,7 @@ export function BookingDialog({
                 </Round>
               </div>
             </div>
-            <div className="rounded-xl border border-border p-3">
+            <div className="rounded-2xl border border-border/70 bg-card p-3.5">
               <p className="eyebrow text-muted-foreground">Tid</p>
               <div className="mt-2 flex items-center gap-2">
                 <Clock className="h-4 w-4 text-muted-foreground" />
@@ -368,7 +373,7 @@ export function BookingDialog({
           </div>
 
           {/* Bordsval + lås */}
-          <div className="rounded-xl border border-border p-3">
+          <div className="rounded-2xl border border-border/70 bg-card p-3.5">
             <div className="flex items-center justify-between gap-2">
               <p className="eyebrow text-muted-foreground">Välj {unit}</p>
               <span className="text-xs text-muted-foreground">
@@ -453,7 +458,7 @@ export function BookingDialog({
               <select
                 value={source}
                 onChange={(e) => setSource(e.target.value as BookingSource)}
-                className="mt-1.5 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
+                className="mt-1.5 w-full rounded-2xl border border-border/70 bg-background px-3.5 py-2.5 text-sm tracking-tight outline-none transition-shadow focus:border-primary focus:ring-4 focus:ring-primary/10"
               >
                 {["Telefon", "Webb", "Röstagent", "E-postconcierge", "Walk-in"].map((s) => (
                   <option key={s}>{s}</option>
@@ -487,12 +492,12 @@ export function BookingDialog({
               value={company}
               onChange={(e) => setCompany(e.target.value)}
               placeholder="Företag (valfritt)"
-              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
+              className="w-full rounded-2xl border border-border/70 bg-background px-3.5 py-2.5 text-sm tracking-tight outline-none transition-shadow focus:border-primary focus:ring-4 focus:ring-primary/10"
             />
             <select
               value={occasion}
               onChange={(e) => setOccasion(e.target.value)}
-              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
+              className="w-full rounded-2xl border border-border/70 bg-background px-3.5 py-2.5 text-sm tracking-tight outline-none transition-shadow focus:border-primary focus:ring-4 focus:ring-primary/10"
             >
               <option value="">Tillfälle…</option>
               {["Middag", "Affärsmöte", "Födelsedag", "Årsdag", "Fest", "Turist"].map((o) => (
@@ -506,11 +511,11 @@ export function BookingDialog({
             onChange={(e) => setNote(e.target.value)}
             rows={2}
             placeholder="Notering: önskemål, allergier, kommentar…"
-            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
+            className="w-full rounded-2xl border border-border/70 bg-background px-3.5 py-2.5 text-sm tracking-tight outline-none transition-shadow focus:border-primary focus:ring-4 focus:ring-primary/10"
           />
 
           {/* Taggar (hopfällbart) */}
-          <div className="rounded-xl border border-border p-3">
+          <div className="rounded-2xl border border-border/70 bg-card p-3.5">
             <button
               type="button"
               onClick={() => setShowTags((v) => !v)}
@@ -558,7 +563,7 @@ export function BookingDialog({
           </div>
 
           {/* PM direkt i bokningen */}
-          <div className="rounded-xl border border-primary/30 bg-primary/5 p-3">
+          <div className="rounded-2xl border border-primary/25 bg-primary/[0.06] p-3.5">
             <button
               type="button"
               onClick={() => setPmOpen((v) => !v)}
@@ -609,14 +614,14 @@ export function BookingDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-border px-4 py-2.5 text-sm text-muted-foreground"
+            className="rounded-full border border-border px-5 py-2.5 text-sm font-medium tracking-tight text-muted-foreground transition-colors hover:bg-muted hover:text-forest"
           >
             Avbryt
           </button>
           <button
             type="button"
             onClick={save}
-            className="min-w-0 flex-1 truncate rounded-lg bg-primary px-4 py-2.5 text-sm text-primary-foreground"
+            className="min-w-0 flex-1 truncate rounded-full bg-primary px-5 py-2.5 text-sm font-medium tracking-tight text-primary-foreground shadow-sm transition-all hover:shadow-md active:scale-[0.99]"
           >
             {table ? `Spara · ${unit} ${table}${lockedTable ? " (låst)" : ""}` : "Spara · AI placerar"}
           </button>
@@ -636,7 +641,7 @@ function ContactBox({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-border bg-background px-3 py-2">
+    <div className="rounded-2xl border border-border/70 bg-background px-3.5 py-2.5">
       <p className="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-muted-foreground">
         <span className="text-primary">{icon}</span>
         {label}

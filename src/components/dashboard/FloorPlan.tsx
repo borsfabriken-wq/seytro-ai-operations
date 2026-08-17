@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { ArrowRight, Clock, FileText, Lock, Minus, Plus, Users, X } from "lucide-react";
+import { PmBookIcon } from "@/components/dashboard/PmModal";
 import type { Booking, TableUnit } from "@/lib/dashboard-data";
 
 /** Endast två relevanta lägen i salen: tillgängligt eller upptaget av ett sällskap. */
@@ -74,6 +75,7 @@ export function FloorPlan({
   selected,
   onSelect,
   onOpenBooking,
+  onOpenPm,
   dragging = false,
   onDropBooking,
   highlight,
@@ -83,6 +85,8 @@ export function FloorPlan({
   selected?: string | null;
   onSelect: (unit: TableUnit) => void;
   onOpenBooking?: (booking: Booking) => void;
+  /** Öppnar bokningens PM (förbeställning) i PM-vyn. */
+  onOpenPm?: (pmId: string) => void;
   dragging?: boolean;
   onDropBooking?: (unit: TableUnit, bookingId: string) => void;
   /** Id på bord som matchar aktuell sökning — övriga tonas ned. */
@@ -317,6 +321,27 @@ export function FloorPlan({
                   {booking?.lockedTable && (
                     <Lock className="absolute right-0.5 top-0.5 h-2 w-2 opacity-70" />
                   )}
+                  {booking?.pmId && (
+                    <span
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Öppna PM för ${u.label}`}
+                      title="Förbeställning (PM) — klicka för att se beställningen"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenPm?.(booking.pmId!);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.stopPropagation();
+                          onOpenPm?.(booking.pmId!);
+                        }
+                      }}
+                      className="absolute -right-1 -top-1 grid h-3.5 w-3.5 place-items-center rounded-full bg-card shadow-sm ring-1 ring-border-subtle transition-transform hover:scale-125"
+                    >
+                      <PmBookIcon className="h-2.5 w-2.5" />
+                    </span>
+                  )}
                 </span>
               </button>
             );
@@ -388,6 +413,25 @@ export function FloorPlan({
                         {peekBooking.note}
                       </p>
                     </div>
+                  )}
+
+                  {peekBooking.pmId && onOpenPm && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onOpenPm(peekBooking.pmId!);
+                        setPeek(null);
+                      }}
+                      className="flex w-full items-center justify-between gap-2 rounded-lg border border-border-subtle bg-background px-2 py-1.5 text-left transition-colors hover:border-primary/50"
+                    >
+                      <span className="flex min-w-0 items-center gap-1.5">
+                        <PmBookIcon className="h-3.5 w-3.5 shrink-0" />
+                        <span className="truncate text-[11px] font-medium text-foreground">
+                          PM · förbeställning
+                        </span>
+                      </span>
+                      <span className="shrink-0 text-[10px] text-primary">Öppna</span>
+                    </button>
                   )}
 
                   {onOpenBooking && (

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { PmSheet } from "@/components/dashboard/PmSheet";
+import { usePmDocs } from "@/lib/pm-store";
 import { pmDocs, type PmDoc } from "@/lib/pm";
 
 /** Röd bok-ikon som markerar att bokningen har en förbeställning (PM). */
@@ -20,10 +21,17 @@ export function PmBookIcon({ className = "h-4 w-4" }: { className?: string }) {
 /** Öppnar hela PM:et i en ruta ovanpå vyn. */
 export function PmModal({ pmId, onClose }: { pmId: string | null; onClose: () => void }) {
   const [doc, setDoc] = useState<PmDoc | null>(null);
+  const localDocs = usePmDocs();
 
   useEffect(() => {
-    setDoc(pmId ? (pmDocs.find((d) => d.id === pmId) ?? null) : null);
-  }, [pmId]);
+    if (!pmId) {
+      setDoc(null);
+      return;
+    }
+    setDoc(
+      localDocs.find((d) => d.id === pmId) ?? pmDocs.find((d) => d.id === pmId) ?? null,
+    );
+  }, [pmId, localDocs]);
 
   useEffect(() => {
     if (!pmId) return;
