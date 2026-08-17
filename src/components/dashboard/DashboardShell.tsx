@@ -15,6 +15,8 @@ import {
   LayoutGrid,
   ListChecks,
   LogOut,
+  MessageSquare,
+
   PhoneCall,
   Plus,
   Search,
@@ -85,7 +87,9 @@ function navGroups(venue: Venue): NavGroup[] {
     {
       title: "Kommunikation",
       items: [
+        { to: "/dashboard/chatt", label: "Gästchatt", icon: MessageSquare },
         { to: "/dashboard/epost", label: "E-post", icon: Inbox },
+
         { to: "/dashboard/samtal", label: "Samtal", icon: PhoneCall },
         { to: "/dashboard/eskaleringar", label: "Eskaleringar", icon: AlertTriangle },
       ],
@@ -143,6 +147,8 @@ function buildQuickDays(selected: Date) {
 }
 
 import { LiveFeed } from "@/components/dashboard/LiveFeed";
+import { GuestChatButton } from "@/components/dashboard/GuestChat";
+
 import { CommandPalette, useCommandPalette } from "@/components/dashboard/CommandPalette";
 
 
@@ -422,7 +428,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 >
                   <Search className="h-4 w-4" />
                 </button>
+                <GuestChatButton />
                 <LiveFeed venue={venue} />
+
                 <button
                   type="button"
                   onClick={() => navigate({ to: "/dashboard/salsplan", search: { new: true } })}
