@@ -125,25 +125,36 @@ export function newPeriod(partial: Partial<ServicePeriod> = {}): ServicePeriod {
 }
 
 export function defaultPeriods(): ServicePeriod[] {
+  const all = [0, 1, 2, 3, 4, 5, 6];
   return [
+    newPeriod({
+      name: "Frukost",
+      icon: "frukost",
+      start: "06:00",
+      end: "10:30",
+      defaultTime: "08:00",
+      days: all,
+      sumStart: "06:00",
+      sumEnd: "10:30",
+    }),
     newPeriod({
       name: "Lunch",
       icon: "soppa",
-      start: "11:30",
-      end: "15:00",
+      start: "10:30",
+      end: "16:30",
       defaultTime: "12:00",
-      days: [0, 1, 2, 3, 4],
-      sumStart: "11:30",
-      sumEnd: "15:00",
+      days: all,
+      sumStart: "10:30",
+      sumEnd: "16:00",
     }),
     newPeriod({
       name: "Middag",
       icon: "bestick",
-      start: "17:00",
-      end: "23:00",
+      start: "16:15",
+      end: "23:59",
       defaultTime: "19:00",
-      days: [0, 1, 2, 3, 4, 5, 6],
-      sumStart: "17:00",
+      days: all,
+      sumStart: "16:15",
       sumEnd: "23:59",
     }),
   ];
@@ -186,11 +197,11 @@ function migratePeriods(hours: DayHours[]): ServicePeriod[] {
         name: "Lunch",
         icon: "soppa",
         start: first.lunchOpen,
-        end: first.lunchClose ?? "15:00",
-        defaultTime: first.lunchOpen,
-        days: lunchDays.length ? lunchDays : [0, 1, 2, 3, 4],
+        end: first.lunchClose ?? "16:30",
+        defaultTime: "12:00",
+        days: lunchDays.length ? lunchDays : [0, 1, 2, 3, 4, 5, 6],
         sumStart: first.lunchOpen,
-        sumEnd: first.lunchClose ?? "15:00",
+        sumEnd: first.lunchClose ?? "16:00",
       }),
     );
   }
@@ -200,11 +211,11 @@ function migratePeriods(hours: DayHours[]): ServicePeriod[] {
         name: "Middag",
         icon: "bestick",
         start: first.dinnerOpen,
-        end: first.dinnerClose ?? "22:30",
+        end: first.dinnerClose ?? "23:59",
         defaultTime: "19:00",
         days: dinnerDays.length ? dinnerDays : [0, 1, 2, 3, 4, 5, 6],
         sumStart: first.dinnerOpen,
-        sumEnd: first.dinnerClose ?? "22:30",
+        sumEnd: first.dinnerClose ?? "23:59",
       }),
     );
   }
