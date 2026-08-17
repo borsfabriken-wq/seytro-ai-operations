@@ -181,6 +181,7 @@ export const dashboardData: Record<Venue, VenueData> = {
       { id: "t64", label: "64", seats: 2, status: "ledigt", zone: "Uteservering", x: 51, y: 95, shape: "lounge" },
       { id: "t65", label: "65", seats: 2, status: "ledigt", zone: "Uteservering", x: 56, y: 94, shape: "lounge" },
       { id: "t66", label: "66", seats: 2, status: "ledigt", zone: "Uteservering", x: 61, y: 94, shape: "lounge" },
+    ],
     guests: [
       { id: "g1", name: "Marcus Ehn", email: "marcus.ehn@mail.se", phone: "+46 70 118 22 40", visits: 14, spend: 21400, last: "12 aug 2026", tags: ["VIP", "Rödvin", "Fönsterbord"] },
       { id: "g2", name: "Anna Wiklund", email: "anna.w@mail.se", phone: "+46 73 442 09 11", visits: 6, spend: 8100, last: "28 jul 2026", tags: ["Barnfamilj"] },
