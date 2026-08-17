@@ -19,7 +19,7 @@ const zooms = [0.8, 1, 1.3, 1.7, 2.2] as const;
 /** Planen är 16:10 — höjdprocent är 1.6× tätare än breddprocent. */
 const ASPECT = 1.6;
 /** Marginal runt bordskroppen där stolarna ritas (i breddprocent). */
-const CHAIR_PAD = 0.95;
+const CHAIR_PAD = 1.05;
 
 type Body = { w: number; h: number; radius: string; round: boolean };
 
@@ -27,16 +27,16 @@ type Body = { w: number; h: number; radius: string; round: boolean };
 function body(u: TableUnit): Body {
   const seats = u.seats ?? 2;
   const shape = u.shape ?? "fyrkant";
-  if (shape === "bar") return { w: 13, h: 7, radius: "0.35rem", round: false };
-  if (shape === "lounge") return { w: 1.9, h: 1.9, radius: "999px", round: true };
+  if (shape === "bar") return { w: 15, h: 7.5, radius: "0.4rem", round: false };
+  if (shape === "lounge") return { w: 2.6, h: 2.6, radius: "999px", round: true };
   if (shape === "rund") {
-    const d = 2.6 + seats * 0.25;
+    const d = 3.4 + seats * 0.25;
     return { w: d, h: d, radius: "999px", round: true };
   }
-  if (shape === "avlang") return { w: 2.4 + seats * 0.5, h: 2.6, radius: "0.3rem", round: false };
-  if (seats <= 2) return { w: 2.5, h: 2.0, radius: "0.25rem", round: false };
-  if (seats <= 4) return { w: 3.1, h: 2.5, radius: "0.25rem", round: false };
-  return { w: 3.8, h: 3.0, radius: "0.3rem", round: false };
+  if (shape === "avlang") return { w: 3 + seats * 0.5, h: 3.2, radius: "0.4rem", round: false };
+  if (seats <= 2) return { w: 3.4, h: 2.8, radius: "0.4rem", round: false };
+  if (seats <= 4) return { w: 4.1, h: 3.2, radius: "0.4rem", round: false };
+  return { w: 4.8, h: 3.8, radius: "0.45rem", round: false };
 }
 
 /** Stolarnas placering i andel av hela bordsrutan (kropp + stolsmarginal). */
@@ -206,7 +206,7 @@ export function FloorPlan({
           {zoneLabels.map((z) => (
             <span
               key={z.zone}
-              className="pointer-events-none absolute text-[9px] uppercase tracking-[0.18em] text-muted-foreground/70"
+              className="pointer-events-none absolute text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground/60"
               style={{ left: `${Math.max(z.x - 4.5, 0.4)}%`, top: `${Math.max(z.y - 9, 0.4)}%` }}
             >
               {z.zone}
@@ -283,8 +283,8 @@ export function FloorPlan({
                     style={{
                       left: `${c.x * 100}%`,
                       top: `${c.y * 100}%`,
-                      width: `${(0.62 / boxW) * 100}%`,
-                      height: `${(0.62 / boxH) * 100}%`,
+                      width: `${(0.55 / boxW) * 100}%`,
+                      height: `${(0.55 / boxH) * 100}%`,
                     }}
                   />
                 ))}
@@ -312,7 +312,7 @@ export function FloorPlan({
                     borderRadius: b.radius,
                   }}
                 >
-                  <span className="text-[9px] font-medium leading-none tabular-nums">
+                  <span className="text-[11px] font-semibold leading-none tabular-nums">
                     {u.label}
                   </span>
                   {booking?.lockedTable && (
