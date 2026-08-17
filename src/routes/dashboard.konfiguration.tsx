@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import {
@@ -16,6 +16,19 @@ import {
 } from "lucide-react";
 
 import { useVenue } from "@/components/dashboard/DashboardShell";
+import {
+  PeriodIconGlyph,
+  ServicePeriodPanel,
+} from "@/components/onboarding/ServicePeriodPanel";
+import {
+  activePeriods,
+  defaultPeriods,
+  newPeriod,
+  readSetup,
+  weekdayShort,
+  writeSetup,
+  type ServicePeriod,
+} from "@/lib/onboarding";
 
 export const Route = createFileRoute("/dashboard/konfiguration")({
   head: () => ({
@@ -342,27 +355,74 @@ function ConfigPage() {
           )}
 
           {section === "oppettider" && (
-            <Card title="Öppettider och pass" desc="Bokningsbara tider per dag och pass.">
-              <div className="space-y-1" onChange={markDirty}>
-                {days.map((d) => (
-                  <div
-                    key={d}
-                    className="grid items-center gap-3 border-b border-border/60 py-3 last:border-0 sm:grid-cols-[7rem_1fr_1fr]"
+            <Card
+              title="Öppettider och pass"
+              desc="Serveringspass med egna tidsinställningar. Klicka på ett pass för att ändra tider, veckodagar och ikon."
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                  Serveringspass
+                </p>
+                <button
+                  type="button"
+                  onClick={addPeriod}
+                  className="rounded-xl border border-dashed border-border px-3 py-1.5 text-xs transition hover:border-primary/50"
+                >
+                  + Nytt pass
+                </button>
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {periods.map((p) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => setEditingPeriod(p.id)}
+                    className="flex items-center gap-3 rounded-2xl border border-border bg-card px-3.5 py-2.5 text-left transition hover:border-primary/50 hover:shadow-sm"
                   >
-                    <span className="text-sm text-forest">{d}</span>
-                    <div className="flex items-center gap-2 text-sm">
-                      <span className="w-14 text-xs text-muted-foreground">Lunch</span>
-                      <input className={inputClass} defaultValue="11:30" />
-                      <input className={inputClass} defaultValue="14:30" />
-                    </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <span className="w-14 text-xs text-muted-foreground">Middag</span>
-                      <input className={inputClass} defaultValue="17:00" />
-                      <input className={inputClass} defaultValue="22:00" />
-                    </div>
-                  </div>
+                    <span className="grid h-8 w-8 place-items-center rounded-xl bg-primary/10 text-primary">
+                      <PeriodIconGlyph icon={p.icon} />
+                    </span>
+                    <span>
+                      <span className="block text-sm font-medium tracking-tight">{p.name}</span>
+                      <span className="block text-xs text-muted-foreground">
+                        {p.start}–{p.end} · standard {p.defaultTime}
+                      </span>
+                    </span>
+                  </button>
                 ))}
               </div>
+
+              <div className="mt-5 space-y-1">
+                {days.map((d, i) => {
+                  const dayPeriods = activePeriods(periods, i);
+                  return (
+                    <div
+                      key={d}
+                      className="flex flex-wrap items-center gap-3 border-b border-border/60 py-3 last:border-0"
+                    >
+                      <span className="w-28 text-sm text-forest">{d}</span>
+                      {dayPeriods.length === 0 ? (
+                        <span className="text-sm text-muted-foreground">Stängt</span>
+                      ) : (
+                        <div className="flex flex-wrap gap-2">
+                          {dayPeriods.map((p) => (
+                            <button
+                              key={p.id}
+                              type="button"
+                              onClick={() => setEditingPeriod(p.id)}
+                              className="flex items-center gap-2 rounded-lg bg-muted/70 px-2.5 py-1.5 text-xs transition hover:bg-muted"
+                            >
+                              <PeriodIconGlyph icon={p.icon} className="h-3.5 w-3.5 text-primary" />
+                              {p.name} {p.start}–{p.end}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
               <div className="mt-5">
                 <Toggle
                   label="Stäng automatiskt vid helgdagar"
