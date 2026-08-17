@@ -147,11 +147,31 @@ export function buildPmDoc(
         ]
       : [];
 
+  /** Fritt skrivna avsnitt — varje rad blir en egen utskriftsrad. */
+  const freeSections: PmSection[] = (choice.freeBlocks ?? [])
+    .filter((f) => f.title.trim() || f.body.trim())
+    .map((f) => ({
+      id: uid("s"),
+      title: f.title.trim() || "Eget avsnitt",
+      lines: f.body
+        .split("\n")
+        .map((l) => l.replace(/^[-•\s]+/, "").trim())
+        .filter(Boolean)
+        .map((l) => ({ id: uid(), qty: 1, name: l })),
+    }))
+    .filter((s) => s.lines.length > 0);
+
   return {
     ...base,
     party,
     split,
-    sections: [...fromTemplate(menu), ...fromTemplate(drink), ...dietSection, ...extraSection],
+    sections: [
+      ...fromTemplate(menu),
+      ...fromTemplate(drink),
+      ...dietSection,
+      ...extraSection,
+      ...freeSections,
+    ],
     ...(choice.diets.length > 0 ? { diets: choice.diets } : {}),
     ...(choice.note.trim() ? { allergies: choice.note.trim() } : {}),
   };
