@@ -269,5 +269,18 @@ export function useTemplates() {
     [custom, persist],
   );
 
-  return { templates: [...builtinTemplates, ...custom], custom, addTemplate, removeTemplate };
+  const active = [...builtinTemplates, ...custom].filter((t) => t.active !== false);
+
+  return { templates: active, custom, addTemplate, removeTemplate };
 }
+
+/** Skriver utbudet från onboardingen till samma lagring som PM-byggaren läser. */
+export function writeTemplates(list: MenuTemplate[]) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(KEY, JSON.stringify(list));
+  } catch {
+    /* ignorera */
+  }
+}
+
