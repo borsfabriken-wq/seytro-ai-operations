@@ -75,6 +75,7 @@ export function FloorPlan({
   selected,
   onSelect,
   onOpenBooking,
+  onOpenPm,
   dragging = false,
   onDropBooking,
   highlight,
@@ -84,6 +85,8 @@ export function FloorPlan({
   selected?: string | null;
   onSelect: (unit: TableUnit) => void;
   onOpenBooking?: (booking: Booking) => void;
+  /** Öppnar bokningens PM (förbeställning) i PM-vyn. */
+  onOpenPm?: (pmId: string) => void;
   dragging?: boolean;
   onDropBooking?: (unit: TableUnit, bookingId: string) => void;
   /** Id på bord som matchar aktuell sökning — övriga tonas ned. */
