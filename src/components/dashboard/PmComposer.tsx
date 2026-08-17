@@ -37,6 +37,11 @@ export function PmComposer({
   const menus = templates.filter((t) => t.kind === "meny");
   const drinks = templates.filter((t) => t.kind === "dryck");
   const addons = templates.filter((t) => t.kind === "tillägg");
+  /** Vin, öl och sprit läggs till som enskilda rader med sitt eget pris. */
+  const beverages = templates
+    .filter((t) => t.kind === "vin" || t.kind === "sprit")
+    .flatMap((t) => t.sections.flatMap((s) => s.lines))
+    .map((l) => ({ name: l.name, price: l.price ?? 0 }));
 
   const [customName, setCustomName] = useState("");
   const [mode, setMode] = useState<"mall" | "fritt">("mall");
@@ -218,7 +223,11 @@ export function PmComposer({
 
       <Step index={3} title="Speciella artiklar" hint="Läggs till som antal">
         <div className="flex flex-wrap gap-1.5">
-          {[...specialArticles, ...addons.map((a) => ({ name: a.label, price: a.price }))].map(
+          {[
+            ...specialArticles,
+            ...addons.map((a) => ({ name: a.label, price: a.price })),
+            ...beverages,
+          ].map(
             (a) => (
               <button
                 key={a.name}

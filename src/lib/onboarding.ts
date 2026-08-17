@@ -1,4 +1,6 @@
 import type { TableUnit, Venue } from "@/lib/dashboard-data";
+import type { MenuTemplate } from "@/lib/pm-templates";
+
 
 export const SETUP_KEY = "seytro-setup";
 
@@ -40,7 +42,10 @@ export type VenueSetup = {
     requireCard: boolean;
     cancellationHours: number;
   };
+  /** Menyer, dryckespaket, vin och sprit */
+  menus: MenuTemplate[];
   /** Kanaler och AI */
+
   channels: {
     voice: boolean;
     email: boolean;
@@ -84,6 +89,8 @@ export function emptySetup(): VenueSetup {
     hours: defaultHours(),
     zones: ["Matsalen", "Bar", "Uteservering"],
     tables: [],
+    menus: [],
+
     rules: {
       slotMinutes: 15,
       durationSmall: 105,
@@ -116,7 +123,7 @@ export function readSetup(): VenueSetup | null {
     if (!raw) return null;
     const parsed = JSON.parse(raw) as VenueSetup;
     if (!parsed || typeof parsed.org !== "string") return null;
-    return { ...emptySetup(), ...parsed };
+    return { ...emptySetup(), ...parsed, menus: parsed.menus ?? [] };
   } catch {
     return null;
   }

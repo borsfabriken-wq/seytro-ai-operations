@@ -11,11 +11,14 @@ import {
   Plus,
   Settings2,
   Sparkles,
+  UtensilsCrossed,
   X,
 } from "lucide-react";
 import { toast } from "sonner";
 
 import { FloorPlanEditor } from "@/components/dashboard/FloorPlanEditor";
+import { MenuBuilder } from "@/components/onboarding/MenuBuilder";
+import { writeTemplates } from "@/lib/pm-templates";
 import { writeAccountPlan } from "@/lib/account";
 import {
   coversPerService,
@@ -53,8 +56,9 @@ const steps = [
   { id: 1, label: "Öppettider", icon: CalendarClock },
   { id: 2, label: "Zoner & bordskarta", icon: LayoutGrid },
   { id: 3, label: "Bokningsregler", icon: Settings2 },
-  { id: 4, label: "Kanaler & AI", icon: MessageSquare },
-  { id: 5, label: "Klart", icon: Sparkles },
+  { id: 4, label: "Menyer & dryck", icon: UtensilsCrossed },
+  { id: 5, label: "Kanaler & AI", icon: MessageSquare },
+  { id: 6, label: "Klart", icon: Sparkles },
 ] as const;
 
 const field =
@@ -123,6 +127,7 @@ function OnboardingPage() {
 
   const finish = () => {
     writeSetup({ ...setup, seatsTotal: seatCount(setup.tables) });
+    writeTemplates(setup.menus.filter((m) => m.custom));
     writeAccountPlan("custom");
     window.localStorage.setItem(
       "seytro-venue",
@@ -469,6 +474,31 @@ function OnboardingPage() {
           )}
 
           {step === 4 && (
+            <div>
+              <div className="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                  <h2 className="text-xl">Menyer och dryck</h2>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Lägg in matmenyer, dryckespaket, vin och sprit — på flera språk. Allt blir
+                    valbart direkt när ett PM skapas på en bokning.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setStep(5)}
+                  className="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
+                >
+                  Hoppa över — fyll på senare
+                </button>
+              </div>
+              <div className="mt-5">
+                <MenuBuilder value={setup.menus} onChange={(menus) => patch({ menus })} />
+              </div>
+            </div>
+          )}
+
+
+          {step === 5 && (
             <div className="grid gap-5 lg:grid-cols-2">
               <div className="lg:col-span-2">
                 <h2 className="text-xl">Kanaler och AI</h2>
@@ -547,7 +577,7 @@ function OnboardingPage() {
             </div>
           )}
 
-          {step === 5 && (
+          {step === 6 && (
             <div>
               <h2 className="text-xl">Klart att köra</h2>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -569,6 +599,16 @@ function OnboardingPage() {
                       .join(", ") || "inga",
                   ],
                   ["Stort sällskap", `från ${setup.rules.largePartyThreshold} pers`],
+                  [
+                    "Menyer & dryck",
+                    setup.menus.length
+                      ? `${setup.menus.filter((m) => m.kind === "meny").length} menyer · ${
+                          setup.menus.filter((m) => m.kind === "dryck").length
+                        } paket · ${
+                          setup.menus.filter((m) => m.kind === "vin" || m.kind === "sprit").length
+                        } dryckeslistor`
+                      : "inget utbud ännu",
+                  ],
                 ].map(([k, v]) => (
                   <div key={k} className="rounded-xl border border-border bg-background p-4">
                     <dt className="text-xs uppercase tracking-wide text-muted-foreground">{k}</dt>
@@ -594,7 +634,7 @@ function OnboardingPage() {
           >
             <ArrowLeft className="h-4 w-4" /> Tillbaka
           </button>
-          {step < 5 ? (
+          {step < 6 ? (
             <button
               type="button"
               onClick={() => canContinue && setStep((s) => s + 1)}
