@@ -94,6 +94,7 @@ export function BookingDialog({
   const [pmOpen, setPmOpen] = useState(false);
   const [pmChoice, setPmChoice] = useState<PmChoice>({ ...emptyChoice });
   const { templates } = useTemplates();
+  const quickTimes = useQuickTimes();
 
   const [table, setTable] = useState("");
   const [lockedTable, setLockedTable] = useState(false);
