@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { PmSheet } from "@/components/dashboard/PmSheet";
+import { usePmDocs } from "@/lib/pm-store";
 import { pmDocs, type PmDoc } from "@/lib/pm";
 
 /** Röd bok-ikon som markerar att bokningen har en förbeställning (PM). */
