@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { ArrowRight, Clock, FileText, Lock, Minus, Plus, Users, X } from "lucide-react";
+import { PmBookIcon } from "@/components/dashboard/PmModal";
 import type { Booking, TableUnit } from "@/lib/dashboard-data";
 
 /** Endast två relevanta lägen i salen: tillgängligt eller upptaget av ett sällskap. */
