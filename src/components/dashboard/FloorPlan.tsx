@@ -206,7 +206,7 @@ export function FloorPlan({
             <span
               key={z.zone}
               className="pointer-events-none absolute text-[9px] uppercase tracking-[0.18em] text-muted-foreground/70"
-              style={{ left: `${Math.max(z.x - 3, 0.5)}%`, top: `${Math.max(z.y - 7, 0.5)}%` }}
+              style={{ left: `${Math.max(z.x - 4.5, 0.4)}%`, top: `${Math.max(z.y - 9, 0.4)}%` }}
             >
               {z.zone}
             </span>
