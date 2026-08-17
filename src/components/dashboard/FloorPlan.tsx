@@ -18,10 +18,17 @@ const zooms = [0.8, 1, 1.3, 1.7, 2.2] as const;
 
 /** Planen är 16:10 — höjdprocent är 1.6× tätare än breddprocent. */
 const ASPECT = 1.6;
-/** Marginal runt bordskroppen där stolarna ritas (i breddprocent). */
-const CHAIR_PAD = 1.05;
+/** Stolarnas mått och luftspalt mot bordskanten (i breddprocent = kvadratiska px). */
+const CHAIR_T = 0.5;
+const CHAIR_L = 1.0;
+const CHAIR_GAP = 0.45;
+/** Marginal runt bordskroppen där stolarna ritas. */
+const CHAIR_PAD = CHAIR_GAP + CHAIR_T;
 
 type Body = { w: number; h: number; radius: string; round: boolean };
+
+/** En stol: mittpunkt relativt bordets mitt, samt om den ligger på en långsida. */
+type Chair = { cx: number; cy: number; vertical: boolean };
 
 /** Bordskroppens storlek i breddprocent, utifrån form och antal platser. */
 function body(u: TableUnit): Body {
@@ -39,30 +46,43 @@ function body(u: TableUnit): Body {
   return { w: 4.8, h: 3.8, radius: "0.45rem", round: false };
 }
 
-/** Stolarnas placering i andel av hela bordsrutan (kropp + stolsmarginal). */
-function chairs(u: TableUnit, b: Body): { x: number; y: number }[] {
+/** Stolarnas placering — alltid utanför bordskanten med en tydlig luftspalt. */
+function chairs(u: TableUnit, b: Body): Chair[] {
   const seats = Math.max(1, Math.min(u.seats ?? 2, 20));
   if (u.shape === "lounge") return [];
+
+  const off = CHAIR_GAP + CHAIR_T / 2;
+
   if (b.round) {
+    const r = b.w / 2 + off;
     return Array.from({ length: seats }, (_, i) => {
       const a = (i / seats) * Math.PI * 2 - Math.PI / 2;
-      return { x: 0.5 + 0.43 * Math.cos(a), y: 0.5 + 0.43 * Math.sin(a) };
+      return { cx: r * Math.cos(a), cy: r * Math.sin(a), vertical: Math.abs(Math.cos(a)) > 0.7 };
     });
   }
-  const sides = u.shape === "bar" || seats > 8;
-  const perSide = sides ? Math.max(1, Math.round(seats * 0.12)) : 0;
-  const rest = seats - perSide * 2;
+
+  // Rektangulärt bord: stolarna fördelas på långsidorna, med kortsidorna som komplement.
+  const capTop = Math.max(1, Math.floor(b.w / (CHAIR_L + 0.35)));
+  const perSide = seats > capTop * 2 || u.shape === "bar" || seats > 8 ? 1 : 0;
+  const rest = Math.max(0, seats - perSide * 2);
   const top = Math.ceil(rest / 2);
   const bottom = rest - top;
-  const out: { x: number; y: number }[] = [];
-  for (let i = 0; i < top; i++) out.push({ x: (i + 1) / (top + 1), y: 0.06 });
-  for (let i = 0; i < bottom; i++) out.push({ x: (i + 1) / (bottom + 1), y: 0.94 });
+
+  const out: Chair[] = [];
+  const yOff = b.h / 2 + off;
+  const xOff = b.w / 2 + off;
+  for (let i = 0; i < top; i++)
+    out.push({ cx: ((i + 1) / (top + 1) - 0.5) * b.w, cy: -yOff, vertical: false });
+  for (let i = 0; i < bottom; i++)
+    out.push({ cx: ((i + 1) / (bottom + 1) - 0.5) * b.w, cy: yOff, vertical: false });
   for (let i = 0; i < perSide; i++) {
-    out.push({ x: 0.05, y: (i + 1) / (perSide + 1) });
-    out.push({ x: 0.95, y: (i + 1) / (perSide + 1) });
+    const y = ((i + 1) / (perSide + 1) - 0.5) * b.h;
+    out.push({ cx: -xOff, cy: y, vertical: true });
+    out.push({ cx: xOff, cy: y, vertical: true });
   }
   return out;
 }
+
 
 /**
  * Salsplan i fågelvy: borden ligger på sina verkliga platser i lokalen
