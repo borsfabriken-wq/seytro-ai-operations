@@ -273,100 +273,106 @@ function OnboardingPage() {
             <div>
               <h2 className="text-xl">Öppettider och pass</h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                Sätt lunch- och middagspass per dag. Stängda dagar bokas aldrig av AI:n.
+                Skapa så många serveringspass ni behöver — frukost, lunch, middag, afternoon tea.
+                Klicka på ett pass för att öppna dess tidsinställningar. Stängda dagar bokas aldrig
+                av AI:n.
               </p>
-              <div className="mt-5 space-y-2">
-                {setup.hours.map((h, i) => (
-                  <div
-                    key={h.day}
-                    className="grid items-center gap-2 rounded-xl border border-border bg-background p-3 sm:grid-cols-[120px_1fr_1fr]"
+
+              <div className="mt-5 rounded-2xl border border-border bg-background p-4">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                    Serveringspass
+                  </p>
+                  <button
+                    type="button"
+                    onClick={addPeriod}
+                    className="rounded-xl border border-dashed border-border px-3 py-1.5 text-xs transition hover:border-primary/50"
                   >
+                    + Nytt pass
+                  </button>
+                </div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {setup.periods.map((p) => (
                     <button
+                      key={p.id}
                       type="button"
-                      onClick={() =>
-                        patch({
-                          hours: setup.hours.map((x, j) =>
-                            j === i ? { ...x, closed: !x.closed } : x,
-                          ),
-                        })
-                      }
-                      className="flex items-center gap-2 text-left text-sm font-medium"
+                      onClick={() => setEditingPeriod(p.id)}
+                      className="group flex items-center gap-3 rounded-2xl border border-border bg-card px-3.5 py-2.5 text-left transition hover:border-primary/50 hover:shadow-sm"
                     >
-                      <span
-                        className={`grid h-5 w-5 place-items-center rounded border ${
-                          h.closed
-                            ? "border-border text-transparent"
-                            : "border-primary bg-primary text-primary-foreground"
-                        }`}
-                      >
-                        <Check className="h-3 w-3" />
+                      <span className="grid h-8 w-8 place-items-center rounded-xl bg-primary/10 text-primary">
+                        <PeriodIconGlyph icon={p.icon} />
                       </span>
-                      {h.label}
+                      <span>
+                        <span className="block text-sm font-medium tracking-tight">{p.name}</span>
+                        <span className="block text-xs text-muted-foreground">
+                          {p.start}–{p.end} ·{" "}
+                          {p.days.length === 7
+                            ? "alla dagar"
+                            : p.days.map((d) => weekdayShort[d]).join(", ")}
+                        </span>
+                      </span>
                     </button>
-                    {h.closed ? (
-                      <span className="text-sm text-muted-foreground sm:col-span-2">Stängt</span>
-                    ) : (
-                      <>
-                        <div className="flex items-center gap-2">
-                          <span className="w-14 text-xs text-muted-foreground">Lunch</span>
-                          <input
-                            type="time"
-                            value={h.lunchOpen}
-                            onChange={(e) =>
-                              patch({
-                                hours: setup.hours.map((x, j) =>
-                                  j === i ? { ...x, lunchOpen: e.target.value } : x,
-                                ),
-                              })
-                            }
-                            className="h-9 rounded-lg border border-border bg-background px-2 text-sm"
-                          />
-                          <span className="text-muted-foreground">–</span>
-                          <input
-                            type="time"
-                            value={h.lunchClose}
-                            onChange={(e) =>
-                              patch({
-                                hours: setup.hours.map((x, j) =>
-                                  j === i ? { ...x, lunchClose: e.target.value } : x,
-                                ),
-                              })
-                            }
-                            className="h-9 rounded-lg border border-border bg-background px-2 text-sm"
-                          />
+                  ))}
+                  {setup.periods.length === 0 && (
+                    <p className="text-sm text-muted-foreground">
+                      Inga pass ännu — lägg till ert första.
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-4 space-y-2">
+                {setup.hours.map((h, i) => {
+                  const dayPeriods = activePeriods(setup.periods, h.day);
+                  return (
+                    <div
+                      key={h.day}
+                      className="flex flex-wrap items-center gap-3 rounded-xl border border-border bg-background p-3"
+                    >
+                      <button
+                        type="button"
+                        onClick={() =>
+                          patch({
+                            hours: setup.hours.map((x, j) =>
+                              j === i ? { ...x, closed: !x.closed } : x,
+                            ),
+                          })
+                        }
+                        className="flex w-32 items-center gap-2 text-left text-sm font-medium"
+                      >
+                        <span
+                          className={`grid h-5 w-5 place-items-center rounded border ${
+                            h.closed
+                              ? "border-border text-transparent"
+                              : "border-primary bg-primary text-primary-foreground"
+                          }`}
+                        >
+                          <Check className="h-3 w-3" />
+                        </span>
+                        {h.label}
+                      </button>
+                      {h.closed ? (
+                        <span className="text-sm text-muted-foreground">Stängt</span>
+                      ) : dayPeriods.length === 0 ? (
+                        <span className="text-sm text-muted-foreground">Inget pass denna dag</span>
+                      ) : (
+                        <div className="flex flex-wrap gap-2">
+                          {dayPeriods.map((p) => (
+                            <button
+                              key={p.id}
+                              type="button"
+                              onClick={() => setEditingPeriod(p.id)}
+                              className="flex items-center gap-2 rounded-lg bg-muted/70 px-2.5 py-1.5 text-xs transition hover:bg-muted"
+                            >
+                              <PeriodIconGlyph icon={p.icon} className="h-3.5 w-3.5 text-primary" />
+                              {p.name} {p.start}–{p.end}
+                            </button>
+                          ))}
                         </div>
-                        <div className="flex items-center gap-2">
-                          <span className="w-14 text-xs text-muted-foreground">Middag</span>
-                          <input
-                            type="time"
-                            value={h.dinnerOpen}
-                            onChange={(e) =>
-                              patch({
-                                hours: setup.hours.map((x, j) =>
-                                  j === i ? { ...x, dinnerOpen: e.target.value } : x,
-                                ),
-                              })
-                            }
-                            className="h-9 rounded-lg border border-border bg-background px-2 text-sm"
-                          />
-                          <span className="text-muted-foreground">–</span>
-                          <input
-                            type="time"
-                            value={h.dinnerClose}
-                            onChange={(e) =>
-                              patch({
-                                hours: setup.hours.map((x, j) =>
-                                  j === i ? { ...x, dinnerClose: e.target.value } : x,
-                                ),
-                              })
-                            }
-                            className="h-9 rounded-lg border border-border bg-background px-2 text-sm"
-                          />
-                        </div>
-                      </>
-                    )}
-                  </div>
-                ))}
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
