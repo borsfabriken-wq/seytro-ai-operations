@@ -223,7 +223,11 @@ export function PmComposer({
 
       <Step index={3} title="Speciella artiklar" hint="Läggs till som antal">
         <div className="flex flex-wrap gap-1.5">
-          {[...specialArticles, ...addons.map((a) => ({ name: a.label, price: a.price }))].map(
+          {[
+            ...specialArticles,
+            ...addons.map((a) => ({ name: a.label, price: a.price })),
+            ...beverages,
+          ].map(
             (a) => (
               <button
                 key={a.name}
