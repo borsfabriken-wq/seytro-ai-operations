@@ -329,11 +329,13 @@ export function FloorPlan({
               style={{ left: peek.x, top: peek.y }}
             >
               <div className="flex items-start justify-between gap-2">
-                <div className="flex items-center gap-1.5">
-                  <span className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-xs font-semibold text-foreground">
                     Bord {peekUnit.label}
                   </span>
-                  <span className="text-[10px] text-muted-foreground">{peekUnit.zone}</span>
+                  <span className="text-[10px] tabular-nums text-muted-foreground">
+                    {peekUnit.seats} pl · {peekUnit.zone}
+                  </span>
                 </div>
                 <button
                   type="button"
@@ -348,21 +350,23 @@ export function FloorPlan({
               {peekBooking ? (
                 <div className="mt-2 space-y-2">
                   <div>
-                    <p className="text-sm font-semibold text-foreground leading-tight">
-                      {peekBooking.name}
+                    <p className="flex items-center gap-1.5 text-[11px] tabular-nums text-muted-foreground">
+                      <Clock className="h-3 w-3" />
+                      {peekBooking.time}
+                      {peekBooking.end ? `–${peekBooking.end}` : ""}
                     </p>
-                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
-                      <span className="inline-flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        {peekBooking.time}
-                        {peekBooking.end ? `–${peekBooking.end}` : ""}
+                    <p className="mt-0.5 text-sm font-semibold leading-tight text-foreground">
+                      {peekBooking.name}{" "}
+                      <span className="font-normal text-muted-foreground">
+                        ({peekBooking.party})
                       </span>
-                      <span className="inline-flex items-center gap-1">
-                        <Users className="h-3 w-3" />
-                        {peekBooking.party}/{peekUnit.seats}
-                      </span>
-                    </div>
+                    </p>
+                    <p className="mt-0.5 inline-flex items-center gap-1 text-[11px] text-muted-foreground">
+                      <Users className="h-3 w-3" />
+                      {peekBooking.status === "anlänt" ? "Sitter nu" : "Väntas in"}
+                    </p>
                   </div>
+
 
                   {peekBooking.tags.length > 0 && (
                     <div className="flex flex-wrap gap-1">
