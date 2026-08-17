@@ -115,6 +115,27 @@ function OnboardingPage() {
   const [step, setStep] = useState(0);
   const [setup, setSetup] = useState<VenueSetup>(() => readSetup() ?? emptySetup());
   const [zoneInput, setZoneInput] = useState("");
+  const [editingPeriod, setEditingPeriod] = useState<string | null>(null);
+
+  const addPeriod = () => {
+    const p = newPeriod();
+    setSetup((s) => ({ ...s, periods: [...s.periods, p] }));
+    setEditingPeriod(p.id);
+  };
+
+  const savePeriod = (next: ServicePeriod) => {
+    setSetup((s) => ({
+      ...s,
+      periods: s.periods.map((p) => (p.id === next.id ? next : p)),
+    }));
+    toast.success(`${next.name} sparat`);
+    setEditingPeriod(null);
+  };
+
+  const deletePeriod = (id: string) => {
+    setSetup((s) => ({ ...s, periods: s.periods.filter((p) => p.id !== id) }));
+    setEditingPeriod(null);
+  };
 
   const patch = (p: Partial<VenueSetup>) => setSetup((s) => ({ ...s, ...p }));
 
@@ -672,6 +693,18 @@ function OnboardingPage() {
           )}
         </div>
       </div>
+
+      {editingPeriod && setup.periods.some((p) => p.id === editingPeriod) && (
+        <ServicePeriodPanel
+          period={setup.periods.find((p) => p.id === editingPeriod)!}
+          siblings={setup.periods}
+          onSelect={setEditingPeriod}
+          onAdd={addPeriod}
+          onSave={savePeriod}
+          onDelete={deletePeriod}
+          onClose={() => setEditingPeriod(null)}
+        />
+      )}
     </main>
   );
 }
