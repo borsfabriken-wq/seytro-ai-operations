@@ -590,6 +590,7 @@ function FloorPage() {
                 setPlacingId(null);
                 setDrawerId(b.id);
               }}
+              onOpenPm={setOpenPmId}
               dragging={Boolean(draggingId)}
               onDropBooking={dropOnUnit}
               highlight={highlightUnits}
