@@ -127,6 +127,7 @@ function OnboardingPage() {
 
   const finish = () => {
     writeSetup({ ...setup, seatsTotal: seatCount(setup.tables) });
+    writeTemplates(setup.menus.filter((m) => m.custom));
     writeAccountPlan("custom");
     window.localStorage.setItem(
       "seytro-venue",
