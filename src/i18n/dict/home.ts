@@ -45,15 +45,15 @@ export const home: Record<string, string> = {
   "Intäkt, beläggning och kanalprestanda i klartext.": "Revenue, occupancy and channel performance in plain terms.",
   "Kampanjer": "Campaigns",
   "Segmenterade utskick som fyller de svaga passen.": "Segmented outreach that fills the slow shifts.",
-  "Koppla": "Connect",
-  "Seytro läggs ovanpå era befintliga system — bokning, telefoni, mejl och kassa. Ingen migrering, inget systembyte.":
-    "Seytro sits on top of your existing systems — booking, telephony, email and POS. No migration, no system swap.",
-  "Lär": "Learn",
-  "Plattformen tränas på era regler, er ton och era öppettider. Ni godkänner innan den går live.":
-    "The platform is trained on your rules, your tone and your hours. You approve before it goes live.",
-  "Kör": "Run",
-  "AI:n hanterar rutinen, samlar datan och eskalerar till personal när något kräver en människa.":
-    "The AI handles the routine, collects the data and escalates to staff when something needs a human.",
+  "Flytta in": "Move in",
+  "Vi tar över bokningar, gästregister och historik från ert nuvarande system. Ni behöver inte föra över något för hand.":
+    "We take over bookings, guest records and history from your current system. Nothing has to be moved by hand.",
+  "Bygg upp": "Set up",
+  "Salsplan, öppettider, bokningsregler och er ton sätts upp i Seytro. Ni godkänner allt innan ni går live.":
+    "Floor plan, opening hours, booking rules and your tone of voice are set up in Seytro. You approve everything before going live.",
+  "Ta över": "Take over",
+  "Seytro blir ert enda system: bokning, telefoni, mejl, drift och gästdata i samma plattform, med AI som sköter rutinen och eskalerar till personalen.":
+    "Seytro becomes your only system: bookings, phone, email, operations and guest data in one platform, with AI handling the routine and escalating to staff.",
   "Gäster som möts av personal i en servicemiljö": "Guests being welcomed by staff in a hospitality setting",
   "AI-integrationer för servicebranschen": "AI integrations for the hospitality industry",
   "Bokningar och placering som sköter sig självt.": "Bookings and seating that take care of themselves.",

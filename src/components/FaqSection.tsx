@@ -17,9 +17,9 @@ const faqs = [
       "Bordsplacering och rumsplacering utgår från era egna regler: sällskapets storlek, tidsluckor, turnering, zoner, städstatus och gästens preferenser. Ni styr reglerna, plattformen gör pusslet — och ni kan alltid flytta manuellt i salsplanen.",
   },
   {
-    question: "Fungerar Seytro ihop med vårt bokningssystem och vår telefoni?",
+    question: "Måste vi byta ut vårt nuvarande bokningssystem?",
     answer:
-      "Ja. Seytro läggs som ett lager ovanpå det ni redan använder — bokningssystem, växel, mejl, kassa och gästregister. Ingen migrering, inget systembyte, och datan fortsätter leva där den ligger idag.",
+      "Ja — Seytro ersätter det. Bokning, växel, mejl, gästregister och drift samlas i en och samma plattform. Vi sköter flytten av bokningar och gästdata åt er, och kopplar kassan så att allt hänger ihop.",
   },
   {
     question: "Vad kostar det och hur snabbt märks effekten?",

@@ -17,13 +17,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Seytro fångar upp missade bokningar, minskar det administrativa arbetet och samlar all gästdata — AI-integrationer ovanpå de system servicebranschen redan använder.",
+          "Seytro ersätter era gamla system med en komplett AI-plattform för bokning, drift och gästkommunikation — allt i ett, från dag ett.",
       },
       { property: "og:title", content: "Seytro — AI för servicebranschen" },
       {
         property: "og:description",
         content:
-          "Inga missade förfrågningar, mindre administration och en samlad datagrund. AI som lägger sig ovanpå era befintliga system.",
+          "Inga missade förfrågningar, mindre administration och all gästdata på ett ställe. Ett system som ersätter alla andra.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -87,9 +87,9 @@ const pillars = [
 ];
 
 const steps = [
-  ["Koppla", "Seytro läggs ovanpå era befintliga system — bokning, telefoni, mejl och kassa. Ingen migrering, inget systembyte."],
-  ["Lär", "Plattformen tränas på era regler, er ton och era öppettider. Ni godkänner innan den går live."],
-  ["Kör", "AI:n hanterar rutinen, samlar datan och eskalerar till personal när något kräver en människa."],
+  ["Flytta in", "Vi tar över bokningar, gästregister och historik från ert nuvarande system. Ni behöver inte föra över något för hand."],
+  ["Bygg upp", "Salsplan, öppettider, bokningsregler och er ton sätts upp i Seytro. Ni godkänner allt innan ni går live."],
+  ["Ta över", "Seytro blir ert enda system: bokning, telefoni, mejl, drift och gästdata i samma plattform, med AI som sköter rutinen och eskalerar till personalen."],
 ];
 
 function Index() {
@@ -120,7 +120,7 @@ function Index() {
                 Bokningar och placering som sköter sig självt.
               </h1>
               <p className="fade-up mt-8 max-w-xl text-body-lg text-primary-foreground/75">
-                Ett AI-lager ovanpå de system ni redan har: varje samtal och mejl besvaras, varje
+                Ett komplett system som ersätter ert gamla: varje samtal och mejl besvaras, varje
                 gäst placeras rätt och rutinadministrationen försvinner.
               </p>
 
@@ -176,7 +176,7 @@ function Index() {
           <p className="text-body-lg text-muted-foreground lg:pb-2">
             Samma flaskhalsar återkommer i varje restaurang och hotell — obesvarade
             förfrågningar, manuell placering och gästdata utspridd i olika system.
-            Seytro lägger sig som ett AI-lager ovanpå det ni redan använder.
+            Seytro ersätter dem med ett enda system.
           </p>
         </div>
         <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border bg-border lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)]">
@@ -259,7 +259,7 @@ function Index() {
             Så fungerar det
           </p>
           <h2 className="mt-6 max-w-3xl text-display">
-            En helhetslösning för bokning, drift och gästkommunikation — ovanpå era befintliga system.
+            En helhetslösning för bokning, drift och gästkommunikation — som ersätter era befintliga system.
           </h2>
           <div className="mt-14 grid gap-10 lg:grid-cols-3">
             {steps.map(([t, d], i) => (
