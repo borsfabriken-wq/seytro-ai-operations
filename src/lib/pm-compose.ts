@@ -7,6 +7,9 @@ import type { MenuTemplate } from "@/lib/pm-templates";
 
 export type PmExtra = { id: string; name: string; price: number; qty: number };
 
+/** Fritt skrivet block i PM:et — används när ingen mall passar. */
+export type PmFreeBlock = { id: string; title: string; body: string };
+
 export type PmChoice = {
   menuId: string | null;
   drinkId: string | null;
@@ -14,6 +17,8 @@ export type PmChoice = {
   /** Kost och allergier per antal gäster. */
   diets: PmDiet[];
   note: string;
+  /** Egna, fritt skrivna avsnitt som skrivs ut i PM:et. */
+  freeBlocks?: PmFreeBlock[];
 };
 
 export const emptyChoice: PmChoice = {
@@ -22,6 +27,7 @@ export const emptyChoice: PmChoice = {
   extras: [],
   diets: [],
   note: "",
+  freeBlocks: [],
 };
 
 /** Vanliga kostval och allergier — klickas in med antal gäster. */
