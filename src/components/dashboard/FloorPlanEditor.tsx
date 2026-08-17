@@ -8,6 +8,8 @@ const shapeClass: Record<NonNullable<TableUnit["shape"]>, string> = {
   rund: "rounded-full h-14 w-14",
   fyrkant: "rounded-md h-12 w-12",
   avlang: "rounded-lg h-12 w-24",
+  bar: "rounded-lg h-12 w-32",
+  lounge: "rounded-full h-9 w-9",
 };
 
 const shapes: NonNullable<TableUnit["shape"]>[] = ["fyrkant", "rund", "avlang"];

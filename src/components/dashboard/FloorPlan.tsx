@@ -13,16 +13,54 @@ export const floorStateLabel: Record<FloorState, string> = {
   upptaget: "Upptaget",
 };
 
-const zooms = [0.8, 1, 1.3, 1.7] as const;
+const zooms = [0.8, 1, 1.3, 1.7, 2.2] as const;
 
-/** Bordets storlek i procent av planens bredd/höjd, utifrån form och antal platser. */
-function footprint(u: TableUnit) {
+/** Planen är 16:10 — höjdprocent är 1.6× tätare än breddprocent. */
+const ASPECT = 1.6;
+/** Marginal runt bordskroppen där stolarna ritas (i breddprocent). */
+const CHAIR_PAD = 0.95;
+
+type Body = { w: number; h: number; radius: string; round: boolean };
+
+/** Bordskroppens storlek i breddprocent, utifrån form och antal platser. */
+function body(u: TableUnit): Body {
   const seats = u.seats ?? 2;
   const shape = u.shape ?? "fyrkant";
-  const base = Math.min(9, 4.2 + seats * 0.35);
-  if (shape === "avlang") return { w: base * 1.9, h: base * 0.95, radius: "0.9rem" };
-  if (shape === "rund") return { w: base * 1.25, h: base * 1.25, radius: "999px" };
-  return { w: base * 1.15, h: base * 1.15, radius: "0.65rem" };
+  if (shape === "bar") return { w: 13, h: 7, radius: "0.35rem", round: false };
+  if (shape === "lounge") return { w: 1.9, h: 1.9, radius: "999px", round: true };
+  if (shape === "rund") {
+    const d = 2.6 + seats * 0.25;
+    return { w: d, h: d, radius: "999px", round: true };
+  }
+  if (shape === "avlang") return { w: 2.4 + seats * 0.5, h: 2.6, radius: "0.3rem", round: false };
+  if (seats <= 2) return { w: 2.5, h: 2.0, radius: "0.25rem", round: false };
+  if (seats <= 4) return { w: 3.1, h: 2.5, radius: "0.25rem", round: false };
+  return { w: 3.8, h: 3.0, radius: "0.3rem", round: false };
+}
+
+/** Stolarnas placering i andel av hela bordsrutan (kropp + stolsmarginal). */
+function chairs(u: TableUnit, b: Body): { x: number; y: number }[] {
+  const seats = Math.max(1, Math.min(u.seats ?? 2, 20));
+  if (u.shape === "lounge") return [];
+  if (b.round) {
+    return Array.from({ length: seats }, (_, i) => {
+      const a = (i / seats) * Math.PI * 2 - Math.PI / 2;
+      return { x: 0.5 + 0.43 * Math.cos(a), y: 0.5 + 0.43 * Math.sin(a) };
+    });
+  }
+  const sides = u.shape === "bar" || seats > 8;
+  const perSide = sides ? Math.max(1, Math.round(seats * 0.12)) : 0;
+  const rest = seats - perSide * 2;
+  const top = Math.ceil(rest / 2);
+  const bottom = rest - top;
+  const out: { x: number; y: number }[] = [];
+  for (let i = 0; i < top; i++) out.push({ x: (i + 1) / (top + 1), y: 0.06 });
+  for (let i = 0; i < bottom; i++) out.push({ x: (i + 1) / (bottom + 1), y: 0.94 });
+  for (let i = 0; i < perSide; i++) {
+    out.push({ x: 0.05, y: (i + 1) / (perSide + 1) });
+    out.push({ x: 0.95, y: (i + 1) / (perSide + 1) });
+  }
+  return out;
 }
 
 /**
@@ -78,28 +116,16 @@ export function FloorPlan({
     });
   }, [units]);
 
-  const zoneAreas = useMemo(() => {
-    const map = new Map<string, { x1: number; y1: number; x2: number; y2: number }>();
+  /** Diskret etikett per zon, satt vid zonens övre vänstra hörn. */
+  const zoneLabels = useMemo(() => {
+    const map = new Map<string, { x: number; y: number }>();
     for (const u of placed) {
-      const f = footprint(u);
-      const box = map.get(u.zone);
-      const x1 = (u.x ?? 50) - f.w / 2 - 2.5;
-      const x2 = (u.x ?? 50) + f.w / 2 + 2.5;
-      const y1 = (u.y ?? 50) - f.h / 2 - 5;
-      const y2 = (u.y ?? 50) + f.h / 2 + 3;
-      map.set(
-        u.zone,
-        box
-          ? {
-              x1: Math.min(box.x1, x1),
-              y1: Math.min(box.y1, y1),
-              x2: Math.max(box.x2, x2),
-              y2: Math.max(box.y2, y2),
-            }
-          : { x1, y1, x2, y2 },
-      );
+      const x = u.x ?? 50;
+      const y = u.y ?? 50;
+      const cur = map.get(u.zone);
+      map.set(u.zone, cur ? { x: Math.min(cur.x, x), y: Math.min(cur.y, y) } : { x, y });
     }
-    return Array.from(map, ([zone, b]) => ({ zone, ...b }));
+    return Array.from(map, ([zone, p]) => ({ zone, ...p }));
   }, [placed]);
 
   const peekUnit = peek ? placed.find((u) => u.id === peek.id) ?? null : null;
@@ -175,22 +201,15 @@ export function FloorPlan({
             backgroundSize: "4% 6.25%",
           }}
         >
-          {/* Zonytor */}
-          {zoneAreas.map((z) => (
-            <div
+          {/* Zonetiketter */}
+          {zoneLabels.map((z) => (
+            <span
               key={z.zone}
-              className="pointer-events-none absolute rounded-2xl border border-dashed border-border-subtle bg-muted/40"
-              style={{
-                left: `${z.x1}%`,
-                top: `${z.y1}%`,
-                width: `${z.x2 - z.x1}%`,
-                height: `${z.y2 - z.y1}%`,
-              }}
+              className="pointer-events-none absolute text-[9px] uppercase tracking-[0.18em] text-muted-foreground/70"
+              style={{ left: `${Math.max(z.x - 4.5, 0.4)}%`, top: `${Math.max(z.y - 9, 0.4)}%` }}
             >
-              <span className="absolute left-2 top-1 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                {z.zone}
-              </span>
-            </div>
+              {z.zone}
+            </span>
           ))}
 
           {/* Bord */}
@@ -200,8 +219,12 @@ export function FloorPlan({
             const state = floorStateOf(u);
             const booking = bookingFor(u);
             const guest = booking?.name ?? u.guest;
-            const party = booking?.party;
-            const f = footprint(u);
+            const b = body(u);
+            const seatDots = chairs(u, b);
+            const boxW = b.w + CHAIR_PAD * 2;
+            const boxH = b.h + CHAIR_PAD * 2;
+            const padX = (CHAIR_PAD / boxW) * 100;
+            const padY = (CHAIR_PAD / boxH) * 100;
             const isHit = hits ? hits.has(u.id) : null;
 
             return (
@@ -242,40 +265,59 @@ export function FloorPlan({
                 style={{
                   left: `${u.x}%`,
                   top: `${u.y}%`,
-                  width: `${f.w}%`,
-                  height: `${f.h * 1.6}%`,
-                  borderRadius: f.radius,
+                  width: `${boxW}%`,
+                  height: `${boxH * ASPECT}%`,
                 }}
-                className={`absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center border px-1 transition-all duration-150 ${
-                  state === "upptaget"
-                    ? "border-transparent bg-surface-inverse text-primary-foreground shadow-[0_10px_28px_-18px_color-mix(in_oklab,var(--color-foreground)_70%,transparent)]"
-                    : "border-border-subtle bg-card text-forest shadow-hairline hover:border-primary/60"
-                } ${
-                  isOver
-                    ? "scale-[1.08] ring-2 ring-primary"
-                    : isSelected || peek?.id === u.id
-                      ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
+                className={`absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-150 ${
+                  isOver ? "scale-[1.12]" : ""
+                } ${isHit === false ? "opacity-20" : ""}`}
+              >
+                {/* Stolar */}
+                {seatDots.map((c, i) => (
+                  <span
+                    key={i}
+                    className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-[2px] ${
+                      state === "upptaget" ? "bg-surface-inverse/70" : "bg-foreground/20"
+                    }`}
+                    style={{
+                      left: `${c.x * 100}%`,
+                      top: `${c.y * 100}%`,
+                      width: `${(0.62 / boxW) * 100}%`,
+                      height: `${(0.62 / boxH) * 100}%`,
+                    }}
+                  />
+                ))}
+
+                {/* Bordskropp */}
+                <span
+                  className={`absolute grid place-items-center border transition-colors ${
+                    state === "upptaget"
+                      ? "border-transparent bg-surface-inverse text-primary-foreground"
+                      : "border-border bg-card text-forest"
+                  } ${
+                    isOver || isSelected || peek?.id === u.id
+                      ? "ring-2 ring-primary ring-offset-1 ring-offset-background"
                       : isHit
-                        ? "ring-2 ring-primary/70 ring-offset-2 ring-offset-background"
+                        ? "ring-2 ring-primary/70 ring-offset-1 ring-offset-background"
                         : dragging && state === "tillgängligt"
                           ? "ring-1 ring-primary/40"
                           : ""
-                } ${isHit === false ? "opacity-25" : ""}`}
-              >
-                <span className="text-[11px] font-medium leading-none tabular-nums">
-                  {u.label}
-                </span>
-                <span
-                  className={`mt-0.5 inline-flex items-center gap-0.5 text-[9px] leading-none tabular-nums ${
-                    state === "upptaget" ? "opacity-70" : "text-muted-foreground"
                   }`}
+                  style={{
+                    left: `${padX}%`,
+                    top: `${padY}%`,
+                    right: `${padX}%`,
+                    bottom: `${padY}%`,
+                    borderRadius: b.radius,
+                  }}
                 >
-                  <Users className="h-2 w-2" />
-                  {party ? `${party}/${u.seats}` : u.seats}
+                  <span className="text-[9px] font-medium leading-none tabular-nums">
+                    {u.label}
+                  </span>
+                  {booking?.lockedTable && (
+                    <Lock className="absolute right-0.5 top-0.5 h-2 w-2 opacity-70" />
+                  )}
                 </span>
-                {booking?.lockedTable && (
-                  <Lock className="absolute right-1 top-1 h-2 w-2 opacity-70" />
-                )}
               </button>
             );
           })}
@@ -287,11 +329,13 @@ export function FloorPlan({
               style={{ left: peek.x, top: peek.y }}
             >
               <div className="flex items-start justify-between gap-2">
-                <div className="flex items-center gap-1.5">
-                  <span className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-xs font-semibold text-foreground">
                     Bord {peekUnit.label}
                   </span>
-                  <span className="text-[10px] text-muted-foreground">{peekUnit.zone}</span>
+                  <span className="text-[10px] tabular-nums text-muted-foreground">
+                    {peekUnit.seats} pl · {peekUnit.zone}
+                  </span>
                 </div>
                 <button
                   type="button"
@@ -306,21 +350,23 @@ export function FloorPlan({
               {peekBooking ? (
                 <div className="mt-2 space-y-2">
                   <div>
-                    <p className="text-sm font-semibold text-foreground leading-tight">
-                      {peekBooking.name}
+                    <p className="flex items-center gap-1.5 text-[11px] tabular-nums text-muted-foreground">
+                      <Clock className="h-3 w-3" />
+                      {peekBooking.time}
+                      {peekBooking.end ? `–${peekBooking.end}` : ""}
                     </p>
-                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
-                      <span className="inline-flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        {peekBooking.time}
-                        {peekBooking.end ? `–${peekBooking.end}` : ""}
+                    <p className="mt-0.5 text-sm font-semibold leading-tight text-foreground">
+                      {peekBooking.name}{" "}
+                      <span className="font-normal text-muted-foreground">
+                        ({peekBooking.party})
                       </span>
-                      <span className="inline-flex items-center gap-1">
-                        <Users className="h-3 w-3" />
-                        {peekBooking.party}/{peekUnit.seats}
-                      </span>
-                    </div>
+                    </p>
+                    <p className="mt-0.5 inline-flex items-center gap-1 text-[11px] text-muted-foreground">
+                      <Users className="h-3 w-3" />
+                      {peekBooking.status === "anlänt" ? "Sitter nu" : "Väntas in"}
+                    </p>
                   </div>
+
 
                   {peekBooking.tags.length > 0 && (
                     <div className="flex flex-wrap gap-1">
