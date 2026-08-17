@@ -111,16 +111,19 @@ function OnboardingPage() {
 
   const openMinutes = useMemo(() => {
     const open = setup.hours.filter((h) => !h.closed);
-    if (open.length === 0) return 0;
+    if (open.length === 0 || setup.periods.length === 0) return 0;
     const total = open.reduce(
       (sum, h) =>
         sum +
-        minutesBetween(h.lunchOpen, h.lunchClose) +
-        minutesBetween(h.dinnerOpen, h.dinnerClose),
+        activePeriods(setup.periods, h.day).reduce(
+          (m, p) => m + minutesBetween(p.start, p.end),
+          0,
+        ),
       0,
     );
-    return Math.round(total / open.length / 2);
-  }, [setup.hours]);
+    const passes = open.reduce((n, h) => n + activePeriods(setup.periods, h.day).length, 0) || 1;
+    return Math.round(total / passes);
+  }, [setup.hours, setup.periods]);
 
   const canContinue =
     step !== 0 || (setup.org.trim().length > 1 && setup.city.trim().length > 0);
