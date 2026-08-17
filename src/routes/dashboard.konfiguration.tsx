@@ -25,7 +25,6 @@ import {
   defaultPeriods,
   newPeriod,
   readSetup,
-  weekdayShort,
   writeSetup,
   type ServicePeriod,
 } from "@/lib/onboarding";
