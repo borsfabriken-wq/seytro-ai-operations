@@ -25,9 +25,9 @@ export const core: Record<string, string> = {
   "Hur vet systemet var gästen ska placeras?": "How does the system know where to seat the guest?",
   "Bordsplacering och rumsplacering utgår från era egna regler: sällskapets storlek, tidsluckor, turnering, zoner, städstatus och gästens preferenser. Ni styr reglerna, plattformen gör pusslet — och ni kan alltid flytta manuellt i salsplanen.":
     "Table and room placement is based on your own rules: party size, time slots, turnover, zones, cleaning status and guest preferences. You control the rules, the platform solves the puzzle — and you can always move things manually on the floor plan.",
-  "Fungerar Seytro ihop med vårt bokningssystem och vår telefoni?": "Does Seytro work with our booking system and phone system?",
-  "Ja. Seytro läggs som ett lager ovanpå det ni redan använder — bokningssystem, växel, mejl, kassa och gästregister. Ingen migrering, inget systembyte, och datan fortsätter leva där den ligger idag.":
-    "Yes. Seytro is added as a layer on top of what you already use — booking system, switchboard, email, POS and guest register. No migration, no system change, and the data stays right where it is today.",
+  "Måste vi byta ut vårt nuvarande bokningssystem?": "Do we have to replace our current booking system?",
+  "Ja — Seytro ersätter det. Bokning, växel, mejl, gästregister och drift samlas i en och samma plattform. Vi sköter flytten av bokningar och gästdata åt er, och kopplar kassan så att allt hänger ihop.":
+    "Yes — Seytro replaces it. Bookings, switchboard, email, guest records and operations all live in one platform. We handle the migration of bookings and guest data for you, and connect your POS so everything ties together.",
   "Vad kostar det och hur snabbt märks effekten?": "What does it cost and how quickly do you see results?",
   "Ni betalar per verksamhet utifrån volym på samtal och mejl. De flesta ser effekten redan första månaden: färre obesvarade förfrågningar, kortare handläggningstid i inkorgen och färre no-shows tack vare automatiska påminnelser.":
     "You pay per venue based on call and email volume. Most see results within the first month: fewer unanswered inquiries, shorter processing time in the inbox and fewer no-shows thanks to automatic reminders.",
