@@ -293,21 +293,26 @@ export function FloorPlan({
                   isOver ? "scale-[1.12]" : ""
                 } ${isHit === false ? "opacity-20" : ""}`}
               >
-                {/* Stolar */}
-                {seatDots.map((c, i) => (
-                  <span
-                    key={i}
-                    className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-[2px] ${
-                      state === "upptaget" ? "bg-surface-inverse/70" : "bg-foreground/20"
-                    }`}
-                    style={{
-                      left: `${c.x * 100}%`,
-                      top: `${c.y * 100}%`,
-                      width: `${(0.55 / boxW) * 100}%`,
-                      height: `${(0.55 / boxH) * 100}%`,
-                    }}
-                  />
-                ))}
+                {/* Stolar — ligger utanför bordskanten med luftspalt */}
+                {seatDots.map((c, i) => {
+                  const w = c.vertical ? CHAIR_T : CHAIR_L;
+                  const h = c.vertical ? CHAIR_L : CHAIR_T;
+                  return (
+                    <span
+                      key={i}
+                      className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full ${
+                        state === "upptaget" ? "bg-surface-inverse/45" : "bg-foreground/15"
+                      }`}
+                      style={{
+                        left: `${((c.cx + boxW / 2) / boxW) * 100}%`,
+                        top: `${((c.cy + boxH / 2) / boxH) * 100}%`,
+                        width: `${(w / boxW) * 100}%`,
+                        height: `${(h / boxH) * 100}%`,
+                      }}
+                    />
+                  );
+                })}
+
 
                 {/* Bordskropp */}
                 <span
