@@ -1,4 +1,6 @@
 import type { TableUnit, Venue } from "@/lib/dashboard-data";
+import type { MenuTemplate } from "@/lib/pm-templates";
+
 
 export const SETUP_KEY = "seytro-setup";
 
