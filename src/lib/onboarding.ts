@@ -42,7 +42,10 @@ export type VenueSetup = {
     requireCard: boolean;
     cancellationHours: number;
   };
+  /** Menyer, dryckespaket, vin och sprit */
+  menus: MenuTemplate[];
   /** Kanaler och AI */
+
   channels: {
     voice: boolean;
     email: boolean;
