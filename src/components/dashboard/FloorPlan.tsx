@@ -415,6 +415,25 @@ export function FloorPlan({
                     </div>
                   )}
 
+                  {peekBooking.pmId && onOpenPm && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onOpenPm(peekBooking.pmId!);
+                        setPeek(null);
+                      }}
+                      className="flex w-full items-center justify-between gap-2 rounded-lg border border-border-subtle bg-background px-2 py-1.5 text-left transition-colors hover:border-primary/50"
+                    >
+                      <span className="flex min-w-0 items-center gap-1.5">
+                        <PmBookIcon className="h-3.5 w-3.5 shrink-0" />
+                        <span className="truncate text-[11px] font-medium text-foreground">
+                          PM · förbeställning
+                        </span>
+                      </span>
+                      <span className="shrink-0 text-[10px] text-primary">Öppna</span>
+                    </button>
+                  )}
+
                   {onOpenBooking && (
                     <button
                       type="button"
