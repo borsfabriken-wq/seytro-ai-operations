@@ -238,14 +238,14 @@ export function PmComposer({
             value={customName}
             onChange={(e) => setCustomName(e.target.value)}
             placeholder="Egen artikel"
-            className="min-w-0 flex-1 rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary"
+            className="min-w-0 flex-1 rounded-2xl border border-border/70 bg-background px-3.5 py-2.5 text-sm tracking-tight outline-none transition-shadow focus:border-primary focus:ring-4 focus:ring-primary/10"
           />
           <input
             value={customPrice}
             onChange={(e) => setCustomPrice(e.target.value.replace(/[^\d]/g, ""))}
             inputMode="numeric"
             placeholder="Pris"
-            className="w-24 rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary"
+            className="w-24 rounded-2xl border border-border/70 bg-background px-3.5 py-2.5 text-sm tracking-tight outline-none transition-shadow focus:border-primary focus:ring-4 focus:ring-primary/10"
           />
           <button
             type="button"
@@ -255,7 +255,7 @@ export function PmComposer({
               setCustomName("");
               setCustomPrice("");
             }}
-            className="rounded-lg bg-primary px-3 py-2 text-sm text-primary-foreground"
+            className="rounded-full bg-primary px-4 py-2.5 text-sm font-medium tracking-tight text-primary-foreground shadow-sm transition-all hover:shadow-md active:scale-[0.99]"
           >
             Lägg till
           </button>
@@ -312,7 +312,7 @@ export function PmComposer({
         {value.diets.length > 0 && (
           <ul className="mt-3 space-y-2">
             {value.diets.map((d) => (
-              <li key={d.id} className="rounded-xl border border-border p-2.5">
+              <li key={d.id} className="rounded-2xl border border-border/70 p-3">
                 <div className="flex items-center gap-3">
                   <span className="flex min-w-0 flex-1 items-center gap-1.5 truncate text-sm text-forest">
                     {d.critical ? (
@@ -371,11 +371,11 @@ export function PmComposer({
         onChange={(e) => set({ note: e.target.value })}
         rows={2}
         placeholder="Allergier och önskemål — syns i utskriften till köket"
-        className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary"
+        className="w-full rounded-2xl border border-border/70 bg-background px-3.5 py-2.5 text-sm tracking-tight outline-none transition-shadow focus:border-primary focus:ring-4 focus:ring-primary/10"
       />
 
       {/* Underlag */}
-      <div className="rounded-xl border border-border bg-muted/40 p-4">
+      <div className="rounded-2xl border border-border/70 bg-muted/40 p-4">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="eyebrow text-muted-foreground">Underlag att skriva ut</p>
@@ -445,7 +445,7 @@ function PickCard({
     <button
       type="button"
       onClick={onClick}
-      className={`rounded-xl border p-3 text-left transition-colors ${
+      className={`rounded-2xl border p-3.5 text-left transition-all hover:shadow-sm ${
         selected ? "border-primary bg-primary/6" : "border-border hover:border-primary/50"
       }`}
     >
