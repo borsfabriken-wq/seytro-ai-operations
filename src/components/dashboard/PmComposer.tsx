@@ -39,6 +39,8 @@ export function PmComposer({
   const addons = templates.filter((t) => t.kind === "tillägg");
 
   const [customName, setCustomName] = useState("");
+  const [mode, setMode] = useState<"mall" | "fritt">("mall");
+
   const [customPrice, setCustomPrice] = useState("");
 
   const set = (patch: Partial<PmChoice>) => onChange({ ...value, ...patch });
