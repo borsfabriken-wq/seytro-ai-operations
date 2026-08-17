@@ -123,7 +123,7 @@ export function readSetup(): VenueSetup | null {
     if (!raw) return null;
     const parsed = JSON.parse(raw) as VenueSetup;
     if (!parsed || typeof parsed.org !== "string") return null;
-    return { ...emptySetup(), ...parsed };
+    return { ...emptySetup(), ...parsed, menus: parsed.menus ?? [] };
   } catch {
     return null;
   }
