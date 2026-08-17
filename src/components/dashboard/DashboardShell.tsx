@@ -422,7 +422,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 >
                   <Search className="h-4 w-4" />
                 </button>
+                <GuestChatButton />
                 <LiveFeed venue={venue} />
+
                 <button
                   type="button"
                   onClick={() => navigate({ to: "/dashboard/salsplan", search: { new: true } })}

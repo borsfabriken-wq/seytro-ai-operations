@@ -29,6 +29,7 @@ import { Route as VoiceAgentRouteImport } from './routes/voice-agent'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as DashboardAnalysRouteImport } from './routes/dashboard.analys'
 import { Route as DashboardAssistentRouteImport } from './routes/dashboard.assistent'
+import { Route as DashboardChattRouteImport } from './routes/dashboard.chatt'
 import { Route as DashboardEpostRouteImport } from './routes/dashboard.epost'
 import { Route as DashboardEskaleringarRouteImport } from './routes/dashboard.eskaleringar'
 import { Route as DashboardForslagRouteImport } from './routes/dashboard.forslag'
@@ -159,6 +160,11 @@ const DashboardAnalysRoute = DashboardAnalysRouteImport.update({
 const DashboardAssistentRoute = DashboardAssistentRouteImport.update({
   id: '/assistent',
   path: '/assistent',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardChattRoute = DashboardChattRouteImport.update({
+  id: '/chatt',
+  path: '/chatt',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardEpostRoute = DashboardEpostRouteImport.update({
@@ -341,6 +347,7 @@ export interface FileRoutesByFullPath {
   '/voice-agent': typeof VoiceAgentRoute
   '/dashboard/analys': typeof DashboardAnalysRoute
   '/dashboard/assistent': typeof DashboardAssistentRoute
+  '/dashboard/chatt': typeof DashboardChattRoute
   '/dashboard/epost': typeof DashboardEpostRoute
   '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
   '/dashboard/forslag': typeof DashboardForslagRoute
@@ -393,6 +400,7 @@ export interface FileRoutesByTo {
   '/voice-agent': typeof VoiceAgentRoute
   '/dashboard/analys': typeof DashboardAnalysRoute
   '/dashboard/assistent': typeof DashboardAssistentRoute
+  '/dashboard/chatt': typeof DashboardChattRoute
   '/dashboard/epost': typeof DashboardEpostRoute
   '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
   '/dashboard/forslag': typeof DashboardForslagRoute
@@ -447,6 +455,7 @@ export interface FileRoutesById {
   '/voice-agent': typeof VoiceAgentRoute
   '/dashboard/analys': typeof DashboardAnalysRoute
   '/dashboard/assistent': typeof DashboardAssistentRoute
+  '/dashboard/chatt': typeof DashboardChattRoute
   '/dashboard/epost': typeof DashboardEpostRoute
   '/dashboard/eskaleringar': typeof DashboardEskaleringarRoute
   '/dashboard/forslag': typeof DashboardForslagRoute
@@ -502,6 +511,7 @@ export interface FileRouteTypes {
     | '/voice-agent'
     | '/dashboard/analys'
     | '/dashboard/assistent'
+    | '/dashboard/chatt'
     | '/dashboard/epost'
     | '/dashboard/eskaleringar'
     | '/dashboard/forslag'
@@ -554,6 +564,7 @@ export interface FileRouteTypes {
     | '/voice-agent'
     | '/dashboard/analys'
     | '/dashboard/assistent'
+    | '/dashboard/chatt'
     | '/dashboard/epost'
     | '/dashboard/eskaleringar'
     | '/dashboard/forslag'
@@ -607,6 +618,7 @@ export interface FileRouteTypes {
     | '/voice-agent'
     | '/dashboard/analys'
     | '/dashboard/assistent'
+    | '/dashboard/chatt'
     | '/dashboard/epost'
     | '/dashboard/eskaleringar'
     | '/dashboard/forslag'
@@ -818,6 +830,13 @@ declare module '@tanstack/react-router' {
       path: '/assistent'
       fullPath: '/dashboard/assistent'
       preLoaderRoute: typeof DashboardAssistentRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/chatt': {
+      id: '/dashboard/chatt'
+      path: '/chatt'
+      fullPath: '/dashboard/chatt'
+      preLoaderRoute: typeof DashboardChattRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/dashboard/epost': {
@@ -1043,6 +1062,7 @@ declare module '@tanstack/react-router' {
 interface DashboardRouteChildren {
   DashboardAnalysRoute: typeof DashboardAnalysRoute
   DashboardAssistentRoute: typeof DashboardAssistentRoute
+  DashboardChattRoute: typeof DashboardChattRoute
   DashboardEpostRoute: typeof DashboardEpostRoute
   DashboardEskaleringarRoute: typeof DashboardEskaleringarRoute
   DashboardForslagRoute: typeof DashboardForslagRoute
@@ -1063,6 +1083,7 @@ interface DashboardRouteChildren {
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardAnalysRoute: DashboardAnalysRoute,
   DashboardAssistentRoute: DashboardAssistentRoute,
+  DashboardChattRoute: DashboardChattRoute,
   DashboardEpostRoute: DashboardEpostRoute,
   DashboardEskaleringarRoute: DashboardEskaleringarRoute,
   DashboardForslagRoute: DashboardForslagRoute,
