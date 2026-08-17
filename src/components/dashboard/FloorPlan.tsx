@@ -321,6 +321,27 @@ export function FloorPlan({
                   {booking?.lockedTable && (
                     <Lock className="absolute right-0.5 top-0.5 h-2 w-2 opacity-70" />
                   )}
+                  {booking?.pmId && (
+                    <span
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Öppna PM för ${u.label}`}
+                      title="Förbeställning (PM) — klicka för att se beställningen"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenPm?.(booking.pmId!);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.stopPropagation();
+                          onOpenPm?.(booking.pmId!);
+                        }
+                      }}
+                      className="absolute -right-1 -top-1 grid h-3.5 w-3.5 place-items-center rounded-full bg-card shadow-sm ring-1 ring-border-subtle transition-transform hover:scale-125"
+                    >
+                      <PmBookIcon className="h-2.5 w-2.5" />
+                    </span>
+                  )}
                 </span>
               </button>
             );
