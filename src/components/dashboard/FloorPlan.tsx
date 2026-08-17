@@ -200,9 +200,6 @@ export function FloorPlan({
           style={{
             width: `${100 * zoom}%`,
             aspectRatio: "16 / 10",
-            backgroundImage:
-              "linear-gradient(to right, color-mix(in oklab, var(--color-foreground) 4%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in oklab, var(--color-foreground) 4%, transparent) 1px, transparent 1px)",
-            backgroundSize: "4% 6.25%",
           }}
         >
           {/* Zonetiketter */}
