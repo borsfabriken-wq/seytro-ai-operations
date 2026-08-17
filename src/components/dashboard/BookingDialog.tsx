@@ -136,7 +136,12 @@ export function BookingDialog({
     setTags((prev) => (prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]));
 
   const hasPm =
-    pmOpen && (pmChoice.menuId || pmChoice.drinkId || pmChoice.extras.length > 0);
+    pmOpen &&
+    (pmChoice.menuId ||
+      pmChoice.drinkId ||
+      pmChoice.extras.length > 0 ||
+      pmChoice.diets.length > 0 ||
+      (pmChoice.freeBlocks ?? []).some((f) => f.title.trim() || f.body.trim()));
 
   const save = () => {
     const guestName = name.trim() || "Ny gäst";
