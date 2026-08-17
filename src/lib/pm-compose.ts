@@ -186,6 +186,9 @@ export function choiceSummary(choice: PmChoice, templates: MenuTemplate[], party
     drink ? `${party} × ${drink.label}` : null,
     ...choice.extras.map((e) => `${e.qty} × ${e.name}`),
     ...choice.diets.map((d) => `${d.count} × ${d.label}`),
+    ...(choice.freeBlocks ?? [])
+      .filter((f) => f.title.trim() || f.body.trim())
+      .map((f) => `${f.title.trim() || "Eget"}: ${f.body.trim().replace(/\s*\n\s*/g, ", ")}`),
     choice.note.trim() ? `Önskemål: ${choice.note.trim()}` : null,
   ].filter(Boolean);
   return rows.length ? `PM: ${rows.join(" · ")}` : "";
