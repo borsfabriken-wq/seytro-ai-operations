@@ -18,17 +18,26 @@ import { toast } from "sonner";
 
 import { FloorPlanEditor } from "@/components/dashboard/FloorPlanEditor";
 import { MenuBuilder } from "@/components/onboarding/MenuBuilder";
+import {
+  PeriodIconGlyph,
+  ServicePeriodPanel,
+} from "@/components/onboarding/ServicePeriodPanel";
 import { writeTemplates } from "@/lib/pm-templates";
 import { writeAccountPlan } from "@/lib/account";
 import {
+  activePeriods,
   coversPerService,
   emptySetup,
   minutesBetween,
+  newPeriod,
   readSetup,
   seatCount,
+  weekdayShort,
   writeSetup,
+  type ServicePeriod,
   type VenueSetup,
 } from "@/lib/onboarding";
+
 
 export const Route = createFileRoute("/onboarding")({
   head: () => ({
@@ -106,21 +115,45 @@ function OnboardingPage() {
   const [step, setStep] = useState(0);
   const [setup, setSetup] = useState<VenueSetup>(() => readSetup() ?? emptySetup());
   const [zoneInput, setZoneInput] = useState("");
+  const [editingPeriod, setEditingPeriod] = useState<string | null>(null);
+
+  const addPeriod = () => {
+    const p = newPeriod();
+    setSetup((s) => ({ ...s, periods: [...s.periods, p] }));
+    setEditingPeriod(p.id);
+  };
+
+  const savePeriod = (next: ServicePeriod) => {
+    setSetup((s) => ({
+      ...s,
+      periods: s.periods.map((p) => (p.id === next.id ? next : p)),
+    }));
+    toast.success(`${next.name} sparat`);
+    setEditingPeriod(null);
+  };
+
+  const deletePeriod = (id: string) => {
+    setSetup((s) => ({ ...s, periods: s.periods.filter((p) => p.id !== id) }));
+    setEditingPeriod(null);
+  };
 
   const patch = (p: Partial<VenueSetup>) => setSetup((s) => ({ ...s, ...p }));
 
   const openMinutes = useMemo(() => {
     const open = setup.hours.filter((h) => !h.closed);
-    if (open.length === 0) return 0;
+    if (open.length === 0 || setup.periods.length === 0) return 0;
     const total = open.reduce(
       (sum, h) =>
         sum +
-        minutesBetween(h.lunchOpen, h.lunchClose) +
-        minutesBetween(h.dinnerOpen, h.dinnerClose),
+        activePeriods(setup.periods, h.day).reduce(
+          (m, p) => m + minutesBetween(p.start, p.end),
+          0,
+        ),
       0,
     );
-    return Math.round(total / open.length / 2);
-  }, [setup.hours]);
+    const passes = open.reduce((n, h) => n + activePeriods(setup.periods, h.day).length, 0) || 1;
+    return Math.round(total / passes);
+  }, [setup.hours, setup.periods]);
 
   const canContinue =
     step !== 0 || (setup.org.trim().length > 1 && setup.city.trim().length > 0);
@@ -261,100 +294,106 @@ function OnboardingPage() {
             <div>
               <h2 className="text-xl">Öppettider och pass</h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                Sätt lunch- och middagspass per dag. Stängda dagar bokas aldrig av AI:n.
+                Skapa så många serveringspass ni behöver — frukost, lunch, middag, afternoon tea.
+                Klicka på ett pass för att öppna dess tidsinställningar. Stängda dagar bokas aldrig
+                av AI:n.
               </p>
-              <div className="mt-5 space-y-2">
-                {setup.hours.map((h, i) => (
-                  <div
-                    key={h.day}
-                    className="grid items-center gap-2 rounded-xl border border-border bg-background p-3 sm:grid-cols-[120px_1fr_1fr]"
+
+              <div className="mt-5 rounded-2xl border border-border bg-background p-4">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                    Serveringspass
+                  </p>
+                  <button
+                    type="button"
+                    onClick={addPeriod}
+                    className="rounded-xl border border-dashed border-border px-3 py-1.5 text-xs transition hover:border-primary/50"
                   >
+                    + Nytt pass
+                  </button>
+                </div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {setup.periods.map((p) => (
                     <button
+                      key={p.id}
                       type="button"
-                      onClick={() =>
-                        patch({
-                          hours: setup.hours.map((x, j) =>
-                            j === i ? { ...x, closed: !x.closed } : x,
-                          ),
-                        })
-                      }
-                      className="flex items-center gap-2 text-left text-sm font-medium"
+                      onClick={() => setEditingPeriod(p.id)}
+                      className="group flex items-center gap-3 rounded-2xl border border-border bg-card px-3.5 py-2.5 text-left transition hover:border-primary/50 hover:shadow-sm"
                     >
-                      <span
-                        className={`grid h-5 w-5 place-items-center rounded border ${
-                          h.closed
-                            ? "border-border text-transparent"
-                            : "border-primary bg-primary text-primary-foreground"
-                        }`}
-                      >
-                        <Check className="h-3 w-3" />
+                      <span className="grid h-8 w-8 place-items-center rounded-xl bg-primary/10 text-primary">
+                        <PeriodIconGlyph icon={p.icon} />
                       </span>
-                      {h.label}
+                      <span>
+                        <span className="block text-sm font-medium tracking-tight">{p.name}</span>
+                        <span className="block text-xs text-muted-foreground">
+                          {p.start}–{p.end} ·{" "}
+                          {p.days.length === 7
+                            ? "alla dagar"
+                            : p.days.map((d) => weekdayShort[d]).join(", ")}
+                        </span>
+                      </span>
                     </button>
-                    {h.closed ? (
-                      <span className="text-sm text-muted-foreground sm:col-span-2">Stängt</span>
-                    ) : (
-                      <>
-                        <div className="flex items-center gap-2">
-                          <span className="w-14 text-xs text-muted-foreground">Lunch</span>
-                          <input
-                            type="time"
-                            value={h.lunchOpen}
-                            onChange={(e) =>
-                              patch({
-                                hours: setup.hours.map((x, j) =>
-                                  j === i ? { ...x, lunchOpen: e.target.value } : x,
-                                ),
-                              })
-                            }
-                            className="h-9 rounded-lg border border-border bg-background px-2 text-sm"
-                          />
-                          <span className="text-muted-foreground">–</span>
-                          <input
-                            type="time"
-                            value={h.lunchClose}
-                            onChange={(e) =>
-                              patch({
-                                hours: setup.hours.map((x, j) =>
-                                  j === i ? { ...x, lunchClose: e.target.value } : x,
-                                ),
-                              })
-                            }
-                            className="h-9 rounded-lg border border-border bg-background px-2 text-sm"
-                          />
+                  ))}
+                  {setup.periods.length === 0 && (
+                    <p className="text-sm text-muted-foreground">
+                      Inga pass ännu — lägg till ert första.
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-4 space-y-2">
+                {setup.hours.map((h, i) => {
+                  const dayPeriods = activePeriods(setup.periods, h.day);
+                  return (
+                    <div
+                      key={h.day}
+                      className="flex flex-wrap items-center gap-3 rounded-xl border border-border bg-background p-3"
+                    >
+                      <button
+                        type="button"
+                        onClick={() =>
+                          patch({
+                            hours: setup.hours.map((x, j) =>
+                              j === i ? { ...x, closed: !x.closed } : x,
+                            ),
+                          })
+                        }
+                        className="flex w-32 items-center gap-2 text-left text-sm font-medium"
+                      >
+                        <span
+                          className={`grid h-5 w-5 place-items-center rounded border ${
+                            h.closed
+                              ? "border-border text-transparent"
+                              : "border-primary bg-primary text-primary-foreground"
+                          }`}
+                        >
+                          <Check className="h-3 w-3" />
+                        </span>
+                        {h.label}
+                      </button>
+                      {h.closed ? (
+                        <span className="text-sm text-muted-foreground">Stängt</span>
+                      ) : dayPeriods.length === 0 ? (
+                        <span className="text-sm text-muted-foreground">Inget pass denna dag</span>
+                      ) : (
+                        <div className="flex flex-wrap gap-2">
+                          {dayPeriods.map((p) => (
+                            <button
+                              key={p.id}
+                              type="button"
+                              onClick={() => setEditingPeriod(p.id)}
+                              className="flex items-center gap-2 rounded-lg bg-muted/70 px-2.5 py-1.5 text-xs transition hover:bg-muted"
+                            >
+                              <PeriodIconGlyph icon={p.icon} className="h-3.5 w-3.5 text-primary" />
+                              {p.name} {p.start}–{p.end}
+                            </button>
+                          ))}
                         </div>
-                        <div className="flex items-center gap-2">
-                          <span className="w-14 text-xs text-muted-foreground">Middag</span>
-                          <input
-                            type="time"
-                            value={h.dinnerOpen}
-                            onChange={(e) =>
-                              patch({
-                                hours: setup.hours.map((x, j) =>
-                                  j === i ? { ...x, dinnerOpen: e.target.value } : x,
-                                ),
-                              })
-                            }
-                            className="h-9 rounded-lg border border-border bg-background px-2 text-sm"
-                          />
-                          <span className="text-muted-foreground">–</span>
-                          <input
-                            type="time"
-                            value={h.dinnerClose}
-                            onChange={(e) =>
-                              patch({
-                                hours: setup.hours.map((x, j) =>
-                                  j === i ? { ...x, dinnerClose: e.target.value } : x,
-                                ),
-                              })
-                            }
-                            className="h-9 rounded-lg border border-border bg-background px-2 text-sm"
-                          />
-                        </div>
-                      </>
-                    )}
-                  </div>
-                ))}
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -592,6 +631,12 @@ function OnboardingPage() {
                   ["Zoner", setup.zones.join(", ") || "—"],
                   ["Öppna dagar", `${setup.hours.filter((h) => !h.closed).length} av 7`],
                   [
+                    "Serveringspass",
+                    setup.periods.length
+                      ? setup.periods.map((p) => p.name).join(", ")
+                      : "inga pass",
+                  ],
+                  [
                     "Kanaler",
                     Object.entries(setup.channels)
                       .filter(([, v]) => v)
@@ -654,6 +699,18 @@ function OnboardingPage() {
           )}
         </div>
       </div>
+
+      {editingPeriod && setup.periods.some((p) => p.id === editingPeriod) && (
+        <ServicePeriodPanel
+          period={setup.periods.find((p) => p.id === editingPeriod)!}
+          siblings={setup.periods}
+          onSelect={setEditingPeriod}
+          onAdd={addPeriod}
+          onSave={savePeriod}
+          onDelete={deletePeriod}
+          onClose={() => setEditingPeriod(null)}
+        />
+      )}
     </main>
   );
 }

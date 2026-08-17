@@ -9,10 +9,43 @@ export type DayHours = {
   day: number;
   label: string;
   closed: boolean;
-  lunchOpen: string;
-  lunchClose: string;
-  dinnerOpen: string;
-  dinnerClose: string;
+  /** Kvar för äldre sparade uppsättningar – migreras till pass. */
+  lunchOpen?: string;
+  lunchClose?: string;
+  dinnerOpen?: string;
+  dinnerClose?: string;
+};
+
+/** Ikoner som ett serveringspass kan märkas med. */
+export const PERIOD_ICONS = [
+  "frukost",
+  "brod",
+  "soppa",
+  "kaffe",
+  "glas",
+  "bestick",
+  "drink",
+  "skaldjur",
+  "event",
+] as const;
+
+export type PeriodIcon = (typeof PERIOD_ICONS)[number];
+
+/** Ett serveringspass, t.ex. Lunch 11:30–15:00 mån–fre. */
+export type ServicePeriod = {
+  id: string;
+  name: string;
+  icon: PeriodIcon;
+  /** Tidsperiod passet är bokningsbart. */
+  start: string;
+  end: string;
+  /** Standardtid som föreslås för nya bokningar. */
+  defaultTime: string;
+  /** 0 = måndag … 6 = söndag */
+  days: number[];
+  /** Intervall som summeras i dagens siffror. */
+  sumStart: string;
+  sumEnd: string;
 };
 
 export type VenueSetup = {
@@ -26,6 +59,8 @@ export type VenueSetup = {
   seatsTotal: number;
   /** Öppettider och pass */
   hours: DayHours[];
+  /** Serveringspass med egna tidsinställningar */
+  periods: ServicePeriod[];
   /** Salsplan */
   zones: string[];
   tables: TableUnit[];
@@ -66,15 +101,114 @@ export type VenueSetup = {
 const weekdays = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"];
 
 export function defaultHours(): DayHours[] {
-  return weekdays.map((label, day) => ({
-    day,
-    label,
-    closed: day === 6,
-    lunchOpen: "11:30",
-    lunchClose: "15:00",
-    dinnerOpen: "17:00",
-    dinnerClose: day >= 4 ? "23:30" : "22:30",
-  }));
+  return weekdays.map((label, day) => ({ day, label, closed: day === 6 }));
+}
+
+export const weekdayLabels = weekdays;
+export const weekdayShort = ["Mån", "Tis", "Ons", "Tor", "Fre", "Lör", "Sön"];
+
+let periodCounter = 0;
+export function newPeriod(partial: Partial<ServicePeriod> = {}): ServicePeriod {
+  periodCounter += 1;
+  return {
+    id: `sp${Date.now().toString(36)}${periodCounter}`,
+    name: "Nytt pass",
+    icon: "bestick",
+    start: "17:00",
+    end: "22:00",
+    defaultTime: "19:00",
+    days: [0, 1, 2, 3, 4, 5, 6],
+    sumStart: "17:00",
+    sumEnd: "22:00",
+    ...partial,
+  };
+}
+
+export function defaultPeriods(): ServicePeriod[] {
+  return [
+    newPeriod({
+      name: "Lunch",
+      icon: "soppa",
+      start: "11:30",
+      end: "15:00",
+      defaultTime: "12:00",
+      days: [0, 1, 2, 3, 4],
+      sumStart: "11:30",
+      sumEnd: "15:00",
+    }),
+    newPeriod({
+      name: "Middag",
+      icon: "bestick",
+      start: "17:00",
+      end: "23:00",
+      defaultTime: "19:00",
+      days: [0, 1, 2, 3, 4, 5, 6],
+      sumStart: "17:00",
+      sumEnd: "23:59",
+    }),
+  ];
+}
+
+/** Passen som gäller en viss veckodag (0 = måndag), sorterade på starttid. */
+export function activePeriods(periods: ServicePeriod[], day: number) {
+  return periods
+    .filter((p) => p.days.includes(day))
+    .slice()
+    .sort((a, b) => a.start.localeCompare(b.start));
+}
+
+/** Snabbtider var 30:e minut inom dagens pass. Faller tillbaka på standardpassen. */
+export function periodQuickTimes(periods: ServicePeriod[], day: number, stepMin = 30) {
+  const list = activePeriods(periods.length ? periods : defaultPeriods(), day);
+  const out: string[] = [];
+  for (const p of list) {
+    const [sh = 0, sm = 0] = p.start.split(":").map(Number);
+    const [eh = 0, em = 0] = p.end.split(":").map(Number);
+    for (let m = sh * 60 + sm; m <= eh * 60 + em - stepMin; m += stepMin) {
+      out.push(
+        `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`,
+      );
+    }
+  }
+  return out;
+}
+
+/** Bygger pass av äldre uppsättningar som bara hade lunch- och middagsfält. */
+function migratePeriods(hours: DayHours[]): ServicePeriod[] {
+  const first = hours.find((h) => h.lunchOpen || h.dinnerOpen);
+  if (!first) return defaultPeriods();
+  const lunchDays = hours.filter((h) => !h.closed && h.lunchOpen).map((h) => h.day);
+  const dinnerDays = hours.filter((h) => !h.closed && h.dinnerOpen).map((h) => h.day);
+  const out: ServicePeriod[] = [];
+  if (first.lunchOpen) {
+    out.push(
+      newPeriod({
+        name: "Lunch",
+        icon: "soppa",
+        start: first.lunchOpen,
+        end: first.lunchClose ?? "15:00",
+        defaultTime: first.lunchOpen,
+        days: lunchDays.length ? lunchDays : [0, 1, 2, 3, 4],
+        sumStart: first.lunchOpen,
+        sumEnd: first.lunchClose ?? "15:00",
+      }),
+    );
+  }
+  if (first.dinnerOpen) {
+    out.push(
+      newPeriod({
+        name: "Middag",
+        icon: "bestick",
+        start: first.dinnerOpen,
+        end: first.dinnerClose ?? "22:30",
+        defaultTime: "19:00",
+        days: dinnerDays.length ? dinnerDays : [0, 1, 2, 3, 4, 5, 6],
+        sumStart: first.dinnerOpen,
+        sumEnd: first.dinnerClose ?? "22:30",
+      }),
+    );
+  }
+  return out.length ? out : defaultPeriods();
 }
 
 export function emptySetup(): VenueSetup {
@@ -87,6 +221,7 @@ export function emptySetup(): VenueSetup {
     email: "",
     seatsTotal: 0,
     hours: defaultHours(),
+    periods: defaultPeriods(),
     zones: ["Matsalen", "Bar", "Uteservering"],
     tables: [],
     menus: [],
@@ -123,7 +258,14 @@ export function readSetup(): VenueSetup | null {
     if (!raw) return null;
     const parsed = JSON.parse(raw) as VenueSetup;
     if (!parsed || typeof parsed.org !== "string") return null;
-    return { ...emptySetup(), ...parsed, menus: parsed.menus ?? [] };
+    const hours = parsed.hours?.length ? parsed.hours : defaultHours();
+    return {
+      ...emptySetup(),
+      ...parsed,
+      hours,
+      periods: parsed.periods?.length ? parsed.periods : migratePeriods(hours),
+      menus: parsed.menus ?? [],
+    };
   } catch {
     return null;
   }

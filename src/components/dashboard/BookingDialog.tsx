@@ -20,6 +20,7 @@ import { useTemplates } from "@/lib/pm-templates";
 import { uid } from "@/lib/pm";
 import { addPmDoc } from "@/lib/pm-store";
 import { buildPmDoc, choiceSummary, emptyChoice, type PmChoice } from "@/lib/pm-compose";
+import { periodQuickTimes, readSetup } from "@/lib/onboarding";
 
 
 export const tagGroups: { label: string; tags: string[] }[] = [
@@ -50,7 +51,15 @@ export const pmTemplates: { label: string; text: string }[] = [
 
 export type NewBookingDraft = Omit<Booking, "id">;
 
-const quickTimes = ["11:30", "12:00", "12:30", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30"];
+/** Snabbtiderna följer verksamhetens serveringspass. */
+function useQuickTimes() {
+  return useMemo(() => {
+    const setup = readSetup();
+    const jsDay = new Date().getDay();
+    const day = (jsDay + 6) % 7;
+    return periodQuickTimes(setup?.periods ?? [], day);
+  }, []);
+}
 
 export function BookingDialog({
   open,
@@ -85,6 +94,7 @@ export function BookingDialog({
   const [pmOpen, setPmOpen] = useState(false);
   const [pmChoice, setPmChoice] = useState<PmChoice>({ ...emptyChoice });
   const { templates } = useTemplates();
+  const quickTimes = useQuickTimes();
 
   const [table, setTable] = useState("");
   const [lockedTable, setLockedTable] = useState(false);
