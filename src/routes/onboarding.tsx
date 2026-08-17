@@ -472,6 +472,31 @@ function OnboardingPage() {
             </div>
           )}
 
+          {step === 4 && (
+            <div>
+              <div className="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                  <h2 className="text-xl">Menyer och dryck</h2>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Lägg in matmenyer, dryckespaket, vin och sprit — på flera språk. Allt blir
+                    valbart direkt när ett PM skapas på en bokning.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setStep(5)}
+                  className="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
+                >
+                  Hoppa över — fyll på senare
+                </button>
+              </div>
+              <div className="mt-5">
+                <MenuBuilder value={setup.menus} onChange={(menus) => patch({ menus })} />
+              </div>
+            </div>
+          )}
+
+
           {step === 5 && (
             <div className="grid gap-5 lg:grid-cols-2">
               <div className="lg:col-span-2">
