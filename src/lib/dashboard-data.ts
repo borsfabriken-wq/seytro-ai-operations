@@ -73,7 +73,7 @@ export type TableUnit = {
   /** Position i procent på salsplanen (endast restaurang) */
   x?: number;
   y?: number;
-  shape?: "rund" | "fyrkant" | "avlang";
+  shape?: "rund" | "fyrkant" | "avlang" | "bar" | "lounge";
 };
 
 type VenueData = {
