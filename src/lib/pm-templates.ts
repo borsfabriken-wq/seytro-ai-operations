@@ -119,6 +119,7 @@ export function buildTemplate(input: {
   price: number;
   desc: string;
   lines: TemplateDraftLine[];
+  service?: ServiceSlot[];
 }): MenuTemplate {
   return {
     id: uid("tpl"),
@@ -127,6 +128,8 @@ export function buildTemplate(input: {
     price: input.price,
     desc: input.desc,
     custom: true,
+    active: true,
+    ...(input.service?.length ? { service: input.service } : {}),
     sections: [
       {
         title: input.label,
@@ -141,6 +144,96 @@ export function buildTemplate(input: {
     ],
   };
 }
+
+/** Förifyllda startmallar som kan kryssas i under onboardingen. */
+export function starterTemplates(): MenuTemplate[] {
+  return [
+    buildTemplate({
+      label: "3-rätters middag",
+      kind: "meny",
+      price: 695,
+      desc: "Säsongsmeny med förrätt, varmrätt och dessert.",
+      service: ["middag", "event"],
+      lines: [
+        { name: "Toast Skagen", desc: "Handskalade räkor, dill, löjrom" },
+        { name: "Highland entrecôte", desc: "Rotselleri, rödvinssky" },
+        { name: "Chokladtryffel", desc: "Havtorn, grädde" },
+      ],
+    }),
+    buildTemplate({
+      label: "Lunchmeny",
+      kind: "meny",
+      price: 165,
+      desc: "Dagens rätt med sallad, bröd och kaffe.",
+      service: ["lunch"],
+      lines: [
+        { name: "Dagens kött" },
+        { name: "Dagens fisk" },
+        { name: "Dagens vegetariska" },
+      ],
+    }),
+    buildTemplate({
+      label: "Barnmeny",
+      kind: "meny",
+      price: 125,
+      desc: "Mindre portioner för barn upp till 12 år.",
+      lines: [{ name: "Köttbullar med potatismos" }, { name: "Pannkakor med sylt" }],
+    }),
+    buildTemplate({
+      label: "Vinpaket 3 glas",
+      kind: "dryck",
+      price: 545,
+      desc: "Ett glas till varje rätt, valt av sommelieren.",
+      service: ["middag", "event"],
+      lines: [
+        { name: "Glas 1 — mousserande" },
+        { name: "Glas 2 — vitt" },
+        { name: "Glas 3 — rött" },
+      ],
+    }),
+    buildTemplate({
+      label: "Alkoholfritt paket",
+      kind: "dryck",
+      price: 295,
+      desc: "Tre alkoholfria drycker matchade till menyn.",
+      lines: [{ name: "Alkoholfri bubbel" }, { name: "Kombucha" }, { name: "Örtinfusion" }],
+    }),
+    buildTemplate({
+      label: "Vinlista",
+      kind: "vin",
+      price: 0,
+      desc: "Glas- och flaskvin.",
+      lines: [
+        { name: "Champagne brut", price: 1195 },
+        { name: "Chablis", price: 745 },
+        { name: "Barolo", price: 995 },
+      ],
+    }),
+    buildTemplate({
+      label: "Bar & sprit",
+      kind: "sprit",
+      price: 0,
+      desc: "Öl, cocktails och sprit.",
+      lines: [
+        { name: "Fatöl 40 cl", price: 89 },
+        { name: "Husets gin & tonic", price: 145 },
+        { name: "Cognac 4 cl", price: 165 },
+      ],
+    }),
+    buildTemplate({
+      label: "Tillägg",
+      kind: "tillägg",
+      price: 0,
+      desc: "Enstaka artiklar som läggs på notan.",
+      lines: [
+        { name: "Tårta", price: 395 },
+        { name: "Snittar per person", price: 95 },
+        { name: "Korkavgift", price: 250 },
+      ],
+    }),
+  ];
+}
+
 
 /**
  * Restaurangens egna mallar (menyer och dryckespaket). Sparas lokalt och
