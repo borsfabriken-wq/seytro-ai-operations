@@ -338,11 +338,14 @@ function TemplateCard({
                       value={l.price ?? ""}
                       onChange={(e) =>
                         setLines(
-                          lines.map((x, xi) =>
-                            xi === i
-                              ? { ...x, price: e.target.value ? Number(e.target.value) : undefined }
-                              : x,
-                          ),
+                          lines.map((x, xi) => {
+                            if (xi !== i) return x;
+                            const { price: _drop, ...rest } = x;
+                            return e.target.value
+                              ? { ...rest, price: Number(e.target.value) }
+                              : rest;
+                          }),
+
                         )
                       }
                       placeholder="Pris"
