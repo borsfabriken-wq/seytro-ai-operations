@@ -18,17 +18,26 @@ import { toast } from "sonner";
 
 import { FloorPlanEditor } from "@/components/dashboard/FloorPlanEditor";
 import { MenuBuilder } from "@/components/onboarding/MenuBuilder";
+import {
+  PeriodIconGlyph,
+  ServicePeriodPanel,
+} from "@/components/onboarding/ServicePeriodPanel";
 import { writeTemplates } from "@/lib/pm-templates";
 import { writeAccountPlan } from "@/lib/account";
 import {
+  activePeriods,
   coversPerService,
   emptySetup,
   minutesBetween,
+  newPeriod,
   readSetup,
   seatCount,
+  weekdayShort,
   writeSetup,
+  type ServicePeriod,
   type VenueSetup,
 } from "@/lib/onboarding";
+
 
 export const Route = createFileRoute("/onboarding")({
   head: () => ({
