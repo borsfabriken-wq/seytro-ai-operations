@@ -157,6 +157,22 @@ export function activePeriods(periods: ServicePeriod[], day: number) {
     .sort((a, b) => a.start.localeCompare(b.start));
 }
 
+/** Snabbtider var 30:e minut inom dagens pass. Faller tillbaka på standardpassen. */
+export function periodQuickTimes(periods: ServicePeriod[], day: number, stepMin = 30) {
+  const list = activePeriods(periods.length ? periods : defaultPeriods(), day);
+  const out: string[] = [];
+  for (const p of list) {
+    const [sh = 0, sm = 0] = p.start.split(":").map(Number);
+    const [eh = 0, em = 0] = p.end.split(":").map(Number);
+    for (let m = sh * 60 + sm; m <= eh * 60 + em - stepMin; m += stepMin) {
+      out.push(
+        `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`,
+      );
+    }
+  }
+  return out;
+}
+
 /** Bygger pass av äldre uppsättningar som bara hade lunch- och middagsfält. */
 function migratePeriods(hours: DayHours[]): ServicePeriod[] {
   const first = hours.find((h) => h.lunchOpen || h.dinnerOpen);

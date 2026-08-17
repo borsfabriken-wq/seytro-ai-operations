@@ -50,7 +50,15 @@ export const pmTemplates: { label: string; text: string }[] = [
 
 export type NewBookingDraft = Omit<Booking, "id">;
 
-const quickTimes = ["11:30", "12:00", "12:30", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30"];
+/** Snabbtiderna följer verksamhetens serveringspass. */
+function useQuickTimes() {
+  return useMemo(() => {
+    const setup = readSetup();
+    const jsDay = new Date().getDay();
+    const day = (jsDay + 6) % 7;
+    return periodQuickTimes(setup?.periods ?? [], day);
+  }, []);
+}
 
 export function BookingDialog({
   open,
