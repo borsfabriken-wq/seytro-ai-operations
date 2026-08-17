@@ -167,7 +167,7 @@ export function ServicePeriodPanel({
             />
           </section>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4">
             <div>
               <p className="text-xs uppercase tracking-wider text-muted-foreground">Tidsperiod</p>
               <div className="mt-2">
@@ -184,8 +184,9 @@ export function ServicePeriodPanel({
               <input
                 type="time"
                 value={draft.defaultTime}
+                aria-label="Standardtid"
                 onChange={(e) => set({ defaultTime: e.target.value })}
-                className={`${field} mt-2`}
+                className={`${field} mt-2 max-w-[10rem]`}
               />
             </div>
           </div>

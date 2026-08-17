@@ -631,6 +631,12 @@ function OnboardingPage() {
                   ["Zoner", setup.zones.join(", ") || "—"],
                   ["Öppna dagar", `${setup.hours.filter((h) => !h.closed).length} av 7`],
                   [
+                    "Serveringspass",
+                    setup.periods.length
+                      ? setup.periods.map((p) => p.name).join(", ")
+                      : "inga pass",
+                  ],
+                  [
                     "Kanaler",
                     Object.entries(setup.channels)
                       .filter(([, v]) => v)
