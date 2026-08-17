@@ -15,6 +15,8 @@ import {
   LayoutGrid,
   ListChecks,
   LogOut,
+  MessageSquare,
+
   PhoneCall,
   Plus,
   Search,
