@@ -599,6 +599,16 @@ function OnboardingPage() {
                       .join(", ") || "inga",
                   ],
                   ["Stort sällskap", `från ${setup.rules.largePartyThreshold} pers`],
+                  [
+                    "Menyer & dryck",
+                    setup.menus.length
+                      ? `${setup.menus.filter((m) => m.kind === "meny").length} menyer · ${
+                          setup.menus.filter((m) => m.kind === "dryck").length
+                        } paket · ${
+                          setup.menus.filter((m) => m.kind === "vin" || m.kind === "sprit").length
+                        } dryckeslistor`
+                      : "inget utbud ännu",
+                  ],
                 ].map(([k, v]) => (
                   <div key={k} className="rounded-xl border border-border bg-background p-4">
                     <dt className="text-xs uppercase tracking-wide text-muted-foreground">{k}</dt>
