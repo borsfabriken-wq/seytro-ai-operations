@@ -252,6 +252,27 @@ function ConfigPage() {
     reason: "",
   });
 
+  const [periods, setPeriods] = useState<ServicePeriod[]>(defaultPeriods);
+  const [editingPeriod, setEditingPeriod] = useState<string | null>(null);
+
+  // Pass ligger i den sparade uppsättningen; faller tillbaka på standardpassen.
+  useEffect(() => {
+    const stored = readSetup();
+    if (stored?.periods?.length) setPeriods(stored.periods);
+  }, []);
+
+  const persistPeriods = (next: ServicePeriod[]) => {
+    setPeriods(next);
+    const stored = readSetup();
+    if (stored) writeSetup({ ...stored, periods: next });
+  };
+
+  const addPeriod = () => {
+    const p = newPeriod();
+    persistPeriods([...periods, p]);
+    setEditingPeriod(p.id);
+  };
+
   const update = <K extends keyof Settings>(key: K, value: Settings[K]) => {
     setSettings((s) => ({ ...s, [key]: value }));
     setDirty(true);
@@ -875,6 +896,24 @@ function ConfigPage() {
           )}
         </div>
       </div>
+      {editingPeriod && periods.some((p) => p.id === editingPeriod) && (
+        <ServicePeriodPanel
+          period={periods.find((p) => p.id === editingPeriod)!}
+          siblings={periods}
+          onSelect={setEditingPeriod}
+          onAdd={addPeriod}
+          onSave={(next) => {
+            persistPeriods(periods.map((p) => (p.id === next.id ? next : p)));
+            toast.success(`${next.name} sparat`);
+            setEditingPeriod(null);
+          }}
+          onDelete={(id) => {
+            persistPeriods(periods.filter((p) => p.id !== id));
+            setEditingPeriod(null);
+          }}
+          onClose={() => setEditingPeriod(null)}
+        />
+      )}
     </div>
   );
 }
