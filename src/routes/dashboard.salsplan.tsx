@@ -164,8 +164,8 @@ function FloorPage() {
           städas: visibleUnits.filter((u) => u.status === "städas").length,
         }
       : {
-          Tillgängligt: visibleUnits.filter((u) => floorStateOf(u) === "tillgängligt").length,
-          Upptaget: visibleUnits.filter((u) => floorStateOf(u) === "upptaget").length,
+          Tillgängligt: visibleUnits.filter((u) => !unitOccupied(u)).length,
+          Upptaget: visibleUnits.filter((u) => unitOccupied(u)).length,
         };
 
   const activeBooking = bookings.find((b) => b.id === selectedBooking) ?? null;
