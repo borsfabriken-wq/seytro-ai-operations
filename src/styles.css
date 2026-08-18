@@ -143,10 +143,10 @@
   --status-alert: oklch(0.955 0.032 24);
   --status-alert-fg: oklch(0.532 0.168 26);
   --status-alert-border: oklch(0.872 0.062 24);
-  /* Klart / avbokat: neutral, nedtonad */
-  --status-done: oklch(0.958 0.003 240);
-  --status-done-fg: oklch(0.618 0.006 240);
-  --status-done-border: oklch(0.902 0.005 240);
+  /* Klart: dämpad grön */
+  --status-done: oklch(0.962 0.03 158);
+  --status-done-fg: oklch(0.492 0.098 158);
+  --status-done-border: oklch(0.885 0.052 158);
 
   /* --- shadcn-mappning ------------------------------------------- */
   --background: var(--surface-0);
