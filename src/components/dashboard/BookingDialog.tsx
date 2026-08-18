@@ -158,11 +158,13 @@ export function BookingDialog({
     const summary = hasPm ? choiceSummary(pmChoice, templates, Math.max(1, party)) : "";
     const noteText = [note.trim(), pm.trim(), summary].filter(Boolean).join("\n\n");
 
-    if (hasPm) {
+    const pmId = hasPm ? uid("pm") : null;
+
+    if (pmId) {
       addPmDoc(
         buildPmDoc(
           {
-            id: uid("pm"),
+            id: pmId,
             title: `${guestName} — ${Math.max(1, party)} personer`,
             date: "idag",
             time,
