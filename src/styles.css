@@ -97,6 +97,12 @@
   /* --- Stödtoner (liv i ytor, badges, diagram) -------------------- */
   --accent-teal: oklch(0.618 0.106 196);
   --accent-teal-tint: oklch(0.966 0.028 196);
+
+  /* --- Salsplan: bordsstatus ------------------------------------- */
+  --table-free: oklch(0.995 0.002 250);      /* ledigt bord, ren yta */
+  --table-free-edge: oklch(0.882 0.006 250);
+  --table-booked: oklch(0.652 0.163 254);    /* bokat — klarblå */
+  --table-double: oklch(0.458 0.148 258);    /* två sittningar — mörkare blå */
   --accent-amber: oklch(0.762 0.128 74);
   --accent-amber-tint: oklch(0.968 0.038 82);
   --accent-plum: oklch(0.598 0.132 318);
@@ -279,6 +285,10 @@
   --color-accent-tint: var(--accent-tint);
   --color-accent-tint-strong: var(--accent-tint-strong);
   --color-accent-edge: var(--accent-edge);
+  --color-table-free: var(--table-free);
+  --color-table-free-edge: var(--table-free-edge);
+  --color-table-booked: var(--table-booked);
+  --color-table-double: var(--table-double);
   --color-accent-teal: var(--accent-teal);
   --color-accent-teal-tint: var(--accent-teal-tint);
   --color-accent-amber: var(--accent-amber);
