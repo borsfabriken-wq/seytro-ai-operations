@@ -117,10 +117,16 @@ export function FloorPlan({
   const [peek, setPeek] = useState<{ id: string; x: number; y: number } | null>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
 
-  const bookingFor = (u: TableUnit) =>
-    bookings.find(
+  /** Aktiva bokningar på bordet — den med PM visas först så boken alltid syns. */
+  const bookingsFor = (u: TableUnit) =>
+    bookings.filter(
       (b) => b.placed !== false && b.status !== "avbokad" && b.table === u.label,
-    ) ?? null;
+    );
+
+  const bookingFor = (u: TableUnit) => {
+    const list = bookingsFor(u);
+    return list.find((b) => b.pmId) ?? list[0] ?? null;
+  };
 
   /** Enheter utan koordinater (t.ex. hotellrum) får en jämn placering per zon. */
   const placed = useMemo(() => {
@@ -155,7 +161,7 @@ export function FloorPlan({
   const peekUnit = peek ? placed.find((u) => u.id === peek.id) ?? null : null;
   const peekBooking = peekUnit ? bookingFor(peekUnit) : null;
 
-  const occupied = placed.filter((u) => floorStateOf(u) === "upptaget").length;
+  const occupied = placed.filter((u) => Boolean(bookingFor(u)) || floorStateOf(u) === "upptaget").length;
   const hits = highlight && highlight.length > 0 ? new Set(highlight) : null;
 
   return (
@@ -237,8 +243,8 @@ export function FloorPlan({
           {placed.map((u) => {
             const isSelected = selected === u.id;
             const isOver = over === u.id;
-            const state = floorStateOf(u);
             const booking = bookingFor(u);
+            const state: FloorState = booking ? "upptaget" : floorStateOf(u);
             const guest = booking?.name ?? u.guest;
             const b = body(u);
             const seatDots = chairs(u, b);

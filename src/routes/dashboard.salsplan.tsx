@@ -113,6 +113,11 @@ function FloorPage() {
   );
   const visibleUnits = data.units.filter((u) => zone === "Alla" || u.zone === zone);
 
+  /** Ett bord räknas som upptaget om en aktiv bokning ligger på det. */
+  const unitOccupied = (u: TableUnit) =>
+    bookings.some((b) => b.placed !== false && b.status !== "avbokad" && b.table === u.label) ||
+    floorStateOf(u) === "upptaget";
+
   const allTags = useMemo(
     () => Array.from(new Set(bookings.flatMap((b) => b.tags))).sort((a, b) => a.localeCompare(b, "sv")),
     [bookings],
@@ -164,8 +169,8 @@ function FloorPage() {
           städas: visibleUnits.filter((u) => u.status === "städas").length,
         }
       : {
-          Tillgängligt: visibleUnits.filter((u) => floorStateOf(u) === "tillgängligt").length,
-          Upptaget: visibleUnits.filter((u) => floorStateOf(u) === "upptaget").length,
+          Tillgängligt: visibleUnits.filter((u) => !unitOccupied(u)).length,
+          Upptaget: visibleUnits.filter((u) => unitOccupied(u)).length,
         };
 
   const activeBooking = bookings.find((b) => b.id === selectedBooking) ?? null;
