@@ -188,6 +188,7 @@ export function BookingDialog({
       status,
       source,
       ...(noteText ? { note: noteText } : {}),
+      ...(pmId ? { pmId } : {}),
       ...(phone.trim() ? { phone: phone.trim() } : {}),
       ...(email.trim() ? { email: email.trim() } : {}),
       ...(company.trim() ? { company: company.trim() } : {}),
