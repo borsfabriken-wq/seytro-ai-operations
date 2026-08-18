@@ -117,10 +117,16 @@ export function FloorPlan({
   const [peek, setPeek] = useState<{ id: string; x: number; y: number } | null>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
 
-  const bookingFor = (u: TableUnit) =>
-    bookings.find(
+  /** Aktiva bokningar på bordet — den med PM visas först så boken alltid syns. */
+  const bookingsFor = (u: TableUnit) =>
+    bookings.filter(
       (b) => b.placed !== false && b.status !== "avbokad" && b.table === u.label,
-    ) ?? null;
+    );
+
+  const bookingFor = (u: TableUnit) => {
+    const list = bookingsFor(u);
+    return list.find((b) => b.pmId) ?? list[0] ?? null;
+  };
 
   /** Enheter utan koordinater (t.ex. hotellrum) får en jämn placering per zon. */
   const placed = useMemo(() => {
