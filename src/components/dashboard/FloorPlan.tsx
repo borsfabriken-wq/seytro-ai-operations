@@ -155,7 +155,7 @@ export function FloorPlan({
   const peekUnit = peek ? placed.find((u) => u.id === peek.id) ?? null : null;
   const peekBooking = peekUnit ? bookingFor(peekUnit) : null;
 
-  const occupied = placed.filter((u) => floorStateOf(u) === "upptaget").length;
+  const occupied = placed.filter((u) => Boolean(bookingFor(u)) || floorStateOf(u) === "upptaget").length;
   const hits = highlight && highlight.length > 0 ? new Set(highlight) : null;
 
   return (
