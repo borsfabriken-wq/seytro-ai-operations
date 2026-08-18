@@ -312,8 +312,8 @@
   --shadow-focus: var(--elev-focus);
 
 
-  --font-display: "Urbanist", system-ui, sans-serif;
-  --font-sans: "Epilogue", system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", "Instrument Sans", system-ui, sans-serif;
+  --font-sans: "Instrument Sans", system-ui, sans-serif;
 
   /* Kompakt UI-skala för inloggat läge */
   --text-ui-xs: 0.6875rem;
