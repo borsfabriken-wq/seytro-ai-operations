@@ -208,12 +208,12 @@
   --leading-relaxed: 1.6;
   --leading-loose: 1.75;
 
-  /* Diagram: blå- och grafitfamiljen */
+  /* Diagram: sammanhängande färgskala */
   --chart-1: oklch(0.652 0.163 254);
-  --chart-2: oklch(0.575 0.158 254);
-  --chart-3: oklch(0.762 0.088 254);
-  --chart-4: oklch(0.828 0.008 240);
-  --chart-5: oklch(0.398 0.01 240);
+  --chart-2: oklch(0.618 0.106 196);
+  --chart-3: oklch(0.762 0.128 74);
+  --chart-4: oklch(0.598 0.132 318);
+  --chart-5: oklch(0.552 0.096 158);
 
   /* Sidomeny: mörk kolgrå yta */
   --sidebar: var(--surface-inverse);
