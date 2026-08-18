@@ -279,6 +279,12 @@
   --color-accent-tint: var(--accent-tint);
   --color-accent-tint-strong: var(--accent-tint-strong);
   --color-accent-edge: var(--accent-edge);
+  --color-accent-teal: var(--accent-teal);
+  --color-accent-teal-tint: var(--accent-teal-tint);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-amber-tint: var(--accent-amber-tint);
+  --color-accent-plum: var(--accent-plum);
+  --color-accent-plum-tint: var(--accent-plum-tint);
 
   /* Brandsystem: kanter */
   --color-border-hairline: var(--border-hairline);
