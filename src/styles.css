@@ -123,10 +123,10 @@
   --status-set: oklch(0.952 0.004 240);
   --status-set-fg: oklch(0.435 0.007 240);
   --status-set-border: oklch(0.888 0.006 240);
-  /* Upptaget: mättad grafityta */
-  --status-busy: oklch(0.298 0.008 220);
-  --status-busy-fg: oklch(0.982 0.002 250);
-  --status-busy-border: oklch(0.298 0.008 220);
+  /* Upptaget: mättad teal-grön yta */
+  --status-busy: oklch(0.452 0.098 192);
+  --status-busy-fg: oklch(0.988 0.004 200);
+  --status-busy-border: oklch(0.412 0.092 192);
   /* Städas: ljus grå, låg vikt */
   --status-clean: oklch(0.966 0.003 240);
   --status-clean-fg: oklch(0.558 0.006 240);
