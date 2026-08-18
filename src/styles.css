@@ -87,12 +87,20 @@
   --ink-muted: oklch(0.578 0.008 245);
   --ink-subtle: oklch(0.708 0.008 245);
 
-  /* --- Accent (klarblå — enda signalfärgen) ----------------------- */
+  /* --- Accent (klarblå = handling) -------------------------------- */
   --accent-base: oklch(0.652 0.163 254);     /* #3E96F4 */
   --accent-strong: oklch(0.575 0.158 254);   /* hover/press */
   --accent-tint: oklch(0.968 0.017 254);     /* ljus markering */
   --accent-tint-strong: oklch(0.935 0.038 254);
   --accent-edge: oklch(0.855 0.072 254);
+
+  /* --- Stödtoner (liv i ytor, badges, diagram) -------------------- */
+  --accent-teal: oklch(0.618 0.106 196);
+  --accent-teal-tint: oklch(0.966 0.028 196);
+  --accent-amber: oklch(0.762 0.128 74);
+  --accent-amber-tint: oklch(0.968 0.038 82);
+  --accent-plum: oklch(0.598 0.132 318);
+  --accent-plum-tint: oklch(0.966 0.026 318);
 
   /* --- Kanter ---------------------------------------------------- */
   --border-hairline: oklch(0.928 0.004 245);
