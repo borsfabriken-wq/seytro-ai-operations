@@ -21,7 +21,7 @@ export function LanguageSwitcher() {
           aria-pressed={locale === code}
           className={`rounded-full px-2 py-0.5 uppercase transition-colors ${
             locale === code
-              ? "bg-foreground/85 text-background"
+              ? "bg-primary text-primary-foreground"
               : "text-muted-foreground hover:text-foreground"
           }`}
         >
