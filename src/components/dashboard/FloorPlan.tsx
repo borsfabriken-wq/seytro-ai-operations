@@ -18,71 +18,24 @@ const zooms = [0.8, 1, 1.3, 1.7, 2.2] as const;
 
 /** Planen är 16:10 — höjdprocent är 1.6× tätare än breddprocent. */
 const ASPECT = 1.6;
-/** Stolarnas mått och luftspalt mot bordskanten (i breddprocent = kvadratiska px). */
-const CHAIR_T = 0.5;
-const CHAIR_L = 1.0;
-const CHAIR_GAP = 0.45;
-/** Marginal runt bordskroppen där stolarna ritas. */
-const CHAIR_PAD = CHAIR_GAP + CHAIR_T;
 
-type Body = { w: number; h: number; radius: string; round: boolean };
+type Body = { w: number; h: number; radius: string };
 
-/** En stol: mittpunkt relativt bordets mitt, samt om den ligger på en långsida. */
-type Chair = { cx: number; cy: number; vertical: boolean };
-
-/** Bordskroppens storlek i breddprocent, utifrån form och antal platser. */
+/** Bordskroppens storlek i breddprocent — lugn, enhetlig skala utan stolar. */
 function body(u: TableUnit): Body {
   const seats = u.seats ?? 2;
   const shape = u.shape ?? "fyrkant";
-  if (shape === "bar") return { w: 15, h: 7.5, radius: "0.4rem", round: false };
-  if (shape === "lounge") return { w: 3.2, h: 3.2, radius: "999px", round: true };
+  if (shape === "bar") return { w: 14, h: 3.4, radius: "1.7rem" };
+  if (shape === "lounge") return { w: 3.4, h: 3.4, radius: "999px" };
   if (shape === "rund") {
-    const d = 3.4 + seats * 0.25;
-    return { w: d, h: d, radius: "999px", round: true };
+    const d = seats <= 4 ? 3.6 : seats <= 8 ? 4.4 : 5.2;
+    return { w: d, h: d, radius: "999px" };
   }
-  if (shape === "avlang") return { w: 3 + seats * 0.5, h: 3.2, radius: "0.4rem", round: false };
-  if (seats <= 2) return { w: 3.4, h: 2.8, radius: "0.4rem", round: false };
-  if (seats <= 4) return { w: 4.1, h: 3.2, radius: "0.4rem", round: false };
-  return { w: 4.8, h: 3.8, radius: "0.45rem", round: false };
+  if (shape === "avlang") return { w: seats <= 6 ? 5.6 : 7, h: 3.2, radius: "0.85rem" };
+  if (seats <= 2) return { w: 3.4, h: 3, radius: "0.75rem" };
+  if (seats <= 4) return { w: 4.2, h: 3.4, radius: "0.8rem" };
+  return { w: 5, h: 3.8, radius: "0.85rem" };
 }
-
-/** Stolarnas placering — alltid utanför bordskanten med en tydlig luftspalt. */
-function chairs(u: TableUnit, b: Body): Chair[] {
-  const seats = Math.max(1, Math.min(u.seats ?? 2, 20));
-  if (u.shape === "lounge") return [];
-
-  const off = CHAIR_GAP + CHAIR_T / 2;
-
-  if (b.round) {
-    const r = b.w / 2 + off;
-    return Array.from({ length: seats }, (_, i) => {
-      const a = (i / seats) * Math.PI * 2 - Math.PI / 2;
-      return { cx: r * Math.cos(a), cy: r * Math.sin(a), vertical: Math.abs(Math.cos(a)) > 0.7 };
-    });
-  }
-
-  // Rektangulärt bord: stolarna fördelas på långsidorna, med kortsidorna som komplement.
-  const capTop = Math.max(1, Math.floor(b.w / (CHAIR_L + 0.35)));
-  const perSide = seats > capTop * 2 || u.shape === "bar" || seats > 8 ? 1 : 0;
-  const rest = Math.max(0, seats - perSide * 2);
-  const top = Math.ceil(rest / 2);
-  const bottom = rest - top;
-
-  const out: Chair[] = [];
-  const yOff = b.h / 2 + off;
-  const xOff = b.w / 2 + off;
-  for (let i = 0; i < top; i++)
-    out.push({ cx: ((i + 1) / (top + 1) - 0.5) * b.w, cy: -yOff, vertical: false });
-  for (let i = 0; i < bottom; i++)
-    out.push({ cx: ((i + 1) / (bottom + 1) - 0.5) * b.w, cy: yOff, vertical: false });
-  for (let i = 0; i < perSide; i++) {
-    const y = ((i + 1) / (perSide + 1) - 0.5) * b.h;
-    out.push({ cx: -xOff, cy: y, vertical: true });
-    out.push({ cx: xOff, cy: y, vertical: true });
-  }
-  return out;
-}
-
 
 /**
  * Salsplan i fågelvy: borden ligger på sina verkliga platser i lokalen
@@ -162,6 +115,8 @@ export function FloorPlan({
   const peekBooking = peekUnit ? bookingFor(peekUnit) : null;
 
   const occupied = placed.filter((u) => Boolean(bookingFor(u)) || floorStateOf(u) === "upptaget").length;
+  /** Två eller fler sällskap på samma bord i dag = dubbel sittning. */
+  const isDouble = (u: TableUnit) => bookingsFor(u).length > 1;
   const hits = highlight && highlight.length > 0 ? new Set(highlight) : null;
 
   return (
@@ -170,12 +125,16 @@ export function FloorPlan({
       <div className="flex items-center justify-between gap-3 border-b border-border-subtle px-4 py-2.5">
         <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
           <span className="inline-flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full border border-border-subtle bg-background" />
-            Tillgängligt
+            <span className="h-2 w-2 rounded-full border border-table-free-edge bg-table-free" />
+            Ledigt
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-surface-inverse" />
-            Upptaget
+            <span className="h-2 w-2 rounded-full bg-table-booked" />
+            Bokat
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="h-2 w-2 rounded-full bg-table-double" />
+            Två sittningar
           </span>
           <span className="tabular-nums">
             {occupied}/{placed.length} bord
@@ -247,11 +206,9 @@ export function FloorPlan({
             const state: FloorState = booking ? "upptaget" : floorStateOf(u);
             const guest = booking?.name ?? u.guest;
             const b = body(u);
-            const seatDots = chairs(u, b);
-            const boxW = b.w + CHAIR_PAD * 2;
-            const boxH = b.h + CHAIR_PAD * 2;
-            const padX = (CHAIR_PAD / boxW) * 100;
-            const padY = (CHAIR_PAD / boxH) * 100;
+            const dbl = isDouble(u);
+            const boxW = b.w;
+            const boxH = b.h;
             const isHit = hits ? hits.has(u.id) : null;
 
             return (
@@ -299,33 +256,14 @@ export function FloorPlan({
                   isOver ? "scale-[1.12]" : ""
                 } ${isHit === false ? "opacity-20" : ""}`}
               >
-                {/* Stolar — ligger utanför bordskanten med luftspalt */}
-                {seatDots.map((c, i) => {
-                  const w = c.vertical ? CHAIR_T : CHAIR_L;
-                  const h = c.vertical ? CHAIR_L : CHAIR_T;
-                  return (
-                    <span
-                      key={i}
-                      className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full ${
-                        state === "upptaget" ? "bg-surface-inverse/45" : "bg-foreground/15"
-                      }`}
-                      style={{
-                        left: `${((c.cx + boxW / 2) / boxW) * 100}%`,
-                        top: `${((c.cy + boxH / 2) / boxH) * 100}%`,
-                        width: `${(w / boxW) * 100}%`,
-                        height: `${(h / boxH) * 100}%`,
-                      }}
-                    />
-                  );
-                })}
-
-
                 {/* Bordskropp */}
                 <span
-                  className={`absolute grid place-items-center border transition-colors ${
+                  className={`absolute inset-0 grid place-items-center border transition-colors ${
                     state === "upptaget"
-                      ? "border-transparent bg-surface-inverse text-primary-foreground"
-                      : "border-border bg-card text-forest"
+                      ? dbl
+                        ? "border-transparent bg-table-double text-primary-foreground"
+                        : "border-transparent bg-table-booked text-primary-foreground"
+                      : "border-table-free-edge bg-table-free text-ink-secondary"
                   } ${
                     isOver || isSelected || peek?.id === u.id
                       ? "ring-2 ring-primary ring-offset-1 ring-offset-background"
@@ -335,13 +273,7 @@ export function FloorPlan({
                           ? "ring-1 ring-primary/40"
                           : ""
                   }`}
-                  style={{
-                    left: `${padX}%`,
-                    top: `${padY}%`,
-                    right: `${padX}%`,
-                    bottom: `${padY}%`,
-                    borderRadius: b.radius,
-                  }}
+                  style={{ borderRadius: b.radius }}
                 >
                   <span className="text-[11px] font-semibold leading-none tabular-nums">
                     {u.label}
