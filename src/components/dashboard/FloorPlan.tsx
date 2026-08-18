@@ -237,8 +237,8 @@ export function FloorPlan({
           {placed.map((u) => {
             const isSelected = selected === u.id;
             const isOver = over === u.id;
-            const state = floorStateOf(u);
             const booking = bookingFor(u);
+            const state: FloorState = booking ? "upptaget" : floorStateOf(u);
             const guest = booking?.name ?? u.guest;
             const b = body(u);
             const seatDots = chairs(u, b);
