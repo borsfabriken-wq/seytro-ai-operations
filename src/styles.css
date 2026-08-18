@@ -79,7 +79,7 @@
   --surface-2: oklch(0.995 0.002 250);       /* kort/panel */
   --surface-3: oklch(1 0 0);                 /* upphöjd yta */
   --surface-accent: oklch(0.962 0.024 254);  /* markerad yta, blå ton */
-  --surface-inverse: oklch(0.298 0.008 220); /* grafit #31393C (sidomeny, footer) */
+  --surface-inverse: oklch(0.318 0.052 190); /* djup teal-grön (sidomeny, footer, upptaget) */
 
   /* --- Text ------------------------------------------------------ */
   --ink: oklch(0.245 0.006 245);
