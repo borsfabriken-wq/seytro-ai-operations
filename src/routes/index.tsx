@@ -8,7 +8,7 @@ import { FaqSection } from "@/components/FaqSection";
 import heroImg from "@/assets/hero-main.jpg";
 import visionImg from "@/assets/vision-new.jpg";
 import cardRestaurant from "@/assets/card-restaurant.jpg";
-import cardHotel from "@/assets/card-hotel.jpg";
+import cardHotelAsset from "@/assets/hero-hotel.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -301,8 +301,8 @@ function Index() {
             {
               to: "/hotell" as const,
               label: "Hotell",
-              img: cardHotel,
-              alt: "Korridor och rumsentré på ett boutiquehotell",
+              img: cardHotelAsset.url,
+              alt: "Elegant hotel reception with warm wood paneling and a curved stone desk",
               desc: "Receptionens inkorg, automatisk rumsplacering och gästservice dygnet runt.",
               cta: "Se Seytro för hotell",
               ring: "hover:border-foreground/30",
