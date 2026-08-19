@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { FaqSection } from "@/components/FaqSection";
-import heroImg from "@/assets/hero-hotel.jpg";
+import heroHotelAsset from "@/assets/hero-hotel.png.asset.json";
 
 export const Route = createFileRoute("/hotell")({
   head: () => ({
@@ -49,8 +49,8 @@ function HotellPage() {
 
       <section className="relative min-h-[75svh] sm:min-h-[85svh] overflow-hidden">
         <img
-          src={heroImg}
-          alt="Hotellreception i grön marmor och mässing med gäster som checkar in"
+          src={heroHotelAsset.url}
+          alt="Elegant hotel reception with warm wood paneling and a curved stone desk"
           width={1920}
           height={1280}
           className="absolute inset-0 h-full w-full object-cover"
