@@ -7,7 +7,7 @@ import { FaqSection } from "@/components/FaqSection";
 
 import heroImg from "@/assets/hero-main.jpg";
 import visionImg from "@/assets/vision-new.jpg";
-import cardRestaurant from "@/assets/card-restaurant.jpg";
+import cardRestaurantAsset from "@/assets/card-restaurant.png.asset.json";
 import cardHotelAsset from "@/assets/hero-hotel.png.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -291,8 +291,8 @@ function Index() {
             {
               to: "/restaurang" as const,
               label: "Restaurang",
-              img: cardRestaurant,
-              alt: "Värd vid en bordsöversikt i en restaurang under service",
+              img: cardRestaurantAsset.url,
+              alt: "Seytro salsplan på en surfplatta i restaurangmiljö",
               desc: "Telefonen under rushen, bordsläggningen och gästerna som ska tillbaka.",
               cta: "Se Seytro för restauranger",
               ring: "hover:border-foreground/30",
