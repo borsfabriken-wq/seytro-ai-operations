@@ -6,7 +6,7 @@ import { ProductShowcase } from "@/components/ProductShowcase";
 import { FaqSection } from "@/components/FaqSection";
 
 import heroImg from "@/assets/hero-main.jpg";
-import visionImg from "@/assets/vision-new.jpg";
+import visionAsset from "@/assets/vision-restaurant.png.asset.json";
 import cardRestaurantAsset from "@/assets/card-restaurant.png.asset.json";
 import cardHotelAsset from "@/assets/hero-hotel.png.asset.json";
 
@@ -361,8 +361,8 @@ function Index() {
             </p>
           </div>
           <img
-            src={visionImg}
-            alt="Detalj av en reception i grön marmor och mässing"
+            src={visionAsset.url}
+            alt="Välkomnande restauranginteriör med personal och gäster"
             width={1280}
             height={960}
             loading="lazy"
